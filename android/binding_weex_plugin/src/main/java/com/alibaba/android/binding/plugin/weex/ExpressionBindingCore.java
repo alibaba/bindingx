@@ -319,6 +319,10 @@ public class ExpressionBindingCore{
         return (creator != null) ? creator.createWith(instance) : null;
     }
 
+    /**
+     * Provide instance of {@code Type}.
+     *
+     * */
     public interface ObjectCreator<Type,Param> {
         Type createWith(Param p);
     }

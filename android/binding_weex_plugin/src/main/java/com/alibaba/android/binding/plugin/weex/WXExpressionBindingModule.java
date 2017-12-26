@@ -13,11 +13,13 @@ import java.util.Map;
 /**
  * Description:
  *
- * 旧版本ExpressionBinding
+ * old binding APIs which will be removed later.
+ * you should use {@link WXExpressionBindingV2Module} instead.
  *
  * Created by rowandjj(chuyi)<br/>
  */
 
+@Deprecated
 public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModule{
 
     private ExpressionBindingCore mExpressionBindingCore;
