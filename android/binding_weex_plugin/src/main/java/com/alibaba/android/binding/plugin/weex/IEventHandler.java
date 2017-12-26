@@ -21,9 +21,6 @@ public interface IEventHandler {
 
     void onStart(@NonNull String sourceRef, @NonNull String eventType);
 
-//    void onBindExpression(@NonNull String eventType, @Nullable String exitExpression,
-//                          @NonNull List<Map<String, String>> expressionArgs, @Nullable JSCallback callback);
-
     void onBindExpression(@NonNull String eventType, @Nullable Map<String, Object> globalConfig, @Nullable ExpressionPair exitExpressionPair,
                           @NonNull List<Map<String, Object>> expressionArgs, @Nullable JSCallback callback);
 

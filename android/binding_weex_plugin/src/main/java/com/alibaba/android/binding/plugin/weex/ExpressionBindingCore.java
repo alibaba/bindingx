@@ -33,6 +33,35 @@ public class ExpressionBindingCore{
     private static final String TAG = ExpressionConstants.TAG;
 
     private Map<String/*token*/, Map<String/*event type*/,IEventHandler>> mBindingCouples;
+    private final Map<String, ObjectCreator<IEventHandler,WXSDKInstance>> mInternalEventHandlerCreatorMap =
+            new HashMap<>(8);
+
+    public ExpressionBindingCore(){
+        registerEventHandler(EventType.TYPE_PAN, new ObjectCreator<IEventHandler, WXSDKInstance>() {
+            @Override
+            public IEventHandler createWith(WXSDKInstance instance) {
+                return new ExpressionTouchHandler(instance);
+            }
+        });
+        registerEventHandler(EventType.TYPE_ORIENTATION, new ObjectCreator<IEventHandler, WXSDKInstance>() {
+            @Override
+            public IEventHandler createWith(WXSDKInstance instance) {
+                return new ExpressionOrientationHandler(instance);
+            }
+        });
+        registerEventHandler(EventType.TYPE_SCROLL, new ObjectCreator<IEventHandler, WXSDKInstance>() {
+            @Override
+            public IEventHandler createWith(WXSDKInstance instance) {
+                return new ExpressionScrollHandler(instance);
+            }
+        });
+        registerEventHandler(EventType.TYPE_TIMING, new ObjectCreator<IEventHandler, WXSDKInstance>() {
+            @Override
+            public IEventHandler createWith(WXSDKInstance instance) {
+                return new ExpressionTimingHandler(instance);
+            }
+        });
+    }
 
     /**
      * @return 如果成功，则返回token，否则返回null
@@ -133,7 +162,7 @@ public class ExpressionBindingCore{
         }
 
         // 生成token，如果是pan/scroll类型，那token即view ref.
-        final String token = TextUtils.isEmpty(anchor) ? InnerTokenGenerator.generate() : anchor;
+        final String token = TextUtils.isEmpty(anchor) ? generateToken() : anchor;
 
         if (mBindingCouples == null) {
             mBindingCouples = new HashMap<>();
@@ -233,33 +262,6 @@ public class ExpressionBindingCore{
         return token;
     }
 
-    @Nullable
-    private IEventHandler createEventHandler(@NonNull String eventType, @NonNull WXSDKInstance instance) {
-        /*手势相关*/
-        if (EventType.TYPE_PAN.equals(eventType) || EventType.TYPE_FLICK.equals(eventType)) {
-            return new ExpressionTouchHandler(instance);
-        /*设备方向*/
-        }else if (EventType.TYPE_ORIENTATION.equals(eventType)) {
-            return new ExpressionOrientationHandler(instance);
-        /*content offset*/
-        } else if (EventType.TYPE_SCROLL.equals(eventType)) {
-            return new ExpressionScrollHandler(instance);
-        /*timing*/
-        } else if (EventType.TYPE_TIMING.equals(eventType)) {
-            return new ExpressionTimingHandler(instance);
-        }
-
-        return null;
-    }
-
-
-    private static class InnerTokenGenerator {
-
-        static String generate() {
-            return UUID.randomUUID().toString();
-        }
-    }
-
     public void onActivityPause() {
         if(mBindingCouples == null) {
             return;
@@ -296,5 +298,29 @@ public class ExpressionBindingCore{
         }catch (Exception e) {
             WXLogUtils.e(TAG, e.getMessage());
         }
+    }
+
+    public void registerEventHandler(String eventType, ObjectCreator<IEventHandler,WXSDKInstance> creator) {
+        if(TextUtils.isEmpty(eventType) || creator == null) {
+            return;
+        }
+        mInternalEventHandlerCreatorMap.put(eventType,creator);
+    }
+
+    private String generateToken() {
+        return UUID.randomUUID().toString();
+    }
+
+    @Nullable
+    private IEventHandler createEventHandler(@NonNull String eventType, @NonNull WXSDKInstance instance) {
+        if(mInternalEventHandlerCreatorMap.isEmpty()) {
+            return null;
+        }
+        ObjectCreator<IEventHandler,WXSDKInstance> creator = mInternalEventHandlerCreatorMap.get(eventType);
+        return (creator != null) ? creator.createWith(instance) : null;
+    }
+
+    public interface ObjectCreator<Type,Param> {
+        Type createWith(Param p);
     }
 }
