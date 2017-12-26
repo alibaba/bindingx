@@ -30,6 +30,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     // provided
-    compileOnly project(':binding_core')
     compileOnly 'com.taobao.android:weex_sdk:0.17.0'
 }

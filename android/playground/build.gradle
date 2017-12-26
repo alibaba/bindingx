@@ -23,6 +23,5 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
 
     implementation 'com.taobao.android:weex_sdk:0.17.0'
-    implementation project(':binding_core')
     implementation project(':binding_weex_plugin')
 }
