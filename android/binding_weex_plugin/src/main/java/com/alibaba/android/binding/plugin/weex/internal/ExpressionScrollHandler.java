@@ -1,4 +1,4 @@
-package com.alibaba.android.binding.plugin.weex;
+package com.alibaba.android.binding.plugin.weex.internal;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,7 +8,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.alibaba.aliweex.utils.WXModuleUtils;
+import com.alibaba.android.binding.plugin.weex.EventType;
+import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.bridge.JSCallback;
@@ -36,7 +37,7 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-class ExpressionScrollHandler extends AbstractEventHandler{
+public class ExpressionScrollHandler extends AbstractEventHandler{
 
     private boolean isStart = false;
 
@@ -51,7 +52,7 @@ class ExpressionScrollHandler extends AbstractEventHandler{
 
     private String mSourceRef;
 
-    ExpressionScrollHandler(@NonNull WXSDKInstance instance) {
+    public ExpressionScrollHandler(@NonNull WXSDKInstance instance) {
         super(instance);
     }
 

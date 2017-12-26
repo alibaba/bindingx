@@ -1,4 +1,4 @@
-package com.alibaba.android.binding.plugin.weex;
+package com.alibaba.android.binding.plugin.weex.internal;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -10,6 +10,7 @@ import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.utils.WXLogUtils;
 

@@ -1,4 +1,4 @@
-package com.alibaba.android.binding.plugin.weex;
+package com.alibaba.android.binding.plugin.weex.internal;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,7 +8,8 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.alibaba.aliweex.utils.WXModuleUtils;
+import com.alibaba.android.binding.plugin.weex.EventType;
+import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.bridge.JSCallback;
@@ -22,7 +23,7 @@ import java.util.Map;
 /**
  * 处理手势相关
  */
-class ExpressionTouchHandler extends AbstractEventHandler implements View.OnTouchListener, GestureDetector.OnGestureListener {
+public class ExpressionTouchHandler extends AbstractEventHandler implements View.OnTouchListener, GestureDetector.OnGestureListener {
     private float mDownX;
     private float mDownY;
 
@@ -34,7 +35,7 @@ class ExpressionTouchHandler extends AbstractEventHandler implements View.OnTouc
     private boolean isPanGestureAvailable;
     private boolean isFlickGestureAvailable;
 
-    ExpressionTouchHandler(@NonNull WXSDKInstance instance) {
+    public ExpressionTouchHandler(@NonNull WXSDKInstance instance) {
         super(instance);
         Context context = instance.getContext();
         mGestureDetector = new GestureDetector(context, this);

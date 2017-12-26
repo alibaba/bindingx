@@ -1,4 +1,4 @@
-package com.alibaba.android.binding.plugin.weex;
+package com.alibaba.android.binding.plugin.weex.internal;
 
 import android.annotation.TargetApi;
 import android.os.Build;

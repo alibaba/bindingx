@@ -3,6 +3,7 @@ package com.alibaba.android.binding.plugin.weex;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.alibaba.android.binding.plugin.weex.internal.ExpressionPair;
 import com.taobao.weex.bridge.JSCallback;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-interface IEventHandler {
+public interface IEventHandler {
 
     boolean onCreate(@NonNull String sourceRef, @NonNull String eventType);
 

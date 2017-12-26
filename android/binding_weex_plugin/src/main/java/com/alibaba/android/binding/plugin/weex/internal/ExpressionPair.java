@@ -1,4 +1,4 @@
-package com.alibaba.android.binding.plugin.weex;
+package com.alibaba.android.binding.plugin.weex.internal;
 
 import android.support.annotation.Nullable;
 
@@ -8,20 +8,20 @@ import android.support.annotation.Nullable;
  * Created by rowandjj(chuyi)<br/>
  */
 
-class ExpressionPair {
+public class ExpressionPair {
 
     //原生表达式
-    final String origin;
+    public final String origin;
 
     //转化后表达式
-    final String transformed;
+    public final String transformed;
 
-    ExpressionPair(String origin,String transformed) {
+    public ExpressionPair(String origin,String transformed) {
         this.origin = origin;
         this.transformed = transformed;
     }
 
-    static ExpressionPair create(@Nullable String origin, @Nullable String transformed) {
+    public static ExpressionPair create(@Nullable String origin, @Nullable String transformed) {
         return new ExpressionPair(origin,transformed);
     }
 

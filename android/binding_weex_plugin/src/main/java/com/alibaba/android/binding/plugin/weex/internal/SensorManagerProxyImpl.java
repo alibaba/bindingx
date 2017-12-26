@@ -1,10 +1,11 @@
-package com.alibaba.android.binding.plugin.weex;
+package com.alibaba.android.binding.plugin.weex.internal;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Handler;
 
+import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
 import com.taobao.weex.utils.WXLogUtils;
 
 import java.util.List;

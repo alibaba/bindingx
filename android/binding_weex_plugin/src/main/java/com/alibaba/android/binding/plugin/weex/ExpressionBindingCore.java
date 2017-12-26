@@ -4,6 +4,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.alibaba.android.binding.plugin.weex.internal.ExpressionOrientationHandler;
+import com.alibaba.android.binding.plugin.weex.internal.ExpressionPair;
+import com.alibaba.android.binding.plugin.weex.internal.ExpressionScrollHandler;
+import com.alibaba.android.binding.plugin.weex.internal.ExpressionTimingHandler;
+import com.alibaba.android.binding.plugin.weex.internal.ExpressionTouchHandler;
+import com.alibaba.android.binding.plugin.weex.internal.Utils;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.bridge.JSCallback;
@@ -22,7 +28,7 @@ import java.util.UUID;
  * Created by rowandjj(chuyi)<br/>
  */
 
-class ExpressionBindingCore{
+public class ExpressionBindingCore{
 
     private static final String TAG = ExpressionConstants.TAG;
 
@@ -31,7 +37,7 @@ class ExpressionBindingCore{
     /**
      * @return 如果成功，则返回token，否则返回null
      * */
-    String doBind(@NonNull Map<String, Object> params, @NonNull JSCallback callback, @NonNull WXSDKInstance instance) {
+    public String doBind(@NonNull Map<String, Object> params, @NonNull JSCallback callback, @NonNull WXSDKInstance instance) {
         String eventType = Utils.getStringValue(params,ExpressionConstants.KEY_EVENT_TYPE);
         String config = Utils.getStringValue(params,ExpressionConstants.KEY_OPTIONS);
         String anchorInstanceId = Utils.getStringValue(params,ExpressionConstants.KEY_INSTANCE_ID);
@@ -54,7 +60,7 @@ class ExpressionBindingCore{
         return doBind(anchor,anchorInstanceId,eventType,configMap,exitExpressionPair,expressionArgs,callback, instance);
     }
 
-    void doUnbind(@Nullable Map<String, Object> params) {
+    public void doUnbind(@Nullable Map<String, Object> params) {
         if(params == null) {
             return;
         }
@@ -65,7 +71,7 @@ class ExpressionBindingCore{
     }
 
 
-    void doUnbind(@Nullable String token, @Nullable String eventType) {
+    public void doUnbind(@Nullable String token, @Nullable String eventType) {
         WXLogUtils.d(TAG, "disable binding [" + token + "," + eventType + "]");
         if (TextUtils.isEmpty(token) || TextUtils.isEmpty(eventType)) {
             WXLogUtils.d(TAG, "disable binding failed(0x1) [" + token + "," + eventType + "]");
@@ -95,7 +101,7 @@ class ExpressionBindingCore{
         }
     }
 
-    void doRelease() {
+    public void doRelease() {
         if (mBindingCouples != null) {
             try {
                 for(Map<String/*eventType*/,IEventHandler> handlerMap : mBindingCouples.values()) {
@@ -115,7 +121,7 @@ class ExpressionBindingCore{
         }
     }
 
-    String doPrepare(@Nullable String anchor, @Nullable String anchorInstanceId, @Nullable String eventType, @NonNull WXSDKInstance instance){
+    public String doPrepare(@Nullable String anchor, @Nullable String anchorInstanceId, @Nullable String eventType, @NonNull WXSDKInstance instance){
         if(TextUtils.isEmpty(eventType)) {
             WXLogUtils.e(TAG,"[doPrepare] failed. can not found eventType");
             return null;
@@ -192,7 +198,7 @@ class ExpressionBindingCore{
      * @param callback 事件回调。
      * @param instance 当前weex实例。
      * */
-    String doBind(@Nullable String anchor, @Nullable String anchorInstanceId, @Nullable String eventType, @Nullable Map<String,Object> globalConfig, @Nullable ExpressionPair exitExpressionPair,
+    public String doBind(@Nullable String anchor, @Nullable String anchorInstanceId, @Nullable String eventType, @Nullable Map<String,Object> globalConfig, @Nullable ExpressionPair exitExpressionPair,
                   @Nullable List<Map<String, Object>> expressionArgs, @Nullable JSCallback callback, @NonNull WXSDKInstance instance) {
 
         if (TextUtils.isEmpty(eventType) || expressionArgs == null) {
@@ -254,7 +260,7 @@ class ExpressionBindingCore{
         }
     }
 
-    void onActivityPause() {
+    public void onActivityPause() {
         if(mBindingCouples == null) {
             return;
         }
@@ -273,7 +279,7 @@ class ExpressionBindingCore{
         }
     }
 
-    void onActivityResume() {
+    public void onActivityResume() {
         if(mBindingCouples == null) {
             return;
         }

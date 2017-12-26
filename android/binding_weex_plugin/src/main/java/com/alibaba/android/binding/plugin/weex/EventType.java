@@ -6,7 +6,7 @@ package com.alibaba.android.binding.plugin.weex;
  * Created by rowandjj(chuyi)<br/>
  */
 
-interface EventType {
+public interface EventType {
     String TYPE_PAN = "pan";
     String TYPE_FLICK = "flick";
     String TYPE_ORIENTATION = "orientation";

@@ -1,4 +1,4 @@
-package com.alibaba.android.binding.plugin.weex;
+package com.alibaba.android.binding.plugin.weex.internal;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -6,8 +6,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.alibaba.aliweex.utils.WXModuleUtils;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
+import com.alibaba.android.binding.plugin.weex.IEventHandler;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.bridge.JSCallback;

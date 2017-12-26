@@ -1,10 +1,12 @@
-package com.alibaba.android.binding.plugin.weex;
+package com.alibaba.android.binding.plugin.weex.internal;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 import android.view.animation.AnimationUtils;
 
+import com.alibaba.android.binding.plugin.weex.EventType;
+import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.bridge.JSCallback;
@@ -20,14 +22,14 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-class ExpressionTimingHandler extends AbstractEventHandler implements AnimationFrame.Callback {
+public class ExpressionTimingHandler extends AbstractEventHandler implements AnimationFrame.Callback {
 
     private long mStartTime = 0;
 
     private AnimationFrame mAnimationFrame;
     private boolean isFinish = false;
 
-    ExpressionTimingHandler(@NonNull WXSDKInstance instance) {
+    public ExpressionTimingHandler(@NonNull WXSDKInstance instance) {
         super(instance);
         if(mAnimationFrame == null) {
             mAnimationFrame = AnimationFrame.newInstance();

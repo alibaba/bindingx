@@ -1,7 +1,8 @@
-package com.alibaba.android.binding.plugin.weex;
+package com.alibaba.android.binding.plugin.weex.internal;
 
 import android.util.Log;
 
+import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
 import com.taobao.weex.WXEnvironment;
 
 import org.json.JSONArray;

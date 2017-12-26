@@ -8,7 +8,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
-import com.alibaba.aliweex.utils.WXModuleUtils;
+import com.alibaba.android.binding.plugin.weex.internal.WXModuleUtils;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.annotation.JSMethod;

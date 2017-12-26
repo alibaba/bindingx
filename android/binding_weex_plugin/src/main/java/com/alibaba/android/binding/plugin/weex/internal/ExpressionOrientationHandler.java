@@ -1,4 +1,4 @@
-package com.alibaba.android.binding.plugin.weex;
+package com.alibaba.android.binding.plugin.weex.internal;
 
 import android.content.Context;
 import android.hardware.SensorManager;
@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.alibaba.android.binding.plugin.weex.EventType;
+import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.bridge.JSCallback;
@@ -24,7 +26,7 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-class ExpressionOrientationHandler extends AbstractEventHandler implements OrientationDetector.OnOrientationChangedListener {
+public class ExpressionOrientationHandler extends AbstractEventHandler implements OrientationDetector.OnOrientationChangedListener {
 
     private boolean isStarted = false;
 
@@ -48,7 +50,7 @@ class ExpressionOrientationHandler extends AbstractEventHandler implements Orien
     private LinkedList<Double> mRecordsAlpha = new LinkedList<>();
 
 
-    ExpressionOrientationHandler(@NonNull WXSDKInstance instance) {
+    public ExpressionOrientationHandler(@NonNull WXSDKInstance instance) {
         super(instance);
         Context context = instance.getContext();
         if (context != null) {

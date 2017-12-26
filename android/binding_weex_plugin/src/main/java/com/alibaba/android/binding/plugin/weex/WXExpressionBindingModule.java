@@ -2,6 +2,7 @@ package com.alibaba.android.binding.plugin.weex;
 
 import android.support.annotation.Nullable;
 
+import com.alibaba.android.binding.plugin.weex.internal.ExpressionPair;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.annotation.JSMethod;
 import com.taobao.weex.bridge.JSCallback;
