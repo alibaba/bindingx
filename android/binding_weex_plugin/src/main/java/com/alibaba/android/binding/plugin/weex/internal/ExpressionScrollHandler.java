@@ -9,10 +9,10 @@ import android.util.Log;
 import android.view.View;
 
 import com.alibaba.android.binding.plugin.weex.EventType;
+import com.alibaba.android.binding.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
-import com.taobao.weex.bridge.JSCallback;
 import com.taobao.weex.bridge.WXBridgeManager;
 import com.taobao.weex.common.Constants;
 import com.taobao.weex.ui.component.WXComponent;
@@ -144,7 +144,7 @@ public class ExpressionScrollHandler extends AbstractEventHandler{
 
     @Override
     public void onBindExpression(@NonNull String eventType, @Nullable Map<String,Object> globalConfig, @Nullable ExpressionPair exitExpressionPair,
-                                 @NonNull List<Map<String, Object>> expressionArgs, @Nullable JSCallback callback) {
+                                 @NonNull List<Map<String, Object>> expressionArgs, @Nullable ExpressionBindingCore.JavaScriptCallback callback) {
         super.onBindExpression(eventType,globalConfig, exitExpressionPair, expressionArgs, callback);
     }
 
@@ -209,7 +209,7 @@ public class ExpressionScrollHandler extends AbstractEventHandler{
             param.put("tdx", _tdx);
             param.put("tdy", _tdy);
 
-            mCallback.invokeAndKeepAlive(param);
+            mCallback.callback(param);
             if (WXEnvironment.isApkDebugable()) {
                 Log.d(TAG, ">>>>>>>>>>>fire event:(" + state + "," + x + "," + y + ","+ _dx  +","+ _dy +"," + _tdx +"," + _tdy +")");
             }

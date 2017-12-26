@@ -9,10 +9,10 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.alibaba.android.binding.plugin.weex.EventType;
+import com.alibaba.android.binding.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
-import com.taobao.weex.bridge.JSCallback;
 import com.taobao.weex.utils.WXLogUtils;
 import com.taobao.weex.utils.WXViewUtils;
 
@@ -210,7 +210,7 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
 
     @Override
     public void onBindExpression(@NonNull String eventType, @Nullable Map<String,Object> globalConfig, @Nullable ExpressionPair exitExpressionPair,
-                                 @NonNull List<Map<String, Object>> expressionArgs, @Nullable JSCallback callback) {
+                                 @NonNull List<Map<String, Object>> expressionArgs, @Nullable ExpressionBindingCore.JavaScriptCallback callback) {
         super.onBindExpression(eventType,globalConfig, exitExpressionPair, expressionArgs, callback);
     }
 
@@ -267,7 +267,7 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
             double y = dy * WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth();
             param.put("deltaX", x);
             param.put("deltaY", y);
-            mCallback.invokeAndKeepAlive(param);
+            mCallback.callback(param);
             if (WXEnvironment.isApkDebugable()) {
                 WXLogUtils.d(TAG, ">>>>>>>>>>>fire event:(" + state + "," + x + "," + y + ")");
             }

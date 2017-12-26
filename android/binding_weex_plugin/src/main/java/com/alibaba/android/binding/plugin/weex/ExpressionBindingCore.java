@@ -12,7 +12,6 @@ import com.alibaba.android.binding.plugin.weex.internal.ExpressionTouchHandler;
 import com.alibaba.android.binding.plugin.weex.internal.Utils;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
-import com.taobao.weex.bridge.JSCallback;
 import com.taobao.weex.utils.WXLogUtils;
 
 import org.json.JSONObject;
@@ -66,7 +65,7 @@ public class ExpressionBindingCore{
     /**
      * @return 如果成功，则返回token，否则返回null
      * */
-    public String doBind(@NonNull Map<String, Object> params, @NonNull JSCallback callback, @NonNull WXSDKInstance instance) {
+    public String doBind(@NonNull Map<String, Object> params, @NonNull JavaScriptCallback callback, @NonNull WXSDKInstance instance) {
         String eventType = Utils.getStringValue(params,ExpressionConstants.KEY_EVENT_TYPE);
         String config = Utils.getStringValue(params,ExpressionConstants.KEY_OPTIONS);
         String anchorInstanceId = Utils.getStringValue(params,ExpressionConstants.KEY_INSTANCE_ID);
@@ -228,7 +227,7 @@ public class ExpressionBindingCore{
      * @param instance 当前weex实例。
      * */
     public String doBind(@Nullable String anchor, @Nullable String anchorInstanceId, @Nullable String eventType, @Nullable Map<String,Object> globalConfig, @Nullable ExpressionPair exitExpressionPair,
-                  @Nullable List<Map<String, Object>> expressionArgs, @Nullable JSCallback callback, @NonNull WXSDKInstance instance) {
+                  @Nullable List<Map<String, Object>> expressionArgs, @Nullable JavaScriptCallback callback, @NonNull WXSDKInstance instance) {
 
         if (TextUtils.isEmpty(eventType) || expressionArgs == null) {
             WXLogUtils.e(TAG, "doBind failed,illegal argument.[" + eventType + "," + expressionArgs + "]");
@@ -322,5 +321,15 @@ public class ExpressionBindingCore{
 
     public interface ObjectCreator<Type,Param> {
         Type createWith(Param p);
+    }
+
+    /**
+     * Interface that represent standard javascript callback function
+     * */
+    public interface JavaScriptCallback {
+        /**
+         * @param params arguments passed to javascript callback method via different platform's bridge
+         * */
+        void callback(Object params);
     }
 }

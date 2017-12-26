@@ -6,11 +6,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.alibaba.android.binding.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
 import com.alibaba.android.binding.plugin.weex.IEventHandler;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
-import com.taobao.weex.bridge.JSCallback;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.utils.WXLogUtils;
 
@@ -35,7 +35,7 @@ abstract class AbstractEventHandler implements IEventHandler {
     protected static final String TAG = ExpressionConstants.TAG;
 
     volatile Map<String/*targetRef*/, List<ExpressionHolder>> mExpressionHoldersMap;
-    JSCallback mCallback;
+    /*package*/ ExpressionBindingCore.JavaScriptCallback mCallback;
     final Map<String, Object> mScope = new HashMap<>();
     String mInstanceId;
     String mAnchorInstanceId;
@@ -55,7 +55,7 @@ abstract class AbstractEventHandler implements IEventHandler {
 
     @Override
     public void onBindExpression(@NonNull String eventType, @Nullable Map<String,Object> globalConfig, @Nullable ExpressionPair exitExpressionPair,
-                                 @NonNull List<Map<String, Object>> expressionArgs, @Nullable JSCallback callback) {
+                                 @NonNull List<Map<String, Object>> expressionArgs, @Nullable ExpressionBindingCore.JavaScriptCallback callback) {
         clearExpressions();
         transformArgs(eventType, expressionArgs);
         this.mCallback = callback;

@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.alibaba.android.binding.plugin.weex.internal.ExpressionPair;
-import com.taobao.weex.bridge.JSCallback;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,7 @@ public interface IEventHandler {
     void onStart(@NonNull String sourceRef, @NonNull String eventType);
 
     void onBindExpression(@NonNull String eventType, @Nullable Map<String, Object> globalConfig, @Nullable ExpressionPair exitExpressionPair,
-                          @NonNull List<Map<String, Object>> expressionArgs, @Nullable JSCallback callback);
+                          @NonNull List<Map<String, Object>> expressionArgs, @Nullable ExpressionBindingCore.JavaScriptCallback callback);
 
     boolean onDisable(@NonNull String sourceRef, @NonNull String eventType);
 

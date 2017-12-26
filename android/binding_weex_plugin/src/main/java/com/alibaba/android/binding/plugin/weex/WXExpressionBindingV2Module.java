@@ -49,12 +49,19 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule{
     }
 
     @JSMethod(uiThread = false)
-    public Map<String, String> bind(Map<String, Object> params, JSCallback callback) {
+    public Map<String, String> bind(Map<String, Object> params, final JSCallback callback) {
         if(mExpressionBindingCore == null) {
             mExpressionBindingCore = new ExpressionBindingCore();
         }
 
-        String token = mExpressionBindingCore.doBind(params,callback,mWXSDKInstance);
+        String token = mExpressionBindingCore.doBind(params,new ExpressionBindingCore.JavaScriptCallback(){
+            @Override
+            public void callback(Object params) {
+                if(callback != null) {
+                    callback.invokeAndKeepAlive(params);
+                }
+            }
+        },mWXSDKInstance);
         Map<String,String> result = new HashMap<>(2);
         result.put(ExpressionConstants.KEY_TOKEN, token);
         return result;

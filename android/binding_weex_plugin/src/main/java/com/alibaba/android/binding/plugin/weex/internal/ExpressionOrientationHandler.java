@@ -8,10 +8,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.android.binding.plugin.weex.EventType;
+import com.alibaba.android.binding.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
-import com.taobao.weex.bridge.JSCallback;
 import com.taobao.weex.utils.WXLogUtils;
 
 import java.util.HashMap;
@@ -76,7 +76,7 @@ public class ExpressionOrientationHandler extends AbstractEventHandler implement
 
     @Override
     public void onBindExpression(@NonNull String eventType, @Nullable Map<String,Object> globalConfig, @Nullable ExpressionPair exitExpressionPair,
-                                 @NonNull List<Map<String, Object>> expressionArgs, @Nullable JSCallback callback) {
+                                 @NonNull List<Map<String, Object>> expressionArgs, @Nullable ExpressionBindingCore.JavaScriptCallback callback) {
         super.onBindExpression(eventType,globalConfig, exitExpressionPair, expressionArgs, callback);
 
         // 获取配置
@@ -289,7 +289,7 @@ public class ExpressionOrientationHandler extends AbstractEventHandler implement
             param.put("beta", beta);
             param.put("gamma", gamma);
 
-            mCallback.invokeAndKeepAlive(param);
+            mCallback.callback(param);
             if (WXEnvironment.isApkDebugable()) {
                 WXLogUtils.d(TAG, ">>>>>>>>>>>fire event:(" + state + "," + alpha + "," + beta + "," + gamma + ")");
             }

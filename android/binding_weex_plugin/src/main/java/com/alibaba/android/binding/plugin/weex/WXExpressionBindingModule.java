@@ -35,13 +35,20 @@ public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModu
     @JSMethod
     @Deprecated
     public void createBinding(@Nullable String sourceRef, @Nullable String eventType, @Nullable String exitExpression,
-                              @Nullable List<Map<String, Object>> expressionArgs, @Nullable JSCallback callback) {
+                              @Nullable List<Map<String, Object>> expressionArgs, @Nullable final JSCallback callback) {
         if(mExpressionBindingCore == null) {
             mExpressionBindingCore = new ExpressionBindingCore();
         }
 
         ExpressionPair exitExpressionPair = ExpressionPair.create(null,exitExpression);
-        mExpressionBindingCore.doBind(sourceRef,null, eventType,null,exitExpressionPair,expressionArgs,callback,mWXSDKInstance);
+        mExpressionBindingCore.doBind(sourceRef, null, eventType, null, exitExpressionPair, expressionArgs, new ExpressionBindingCore.JavaScriptCallback() {
+            @Override
+            public void callback(Object params) {
+                if(callback != null) {
+                    callback.invokeAndKeepAlive(params);
+                }
+            }
+        }, mWXSDKInstance);
     }
 
     @JSMethod
