@@ -8,9 +8,8 @@ import android.view.animation.AnimationUtils;
 import com.alibaba.android.binding.plugin.weex.EventType;
 import com.alibaba.android.binding.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
-import com.taobao.weex.WXEnvironment;
+import com.alibaba.android.binding.plugin.weex.LogProxy;
 import com.taobao.weex.WXSDKInstance;
-import com.taobao.weex.utils.WXLogUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -84,7 +83,7 @@ public class ExpressionTimingHandler extends AbstractEventHandler implements Ani
             }
             isFinish = evaluateExitExpression(mExitExpressionPair,mScope);
         } catch (Exception e) {
-            WXLogUtils.e(TAG, "runtime error\n" + e.getMessage());
+            LogProxy.e("runtime error", e);
         }
     }
 
@@ -130,9 +129,7 @@ public class ExpressionTimingHandler extends AbstractEventHandler implements Ani
             param.put("t", t);
 
             mCallback.callback(param);
-            if (WXEnvironment.isApkDebugable()) {
-                WXLogUtils.d(TAG, ">>>>>>>>>>>fire event:(" + state + "," + t + ")");
-            }
+            LogProxy.d(">>>>>>>>>>>fire event:(" + state + "," + t + ")");
         }
     }
 

@@ -5,12 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.alibaba.android.binding.plugin.weex.EventType;
 import com.alibaba.android.binding.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
+import com.alibaba.android.binding.plugin.weex.LogProxy;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.bridge.WXBridgeManager;
@@ -21,7 +21,6 @@ import com.taobao.weex.ui.component.list.WXListComponent;
 import com.taobao.weex.ui.view.WXScrollView;
 import com.taobao.weex.ui.view.listview.WXRecyclerView;
 import com.taobao.weex.ui.view.refresh.wrapper.BounceRecyclerView;
-import com.taobao.weex.utils.WXLogUtils;
 import com.taobao.weex.utils.WXViewUtils;
 
 import java.util.HashMap;
@@ -61,7 +60,7 @@ public class ExpressionScrollHandler extends AbstractEventHandler{
         String instanceId = TextUtils.isEmpty(mAnchorInstanceId) ? mInstanceId : mAnchorInstanceId;
         WXComponent sourceComponent = WXModuleUtils.findComponentByRef(instanceId, sourceRef);
         if (sourceComponent == null) {
-            WXLogUtils.e(TAG, "[ExpressionScrollHandler]source component not found.");
+            LogProxy.e("[ExpressionScrollHandler]source component not found.");
             return false;
         }
         this.mSourceRef = sourceRef;
@@ -111,11 +110,9 @@ public class ExpressionScrollHandler extends AbstractEventHandler{
      * */
     private void handleScrollEvent(int contentOffsetX, int contentOffsetY, int dx, int dy,
                                    int tdx, int tdy) {
-        if (WXEnvironment.isApkDebugable()) {
-            Log.d(TAG, String.format(Locale.CHINA,
-                    "[ExpressionScrollHandler] scroll changed. (contentOffsetX:%d,contentOffsetY:%d,dx:%d,dy:%d,tdx:%d,tdy:%d)",
-                        contentOffsetX,contentOffsetY,dx,dy,tdx,tdy));
-        }
+        LogProxy.d(String.format(Locale.CHINA,
+                "[ExpressionScrollHandler] scroll changed. (contentOffsetX:%d,contentOffsetY:%d,dx:%d,dy:%d,tdx:%d,tdy:%d)",
+                    contentOffsetX,contentOffsetY,dx,dy,tdx,tdy));
 
         this.mX = contentOffsetX;
         this.mY = contentOffsetY;
@@ -132,7 +129,7 @@ public class ExpressionScrollHandler extends AbstractEventHandler{
                 consumeExpression(mExpressionHoldersMap, mScope, EventType.TYPE_SCROLL);
             }
         } catch (Exception e) {
-            WXLogUtils.e(TAG, "runtime error\n" + e.getMessage());
+            LogProxy.e("runtime error", e);
         }
     }
 
@@ -164,7 +161,7 @@ public class ExpressionScrollHandler extends AbstractEventHandler{
         String instanceId = TextUtils.isEmpty(mAnchorInstanceId) ? mInstanceId : mAnchorInstanceId;
         WXComponent sourceComponent = WXModuleUtils.findComponentByRef(instanceId, sourceRef);
         if (sourceComponent == null) {
-            WXLogUtils.e(TAG, "[ExpressionScrollHandler]source component not found.");
+            LogProxy.e("[ExpressionScrollHandler]source component not found.");
             return false;
         }
         if (sourceComponent instanceof WXScroller) {
@@ -210,9 +207,7 @@ public class ExpressionScrollHandler extends AbstractEventHandler{
             param.put("tdy", _tdy);
 
             mCallback.callback(param);
-            if (WXEnvironment.isApkDebugable()) {
-                Log.d(TAG, ">>>>>>>>>>>fire event:(" + state + "," + x + "," + y + ","+ _dx  +","+ _dy +"," + _tdx +"," + _tdy +")");
-            }
+            LogProxy.d(">>>>>>>>>>>fire event:(" + state + "," + x + "," + y + ","+ _dx  +","+ _dy +"," + _tdx +"," + _tdy +")");
         }
     }
 

@@ -1,9 +1,6 @@
 package com.alibaba.android.binding.plugin.weex.internal;
 
-import android.util.Log;
-
-import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
-import com.taobao.weex.WXEnvironment;
+import com.alibaba.android.binding.plugin.weex.LogProxy;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,9 +19,7 @@ class Expression {
         try {
             this.root = (JSONObject) new JSONTokener(json).nextValue();
         } catch (Throwable e) {
-            if(WXEnvironment.isApkDebugable()) {
-                Log.e(ExpressionConstants.TAG, "[Expression] expression is illegal. \n " + e.getMessage());
-            }
+            LogProxy.e("[Expression] expression is illegal. \n ", e);
         }
     }
 

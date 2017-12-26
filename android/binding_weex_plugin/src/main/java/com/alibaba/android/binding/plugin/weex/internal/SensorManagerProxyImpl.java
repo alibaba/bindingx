@@ -5,8 +5,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Handler;
 
-import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
-import com.taobao.weex.utils.WXLogUtils;
+import com.alibaba.android.binding.plugin.weex.LogProxy;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ class SensorManagerProxyImpl implements SensorManagerProxy {
         } catch (Throwable e) {
             // Suppress occasional exception on Digma iDxD* devices:
             // Receiver not registered: android.hardware.SystemSensorManager$1
-            WXLogUtils.w(ExpressionConstants.TAG, "Failed to unregister device sensor " + sensors.get(0).getName());
+            LogProxy.w("Failed to unregister device sensor " + sensors.get(0).getName());
         }
     }
 }

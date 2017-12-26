@@ -10,9 +10,7 @@ import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
-import com.taobao.weex.WXEnvironment;
-import com.taobao.weex.utils.WXLogUtils;
+import com.alibaba.android.binding.plugin.weex.LogProxy;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,8 +26,6 @@ import java.util.Set;
  */
 
 class OrientationDetector implements SensorEventListener {
-
-    private static final String TAG = ExpressionConstants.TAG;
 
     // These fields are lazily initialized by getHandler().
     private HandlerThread mThread;
@@ -133,10 +129,8 @@ class OrientationDetector implements SensorEventListener {
     private boolean registerOrientationSensorsWithFallback(int rateInMicroseconds) {
         if (mOrientationNotAvailable) return false;
         if (mDeviceOrientationSensors != null) {
-            if(WXEnvironment.isApkDebugable()) {
-                String type = getOrientationSensorTypeUsed();
-                WXLogUtils.d(ExpressionConstants.TAG,"[OrientationDetector] register sensor:"+type);
-            }
+            String type = getOrientationSensorTypeUsed();
+            LogProxy.d("[OrientationDetector] register sensor:"+type);
             return registerSensors(mDeviceOrientationSensors, rateInMicroseconds, true);
         }
         ensureRotationStructuresAllocated();
@@ -144,10 +138,8 @@ class OrientationDetector implements SensorEventListener {
         for (Set<Integer> sensors : mOrientationSensorSets) {
             mDeviceOrientationSensors = sensors;
             if (registerSensors(mDeviceOrientationSensors, rateInMicroseconds, true)) {
-                if(WXEnvironment.isApkDebugable()) {
-                    String type = getOrientationSensorTypeUsed();
-                    WXLogUtils.d(ExpressionConstants.TAG,"[OrientationDetector] register sensor:"+type);
-                }
+                String type = getOrientationSensorTypeUsed();
+                LogProxy.d("[OrientationDetector] register sensor:"+type);
                 return true;
             }
         }
@@ -184,9 +176,7 @@ class OrientationDetector implements SensorEventListener {
      * @return True on success.
      */
     public boolean start(int rateInMicroseconds) {
-        if(WXEnvironment.isApkDebugable()) {
-            WXLogUtils.d(ExpressionConstants.TAG,"[OrientationDetector] sensor started");
-        }
+        LogProxy.d("[OrientationDetector] sensor started");
         boolean success = registerOrientationSensorsWithFallback(rateInMicroseconds);
         if (success) {
             setEventTypeActive(true);
@@ -199,9 +189,7 @@ class OrientationDetector implements SensorEventListener {
      * if they are still in use by a different event type.
      */
     void stop() {
-        if(WXEnvironment.isApkDebugable()) {
-            WXLogUtils.d(ExpressionConstants.TAG,"[OrientationDetector] sensor stopped");
-        }
+        LogProxy.d("[OrientationDetector] sensor stopped");
         Set<Integer> sensorsToDeactivate = new HashSet<>(mActiveSensors);
         unregisterSensors(sensorsToDeactivate);
         setEventTypeActive(false);
@@ -248,7 +236,7 @@ class OrientationDetector implements SensorEventListener {
                 break;
             default:
                 // Unexpected
-                WXLogUtils.e(ExpressionConstants.TAG, "unexpected sensor type:" + type);
+                LogProxy.e("unexpected sensor type:" + type);
         }
 
     }
@@ -458,7 +446,7 @@ class OrientationDetector implements SensorEventListener {
                 }
             } catch (Throwable e) {
                 //ignore
-                WXLogUtils.e(TAG,"[OrientationDetector] "+ e.getMessage());
+                LogProxy.e("[OrientationDetector] ", e);
             }
         }
     }

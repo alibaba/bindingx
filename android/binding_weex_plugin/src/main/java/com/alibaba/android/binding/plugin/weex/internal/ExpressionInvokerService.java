@@ -9,18 +9,17 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.android.binding.plugin.weex.LogProxy;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXScroller;
 import com.taobao.weex.ui.component.WXText;
 import com.taobao.weex.ui.view.WXTextView;
-import com.taobao.weex.utils.WXLogUtils;
 import com.taobao.weex.utils.WXUtils;
 import com.taobao.weex.utils.WXViewUtils;
 
@@ -35,7 +34,6 @@ import java.util.Map;
  */
 
 final class ExpressionInvokerService {
-    private static final String TAG = "ExpressionInvoker";
     private static final Map<String,IExpressionInvoker> sExpressionInvokerMap;
     private static final NOpInvoker EMPTY_INVOKER = new NOpInvoker();
 
@@ -73,7 +71,7 @@ final class ExpressionInvokerService {
     static IExpressionInvoker findInvoker(@NonNull String prop) {
         IExpressionInvoker invoker = sExpressionInvokerMap.get(prop);
         if(invoker == null) {
-            WXLogUtils.e(TAG,"unknown property [" + prop + "]");
+            LogProxy.e("unknown property [" + prop + "]");
             return EMPTY_INVOKER;
         }
         return invoker;
@@ -556,9 +554,7 @@ final class ExpressionInvokerService {
     @Nullable
     private static View findScrollTarget(@NonNull WXComponent component) {
         if(!(component instanceof WXScroller)) {
-            if(WXEnvironment.isApkDebugable()) {
-                Log.e(TAG, "scroll offset only support on Scroller Component");
-            }
+            LogProxy.e("scroll offset only support on Scroller Component");
             return null;
         }
         WXScroller scroller = (WXScroller) component;

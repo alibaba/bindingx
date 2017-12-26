@@ -10,9 +10,7 @@ import com.alibaba.android.binding.plugin.weex.internal.ExpressionScrollHandler;
 import com.alibaba.android.binding.plugin.weex.internal.ExpressionTimingHandler;
 import com.alibaba.android.binding.plugin.weex.internal.ExpressionTouchHandler;
 import com.alibaba.android.binding.plugin.weex.internal.Utils;
-import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
-import com.taobao.weex.utils.WXLogUtils;
 
 import org.json.JSONObject;
 
@@ -28,9 +26,6 @@ import java.util.UUID;
  */
 
 public class ExpressionBindingCore{
-
-    private static final String TAG = ExpressionConstants.TAG;
-
     private Map<String/*token*/, Map<String/*event type*/,IEventHandler>> mBindingCouples;
     private final Map<String, ObjectCreator<IEventHandler,WXSDKInstance>> mInternalEventHandlerCreatorMap =
             new HashMap<>(8);
@@ -76,7 +71,7 @@ public class ExpressionBindingCore{
             try {
                 configMap = Utils.toMap(new JSONObject(config));
             }catch (Exception e) {
-                WXLogUtils.e(TAG,"parse external config failed.\n"+e.getMessage());
+                LogProxy.e("parse external config failed.\n", e);
             }
         }
 
@@ -100,32 +95,32 @@ public class ExpressionBindingCore{
 
 
     public void doUnbind(@Nullable String token, @Nullable String eventType) {
-        WXLogUtils.d(TAG, "disable binding [" + token + "," + eventType + "]");
+        LogProxy.d("disable binding [" + token + "," + eventType + "]");
         if (TextUtils.isEmpty(token) || TextUtils.isEmpty(eventType)) {
-            WXLogUtils.d(TAG, "disable binding failed(0x1) [" + token + "," + eventType + "]");
+            LogProxy.d("disable binding failed(0x1) [" + token + "," + eventType + "]");
             return;
         }
         if (mBindingCouples == null || mBindingCouples.isEmpty()) {
-            WXLogUtils.d(TAG, "disable binding failed(0x2) [" + token + "," + eventType + "]");
+            LogProxy.d("disable binding failed(0x2) [" + token + "," + eventType + "]");
             return;
         }
 
         Map<String/*eventType*/,IEventHandler> handlerMap = mBindingCouples.get(token);
         if(handlerMap == null || handlerMap.isEmpty()) {
-            WXLogUtils.d(TAG, "disable binding failed(0x3) [" + token + "," + eventType + "]");
+            LogProxy.d("disable binding failed(0x3) [" + token + "," + eventType + "]");
             return;
         }
         IEventHandler handler = handlerMap.get(eventType);
         if (handler == null) {
-            WXLogUtils.d(TAG, "disable binding failed(0x4) [" + token + "," + eventType + "]");
+            LogProxy.d("disable binding failed(0x4) [" + token + "," + eventType + "]");
             return;
         }
 
         if(handler.onDisable(token,eventType)) {
             mBindingCouples.remove(token);
-            WXLogUtils.d(TAG, "disable binding success[" + token + "," + eventType + "]");
+            LogProxy.d("disable binding success[" + token + "," + eventType + "]");
         } else {
-            WXLogUtils.d(TAG, "disabled failed(0x4) [" + token + "," + eventType + "]");
+            LogProxy.d("disabled failed(0x4) [" + token + "," + eventType + "]");
         }
     }
 
@@ -144,19 +139,19 @@ public class ExpressionBindingCore{
                 mBindingCouples.clear();
                 mBindingCouples = null;
             }catch (Exception e) {
-                WXLogUtils.e(TAG, e.getMessage());
+                LogProxy.e("release failed",e);
             }
         }
     }
 
     public String doPrepare(@Nullable String anchor, @Nullable String anchorInstanceId, @Nullable String eventType, @NonNull WXSDKInstance instance){
         if(TextUtils.isEmpty(eventType)) {
-            WXLogUtils.e(TAG,"[doPrepare] failed. can not found eventType");
+            LogProxy.e("[doPrepare] failed. can not found eventType");
             return null;
         }
 
         if (instance.getContext() == null) {
-            WXLogUtils.e(TAG, "[doPrepare] failed. context or wxInstance is null");
+            LogProxy.e("[doPrepare] failed. context or wxInstance is null");
             return null;
         }
 
@@ -173,13 +168,9 @@ public class ExpressionBindingCore{
         IEventHandler targetHandler;
         if(handlerMap != null && (targetHandler = handlerMap.get(eventType)) != null) {/*处理器存在*/
             //通知handler
-            if(WXEnvironment.isApkDebugable()) {
-                WXLogUtils.d(TAG, "you have already enabled binding,[token:" + token + ",type:" + eventType+"]");
-            }
+            LogProxy.d("you have already enabled binding,[token:" + token + ",type:" + eventType+"]");
             targetHandler.onStart(token,eventType);
-            if(WXEnvironment.isApkDebugable()) {
-                WXLogUtils.d(TAG, "enableBinding success.[token:" + token + ",type:" + eventType + "]");
-            }
+            LogProxy.d("enableBinding success.[token:" + token + ",type:" + eventType + "]");
         } else {/*不存在*/
             //集合未创建 则创建之,并插入
             if(handlerMap == null) {
@@ -196,16 +187,13 @@ public class ExpressionBindingCore{
                     targetHandler.onStart(token,eventType);
                     //添加到handlerMap
                     handlerMap.put(eventType, targetHandler);
-
-                    if(WXEnvironment.isApkDebugable()) {
-                        WXLogUtils.d(TAG, "enableBinding success.[token:" + token + ",type:" + eventType + "]");
-                    }
+                    LogProxy.d("enableBinding success.[token:" + token + ",type:" + eventType + "]");
                 } else {
-                    WXLogUtils.e(TAG,"expression enabled failed. [token:"+token+",type:"+eventType+"]");
+                    LogProxy.e("expression enabled failed. [token:"+token+",type:"+eventType+"]");
                     return null;
                 }
             } else {
-                WXLogUtils.e(TAG,"unknown eventType: " + eventType);
+                LogProxy.e("unknown eventType: " + eventType);
                 return null;
             }
 
@@ -230,7 +218,7 @@ public class ExpressionBindingCore{
                   @Nullable List<Map<String, Object>> expressionArgs, @Nullable JavaScriptCallback callback, @NonNull WXSDKInstance instance) {
 
         if (TextUtils.isEmpty(eventType) || expressionArgs == null) {
-            WXLogUtils.e(TAG, "doBind failed,illegal argument.[" + eventType + "," + expressionArgs + "]");
+            LogProxy.e( "doBind failed,illegal argument.[" + eventType + "," + expressionArgs + "]");
             return null;
         }
 
@@ -242,9 +230,7 @@ public class ExpressionBindingCore{
         }
 
         if(handler == null) {
-            if(WXEnvironment.isApkDebugable()) {
-                WXLogUtils.d(TAG, "binding not enabled,try auto enable it.[sourceRef:"+anchor+",eventType:"+eventType+"]");
-            }
+            LogProxy.d("binding not enabled,try auto enable it.[sourceRef:"+anchor+",eventType:"+eventType+"]");
             token = doPrepare(anchor,anchorInstanceId, eventType,instance);
             if(!TextUtils.isEmpty(token) && mBindingCouples != null && (handlerMap=mBindingCouples.get(token)) != null) {
                 handler = handlerMap.get(eventType);
@@ -253,9 +239,9 @@ public class ExpressionBindingCore{
 
         if(handler != null) {
             handler.onBindExpression(eventType, globalConfig, exitExpressionPair, expressionArgs, callback);
-            WXLogUtils.d(TAG, "createBinding success.[exitExp:" + exitExpressionPair + ",args:" + expressionArgs + "]");
+            LogProxy.d("createBinding success.[exitExp:" + exitExpressionPair + ",args:" + expressionArgs + "]");
         } else {
-            WXLogUtils.e(TAG, "internal error.binding failed for ref:" + anchor + ",type:" + eventType);
+            LogProxy.e("internal error.binding failed for ref:" + anchor + ",type:" + eventType);
         }
 
         return token;
@@ -271,12 +257,12 @@ public class ExpressionBindingCore{
                     try {
                         h.onActivityPause();
                     }catch (Exception e) {
-                        WXLogUtils.e(TAG,e.getMessage());
+                        LogProxy.e("execute activity pause failed.", e);
                     }
                 }
             }
         }catch (Exception e) {
-            WXLogUtils.e(TAG, e.getMessage());
+            LogProxy.e("activity pause failed", e);
         }
     }
 
@@ -290,12 +276,12 @@ public class ExpressionBindingCore{
                     try {
                         h.onActivityResume();
                     }catch (Exception e) {
-                        WXLogUtils.e(TAG,e.getMessage());
+                        LogProxy.e("execute activity pause failed.",e);
                     }
                 }
             }
         }catch (Exception e) {
-            WXLogUtils.e(TAG, e.getMessage());
+            LogProxy.e("activity pause failed", e);
         }
     }
 

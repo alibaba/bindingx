@@ -3,16 +3,14 @@ package com.alibaba.android.binding.plugin.weex.internal;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.alibaba.android.binding.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
 import com.alibaba.android.binding.plugin.weex.IEventHandler;
-import com.taobao.weex.WXEnvironment;
+import com.alibaba.android.binding.plugin.weex.LogProxy;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.ui.component.WXComponent;
-import com.taobao.weex.utils.WXLogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,8 +29,6 @@ import java.util.Map;
  */
 
 abstract class AbstractEventHandler implements IEventHandler {
-
-    protected static final String TAG = ExpressionConstants.TAG;
 
     volatile Map<String/*targetRef*/, List<ExpressionHolder>> mExpressionHoldersMap;
     /*package*/ ExpressionBindingCore.JavaScriptCallback mCallback;
@@ -89,12 +85,12 @@ abstract class AbstractEventHandler implements IEventHandler {
                 try {
                     configMap = Utils.toMap(new JSONObject(config));
                 }catch (Exception e) {
-                    WXLogUtils.e(TAG,"parse config failed.\n"+e.getMessage());
+                    LogProxy.e("parse config failed", e);
                 }
             }
 
             if (TextUtils.isEmpty(targetRef) || TextUtils.isEmpty(property) || expressionPair == null) {
-                WXLogUtils.e(TAG, "skip illegal binding args[" + targetRef + "," + property + "," + expressionPair + "]");
+                LogProxy.e("skip illegal binding args[" + targetRef + "," + property + "," + expressionPair + "]");
                 continue;
             }
             ExpressionHolder holder = new ExpressionHolder(targetRef,targetInstanceId, expressionPair, property, eventType, configMap);
@@ -125,9 +121,7 @@ abstract class AbstractEventHandler implements IEventHandler {
             try {
                 exit = (boolean) expression.execute(scope);
             } catch (Exception e) {
-                if(WXEnvironment.isApkDebugable()) {
-                    Log.e(TAG, "evaluateExitExpression failed. "+e.getMessage());
-                }
+                LogProxy.e("evaluateExitExpression failed. ", e);
             }
         }
         if (exit) {
@@ -136,14 +130,9 @@ abstract class AbstractEventHandler implements IEventHandler {
             try {
                 onExit(scope);
             }catch (Exception e) {
-                if(WXEnvironment.isApkDebugable()) {
-                    Log.e(TAG,"execute exit expression failed: "+e.getMessage());
-                }
+                LogProxy.e("execute exit expression failed: ", e);
             }
-
-            if(WXEnvironment.isApkDebugable()) {
-                Log.d(TAG, "exit = true,consume finished");
-            }
+            LogProxy.d("exit = true,consume finished");
         }
 
         return exit;
@@ -163,35 +152,31 @@ abstract class AbstractEventHandler implements IEventHandler {
                            @NonNull String currentState) throws IllegalArgumentException, JSONException {
         //https://developer.mozilla.org/zh-CN/docs/Web/CSS/transform
         if (args == null) {
-            WXLogUtils.e(TAG, "expression args is null");
+            LogProxy.e("expression args is null");
             return;
         }
         if (args.isEmpty()) {
-            WXLogUtils.e(TAG, "no expression need consumed");
+            LogProxy.e("no expression need consumed");
             return;
         }
 
         //执行表达式
-        if(WXEnvironment.isApkDebugable()) {
-            Log.d(TAG, String.format(Locale.CHINA, "consume expression with %d tasks. event type is %s",args.size(),currentState));
-        }
+        LogProxy.d(String.format(Locale.CHINA, "consume expression with %d tasks. event type is %s",args.size(),currentState));
         for (List<ExpressionHolder> holderList : args.values()) {
             for (ExpressionHolder holder : holderList) {
                 if (!currentState.equals(holder.eventType)) {
-                    if (WXEnvironment.isApkDebugable()) {
-                        WXLogUtils.d(TAG, "skip expression with wrong event type.[expected:" + currentState + ",found:" + holder.eventType + "]");
-                    }
+                    LogProxy.d("skip expression with wrong event type.[expected:" + currentState + ",found:" + holder.eventType + "]");
                     continue;
                 }
                 String instanceId = TextUtils.isEmpty(holder.targetInstanceId)? mInstanceId : holder.targetInstanceId;
                 WXComponent targetComponent = WXModuleUtils.findComponentByRef(instanceId, holder.targetRef);
                 if (targetComponent == null) {
-                    WXLogUtils.e(TAG, "failed to execute expression,target component not found.[ref:" + holder.targetRef + "]");
+                    LogProxy.e("failed to execute expression,target component not found.[ref:" + holder.targetRef + "]");
                     continue;
                 }
                 View targetView = targetComponent.getHostView();
                 if (targetView == null) {
-                    WXLogUtils.e(TAG, "failed to execute expression,target view not found.[ref:" + holder.targetRef + "]");
+                    LogProxy.e("failed to execute expression,target view not found.[ref:" + holder.targetRef + "]");
                     continue;
                 }
 
@@ -207,7 +192,7 @@ abstract class AbstractEventHandler implements IEventHandler {
 
                 Object obj = expression.execute(scope);
                 if (obj == null) {
-                    WXLogUtils.e(TAG, "failed to execute expression,expression result is null");
+                    LogProxy.e("failed to execute expression,expression result is null");
                     continue;
                 }
                 //apply transform to target view.
@@ -221,7 +206,7 @@ abstract class AbstractEventHandler implements IEventHandler {
     protected abstract void onExit(@NonNull Map<String, Object> scope);
 
     void clearExpressions() {
-        WXLogUtils.d(TAG, "all expression are cleared");
+        LogProxy.d("all expression are cleared");
         if (mExpressionHoldersMap != null) {
             mExpressionHoldersMap.clear();
             mExpressionHoldersMap = null;

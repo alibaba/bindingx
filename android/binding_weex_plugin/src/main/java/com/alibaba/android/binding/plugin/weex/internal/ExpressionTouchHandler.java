@@ -11,9 +11,9 @@ import android.view.View;
 import com.alibaba.android.binding.plugin.weex.EventType;
 import com.alibaba.android.binding.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
+import com.alibaba.android.binding.plugin.weex.LogProxy;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
-import com.taobao.weex.utils.WXLogUtils;
 import com.taobao.weex.utils.WXViewUtils;
 
 import java.util.HashMap;
@@ -65,51 +65,35 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
                     mDownX = event.getRawX();
                     mDownY = event.getRawY();
                     fireEventByState(ExpressionConstants.STATE_START, 0, 0);
-//                    if(WXEnvironment.isApkDebugable()) {
-//                        WXLogUtils.d(TAG, "ACTION_DOWN | (downX:"+mDownX+",downY:"+mDownY+")");
-//                    }
                     break;
                 case MotionEvent.ACTION_MOVE:
                     if (mDownX == 0 && mDownY == 0) {
                         mDownX = event.getRawX();
                         mDownY = event.getRawY();
                         fireEventByState(ExpressionConstants.STATE_START, 0, 0);
-//                        if (WXEnvironment.isApkDebugable()) {
-//                            WXLogUtils.d(TAG, "ACTION_MOVE | (downX:"+mDownX+",downY:"+mDownY+")");
-//                        }
                         break;
                     }
                     mDx = event.getRawX() - mDownX;
                     mDy = event.getRawY() - mDownY;
-//                    if(WXEnvironment.isApkDebugable()) {
-//                        WXLogUtils.d(TAG, "ACTION_MOVE | (dx:" + mDx + ",dy:" + mDy+")");
-//                    }
                     break;
                 case MotionEvent.ACTION_UP:
                     mDownX = 0;
                     mDownY = 0;
                     clearExpressions();
                     fireEventByState(ExpressionConstants.STATE_END, mDx, mDy);
-
                     //bugFixed:we must reset dx & dy every time.
                     mDx = 0;
                     mDy = 0;
-//                    if(WXEnvironment.isApkDebugable()) {
-//                        WXLogUtils.d(TAG, "ACTION_UP");
-//                    }
                     break;
                 case MotionEvent.ACTION_CANCEL:
                     mDownX = 0;
                     mDownY = 0;
                     clearExpressions();
                     fireEventByState(ExpressionConstants.STATE_CANCEL, mDx, mDy);
-//                    if(WXEnvironment.isApkDebugable()) {
-//                        WXLogUtils.d(TAG, "ACTION_CANCEL");
-//                    }
                     break;
             }
         } catch (Exception e) {
-            WXLogUtils.e(TAG, "runtime error\n" + e.getMessage());
+            LogProxy.e("runtime error ", e);
         }
         return mGestureDetector.onTouchEvent(event);
     }
@@ -119,7 +103,7 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 
         if (!isPanGestureAvailable) {
-            WXLogUtils.d(TAG, "pan gesture is not enabled");
+            LogProxy.d("pan gesture is not enabled");
             return false;
         }
 
@@ -149,7 +133,7 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
                 consumeExpression(mExpressionHoldersMap, mScope, EventType.TYPE_PAN);
             }
         } catch (Exception e) {
-            WXLogUtils.e(TAG, "runtime error\n" + e.getMessage());
+            LogProxy.e("runtime error", e);
         }
 
         return false;
@@ -186,13 +170,11 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
         String instanceId = TextUtils.isEmpty(mAnchorInstanceId) ? mInstanceId : mAnchorInstanceId;
         View sourceView = WXModuleUtils.findViewByRef(instanceId, sourceRef);
         if (sourceView == null) {
-            WXLogUtils.e(TAG, "[ExpressionTouchHandler] onCreate failed. sourceView not found:" + sourceRef);
+            LogProxy.e("[ExpressionTouchHandler] onCreate failed. sourceView not found:" + sourceRef);
             return false;
         }
         sourceView.setOnTouchListener(this);
-        if (WXEnvironment.isApkDebugable()) {
-            WXLogUtils.d(TAG, "[ExpressionTouchHandler] onCreate success. {source:" + sourceRef + ",type:" + eventType + "}");
-        }
+        LogProxy.d("[ExpressionTouchHandler] onCreate success. {source:" + sourceRef + ",type:" + eventType + "}");
         return true;
     }
 
@@ -232,7 +214,7 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
             if (hostView != null) {
                 hostView.setOnTouchListener(null);
             }
-            WXLogUtils.d(TAG, "remove touch listener success.[" + sourceRef + "," + eventType + "]");
+            LogProxy.d("remove touch listener success.[" + sourceRef + "," + eventType + "]");
             return true;
         } else {
             return false;
@@ -268,9 +250,7 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
             param.put("deltaX", x);
             param.put("deltaY", y);
             mCallback.callback(param);
-            if (WXEnvironment.isApkDebugable()) {
-                WXLogUtils.d(TAG, ">>>>>>>>>>>fire event:(" + state + "," + x + "," + y + ")");
-            }
+            LogProxy.d(">>>>>>>>>>>fire event:(" + state + "," + x + "," + y + ")");
         }
     }
 

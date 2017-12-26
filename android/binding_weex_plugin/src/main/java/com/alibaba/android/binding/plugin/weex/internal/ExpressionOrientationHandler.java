@@ -5,14 +5,12 @@ import android.hardware.SensorManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.alibaba.android.binding.plugin.weex.EventType;
 import com.alibaba.android.binding.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.binding.plugin.weex.ExpressionConstants;
-import com.taobao.weex.WXEnvironment;
+import com.alibaba.android.binding.plugin.weex.LogProxy;
 import com.taobao.weex.WXSDKInstance;
-import com.taobao.weex.utils.WXLogUtils;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -95,9 +93,7 @@ public class ExpressionOrientationHandler extends AbstractEventHandler implement
         }
 
         this.mSceneType = sceneType;
-        if(WXEnvironment.isApkDebugable()) {
-            Log.d(ExpressionConstants.TAG,"[ExpressionOrientationHandler] sceneType is " + sceneType);
-        }
+        LogProxy.d("[ExpressionOrientationHandler] sceneType is " + sceneType);
 
         if("2d".equals(sceneType)) {
             mEvaluatorX = new OrientationEvaluator(null,90.0d,null);
@@ -173,11 +169,6 @@ public class ExpressionOrientationHandler extends AbstractEventHandler implement
         mLastGamma = gamma;
 
         try {
-//            if(WXEnvironment.isApkDebugable()) {
-//                Log.d(ExpressionConstants.TAG, String.format(Locale.CHINA,"[ExpressionOrientationHandler] raw orientation(alpha:%f,beta:%f,gamma:%f) | normalized orientation(x:%f,y:%f,z:%f)"
-//                        ,alpha,beta,gamma,x,y,z));
-//            }
-
             //消费所有的表达式
             JSMath.applyOrientationValuesToScope(mScope,alpha,beta,gamma,mStartAlpha,mStartBeta,mStartGamma, x,y,z);
             if(!evaluateExitExpression(mExitExpressionPair,mScope)) {
@@ -185,7 +176,7 @@ public class ExpressionOrientationHandler extends AbstractEventHandler implement
             }
 
         } catch (Exception e) {
-            WXLogUtils.e(TAG, "runtime error\n" + e.getMessage());
+            LogProxy.e("runtime error", e);
         }
     }
 
@@ -290,9 +281,7 @@ public class ExpressionOrientationHandler extends AbstractEventHandler implement
             param.put("gamma", gamma);
 
             mCallback.callback(param);
-            if (WXEnvironment.isApkDebugable()) {
-                WXLogUtils.d(TAG, ">>>>>>>>>>>fire event:(" + state + "," + alpha + "," + beta + "," + gamma + ")");
-            }
+            LogProxy.d(">>>>>>>>>>>fire event:(" + state + "," + alpha + "," + beta + "," + gamma + ")");
         }
     }
 
