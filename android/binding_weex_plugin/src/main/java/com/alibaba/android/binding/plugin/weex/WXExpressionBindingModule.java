@@ -17,11 +17,10 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModule implements IExpressionBinding {
+public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModule{
 
     private ExpressionBindingCore mExpressionBindingCore;
 
-    @Override
     @JSMethod
     @Deprecated
     public void enableBinding(@Nullable String sourceRef, @Nullable String eventType) {
@@ -32,7 +31,6 @@ public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModu
         //空实现。 此方法仅为了与iOS兼容
     }
 
-    @Override
     @JSMethod
     @Deprecated
     public void createBinding(@Nullable String sourceRef, @Nullable String eventType, @Nullable String exitExpression,
@@ -45,7 +43,6 @@ public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModu
         mExpressionBindingCore.doBind(sourceRef,null, eventType,null,exitExpressionPair,expressionArgs,callback,mWXSDKInstance);
     }
 
-    @Override
     @JSMethod
     @Deprecated
     public void disableBinding(@Nullable String sourceRef, @Nullable String eventType) {
@@ -54,7 +51,6 @@ public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModu
         }
     }
 
-    @Override
     @JSMethod
     @Deprecated
     public void disableAll() {

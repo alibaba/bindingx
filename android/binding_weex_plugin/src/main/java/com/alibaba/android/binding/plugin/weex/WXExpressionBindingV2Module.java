@@ -35,11 +35,10 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule implements IExpressionBindingV2{
+public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule{
 
     private ExpressionBindingCore mExpressionBindingCore;
 
-    @Override
     @JSMethod(uiThread = false)
     public void prepare(Map<String, Object> params) {
         if(mExpressionBindingCore == null) {
@@ -49,7 +48,6 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule i
         //空实现。 此方法仅为了与iOS兼容
     }
 
-    @Override
     @JSMethod(uiThread = false)
     public Map<String, String> bind(Map<String, Object> params, JSCallback callback) {
         if(mExpressionBindingCore == null) {
@@ -62,7 +60,6 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule i
         return result;
     }
 
-    @Override
     @JSMethod(uiThread = false)
     public void unbind(Map<String, Object> params) {
         if(mExpressionBindingCore != null) {
@@ -70,7 +67,6 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule i
         }
     }
 
-    @Override
     @JSMethod(uiThread = false)
     public void unbindAll() {
         if(mExpressionBindingCore != null) {
@@ -78,13 +74,11 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule i
         }
     }
 
-    @Override
     @JSMethod(uiThread = false)
     public List<String> supportFeatures() {
         return Arrays.asList("pan","orientation","timing","scroll");
     }
 
-    @Override
     @JSMethod(uiThread = false)
     public Map<String, Object> getComputedStyle(@Nullable String ref) {
         WXComponent component = WXModuleUtils.findComponentByRef(mWXSDKInstance.getInstanceId(), ref);
