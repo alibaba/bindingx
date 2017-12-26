@@ -15,6 +15,7 @@ import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.utils.WXLogUtils;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,7 +87,7 @@ abstract class AbstractEventHandler implements IEventHandler {
             Map<String,Object> configMap = null;
             if(!TextUtils.isEmpty(config)) {
                 try {
-                    configMap = JSON.parseObject(config);
+                    configMap = Utils.toMap(new JSONObject(config));
                 }catch (Exception e) {
                     WXLogUtils.e(TAG,"parse config failed.\n"+e.getMessage());
                 }

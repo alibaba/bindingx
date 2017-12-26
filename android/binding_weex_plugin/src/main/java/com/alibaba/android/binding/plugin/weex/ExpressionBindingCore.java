@@ -4,11 +4,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSON;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.bridge.JSCallback;
 import com.taobao.weex.utils.WXLogUtils;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +40,7 @@ class ExpressionBindingCore{
         Map<String,Object> configMap = null;
         if(!TextUtils.isEmpty(config)) {
             try {
-                configMap = JSON.parseObject(config);
+                configMap = Utils.toMap(new JSONObject(config));
             }catch (Exception e) {
                 WXLogUtils.e(TAG,"parse external config failed.\n"+e.getMessage());
             }
