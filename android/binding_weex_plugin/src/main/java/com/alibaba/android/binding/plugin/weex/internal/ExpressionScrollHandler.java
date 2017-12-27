@@ -237,6 +237,7 @@ public class ExpressionScrollHandler extends AbstractEventHandler{
         private int mLastDy=0;
         @Override
         public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+            verticalOffset = -verticalOffset;
             final int dy = verticalOffset - mContentOffsetY;
             mContentOffsetY = verticalOffset;
             if(dy == 0) {
@@ -251,11 +252,9 @@ public class ExpressionScrollHandler extends AbstractEventHandler{
 
             final int tdy = mContentOffsetY - mTy;
             mLastDy = dy;
-            handleScrollEvent(0,mContentOffsetY,0,dy,0,tdy);
             if(isTurning) {
                 fireEventByState(ExpressionConstants.STATE_TURNING,0,mContentOffsetY,
                         0,dy,0,tdy);
-                return;
             }
 
             WXBridgeManager.getInstance().post(new Runnable() {
@@ -301,13 +300,10 @@ public class ExpressionScrollHandler extends AbstractEventHandler{
             mLastDx = dx;
             mLastDy = dy;
 
-            handleScrollEvent(mContentOffsetX,mContentOffsetY,dx,dy,tdx,tdy);
-
             if(isTurning) {
                 // 通知
                 fireEventByState(ExpressionConstants.STATE_TURNING,mContentOffsetX,mContentOffsetY,
                         dx,dy,tdx,tdy);
-                return;
             }
 
             WXBridgeManager.getInstance().post(new Runnable() {
@@ -387,7 +383,6 @@ public class ExpressionScrollHandler extends AbstractEventHandler{
                 // 通知
                 fireEventByState(ExpressionConstants.STATE_TURNING,mContentOffsetX,mContentOffsetY,
                         dx,dy,tdx,tdy);
-                return;
             }
 
             WXBridgeManager.getInstance().post(new Runnable() {

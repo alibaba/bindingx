@@ -243,6 +243,7 @@ class JSMath {
             int fromColor = parseColor((String) arguments.get(0));
             int toColor = parseColor((String) arguments.get(1));
             double fraction = (double) arguments.get(2);
+            fraction = Math.min(1.0d,Math.max(0.0d,fraction));
             return sArgbEvaluator.evaluate((float) fraction,fromColor,toColor);
         }
     };
