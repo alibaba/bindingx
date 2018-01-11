@@ -93,6 +93,7 @@
 
 - (void)render
 {
+    
     [self renderWeex:[_url absoluteString]];
 }
 

@@ -3,6 +3,10 @@ platform :ios, '8.0'
 #inhibit_all_warnings!
 
 target 'BindingDemo' do
-  pod 'Binding', :path=>'../../'
+  pod 'Binding', :path=>'../binding-weex.podspec'
+
+#  pod 'React', :path=>'/Users/duixiang/alibaba/rn/rntest/node_modules/react-native/React.podspec'
+
+#  pod 'Binding', :path => '../binding-react-native.podspec'
 
 end
