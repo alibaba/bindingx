@@ -35,10 +35,10 @@ RCT_EXPORT_MODULE(Binding)
 
 @synthesize bridge = _bridge;
 
-//- (dispatch_queue_t)methodQueue
-//{
-//    return RCTGetUIManagerQueue();
-//}
+- (dispatch_queue_t)methodQueue
+{
+    return RCTGetUIManagerQueue();
+}
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -58,38 +58,42 @@ RCT_EXPORT_METHOD(prepare:(NSDictionary *)dictionary)
     NSString *anchor = dictionary[@"anchor"];
     NSString *eventType = dictionary[@"eventType"];
     
-    NSNumber* tag = @([anchor integerValue]);
-    [EBUtility execute:@{
-                         @"backgroundColor" : @(0xFF0000FF),
-                         @"height" : @(200),
-                         } to:tag];
+//    NSNumber* tag = @([anchor integerValue]);
+//    [EBUtility execute:@{
+//                         @"backgroundColor" : @(0xFF0000FF),
+//                         @"top" : @(200),
+//                         @"width" : @(300),
+////                         @"transform" : @[@{
+////                                 @"translateY" : @(100),
+////                                 }],
+//                         } to:tag];
     
-//    WXExpressionType exprType = [WXExpressionHandler stringToExprType:eventType];
-//    if (exprType == WXExpressionTypeUndefined) {
-//        NSLog(@"prepare binding eventType error");
-//        return;
-//    }
-//
-//    __weak typeof(self) welf = self;
-//    RCTExecuteOnUIManagerQueue(^{
-//        // find sourceRef & targetRef
-//        UIView* sourceComponent = [welf.bridge.uiManager viewForReactTag:@([anchor integerValue])];
-//        if (!sourceComponent && (exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
-//            NSLog(@"prepare binding can't find component");
-//            return;
-//        }
-//
-//        pthread_mutex_lock(&mutex);
-//
-//        WXExpressionHandler *handler = [welf handlerForToken:anchor expressionType:exprType];
-//        if (!handler) {
-//            // create handler for key
-//            handler = [WXExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
-//            [welf putHandler:handler forToken:anchor expressionType:exprType];
-//        }
-//
-//        pthread_mutex_unlock(&mutex);
-//    });
+    WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
+    if (exprType == WXExpressionTypeUndefined) {
+        NSLog(@"prepare binding eventType error");
+        return;
+    }
+
+    __weak typeof(self) welf = self;
+    RCTExecuteOnUIManagerQueue(^{
+        // find sourceRef & targetRef
+        UIView* sourceComponent = [welf.bridge.uiManager viewForReactTag:@([anchor integerValue])];
+        if (!sourceComponent && (exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
+            NSLog(@"prepare binding can't find component");
+            return;
+        }
+
+        pthread_mutex_lock(&mutex);
+
+        EBExpressionHandler *handler = [welf handlerForToken:anchor expressionType:exprType];
+        if (!handler) {
+            // create handler for key
+            handler = [EBExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
+            [welf putHandler:handler forToken:anchor expressionType:exprType];
+        }
+
+        pthread_mutex_unlock(&mutex);
+    });
     
 }
 
@@ -132,31 +136,16 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *, bind:(NSDictionary *)diction
     }
     
     __weak typeof(self) welf = self;
-//    RCTExecuteOnUIManagerQueue(^{
-//
-//        // find sourceRef & targetRef
-//        WXComponent *sourceComponent = nil;
-//        NSString *instanceId = dictionary[@"instanceId"];
-//        if (instanceId) {
-//            WXSDKInstance *instance = [WXSDKManager instanceForID:instanceId];
-//            sourceComponent = [instance componentForRef:token];
-//        } else {
-//            sourceComponent = [weexInstance componentForRef:token];
-//        }
-//        if (!sourceComponent && (exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
-//            WX_LOG(WXLogFlagWarning, @"bind can't find source component");
-//            callback(@{@"state":@"error",@"msg":@"bind can't find source component"}, NO);
-//            return;
-//        }
-//
-//        NSMapTable<NSString *, id> *weakMap = [NSMapTable strongToWeakObjectsMapTable];
-//        NSMutableDictionary<NSString *, NSDictionary *> *expressionDic = [NSMutableDictionary dictionary];
-//        for (NSDictionary *targetDic in targetExpression) {
-//            NSString *targetRef = targetDic[@"element"];
-//            NSString *property = targetDic[@"property"];
-//            NSString *expression = targetDic[@"expression"];
-//            NSString *instanceId = targetDic[@"instanceId"];
-//
+    RCTExecuteOnUIManagerQueue(^{
+
+        NSMapTable<NSString *, id> *weakMap = [NSMapTable strongToWeakObjectsMapTable];
+        NSMutableDictionary<NSString *, NSDictionary *> *expressionDic = [NSMutableDictionary dictionary];
+        for (NSDictionary *targetDic in targetExpression) {
+            NSString *targetRef = targetDic[@"element"];
+            NSString *property = targetDic[@"property"];
+            NSString *expression = targetDic[@"expression"];
+            NSString *instanceId = targetDic[@"instanceId"];
+            
 //            WXComponent *targetComponent = nil;
 //            if (instanceId) {
 //                WXSDKInstance *instance = [WXSDKManager instanceForID:instanceId];
@@ -164,50 +153,52 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *, bind:(NSDictionary *)diction
 //            } else {
 //                targetComponent = [weexInstance componentForRef:targetRef];
 //            }
-//            if (targetComponent) {
-//
+            if (targetRef) {
+
+                // TOD 移除 animations
 //                if ([targetComponent isViewLoaded]) {
 //                    WXPerformBlockOnMainThread(^{
 //                        [targetComponent.view.layer removeAllAnimations];
 //                    });
 //                }
-//
-//                [weakMap setObject:targetComponent forKey:targetRef];
-//                NSMutableDictionary *propertyDic = [expressionDic[targetRef] mutableCopy];
-//                if (!propertyDic) {
-//                    propertyDic = [NSMutableDictionary dictionary];
-//                }
-//                NSMutableDictionary *expDict = [NSMutableDictionary dictionary];
-//                expDict[@"expression"] = expression;
-//                if( targetDic[@"config"] )
-//                {
-//                    expDict[@"config"] = targetDic[@"config"];
-//                }
-//                propertyDic[property] = expDict;
-//                expressionDic[targetRef] = propertyDic;
-//            }
-//        }
-//
-//        // find handler for key
-//        pthread_mutex_lock(&mutex);
-//
-//        WXExpressionHandler *handler = [welf handlerForToken:token expressionType:exprType];
-//        if (!handler) {
-//            // create handler for key
-//            handler = [WXExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
-//            [welf putHandler:handler forToken:token expressionType:exprType];
-//        }
-//
-//        [handler updateTargets:weakMap
-//                    expression:expressionDic
-//                       options:options
-//                exitExpression:exitExpression
-//                      callback:^(id  _Nonnull result, BOOL keepAlive) {
-//                          callback(result,keepAlive);
-//                      }];
-//
-//        pthread_mutex_unlock(&mutex);
-//    });
+
+                [weakMap setObject:targetRef forKey:targetRef];
+                NSMutableDictionary *propertyDic = [expressionDic[targetRef] mutableCopy];
+                if (!propertyDic) {
+                    propertyDic = [NSMutableDictionary dictionary];
+                }
+                NSMutableDictionary *expDict = [NSMutableDictionary dictionary];
+                expDict[@"expression"] = expression;
+                if( targetDic[@"config"] )
+                {
+                    expDict[@"config"] = targetDic[@"config"];
+                }
+                propertyDic[property] = expDict;
+                expressionDic[targetRef] = propertyDic;
+            }
+        }
+
+        // find handler for key
+        pthread_mutex_lock(&mutex);
+
+        EBExpressionHandler *handler = [welf handlerForToken:token expressionType:exprType];
+        if (!handler) {
+            // create handler for key
+            handler = [EBExpressionHandler handlerWithExpressionType:exprType source:token];
+            [welf putHandler:handler forToken:token expressionType:exprType];
+        }
+
+        [handler updateTargets:weakMap
+                    expression:expressionDic
+                       options:options
+                exitExpression:exitExpression
+                      callback:^(id  _Nonnull result, BOOL keepAlive) {
+                          // TODO 改为keepAlive
+                          callback(@[]);
+                      }];
+
+        pthread_mutex_unlock(&mutex);
+    });
     return  [NSDictionary dictionaryWithObject:token forKey:@"token"];
 }
 

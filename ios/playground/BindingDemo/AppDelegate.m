@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import <WeexSDK/WeexSDK.h>
 #import "WXViewController.h"
-#import <Binding/WXEBModule.h>
+//#import <Binding/WXEBModule.h>
 
 @interface AppDelegate ()
 
@@ -24,12 +24,17 @@
     [WXAppConfiguration setExternalUserAgent:@"ExternalUA"];
     [WXSDKEngine initSDKEnvironment];
     
-    [WXSDKEngine registerModule:@"binding" withClass:[WXEBModule class]];
+//    [WXSDKEngine registerModule:@"binding" withClass:[WXEBModule class]];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
 //    NSString* path = [NSString stringWithFormat:@"file://%@/bundlejs/index.js?wh_weex=true",[NSBundle mainBundle].bundlePath];
-    NSString* path = @"http://dotwe.org/raw/dist/a02b3b3d6e0983be733b3bb2f1e4140f.bundle.wx?_wx_tpl=http://dotwe.org/raw/dist/a02b3b3d6e0983be733b3bb2f1e4140f.bundle.wx";
+//    NSString* path = @"http://dotwe.org/raw/dist/a02b3b3d6e0983be733b3bb2f1e4140f.bundle.wx?_wx_tpl=http://dotwe.org/raw/dist/a02b3b3d6e0983be733b3bb2f1e4140f.bundle.wx";//timing
+    
+    NSString* path = @"http://dotwe.org/raw/dist/19229fdaff971b2e29682d4c3d13f29d.bundle.wx?_wx_tpl=http://dotwe.org/raw/dist/19229fdaff971b2e29682d4c3d13f29d.bundle.wx";//pan
+    
+//    NSString* path = @"http://rax.alibaba-inc.com/bundle/ce009739-b14d-4a06-b239-7977452c5232/bundle.js?wh_weex=true&wh_ttid=native&_wx_tpl=http://rax.alibaba-inc.com/bundle/ce009739-b14d-4a06-b239-7977452c5232/bundle.js";//scroller
+    
     WXViewController *controller = [[WXViewController alloc] initWithURL:[NSURL URLWithString:path]];
     WXRootViewController *rootController = [[WXRootViewController alloc] initWithRootViewController:controller];
     self.window.rootViewController = rootController;

@@ -32,36 +32,27 @@
 
 @implementation EBExpressionHandler
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (instancetype)initWithExpressionType:(WXExpressionType)exprType
                                 source:(id)source {
     if (self = [super init]) {
         self.source = source;
         self.exprType = exprType;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeExpressionBinding) name:@"WXExpressionBindingRemove" object:nil];
     }
     return self;
 }
 
-- (void)updateTargets:(NSMapTable<NSString *, id> *)targets
-           expression:(NSDictionary<NSString *, NSDictionary *> *)targetExpression
+- (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)targetExpression
          options:(NSDictionary *)options
        exitExpression:(NSString *)exitExpression
              callback:(KeepAliveCallback)callback {
-    self.targets = targets;
-    self.expressions = targetExpression;
+    self.targetExpression = targetExpression;
     self.exitExpression = exitExpression;
     self.callback = callback;
     self.options = options;
 }
 
 - (void)removeExpressionBinding {
-    self.targets = nil;
-    self.expressions = nil;
+    self.targetExpression = nil;
 }
 
 + (WXExpressionType)stringToExprType:(NSString *)typeStr {
@@ -103,6 +94,9 @@
         exitExpressionTransformed = (NSString *)((NSDictionary *)exitExpressionTransformed)[@"transformed"];
     }
     
+    if (!exitExpressionTransformed) {
+        return NO;
+    }
     NSDictionary *expressionTree  = [NSJSONSerialization JSONObjectWithData:[exitExpressionTransformed dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
     if (!expressionTree || expressionTree.count == 0) {
         return NO;
@@ -124,13 +118,8 @@
 
 - (BOOL)executeExpression:(NSDictionary *)scope {
     
-    for (NSString *targetRef in self.expressions) {
-        id target = [self.targets objectForKey:targetRef];
-        if (!target) {
-            continue;
-        }
-        
-        NSDictionary *epMap = self.expressions[targetRef];
+    for (id target in self.targetExpression) {
+        NSDictionary *epMap = [self.targetExpression objectForKey:target];
         EBExpressionProperty *model = [[EBExpressionProperty alloc] init];
         
         // gather property

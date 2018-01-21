@@ -47,16 +47,19 @@ __weak static RCTUIManager* _uiManager = nil;
 
 + (void)execute:(NSDictionary *)style to:(id)target
 {
-    RCTExecuteOnUIManagerQueue(^{
-        NSString* viewName = [_uiManager viewNameForReactTag:target];
-//            [_uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
-//                [_uiManager synchronouslyUpdateViewOnUIThread:target viewName:viewName props:style];
-//            }];
-        
-        RCTExecuteOnMainQueue(^{
-            [_uiManager synchronouslyUpdateViewOnUIThread:target viewName:viewName props:style];
-        });
-    });
+    NSString* viewName = [_uiManager viewNameForReactTag:target];
+    
+    SEL sel = NSSelectorFromString(@"updateView:viewName:props:");
+    IMP imp = [_uiManager methodForSelector:sel];
+    if (imp) {
+        void (*func)(id,SEL,id,id,id) = (void *)imp;
+        func(_uiManager,sel,target,viewName,style);
+    }
+}
+
++ (UIView *)viewByTarget:(id)target
+{
+    return [_uiManager viewForReactTag:target];
 }
 
 #pragma clang diagnostic pop

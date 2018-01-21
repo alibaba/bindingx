@@ -60,17 +60,14 @@
     return self;
 }
 
-- (void)updateTargets:(NSMapTable<NSString *,id> *)targets
-           expression:(NSDictionary<NSString *,NSDictionary *> *)targetExpression
+- (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)targetExpression
          options:(NSDictionary *)options
        exitExpression:(NSString *)exitExpression
              callback:(KeepAliveCallback)callback {
-    [super updateTargets:targets
-              expression:targetExpression
+    [super updateTargetExpression:targetExpression
             options:options
           exitExpression:exitExpression
                 callback:callback];
-    
     
     if (options != nil) {
         _sceneType = [options[@"sceneType"] lowercaseString];

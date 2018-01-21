@@ -17,6 +17,7 @@
 #import <Foundation/Foundation.h>
 
 typedef void (^KeepAliveCallback)(_Nonnull id result, BOOL keepAlive);
+typedef void (^EBGetPanGestureCallback)(BOOL isHorizontal, BOOL isVertical);
 
 extern void PerformBlockOnMainThread(void (^ _Nonnull block)(void));
 extern void PerformBlockOnBridgeThread(void (^ _Nonnull block)(void));
@@ -29,9 +30,11 @@ extern void PerformBlockOnBridgeThread(void (^ _Nonnull block)(void));
 
 + (void)execute:(NSDictionary *_Nullable)style to:(id _Nullable )target;
 
-+ (BOOL)hasHorizontalPan:(id _Nullable )component;
++ (UIPanGestureRecognizer *_Nullable)getPanGestureForComponent:(id _Nullable )source callback:(EBGetPanGestureCallback)callback;
 
-+ (BOOL)hasVerticalPan:(id _Nullable )component;
++ (void)addScrollDelegate:(id _Nullable )delegate source:(id _Nullable )source;
+
++ (void)removeScrollDelegate:(id _Nullable )delegate source:(id _Nullable )source;
 
 @end
 

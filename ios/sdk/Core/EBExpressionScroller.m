@@ -19,10 +19,10 @@
 #import "EBExpression.h"
 #import "EBExpressionProperty.h"
 #import "EBExpressionExecutor.h"
+#import "EBUtility.h"
 
 @interface EBExpressionScroller () <UIScrollViewDelegate>
 
-@property (nonatomic, weak) id scroller;
 @property (nonatomic, assign) CGPoint lastOffset;
 @property (nonatomic, assign) CGPoint lastDOffset;
 @property (nonatomic, assign) CGPoint turnOffset;//拐点
@@ -41,37 +41,12 @@
 }
 
 - (void)initScroller {
-    self.scroller = self.source;
-    SEL sel = NSSelectorFromString(@"addScrollDelegate:");
-    IMP imp = [self.scroller methodForSelector:sel];
-    if (imp) {
-        void (*func)(id) = (void *)imp;
-        func(self);
-    } else {
-        sel = NSSelectorFromString(@"addScrollListener:");
-        imp = [self.scroller methodForSelector:sel];
-        if (imp) {
-            void (*func)(id) = (void *)imp;
-            func(self);
-        }
-    }
+    [EBUtility addScrollDelegate:self source:self.source];
 }
 
 - (void)removeExpressionBinding {
-    [super removeExpressionBinding];
-    SEL sel = NSSelectorFromString(@"removeScrollDelegate:");
-    IMP imp = [self.scroller methodForSelector:sel];
-    if (imp) {
-        void (*func)(id) = (void *)imp;
-        func(self);
-    } else {
-        sel = NSSelectorFromString(@"removeScrollListener:");
-        imp = [self.scroller methodForSelector:sel];
-        if (imp) {
-            void (*func)(id) = (void *)imp;
-            func(self);
-        }
-    }
+    [EBUtility removeScrollDelegate:self source:self.source];
+    
     // 非主线程则为eb dealloc调用，无需执行回调，否则将crash
     // 另外这里的主线程是由于ebmodule在主线程下，否则应该判断ebmodule同线程
     if ([NSThread isMainThread]) {

@@ -32,15 +32,13 @@ typedef NS_ENUM(NSInteger, WXExpressionType) {
 
 @property (nonatomic, copy) NSString *exitExpression;
 @property (nonatomic, copy) KeepAliveCallback callback;
-@property (nonatomic, strong) NSMapTable<NSString *, id> *targets;
-@property (nonatomic, strong) NSDictionary<NSString *, NSDictionary *> *expressions;
+@property (nonatomic, strong) NSMapTable<id, NSDictionary *> *targetExpression;
 @property (nonatomic, strong) NSDictionary *options;
 
 - (instancetype)initWithExpressionType:(WXExpressionType)exprType
                                 source:(id)source;
 
-- (void)updateTargets:(NSMapTable<NSString *, id> *)targets
-           expression:(NSDictionary<NSString *, NSDictionary *> *)targetExpression
+- (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)targetExpression
          options:(NSDictionary *)options
        exitExpression:(NSString *)exitExpression
              callback:(KeepAliveCallback)callback;

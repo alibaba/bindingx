@@ -70,12 +70,22 @@
 }
 
 -(void)addGuestureOnMainThread {
-    self.gesture = [self getPanGestureForComponent:self.source];
+    self.gesture = [EBUtility getPanGestureForComponent:self.source callback:^(BOOL isHorizontal, BOOL isVertical) {
+        _isHorizontal = isHorizontal;
+        _isVertical = isVertical;
+        
+        if (_isHorizontal || _isVertical) {
+            _isMutex = YES;
+        } else {
+            _isMutex = NO;
+        }
+    }];
     
     if (!self.gesture) {
         UIGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
         self.gesture = panGesture;
         self.gesture.delegate = self;
+        // TODO view of source
         [self.source addGestureRecognizer:self.gesture];
     }
     
@@ -86,36 +96,6 @@
     [self.gesture removeTarget:self action:nil];
     [self.gesture addTarget:self action:@selector(handleGesture:)];
     self.gesture.delegate = self;
-}
-
-- (UIPanGestureRecognizer *)getPanGestureForComponent:(id)component {
-    
-    Ivar ivarPan = class_getInstanceVariable([component class], "_panGesture");
-    id panObj = object_getIvar(component, ivarPan);
-    
-    if (!panObj || ![panObj isKindOfClass:[UIPanGestureRecognizer class]]) {
-        SEL selector = NSSelectorFromString(@"addPanGesture");
-        if ([component respondsToSelector:selector]) {
-            [component performSelector:selector onThread:[NSThread mainThread] withObject:nil waitUntilDone:YES];
-        }
-        
-        ivarPan = class_getInstanceVariable([component class], "_panGesture");
-        panObj = object_getIvar(component, ivarPan);
-    }
-    
-    if (panObj && [panObj isKindOfClass:[UIPanGestureRecognizer class]]) {
-        _isHorizontal = [EBUtility hasHorizontalPan:component];
-        _isVertical = [EBUtility hasVerticalPan:component];
-        
-        if (_isHorizontal || _isVertical) {
-            _isMutex = YES;
-        } else {
-            _isMutex = NO;
-        }
-        return (UIPanGestureRecognizer *)panObj;
-    }
-    
-    return nil;
 }
 
 - (void)fireStateChangedEvent:(UIGestureRecognizer *)sender {
@@ -129,8 +109,7 @@
     
     if (!keepAlive) {
         // free resouces
-        self.targets = nil;
-        self.expressions = nil;
+        self.targetExpression = nil;
         self.callback = nil;
     }
 }

@@ -88,5 +88,41 @@ void PerformBlockOnMainThread(void (^block)(void))
     return NO;
 }
 
++ (UIPanGestureRecognizer *_Nullable)getPanGestureForComponent:(id _Nullable )source callback:(EBGetPanGestureCallback)callback
+{
+    WXComponent *component = (WXComponent *)source;
+    Ivar ivarPan = class_getInstanceVariable([component class], "_panGesture");
+    id panObj = object_getIvar(component, ivarPan);
+    
+    if (!panObj || ![panObj isKindOfClass:[UIPanGestureRecognizer class]]) {
+        SEL selector = NSSelectorFromString(@"addPanGesture");
+        if ([component respondsToSelector:selector]) {
+            [component performSelector:selector onThread:[NSThread mainThread] withObject:nil waitUntilDone:YES];
+        }
+        
+        ivarPan = class_getInstanceVariable([component class], "_panGesture");
+        panObj = object_getIvar(component, ivarPan);
+    }
+    
+    if (panObj && [panObj isKindOfClass:[UIPanGestureRecognizer class]]) {
+        callback(
+                 [component.events containsObject:@"horizontalpan"],
+                 [component.events containsObject:@"verticalpan"]
+                 );
+        return (UIPanGestureRecognizer *)panObj;
+    }
+    return nil;
+}
+
++ (void)addScrollDelegate:(id)delegate source:(id)source
+{
+    [source addScrollDelegate:delegate];
+}
+
++ (void)removeScrollDelegate:(id)delegate source:(id)source
+{
+    [source removeScrollDelegate:delegate];
+}
+
 #pragma clang diagnostic pop
 @end

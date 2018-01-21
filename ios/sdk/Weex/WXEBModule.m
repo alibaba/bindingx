@@ -9,13 +9,13 @@
 
 #import "WXEBModule.h"
 #import <WeexSDK/WeexSDK.h>
-#import "WXExpressionHandler.h"
+#import "EBExpressionHandler.h"
 #import <pthread/pthread.h>
 #import <WeexPluginLoader/WeexPluginLoader.h>
 
 @interface WXEBModule ()
 
-@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, WXExpressionHandler *> *> *sourceMap;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, EBExpressionHandler *> *> *sourceMap;
 
 @end
 
@@ -59,7 +59,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         return;
     }
     
-    WXExpressionType exprType = [WXExpressionHandler stringToExprType:eventType];
+    WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
     if (exprType == WXExpressionTypeUndefined) {
         WX_LOG(WXLogFlagWarning, @"prepare binding eventType error");
         return;
@@ -76,10 +76,10 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         
         pthread_mutex_lock(&mutex);
         
-        WXExpressionHandler *handler = [welf handlerForToken:anchor expressionType:exprType];
+        EBExpressionHandler *handler = [welf handlerForToken:anchor expressionType:exprType];
         if (!handler) {
             // create handler for key
-            handler = [WXExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
+            handler = [EBExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
             [welf putHandler:handler forToken:anchor expressionType:exprType];
         }
         
@@ -97,18 +97,18 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
     }
     
     NSString *eventType =  dictionary[@"eventType"];
-    NSArray *targetExpression = dictionary[@"props"];
+    NSArray *props = dictionary[@"props"];
     NSString *token = dictionary[@"anchor"];
     NSString *exitExpression = dictionary[@"exitExpression"];
     NSDictionary *options = dictionary[@"options"];
     
-    if ([WXUtility isBlankString:eventType] || !targetExpression || targetExpression.count == 0) {
+    if ([WXUtility isBlankString:eventType] || !props || props.count == 0) {
         WX_LOG(WXLogFlagWarning, @"bind params error");
         callback(@{@"state":@"error",@"msg":@"bind params error"}, NO);
         return nil;
     }
     
-    WXExpressionType exprType = [WXExpressionHandler stringToExprType:eventType];
+    WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
     if (exprType == WXExpressionTypeUndefined) {
         WX_LOG(WXLogFlagWarning, @"bind params handler error");
         callback(@{@"state":@"error",@"msg":@"bind params handler error"}, NO);
@@ -143,9 +143,8 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
             return;
         }
         
-        NSMapTable<NSString *, id> *weakMap = [NSMapTable strongToWeakObjectsMapTable];
-        NSMutableDictionary<NSString *, NSDictionary *> *expressionDic = [NSMutableDictionary dictionary];
-        for (NSDictionary *targetDic in targetExpression) {
+        NSMapTable<id, NSDictionary *> *targetExpression = [NSMapTable new];
+        for (NSDictionary *targetDic in props) {
             NSString *targetRef = targetDic[@"element"];
             NSString *property = targetDic[@"property"];
             NSString *expression = targetDic[@"expression"];
@@ -166,8 +165,8 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
                     });
                 }
                 
-                [weakMap setObject:targetComponent forKey:targetRef];
-                NSMutableDictionary *propertyDic = [expressionDic[targetRef] mutableCopy];
+                
+                NSMutableDictionary *propertyDic = [[targetExpression objectForKey:targetComponent] mutableCopy];
                 if (!propertyDic) {
                     propertyDic = [NSMutableDictionary dictionary];
                 }
@@ -178,22 +177,21 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
                     expDict[@"config"] = targetDic[@"config"];
                 }
                 propertyDic[property] = expDict;
-                expressionDic[targetRef] = propertyDic;
+                [targetExpression setObject:propertyDic forKey:targetComponent];
             }
         }
         
         // find handler for key
         pthread_mutex_lock(&mutex);
         
-        WXExpressionHandler *handler = [welf handlerForToken:token expressionType:exprType];
+        EBExpressionHandler *handler = [welf handlerForToken:token expressionType:exprType];
         if (!handler) {
             // create handler for key
-            handler = [WXExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
+            handler = [EBExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
             [welf putHandler:handler forToken:token expressionType:exprType];
         }
         
-        [handler updateTargets:weakMap
-                    expression:expressionDic
+        [handler updateTargetExpression:targetExpression
                   options:options
                 exitExpression:exitExpression
                       callback:^(id  _Nonnull result, BOOL keepAlive) {
@@ -219,7 +217,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         return;
     }
     
-    WXExpressionType exprType = [WXExpressionHandler stringToExprType:eventType];
+    WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
     if (exprType == WXExpressionTypeUndefined) {
         WX_LOG(WXLogFlagWarning, @"disableBinding params handler error");
         return;
@@ -227,7 +225,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
     
     pthread_mutex_lock(&mutex);
     
-    WXExpressionHandler *handler = [self handlerForToken:token expressionType:exprType];
+    EBExpressionHandler *handler = [self handlerForToken:token expressionType:exprType];
     if (!handler) {
         WX_LOG(WXLogFlagWarning, @"disableBinding can't find handler handler");
         return;
@@ -242,7 +240,14 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
 - (void)unbindAll {
     pthread_mutex_lock(&mutex);
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"WXExpressionBindingRemove" object:nil];
+    for (NSString *sourceRef in self.sourceMap) {
+        NSMutableDictionary *handlerMap = self.sourceMap[sourceRef];
+        for (NSNumber *expressionType in handlerMap) {
+            EBExpressionHandler *handler = handlerMap[expressionType];
+            [handler removeExpressionBinding];
+        }
+        [handlerMap removeAllObjects];
+    }
     [self.sourceMap removeAllObjects];
     
     pthread_mutex_unlock(&mutex);
@@ -313,32 +318,32 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
 
 
 #pragma mark - Handler Map
-- (NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, WXExpressionHandler *> *> *)sourceMap {
+- (NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, EBExpressionHandler *> *> *)sourceMap {
     if (!_sourceMap) {
-        _sourceMap = [NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, WXExpressionHandler *> *> dictionary];
+        _sourceMap = [NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, EBExpressionHandler *> *> dictionary];
     }
     return _sourceMap;
 }
 
-- (NSMutableDictionary<NSNumber *, WXExpressionHandler *> *)handlerMapForToken:(NSString *)token {
+- (NSMutableDictionary<NSNumber *, EBExpressionHandler *> *)handlerMapForToken:(NSString *)token {
     return [self.sourceMap objectForKey:token];
 }
 
-- (WXExpressionHandler *)handlerForToken:(NSString *)token expressionType:(WXExpressionType)exprType {
+- (EBExpressionHandler *)handlerForToken:(NSString *)token expressionType:(WXExpressionType)exprType {
     return [[self handlerMapForToken:token] objectForKey:[NSNumber numberWithInteger:exprType]];
 }
 
-- (void)putHandler:(WXExpressionHandler *)handler forToken:(NSString *)token expressionType:(WXExpressionType)exprType {
-    NSMutableDictionary<NSNumber *, WXExpressionHandler *> *handlerMap = [self handlerMapForToken:token];
+- (void)putHandler:(EBExpressionHandler *)handler forToken:(NSString *)token expressionType:(WXExpressionType)exprType {
+    NSMutableDictionary<NSNumber *, EBExpressionHandler *> *handlerMap = [self handlerMapForToken:token];
     if (!handlerMap) {
-        handlerMap = [NSMutableDictionary<NSNumber *, WXExpressionHandler *> dictionary];
+        handlerMap = [NSMutableDictionary<NSNumber *, EBExpressionHandler *> dictionary];
         self.sourceMap[token] = handlerMap;
     }
     handlerMap[[NSNumber numberWithInteger:exprType]] = handler;
 }
 
-- (void)removeHandler:(WXExpressionHandler *)handler forToken:(NSString *)token expressionType:(WXExpressionType)exprType {
-    NSMutableDictionary<NSNumber *, WXExpressionHandler *> *handlerMap = [self handlerMapForToken:token];
+- (void)removeHandler:(EBExpressionHandler *)handler forToken:(NSString *)token expressionType:(WXExpressionType)exprType {
+    NSMutableDictionary<NSNumber *, EBExpressionHandler *> *handlerMap = [self handlerMapForToken:token];
     if (handlerMap) {
         [handlerMap removeObjectForKey:[NSNumber numberWithInteger:exprType]];
     }

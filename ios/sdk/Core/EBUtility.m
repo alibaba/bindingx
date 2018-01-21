@@ -54,4 +54,9 @@
     return NO;
 }
 
++ (UIView *)viewByTarget:(id)target
+{
+    return nil;
+}
+
 @end
