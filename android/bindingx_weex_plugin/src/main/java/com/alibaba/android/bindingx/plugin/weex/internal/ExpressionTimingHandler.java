@@ -1,5 +1,6 @@
 package com.alibaba.android.bindingx.plugin.weex.internal;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
@@ -9,7 +10,6 @@ import com.alibaba.android.bindingx.plugin.weex.EventType;
 import com.alibaba.android.bindingx.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
 import com.alibaba.android.bindingx.plugin.weex.LogProxy;
-import com.taobao.weex.WXSDKInstance;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,8 +28,8 @@ public class ExpressionTimingHandler extends AbstractEventHandler implements Ani
     private AnimationFrame mAnimationFrame;
     private boolean isFinish = false;
 
-    public ExpressionTimingHandler(@NonNull WXSDKInstance instance) {
-        super(instance);
+    public ExpressionTimingHandler(Context context, Object... extension) {
+        super(context, extension);
         if(mAnimationFrame == null) {
             mAnimationFrame = AnimationFrame.newInstance();
         } else {

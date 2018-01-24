@@ -1,5 +1,6 @@
 package com.alibaba.android.bindingx.plugin.weex.internal;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -9,7 +10,6 @@ import com.alibaba.android.bindingx.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
 import com.alibaba.android.bindingx.plugin.weex.IEventHandler;
 import com.alibaba.android.bindingx.plugin.weex.LogProxy;
-import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.ui.component.WXComponent;
 
 import org.json.JSONException;
@@ -35,13 +35,15 @@ abstract class AbstractEventHandler implements IEventHandler {
     final Map<String, Object> mScope = new HashMap<>();
     String mInstanceId;
     String mAnchorInstanceId;
+    Context mContext;
 
     ExpressionPair mExitExpressionPair;
 
     Cache<String, Expression> mCachedExpressionMap = new Cache<>(16);
 
-    AbstractEventHandler(@NonNull WXSDKInstance instance) {
-        mInstanceId = instance.getInstanceId();
+    AbstractEventHandler(Context context, Object... extension) {
+        mContext = context;
+        mInstanceId = (extension != null && extension.length > 0 && extension[0] instanceof String) ? ((String)extension[0]) : null;
     }
 
     @Override

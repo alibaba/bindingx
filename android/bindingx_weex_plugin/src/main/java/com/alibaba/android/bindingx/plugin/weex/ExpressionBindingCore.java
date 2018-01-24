@@ -1,5 +1,6 @@
 package com.alibaba.android.bindingx.plugin.weex;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -27,32 +28,32 @@ import java.util.UUID;
 
 public class ExpressionBindingCore{
     private Map<String/*token*/, Map<String/*event type*/,IEventHandler>> mBindingCouples;
-    private final Map<String, ObjectCreator<IEventHandler,WXSDKInstance>> mInternalEventHandlerCreatorMap =
+    private final Map<String, ObjectCreator<IEventHandler,Context>> mInternalEventHandlerCreatorMap =
             new HashMap<>(8);
 
     public ExpressionBindingCore(){
-        registerEventHandler(EventType.TYPE_PAN, new ObjectCreator<IEventHandler, WXSDKInstance>() {
+        registerEventHandler(EventType.TYPE_PAN, new ObjectCreator<IEventHandler, Context>() {
             @Override
-            public IEventHandler createWith(WXSDKInstance instance) {
-                return new ExpressionTouchHandler(instance);
+            public IEventHandler createWith(Context context, Object... extension) {
+                return new ExpressionTouchHandler(context, extension);
             }
         });
-        registerEventHandler(EventType.TYPE_ORIENTATION, new ObjectCreator<IEventHandler, WXSDKInstance>() {
+        registerEventHandler(EventType.TYPE_ORIENTATION, new ObjectCreator<IEventHandler, Context>() {
             @Override
-            public IEventHandler createWith(WXSDKInstance instance) {
-                return new ExpressionOrientationHandler(instance);
+            public IEventHandler createWith(Context context, Object... extension) {
+                return new ExpressionOrientationHandler(context, extension);
             }
         });
-        registerEventHandler(EventType.TYPE_SCROLL, new ObjectCreator<IEventHandler, WXSDKInstance>() {
+        registerEventHandler(EventType.TYPE_SCROLL, new ObjectCreator<IEventHandler, Context>() {
             @Override
-            public IEventHandler createWith(WXSDKInstance instance) {
-                return new ExpressionScrollHandler(instance);
+            public IEventHandler createWith(Context context, Object... extension) {
+                return new ExpressionScrollHandler(context, extension);
             }
         });
-        registerEventHandler(EventType.TYPE_TIMING, new ObjectCreator<IEventHandler, WXSDKInstance>() {
+        registerEventHandler(EventType.TYPE_TIMING, new ObjectCreator<IEventHandler, Context>() {
             @Override
-            public IEventHandler createWith(WXSDKInstance instance) {
-                return new ExpressionTimingHandler(instance);
+            public IEventHandler createWith(Context context, Object... extension) {
+                return new ExpressionTimingHandler(context, extension);
             }
         });
     }
@@ -285,7 +286,7 @@ public class ExpressionBindingCore{
         }
     }
 
-    public void registerEventHandler(String eventType, ObjectCreator<IEventHandler,WXSDKInstance> creator) {
+    public void registerEventHandler(String eventType, ObjectCreator<IEventHandler,Context> creator) {
         if(TextUtils.isEmpty(eventType) || creator == null) {
             return;
         }
@@ -301,8 +302,8 @@ public class ExpressionBindingCore{
         if(mInternalEventHandlerCreatorMap.isEmpty()) {
             return null;
         }
-        ObjectCreator<IEventHandler,WXSDKInstance> creator = mInternalEventHandlerCreatorMap.get(eventType);
-        return (creator != null) ? creator.createWith(instance) : null;
+        ObjectCreator<IEventHandler,Context> creator = mInternalEventHandlerCreatorMap.get(eventType);
+        return (creator != null) ? creator.createWith(instance.getContext(), instance.getInstanceId()) : null;
     }
 
     /**
@@ -310,7 +311,7 @@ public class ExpressionBindingCore{
      *
      * */
     public interface ObjectCreator<Type,Param> {
-        Type createWith(Param p);
+        Type createWith(Param p, Object... extension);
     }
 
     /**

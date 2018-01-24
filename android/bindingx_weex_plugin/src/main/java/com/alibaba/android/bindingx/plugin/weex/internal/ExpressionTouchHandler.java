@@ -13,7 +13,6 @@ import com.alibaba.android.bindingx.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
 import com.alibaba.android.bindingx.plugin.weex.LogProxy;
 import com.taobao.weex.WXEnvironment;
-import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.utils.WXViewUtils;
 
 import java.util.HashMap;
@@ -35,9 +34,8 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
     private boolean isPanGestureAvailable;
     private boolean isFlickGestureAvailable;
 
-    public ExpressionTouchHandler(@NonNull WXSDKInstance instance) {
-        super(instance);
-        Context context = instance.getContext();
+    public ExpressionTouchHandler(Context context, Object... extension) {
+        super(context, extension);
         mGestureDetector = new GestureDetector(context, this);
     }
 

@@ -10,7 +10,6 @@ import com.alibaba.android.bindingx.plugin.weex.EventType;
 import com.alibaba.android.bindingx.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
 import com.alibaba.android.bindingx.plugin.weex.LogProxy;
-import com.taobao.weex.WXSDKInstance;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -48,9 +47,8 @@ public class ExpressionOrientationHandler extends AbstractEventHandler implement
     private LinkedList<Double> mRecordsAlpha = new LinkedList<>();
 
 
-    public ExpressionOrientationHandler(@NonNull WXSDKInstance instance) {
-        super(instance);
-        Context context = instance.getContext();
+    public ExpressionOrientationHandler(Context context, Object... extension) {
+        super(context, extension);
         if (context != null) {
             mOrientationDetector = OrientationDetector.getInstance(context);
         }
