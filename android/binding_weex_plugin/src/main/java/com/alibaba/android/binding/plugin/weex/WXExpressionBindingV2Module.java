@@ -8,6 +8,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
+import com.alibaba.android.binding.plugin.weex.internal.Utils;
 import com.alibaba.android.binding.plugin.weex.internal.WXModuleUtils;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKEngine;
@@ -102,9 +103,9 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule{
         map.put("translateX", sourceView.getTranslationX() * WXEnvironment.sDefaultWidth / (float) WXViewUtils.getScreenWidth());
         map.put("translateY",sourceView.getTranslationY() * WXEnvironment.sDefaultWidth / (float) WXViewUtils.getScreenWidth());
 
-        map.put("rotateX",sourceView.getRotationX());
-        map.put("rotateY",sourceView.getRotationY());
-        map.put("rotateZ",sourceView.getRotation());
+        map.put("rotateX", Utils.normalizeRotation(sourceView.getRotationX()));
+        map.put("rotateY", Utils.normalizeRotation(sourceView.getRotationY()));
+        map.put("rotateZ", Utils.normalizeRotation(sourceView.getRotation()));
 
         map.put("scaleX",sourceView.getScaleX());
         map.put("scaleY",sourceView.getScaleY());
