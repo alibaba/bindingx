@@ -2,6 +2,7 @@ package com.alibaba.android.bindingx.plugin.weex;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Layout;
 import android.text.SpannableString;
@@ -39,11 +40,15 @@ import java.util.Map;
 public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
 
     private ExpressionBindingCore mExpressionBindingCore;
+    private PlatformManager mPlatformManager;
 
     @JSMethod(uiThread = false)
     public void prepare(Map<String, Object> params) {
+        if(mPlatformManager == null) {
+            mPlatformManager = createPlatformManager();
+        }
         if (mExpressionBindingCore == null) {
-            mExpressionBindingCore = new ExpressionBindingCore();
+            mExpressionBindingCore = new ExpressionBindingCore(mPlatformManager);
         }
 
         //空实现。 此方法仅为了与iOS兼容
@@ -51,10 +56,7 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
 
     @JSMethod(uiThread = false)
     public Map<String, String> bind(Map<String, Object> params, final JSCallback callback) {
-        if (mExpressionBindingCore == null) {
-            mExpressionBindingCore = new ExpressionBindingCore();
-        }
-
+        prepare(null);
         String token = mExpressionBindingCore.doBind(
                 mWXSDKInstance == null ? null : mWXSDKInstance.getContext(),
                 mWXSDKInstance == null ? null : mWXSDKInstance.getInstanceId(),
@@ -164,6 +166,45 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
                 }
             }
         }, null);
+    }
+
+    @NonNull
+    /*package*/ static PlatformManager createPlatformManager() {
+        return new PlatformManager.Builder()
+                .withViewFinder(new PlatformManager.IViewFinder() {
+                    @Nullable
+                    @Override
+                    public View findViewBy(String ref, Object... extension) {
+                        //TODO
+
+                        return null;
+                    }
+                })
+                .withViewUpdater(new PlatformManager.IViewUpdater() {
+                    @Override
+                    public void synchronouslyUpdateViewOnUIThread(@NonNull View targetView,
+                                                                  @NonNull String propertyName,
+                                                                  @NonNull Object propertyValue,
+                                                                  Object... extension) {
+                        //TODO
+                    }
+                })
+                .withDeviceResolutionTranslator(new PlatformManager.IDeviceResolutionTranslator() {
+                    @Override
+                    public double webToNative(double rawSize, Object... extension) {
+                        //TODO
+
+                        return 0;
+                    }
+
+                    @Override
+                    public double nativeToWeb(double rawSize, Object... extension) {
+                        //TODO
+
+                        return 0;
+                    }
+                })
+                .build();
     }
 
 

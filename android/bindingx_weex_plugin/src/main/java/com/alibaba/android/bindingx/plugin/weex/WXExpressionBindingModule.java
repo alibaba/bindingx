@@ -23,12 +23,16 @@ import java.util.Map;
 public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModule {
 
     private ExpressionBindingCore mExpressionBindingCore;
+    private PlatformManager mPlatformManager;
 
     @JSMethod
     @Deprecated
     public void enableBinding(@Nullable String sourceRef, @Nullable String eventType) {
+        if(mPlatformManager == null) {
+            mPlatformManager = WXExpressionBindingV2Module.createPlatformManager();
+        }
         if (mExpressionBindingCore == null) {
-            mExpressionBindingCore = new ExpressionBindingCore();
+            mExpressionBindingCore = new ExpressionBindingCore(mPlatformManager);
         }
 
         //空实现。 此方法仅为了与iOS兼容
@@ -38,9 +42,7 @@ public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModu
     @Deprecated
     public void createBinding(@Nullable String sourceRef, @Nullable String eventType, @Nullable String exitExpression,
                               @Nullable List<Map<String, Object>> expressionArgs, @Nullable final JSCallback callback) {
-        if (mExpressionBindingCore == null) {
-            mExpressionBindingCore = new ExpressionBindingCore();
-        }
+        enableBinding(null,null);
 
         ExpressionPair exitExpressionPair = ExpressionPair.create(null, exitExpression);
         mExpressionBindingCore.doBind(

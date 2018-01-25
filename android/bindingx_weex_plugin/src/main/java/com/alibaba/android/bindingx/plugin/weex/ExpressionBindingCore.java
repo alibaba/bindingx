@@ -29,8 +29,15 @@ public class ExpressionBindingCore {
     private Map<String/*token*/, Map<String/*event type*/, IEventHandler>> mBindingCouples;
     private final Map<String, ObjectCreator<IEventHandler, Context>> mInternalEventHandlerCreatorMap =
             new HashMap<>(8);
+    private final PlatformManager mPlatformManager;
 
-    public ExpressionBindingCore() {
+    /**
+     * default constructor
+     * @param platformManager a class that provide platform-compatible APIs.
+     *                        The platform includes Weex and ReactNative.
+     * */
+    public ExpressionBindingCore(@NonNull PlatformManager platformManager) {
+        this.mPlatformManager = platformManager;
         registerEventHandler(EventType.TYPE_PAN, new ObjectCreator<IEventHandler, Context>() {
             @Override
             public IEventHandler createWith(Context context, Object... extension) {
