@@ -20,14 +20,14 @@ import java.util.Map;
  */
 
 @Deprecated
-public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModule{
+public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModule {
 
     private ExpressionBindingCore mExpressionBindingCore;
 
     @JSMethod
     @Deprecated
     public void enableBinding(@Nullable String sourceRef, @Nullable String eventType) {
-        if(mExpressionBindingCore == null) {
+        if (mExpressionBindingCore == null) {
             mExpressionBindingCore = new ExpressionBindingCore();
         }
 
@@ -38,40 +38,49 @@ public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModu
     @Deprecated
     public void createBinding(@Nullable String sourceRef, @Nullable String eventType, @Nullable String exitExpression,
                               @Nullable List<Map<String, Object>> expressionArgs, @Nullable final JSCallback callback) {
-        if(mExpressionBindingCore == null) {
+        if (mExpressionBindingCore == null) {
             mExpressionBindingCore = new ExpressionBindingCore();
         }
 
-        ExpressionPair exitExpressionPair = ExpressionPair.create(null,exitExpression);
-        mExpressionBindingCore.doBind(sourceRef, null, eventType, null, exitExpressionPair, expressionArgs, new ExpressionBindingCore.JavaScriptCallback() {
-            @Override
-            public void callback(Object params) {
-                if(callback != null) {
-                    callback.invokeAndKeepAlive(params);
-                }
-            }
-        }, mWXSDKInstance);
+        ExpressionPair exitExpressionPair = ExpressionPair.create(null, exitExpression);
+        mExpressionBindingCore.doBind(
+                sourceRef,
+                null,
+                eventType,
+                null,
+                exitExpressionPair,
+                expressionArgs,
+                new ExpressionBindingCore.JavaScriptCallback() {
+                    @Override
+                    public void callback(Object params) {
+                        if (callback != null) {
+                            callback.invokeAndKeepAlive(params);
+                        }
+                    }
+                },
+                mWXSDKInstance == null ? null : mWXSDKInstance.getContext(),
+                mWXSDKInstance == null ? null : mWXSDKInstance.getInstanceId());
     }
 
     @JSMethod
     @Deprecated
     public void disableBinding(@Nullable String sourceRef, @Nullable String eventType) {
-        if(mExpressionBindingCore != null) {
-            mExpressionBindingCore.doUnbind(sourceRef,eventType);
+        if (mExpressionBindingCore != null) {
+            mExpressionBindingCore.doUnbind(sourceRef, eventType);
         }
     }
 
     @JSMethod
     @Deprecated
     public void disableAll() {
-        if(mExpressionBindingCore != null) {
+        if (mExpressionBindingCore != null) {
             mExpressionBindingCore.doRelease();
         }
     }
 
     @Override
     public void destroy() {
-        if(mExpressionBindingCore != null) {
+        if (mExpressionBindingCore != null) {
             mExpressionBindingCore.doRelease();
             mExpressionBindingCore = null;
         }
@@ -81,14 +90,14 @@ public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModu
 
     @Override
     public void onActivityPause() {
-        if(mExpressionBindingCore != null) {
+        if (mExpressionBindingCore != null) {
             mExpressionBindingCore.onActivityPause();
         }
     }
 
     @Override
     public void onActivityResume() {
-        if(mExpressionBindingCore != null) {
+        if (mExpressionBindingCore != null) {
             mExpressionBindingCore.onActivityResume();
         }
     }

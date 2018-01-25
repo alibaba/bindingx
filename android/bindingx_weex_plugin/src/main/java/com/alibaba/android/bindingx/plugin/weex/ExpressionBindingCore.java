@@ -11,7 +11,6 @@ import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionScrollHandler
 import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionTimingHandler;
 import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionTouchHandler;
 import com.alibaba.android.bindingx.plugin.weex.internal.Utils;
-import com.taobao.weex.WXSDKInstance;
 
 import org.json.JSONObject;
 
@@ -26,12 +25,12 @@ import java.util.UUID;
  * Created by rowandjj(chuyi)<br/>
  */
 
-public class ExpressionBindingCore{
-    private Map<String/*token*/, Map<String/*event type*/,IEventHandler>> mBindingCouples;
-    private final Map<String, ObjectCreator<IEventHandler,Context>> mInternalEventHandlerCreatorMap =
+public class ExpressionBindingCore {
+    private Map<String/*token*/, Map<String/*event type*/, IEventHandler>> mBindingCouples;
+    private final Map<String, ObjectCreator<IEventHandler, Context>> mInternalEventHandlerCreatorMap =
             new HashMap<>(8);
 
-    public ExpressionBindingCore(){
+    public ExpressionBindingCore() {
         registerEventHandler(EventType.TYPE_PAN, new ObjectCreator<IEventHandler, Context>() {
             @Override
             public IEventHandler createWith(Context context, Object... extension) {
@@ -60,38 +59,41 @@ public class ExpressionBindingCore{
 
     /**
      * @return 如果成功，则返回token，否则返回null
-     * */
-    public String doBind(@NonNull Map<String, Object> params, @NonNull JavaScriptCallback callback, @NonNull WXSDKInstance instance) {
+     */
+    public String doBind(@Nullable Context context,
+                         @Nullable String instanceId,
+                         @NonNull Map<String, Object> params,
+                         @NonNull JavaScriptCallback callback) {
         String eventType = Utils.getStringValue(params, ExpressionConstants.KEY_EVENT_TYPE);
-        String config = Utils.getStringValue(params,ExpressionConstants.KEY_OPTIONS);
-        String anchorInstanceId = Utils.getStringValue(params,ExpressionConstants.KEY_INSTANCE_ID);
+        String config = Utils.getStringValue(params, ExpressionConstants.KEY_OPTIONS);
+        String anchorInstanceId = Utils.getStringValue(params, ExpressionConstants.KEY_INSTANCE_ID);
 
         //全局配置
-        Map<String,Object> configMap = null;
-        if(!TextUtils.isEmpty(config)) {
+        Map<String, Object> configMap = null;
+        if (!TextUtils.isEmpty(config)) {
             try {
                 configMap = Utils.toMap(new JSONObject(config));
-            }catch (Exception e) {
+            } catch (Exception e) {
                 LogProxy.e("parse external config failed.\n", e);
             }
         }
 
-        ExpressionPair exitExpressionPair = Utils.getExpressionPair(params,ExpressionConstants.KEY_EXIT_EXPRESSION);
+        ExpressionPair exitExpressionPair = Utils.getExpressionPair(params, ExpressionConstants.KEY_EXIT_EXPRESSION);
 
-        String anchor = Utils.getStringValue(params,ExpressionConstants.KEY_ANCHOR); //可能为空
+        String anchor = Utils.getStringValue(params, ExpressionConstants.KEY_ANCHOR); //可能为空
         List<Map<String, Object>> expressionArgs = Utils.getRuntimeProps(params);
 
-        return doBind(anchor,anchorInstanceId,eventType,configMap,exitExpressionPair,expressionArgs,callback, instance);
+        return doBind(anchor, anchorInstanceId, eventType, configMap, exitExpressionPair, expressionArgs, callback, context, instanceId);
     }
 
     public void doUnbind(@Nullable Map<String, Object> params) {
-        if(params == null) {
+        if (params == null) {
             return;
         }
         String eventType = Utils.getStringValue(params, ExpressionConstants.KEY_EVENT_TYPE);
         String token = Utils.getStringValue(params, ExpressionConstants.KEY_TOKEN);
 
-        doUnbind(token,eventType);
+        doUnbind(token, eventType);
     }
 
 
@@ -106,8 +108,8 @@ public class ExpressionBindingCore{
             return;
         }
 
-        Map<String/*eventType*/,IEventHandler> handlerMap = mBindingCouples.get(token);
-        if(handlerMap == null || handlerMap.isEmpty()) {
+        Map<String/*eventType*/, IEventHandler> handlerMap = mBindingCouples.get(token);
+        if (handlerMap == null || handlerMap.isEmpty()) {
             LogProxy.d("disable binding failed(0x3) [" + token + "," + eventType + "]");
             return;
         }
@@ -117,7 +119,7 @@ public class ExpressionBindingCore{
             return;
         }
 
-        if(handler.onDisable(token,eventType)) {
+        if (handler.onDisable(token, eventType)) {
             mBindingCouples.remove(token);
             LogProxy.d("disable binding success[" + token + "," + eventType + "]");
         } else {
@@ -128,9 +130,9 @@ public class ExpressionBindingCore{
     public void doRelease() {
         if (mBindingCouples != null) {
             try {
-                for(Map<String/*eventType*/,IEventHandler> handlerMap : mBindingCouples.values()) {
-                    if(handlerMap != null && !handlerMap.isEmpty()) {
-                        for(IEventHandler h : handlerMap.values()) {
+                for (Map<String/*eventType*/, IEventHandler> handlerMap : mBindingCouples.values()) {
+                    if (handlerMap != null && !handlerMap.isEmpty()) {
+                        for (IEventHandler h : handlerMap.values()) {
                             if (h != null) {
                                 h.onDestroy();
                             }
@@ -139,19 +141,23 @@ public class ExpressionBindingCore{
                 }
                 mBindingCouples.clear();
                 mBindingCouples = null;
-            }catch (Exception e) {
-                LogProxy.e("release failed",e);
+            } catch (Exception e) {
+                LogProxy.e("release failed", e);
             }
         }
     }
 
-    public String doPrepare(@Nullable String anchor, @Nullable String anchorInstanceId, @Nullable String eventType, @NonNull WXSDKInstance instance){
-        if(TextUtils.isEmpty(eventType)) {
+    public String doPrepare(@Nullable Context context,
+                            @Nullable String instanceId, /*optional default instance id*/
+                            @Nullable String anchor,
+                            @Nullable String anchorInstanceId,
+                            @Nullable String eventType) {
+        if (TextUtils.isEmpty(eventType)) {
             LogProxy.e("[doPrepare] failed. can not found eventType");
             return null;
         }
 
-        if (instance.getContext() == null) {
+        if (context == null) {
             LogProxy.e("[doPrepare] failed. context or wxInstance is null");
             return null;
         }
@@ -164,33 +170,33 @@ public class ExpressionBindingCore{
         }
 
         //根据sourceRef寻找事件处理器集合
-        Map<String/*eventType*/,IEventHandler> handlerMap = mBindingCouples.get(token);
+        Map<String/*eventType*/, IEventHandler> handlerMap = mBindingCouples.get(token);
         //根据eventType寻找目标处理器
         IEventHandler targetHandler;
-        if(handlerMap != null && (targetHandler = handlerMap.get(eventType)) != null) {/*处理器存在*/
+        if (handlerMap != null && (targetHandler = handlerMap.get(eventType)) != null) {/*处理器存在*/
             //通知handler
-            LogProxy.d("you have already enabled binding,[token:" + token + ",type:" + eventType+"]");
-            targetHandler.onStart(token,eventType);
+            LogProxy.d("you have already enabled binding,[token:" + token + ",type:" + eventType + "]");
+            targetHandler.onStart(token, eventType);
             LogProxy.d("enableBinding success.[token:" + token + ",type:" + eventType + "]");
         } else {/*不存在*/
             //集合未创建 则创建之,并插入
-            if(handlerMap == null) {
+            if (handlerMap == null) {
                 handlerMap = new HashMap<>(4);
-                mBindingCouples.put(token,handlerMap);
+                mBindingCouples.put(token, handlerMap);
             }
             //创建handler
-            targetHandler = createEventHandler(eventType,instance);
-            if(targetHandler != null) {//创建成功
+            targetHandler = createEventHandler(context, instanceId, eventType);
+            if (targetHandler != null) {//创建成功
                 /*可能anchor不在当前instance中*/
                 targetHandler.setAnchorInstanceId(anchorInstanceId);
                 //初始化
-                if(targetHandler.onCreate(token,eventType)) {
-                    targetHandler.onStart(token,eventType);
+                if (targetHandler.onCreate(token, eventType)) {
+                    targetHandler.onStart(token, eventType);
                     //添加到handlerMap
                     handlerMap.put(eventType, targetHandler);
                     LogProxy.d("enableBinding success.[token:" + token + ",type:" + eventType + "]");
                 } else {
-                    LogProxy.e("expression enabled failed. [token:"+token+",type:"+eventType+"]");
+                    LogProxy.e("expression enabled failed. [token:" + token + ",type:" + eventType + "]");
                     return null;
                 }
             } else {
@@ -205,40 +211,47 @@ public class ExpressionBindingCore{
 
 
     /**
-     *
-     * @param anchor 锚点。是一个view的引用(ref)。可能为空。Notice: ref全局唯一。
-     * @param anchorInstanceId weex实例id。代表anchor所在的weex实例。默认是当前module所在实例。可能为空。
-     * @param eventType 事件类型。如pan、scroll等。
-     * @param globalConfig 全局配置。
+     * @param anchor             锚点。是一个view的引用(ref)。可能为空。Notice: ref全局唯一。
+     * @param anchorInstanceId   weex实例id。代表anchor所在的weex实例。默认是当前module所在实例。可能为空。
+     * @param eventType          事件类型。如pan、scroll等。
+     * @param globalConfig       全局配置。
      * @param exitExpressionPair 边界条件表达式。
-     * @param expressionArgs 运行时参数。用于控制视图变换。
-     * @param callback 事件回调。
-     * @param instance 当前weex实例。
-     * */
-    public String doBind(@Nullable String anchor, @Nullable String anchorInstanceId, @Nullable String eventType, @Nullable Map<String,Object> globalConfig, @Nullable ExpressionPair exitExpressionPair,
-                  @Nullable List<Map<String, Object>> expressionArgs, @Nullable JavaScriptCallback callback, @NonNull WXSDKInstance instance) {
+     * @param expressionArgs     运行时参数。用于控制视图变换。
+     * @param callback           事件回调。
+     * @param context            上下文
+     * @param instanceId         页面id。可选
+     */
+    public String doBind(@Nullable String anchor,
+                         @Nullable String anchorInstanceId,
+                         @Nullable String eventType,
+                         @Nullable Map<String, Object> globalConfig,
+                         @Nullable ExpressionPair exitExpressionPair,
+                         @Nullable List<Map<String, Object>> expressionArgs,
+                         @Nullable JavaScriptCallback callback,
+                         @Nullable Context context,
+                         @Nullable String instanceId) {
 
         if (TextUtils.isEmpty(eventType) || expressionArgs == null) {
-            LogProxy.e( "doBind failed,illegal argument.[" + eventType + "," + expressionArgs + "]");
+            LogProxy.e("doBind failed,illegal argument.[" + eventType + "," + expressionArgs + "]");
             return null;
         }
 
         IEventHandler handler = null;
-        Map<String/*eventType*/,IEventHandler> handlerMap = null;
+        Map<String/*eventType*/, IEventHandler> handlerMap = null;
         String token = anchor;
-        if(mBindingCouples != null && !TextUtils.isEmpty(anchor) && (handlerMap=mBindingCouples.get(anchor)) != null) {
+        if (mBindingCouples != null && !TextUtils.isEmpty(anchor) && (handlerMap = mBindingCouples.get(anchor)) != null) {
             handler = handlerMap.get(eventType);
         }
 
-        if(handler == null) {
-            LogProxy.d("binding not enabled,try auto enable it.[sourceRef:"+anchor+",eventType:"+eventType+"]");
-            token = doPrepare(anchor,anchorInstanceId, eventType,instance);
-            if(!TextUtils.isEmpty(token) && mBindingCouples != null && (handlerMap=mBindingCouples.get(token)) != null) {
+        if (handler == null) {
+            LogProxy.d("binding not enabled,try auto enable it.[sourceRef:" + anchor + ",eventType:" + eventType + "]");
+            token = doPrepare(context, instanceId, anchor, anchorInstanceId, eventType);
+            if (!TextUtils.isEmpty(token) && mBindingCouples != null && (handlerMap = mBindingCouples.get(token)) != null) {
                 handler = handlerMap.get(eventType);
             }
         }
 
-        if(handler != null) {
+        if (handler != null) {
             handler.onBindExpression(eventType, globalConfig, exitExpressionPair, expressionArgs, callback);
             LogProxy.d("createBinding success.[exitExp:" + exitExpressionPair + ",args:" + expressionArgs + "]");
         } else {
@@ -249,48 +262,48 @@ public class ExpressionBindingCore{
     }
 
     public void onActivityPause() {
-        if(mBindingCouples == null) {
+        if (mBindingCouples == null) {
             return;
         }
         try {
-            for(Map<String,IEventHandler> map : mBindingCouples.values()) {
-                for(IEventHandler h : map.values()) {
+            for (Map<String, IEventHandler> map : mBindingCouples.values()) {
+                for (IEventHandler h : map.values()) {
                     try {
                         h.onActivityPause();
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         LogProxy.e("execute activity pause failed.", e);
                     }
                 }
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             LogProxy.e("activity pause failed", e);
         }
     }
 
     public void onActivityResume() {
-        if(mBindingCouples == null) {
+        if (mBindingCouples == null) {
             return;
         }
         try {
-            for(Map<String,IEventHandler> map : mBindingCouples.values()) {
-                for(IEventHandler h : map.values()) {
+            for (Map<String, IEventHandler> map : mBindingCouples.values()) {
+                for (IEventHandler h : map.values()) {
                     try {
                         h.onActivityResume();
-                    }catch (Exception e) {
-                        LogProxy.e("execute activity pause failed.",e);
+                    } catch (Exception e) {
+                        LogProxy.e("execute activity pause failed.", e);
                     }
                 }
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             LogProxy.e("activity pause failed", e);
         }
     }
 
-    public void registerEventHandler(String eventType, ObjectCreator<IEventHandler,Context> creator) {
-        if(TextUtils.isEmpty(eventType) || creator == null) {
+    public void registerEventHandler(String eventType, ObjectCreator<IEventHandler, Context> creator) {
+        if (TextUtils.isEmpty(eventType) || creator == null) {
             return;
         }
-        mInternalEventHandlerCreatorMap.put(eventType,creator);
+        mInternalEventHandlerCreatorMap.put(eventType, creator);
     }
 
     private String generateToken() {
@@ -298,29 +311,31 @@ public class ExpressionBindingCore{
     }
 
     @Nullable
-    private IEventHandler createEventHandler(@NonNull String eventType, @NonNull WXSDKInstance instance) {
-        if(mInternalEventHandlerCreatorMap.isEmpty()) {
+    private IEventHandler createEventHandler(@NonNull Context context,
+                                             @Nullable String instanceId,
+                                             @NonNull String eventType) {
+        if (mInternalEventHandlerCreatorMap.isEmpty()) {
             return null;
         }
-        ObjectCreator<IEventHandler,Context> creator = mInternalEventHandlerCreatorMap.get(eventType);
-        return (creator != null) ? creator.createWith(instance.getContext(), instance.getInstanceId()) : null;
+        ObjectCreator<IEventHandler, Context> creator = mInternalEventHandlerCreatorMap.get(eventType);
+        return (creator != null) ? creator.createWith(context, instanceId) : null;
     }
 
     /**
      * Provide instance of {@code Type}.
-     *
-     * */
-    public interface ObjectCreator<Type,Param> {
+     */
+    public interface ObjectCreator<Type, Param> {
         Type createWith(Param p, Object... extension);
     }
 
     /**
      * Interface that represent standard javascript callback function
-     * */
+     */
     public interface JavaScriptCallback {
         /**
-         * @param params arguments passed to javascript callback method via different platform's bridge
-         * */
+         * @param params arguments passed to javascript callback method via different platform's
+         *               bridge
+         */
         void callback(Object params);
     }
 }

@@ -36,13 +36,13 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule{
+public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
 
     private ExpressionBindingCore mExpressionBindingCore;
 
     @JSMethod(uiThread = false)
     public void prepare(Map<String, Object> params) {
-        if(mExpressionBindingCore == null) {
+        if (mExpressionBindingCore == null) {
             mExpressionBindingCore = new ExpressionBindingCore();
         }
 
@@ -51,96 +51,100 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule{
 
     @JSMethod(uiThread = false)
     public Map<String, String> bind(Map<String, Object> params, final JSCallback callback) {
-        if(mExpressionBindingCore == null) {
+        if (mExpressionBindingCore == null) {
             mExpressionBindingCore = new ExpressionBindingCore();
         }
 
-        String token = mExpressionBindingCore.doBind(params,new ExpressionBindingCore.JavaScriptCallback(){
-            @Override
-            public void callback(Object params) {
-                if(callback != null) {
-                    callback.invokeAndKeepAlive(params);
-                }
-            }
-        },mWXSDKInstance);
-        Map<String,String> result = new HashMap<>(2);
+        String token = mExpressionBindingCore.doBind(
+                mWXSDKInstance == null ? null : mWXSDKInstance.getContext(),
+                mWXSDKInstance == null ? null : mWXSDKInstance.getInstanceId(),
+                params == null ? Collections.<String, Object>emptyMap() : params,
+                new ExpressionBindingCore.JavaScriptCallback() {
+                    @Override
+                    public void callback(Object params) {
+                        if (callback != null) {
+                            callback.invokeAndKeepAlive(params);
+                        }
+                    }
+                });
+        Map<String, String> result = new HashMap<>(2);
         result.put(ExpressionConstants.KEY_TOKEN, token);
         return result;
     }
 
     @JSMethod(uiThread = false)
     public void unbind(Map<String, Object> params) {
-        if(mExpressionBindingCore != null) {
+        if (mExpressionBindingCore != null) {
             mExpressionBindingCore.doUnbind(params);
         }
     }
 
     @JSMethod(uiThread = false)
     public void unbindAll() {
-        if(mExpressionBindingCore != null) {
+        if (mExpressionBindingCore != null) {
             mExpressionBindingCore.doRelease();
         }
     }
 
     @JSMethod(uiThread = false)
     public List<String> supportFeatures() {
-        return Arrays.asList("pan","orientation","timing","scroll");
+        return Arrays.asList("pan", "orientation", "timing", "scroll");
     }
 
     @JSMethod(uiThread = false)
     public Map<String, Object> getComputedStyle(@Nullable String ref) {
         WXComponent component = WXModuleUtils.findComponentByRef(mWXSDKInstance.getInstanceId(), ref);
-        if(component == null) {
+        if (component == null) {
             return Collections.emptyMap();
         }
         View sourceView = component.getHostView();
-        if(sourceView == null) {
+        if (sourceView == null) {
             return Collections.emptyMap();
         }
 
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
         map.put("translateX", sourceView.getTranslationX() * WXEnvironment.sDefaultWidth / (float) WXViewUtils.getScreenWidth());
-        map.put("translateY",sourceView.getTranslationY() * WXEnvironment.sDefaultWidth / (float) WXViewUtils.getScreenWidth());
+        map.put("translateY", sourceView.getTranslationY() * WXEnvironment.sDefaultWidth / (float) WXViewUtils.getScreenWidth());
 
         map.put("rotateX", Utils.normalizeRotation(sourceView.getRotationX()));
         map.put("rotateY", Utils.normalizeRotation(sourceView.getRotationY()));
         map.put("rotateZ", Utils.normalizeRotation(sourceView.getRotation()));
 
-        map.put("scaleX",sourceView.getScaleX());
-        map.put("scaleY",sourceView.getScaleY());
+        map.put("scaleX", sourceView.getScaleX());
+        map.put("scaleY", sourceView.getScaleY());
 
-        map.put("opacity",sourceView.getAlpha());
+        map.put("opacity", sourceView.getAlpha());
 
-         if(sourceView.getBackground() != null) {
-             int backgroundColor = Color.BLACK;
-             if(sourceView.getBackground() instanceof ColorDrawable) {
-                 backgroundColor = ((ColorDrawable) sourceView.getBackground()).getColor();
-             } else if(sourceView.getBackground() instanceof BorderDrawable) {
-                 backgroundColor = ((BorderDrawable) sourceView.getBackground()).getColor();
-             }
+        if (sourceView.getBackground() != null) {
+            int backgroundColor = Color.BLACK;
+            if (sourceView.getBackground() instanceof ColorDrawable) {
+                backgroundColor = ((ColorDrawable) sourceView.getBackground()).getColor();
+            } else if (sourceView.getBackground() instanceof BorderDrawable) {
+                backgroundColor = ((BorderDrawable) sourceView.getBackground()).getColor();
+            }
 
-             double a = Color.alpha(backgroundColor)/255.0d;
-             int r = Color.red(backgroundColor);
-             int g = Color.green(backgroundColor);
-             int b = Color.blue(backgroundColor);
-             map.put("background-color",String.format(Locale.CHINA,"rgba(%d,%d,%d,%f)",r,g,b,a));
+            double a = Color.alpha(backgroundColor) / 255.0d;
+            int r = Color.red(backgroundColor);
+            int g = Color.green(backgroundColor);
+            int b = Color.blue(backgroundColor);
+            map.put("background-color", String.format(Locale.CHINA, "rgba(%d,%d,%d,%f)", r, g, b, a));
         }
 
-        if(component instanceof WXText && sourceView instanceof WXTextView) {
+        if (component instanceof WXText && sourceView instanceof WXTextView) {
             Layout layout = ((WXTextView) sourceView).getTextLayout();
-            if(layout != null) {
+            if (layout != null) {
                 CharSequence sequence = layout.getText();
-                if(sequence != null && sequence instanceof SpannableString) {
+                if (sequence != null && sequence instanceof SpannableString) {
                     ForegroundColorSpan[] spans = ((SpannableString) sequence).getSpans(0, sequence.length(), ForegroundColorSpan.class);
-                    if(spans != null && spans.length == 1) {
+                    if (spans != null && spans.length == 1) {
                         int fontColor = spans[0].getForegroundColor();
 
-                        double a = Color.alpha(fontColor)/255.0d;
+                        double a = Color.alpha(fontColor) / 255.0d;
                         int r = Color.red(fontColor);
                         int g = Color.green(fontColor);
                         int b = Color.blue(fontColor);
-                        map.put("color",String.format(Locale.CHINA,"rgba(%d,%d,%d,%f)",r,g,b,a));
+                        map.put("color", String.format(Locale.CHINA, "rgba(%d,%d,%d,%f)", r, g, b, a));
                     }
                 }
             }
@@ -154,7 +158,7 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule{
         WXBridgeManager.getInstance().post(new Runnable() {
             @Override
             public void run() {
-                if(mExpressionBindingCore != null) {
+                if (mExpressionBindingCore != null) {
                     mExpressionBindingCore.doRelease();
                     mExpressionBindingCore = null;
                 }
@@ -170,7 +174,7 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule{
         WXBridgeManager.getInstance().post(new Runnable() {
             @Override
             public void run() {
-                if(mExpressionBindingCore != null) {
+                if (mExpressionBindingCore != null) {
                     mExpressionBindingCore.onActivityPause();
                 }
             }
@@ -182,7 +186,7 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule{
         WXBridgeManager.getInstance().post(new Runnable() {
             @Override
             public void run() {
-                if(mExpressionBindingCore != null) {
+                if (mExpressionBindingCore != null) {
                     mExpressionBindingCore.onActivityResume();
                 }
             }
