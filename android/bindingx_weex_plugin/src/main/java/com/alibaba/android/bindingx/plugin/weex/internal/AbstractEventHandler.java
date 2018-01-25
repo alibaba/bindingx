@@ -118,7 +118,9 @@ abstract class AbstractEventHandler implements IEventHandler {
      * */
     boolean evaluateExitExpression(ExpressionPair exitExpression, @NonNull Map<String,Object> scope) {
         boolean exit = false;
-        if (exitExpression != null && !TextUtils.isEmpty(exitExpression.transformed)) {
+        if (exitExpression != null
+                && !TextUtils.isEmpty(exitExpression.transformed)
+                && !"{}".equals(exitExpression.transformed)) {
             Expression expression = new Expression(exitExpression.transformed);
             try {
                 exit = (boolean) expression.execute(scope);
@@ -183,7 +185,9 @@ abstract class AbstractEventHandler implements IEventHandler {
                 }
 
                 ExpressionPair expressionPair = holder.expressionPair;
-                if(expressionPair == null || expressionPair.transformed == null/*现阶段transform的表达式是必需的*/) {
+                if(expressionPair == null
+                        || TextUtils.isEmpty(expressionPair.transformed)
+                        || "{}".equals(expressionPair.transformed)) {
                     continue;
                 }
                 Expression expression = mCachedExpressionMap.get(expressionPair.transformed);
