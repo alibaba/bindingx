@@ -10,6 +10,7 @@ import com.alibaba.android.bindingx.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
 import com.alibaba.android.bindingx.plugin.weex.IEventHandler;
 import com.alibaba.android.bindingx.plugin.weex.LogProxy;
+import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
 import com.taobao.weex.ui.component.WXComponent;
 
 import org.json.JSONException;
@@ -36,13 +37,15 @@ abstract class AbstractEventHandler implements IEventHandler {
     String mInstanceId;
     String mAnchorInstanceId;
     Context mContext;
+    PlatformManager mPlatformManager;
 
     ExpressionPair mExitExpressionPair;
 
     Cache<String, Expression> mCachedExpressionMap = new Cache<>(16);
 
-    AbstractEventHandler(Context context, Object... extension) {
+    AbstractEventHandler(Context context, PlatformManager manager, Object... extension) {
         mContext = context;
+        mPlatformManager = manager;
         mInstanceId = (extension != null && extension.length > 0 && extension[0] instanceof String) ? ((String)extension[0]) : null;
     }
 

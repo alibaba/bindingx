@@ -27,7 +27,7 @@ import java.util.UUID;
 
 public class ExpressionBindingCore {
     private Map<String/*token*/, Map<String/*event type*/, IEventHandler>> mBindingCouples;
-    private final Map<String, ObjectCreator<IEventHandler, Context>> mInternalEventHandlerCreatorMap =
+    private final Map<String, ObjectCreator<IEventHandler, Context, PlatformManager>> mInternalEventHandlerCreatorMap =
             new HashMap<>(8);
     private final PlatformManager mPlatformManager;
 
@@ -38,28 +38,28 @@ public class ExpressionBindingCore {
      * */
     public ExpressionBindingCore(@NonNull PlatformManager platformManager) {
         this.mPlatformManager = platformManager;
-        registerEventHandler(EventType.TYPE_PAN, new ObjectCreator<IEventHandler, Context>() {
+        registerEventHandler(EventType.TYPE_PAN, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
             @Override
-            public IEventHandler createWith(Context context, Object... extension) {
-                return new ExpressionTouchHandler(context, extension);
+            public IEventHandler createWith(Context context, PlatformManager manager, Object... extension) {
+                return new ExpressionTouchHandler(context, manager, extension);
             }
         });
-        registerEventHandler(EventType.TYPE_ORIENTATION, new ObjectCreator<IEventHandler, Context>() {
+        registerEventHandler(EventType.TYPE_ORIENTATION, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
             @Override
-            public IEventHandler createWith(Context context, Object... extension) {
-                return new ExpressionOrientationHandler(context, extension);
+            public IEventHandler createWith(Context context,PlatformManager manager, Object... extension) {
+                return new ExpressionOrientationHandler(context, manager, extension);
             }
         });
-        registerEventHandler(EventType.TYPE_SCROLL, new ObjectCreator<IEventHandler, Context>() {
+        registerEventHandler(EventType.TYPE_SCROLL, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
             @Override
-            public IEventHandler createWith(Context context, Object... extension) {
-                return new ExpressionScrollHandler(context, extension);
+            public IEventHandler createWith(Context context, PlatformManager manager, Object... extension) {
+                return new ExpressionScrollHandler(context, manager, extension);
             }
         });
-        registerEventHandler(EventType.TYPE_TIMING, new ObjectCreator<IEventHandler, Context>() {
+        registerEventHandler(EventType.TYPE_TIMING, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
             @Override
-            public IEventHandler createWith(Context context, Object... extension) {
-                return new ExpressionTimingHandler(context, extension);
+            public IEventHandler createWith(Context context, PlatformManager manager, Object... extension) {
+                return new ExpressionTimingHandler(context, manager, extension);
             }
         });
     }
@@ -306,7 +306,7 @@ public class ExpressionBindingCore {
         }
     }
 
-    public void registerEventHandler(String eventType, ObjectCreator<IEventHandler, Context> creator) {
+    public void registerEventHandler(String eventType, ObjectCreator<IEventHandler, Context, PlatformManager> creator) {
         if (TextUtils.isEmpty(eventType) || creator == null) {
             return;
         }
@@ -324,15 +324,15 @@ public class ExpressionBindingCore {
         if (mInternalEventHandlerCreatorMap.isEmpty()) {
             return null;
         }
-        ObjectCreator<IEventHandler, Context> creator = mInternalEventHandlerCreatorMap.get(eventType);
-        return (creator != null) ? creator.createWith(context, instanceId) : null;
+        ObjectCreator<IEventHandler, Context, PlatformManager> creator = mInternalEventHandlerCreatorMap.get(eventType);
+        return (creator != null) ? creator.createWith(context,mPlatformManager,instanceId) : null;
     }
 
     /**
      * Provide instance of {@code Type}.
      */
-    public interface ObjectCreator<Type, Param> {
-        Type createWith(Param p, Object... extension);
+    public interface ObjectCreator<Type, ParamA, ParamB> {
+        Type createWith(ParamA p1, ParamB p2, Object... extension);
     }
 
     /**

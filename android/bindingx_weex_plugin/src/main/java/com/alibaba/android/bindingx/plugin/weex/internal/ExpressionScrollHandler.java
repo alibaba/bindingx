@@ -12,6 +12,7 @@ import com.alibaba.android.bindingx.plugin.weex.EventType;
 import com.alibaba.android.bindingx.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
 import com.alibaba.android.bindingx.plugin.weex.LogProxy;
+import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
 import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.bridge.WXBridgeManager;
 import com.taobao.weex.common.Constants;
@@ -51,8 +52,8 @@ public class ExpressionScrollHandler extends AbstractEventHandler{
 
     private String mSourceRef;
 
-    public ExpressionScrollHandler(Context context, Object... extension) {
-        super(context, extension);
+    public ExpressionScrollHandler(Context context, PlatformManager manager, Object... extension) {
+        super(context,manager,extension);
     }
 
     @Override
