@@ -181,9 +181,11 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
                     @Nullable
                     @Override
                     public View findViewBy(String ref, Object... extension) {
-                        //TODO
-
-                        return null;
+                        if(extension.length <= 0 || !(extension[0] instanceof String)) {
+                            return null;
+                        }
+                        String instanceId = (String) extension[0];
+                        return WXModuleUtils.findViewByRef(instanceId, ref);
                     }
                 })
                 .withViewUpdater(new PlatformManager.IViewUpdater() {

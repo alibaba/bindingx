@@ -165,7 +165,7 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
     @Override
     public boolean onCreate(@NonNull String sourceRef, @NonNull String eventType) {
         String instanceId = TextUtils.isEmpty(mAnchorInstanceId) ? mInstanceId : mAnchorInstanceId;
-        View sourceView = WXModuleUtils.findViewByRef(instanceId, sourceRef);
+        View sourceView = mPlatformManager.getViewFinder().findViewBy(sourceRef, instanceId);
         if (sourceView == null) {
             LogProxy.e("[ExpressionTouchHandler] onCreate failed. sourceView not found:" + sourceRef);
             return false;
@@ -207,7 +207,7 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
         //如果所有手势都不支持的话，那么可以清除touchHandler
         if (!this.isPanGestureAvailable() && !this.isFlickGestureAvailable()) {
             String instanceId = TextUtils.isEmpty(mAnchorInstanceId) ? mInstanceId : mAnchorInstanceId;
-            View hostView = WXModuleUtils.findViewByRef(instanceId, sourceRef);
+            View hostView = mPlatformManager.getViewFinder().findViewBy(sourceRef, instanceId);
             if (hostView != null) {
                 hostView.setOnTouchListener(null);
             }
