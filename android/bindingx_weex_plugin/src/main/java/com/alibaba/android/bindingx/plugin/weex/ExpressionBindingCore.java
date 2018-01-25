@@ -321,7 +321,7 @@ public class ExpressionBindingCore {
     private IEventHandler createEventHandler(@NonNull Context context,
                                              @Nullable String instanceId,
                                              @NonNull String eventType) {
-        if (mInternalEventHandlerCreatorMap.isEmpty()) {
+        if (mInternalEventHandlerCreatorMap.isEmpty() || mPlatformManager == null) {
             return null;
         }
         ObjectCreator<IEventHandler, Context, PlatformManager> creator = mInternalEventHandlerCreatorMap.get(eventType);

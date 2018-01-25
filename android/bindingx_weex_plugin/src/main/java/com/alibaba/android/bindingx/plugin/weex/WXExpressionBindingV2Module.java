@@ -11,8 +11,8 @@ import android.view.View;
 
 import com.alibaba.android.bindingx.plugin.weex.internal.Utils;
 import com.alibaba.android.bindingx.plugin.weex.internal.WXModuleUtils;
-import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKEngine;
+import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.annotation.JSMethod;
 import com.taobao.weex.bridge.JSCallback;
 import com.taobao.weex.bridge.WXBridgeManager;
@@ -45,7 +45,7 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
     @JSMethod(uiThread = false)
     public void prepare(Map<String, Object> params) {
         if(mPlatformManager == null) {
-            mPlatformManager = createPlatformManager();
+            mPlatformManager = createPlatformManager(mWXSDKInstance);
         }
         if (mExpressionBindingCore == null) {
             mExpressionBindingCore = new ExpressionBindingCore(mPlatformManager);
@@ -95,6 +95,9 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
 
     @JSMethod(uiThread = false)
     public Map<String, Object> getComputedStyle(@Nullable String ref) {
+        prepare(null);
+        PlatformManager.IDeviceResolutionTranslator resolutionTranslator = mPlatformManager.getResolutionTranslator();
+
         WXComponent component = WXModuleUtils.findComponentByRef(mWXSDKInstance.getInstanceId(), ref);
         if (component == null) {
             return Collections.emptyMap();
@@ -106,8 +109,9 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
 
         Map<String, Object> map = new HashMap<>();
 
-        map.put("translateX", sourceView.getTranslationX() * WXEnvironment.sDefaultWidth / (float) WXViewUtils.getScreenWidth());
-        map.put("translateY", sourceView.getTranslationY() * WXEnvironment.sDefaultWidth / (float) WXViewUtils.getScreenWidth());
+        map.put("translateX", resolutionTranslator.nativeToWeb(sourceView.getTranslationX()));
+        map.put("translateY", resolutionTranslator.nativeToWeb(sourceView.getTranslationY()));
+
 
         map.put("rotateX", Utils.normalizeRotation(sourceView.getRotationX()));
         map.put("rotateY", Utils.normalizeRotation(sourceView.getRotationY()));
@@ -169,7 +173,9 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
     }
 
     @NonNull
-    /*package*/ static PlatformManager createPlatformManager() {
+    /*package*/ static PlatformManager createPlatformManager(WXSDKInstance instance) {
+        final int viewPort = instance == null ? 750 : instance.getInstanceViewPortWidth();
+
         return new PlatformManager.Builder()
                 .withViewFinder(new PlatformManager.IViewFinder() {
                     @Nullable
@@ -192,16 +198,12 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
                 .withDeviceResolutionTranslator(new PlatformManager.IDeviceResolutionTranslator() {
                     @Override
                     public double webToNative(double rawSize, Object... extension) {
-                        //TODO
-
-                        return 0;
+                        return WXViewUtils.getRealPxByWidth((float) rawSize, viewPort);
                     }
 
                     @Override
                     public double nativeToWeb(double rawSize, Object... extension) {
-                        //TODO
-
-                        return 0;
+                        return WXViewUtils.getWebPxByWidth((float) rawSize, viewPort);
                     }
                 })
                 .build();

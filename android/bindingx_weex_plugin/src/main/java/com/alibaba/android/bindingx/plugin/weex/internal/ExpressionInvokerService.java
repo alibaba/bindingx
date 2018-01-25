@@ -15,13 +15,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.bindingx.plugin.weex.LogProxy;
-import com.taobao.weex.WXEnvironment;
+import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXScroller;
 import com.taobao.weex.ui.component.WXText;
 import com.taobao.weex.ui.view.WXTextView;
 import com.taobao.weex.utils.WXUtils;
-import com.taobao.weex.utils.WXViewUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,8 +78,11 @@ final class ExpressionInvokerService {
 
     private static final class NOpInvoker implements IExpressionInvoker {
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull View targetView,
-                           @NonNull Object cmd, @NonNull Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull View targetView,
+                           @NonNull Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String,Object> config) {
             //oops
         }
     }
@@ -97,8 +99,11 @@ final class ExpressionInvokerService {
     private static final class ContentOffsetInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull Object cmd, @NonNull Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String,Object> config) {
             final View scrollView = findScrollTarget(component);
             if(scrollView == null) {
                 return;
@@ -108,8 +113,8 @@ final class ExpressionInvokerService {
                 postRunnable(scrollView, new Runnable() {
                     @Override
                     public void run() {
-                        scrollView.setScrollX((int) getRealSize(val));
-                        scrollView.setScrollY((int) getRealSize(val));
+                        scrollView.setScrollX((int) getRealSize(val,translator));
+                        scrollView.setScrollY((int) getRealSize(val,translator));
                     }
                 });
             } else if(cmd instanceof ArrayList) {
@@ -120,8 +125,8 @@ final class ExpressionInvokerService {
                     postRunnable(scrollView, new Runnable() {
                         @Override
                         public void run() {
-                            scrollView.setScrollX((int) getRealSize(x));
-                            scrollView.setScrollY((int) getRealSize(y));
+                            scrollView.setScrollX((int) getRealSize(x,translator));
+                            scrollView.setScrollY((int) getRealSize(y,translator));
                         }
                     });
                 }
@@ -133,8 +138,11 @@ final class ExpressionInvokerService {
     private static final class ContentOffsetXInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull Object cmd, @NonNull Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String,Object> config) {
             final View scrollView = findScrollTarget(component);
             if(scrollView == null) {
                 return;
@@ -146,7 +154,7 @@ final class ExpressionInvokerService {
             postRunnable(scrollView, new Runnable() {
                 @Override
                 public void run() {
-                    scrollView.setScrollX((int) getRealSize(val));
+                    scrollView.setScrollX((int) getRealSize(val,translator));
                 }
             });
         }
@@ -155,8 +163,11 @@ final class ExpressionInvokerService {
     private static final class ContentOffsetYInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull Object cmd, @NonNull Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String,Object> config) {
             if(!(cmd instanceof Double)) {
                 return;
             }
@@ -168,7 +179,7 @@ final class ExpressionInvokerService {
             postRunnable(targetView, new Runnable() {
                 @Override
                 public void run() {
-                    scrollView.setScrollY((int) getRealSize(val));
+                    scrollView.setScrollY((int) getRealSize(val,translator));
                 }
             });
         }
@@ -177,8 +188,11 @@ final class ExpressionInvokerService {
     private static final class OpacityInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull Object cmd, @NonNull Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String,Object> config) {
             if(!(cmd instanceof Double)) {
                 return;
             }
@@ -196,8 +210,11 @@ final class ExpressionInvokerService {
     private static final class TranslateInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull Object cmd, @NonNull Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String,Object> config) {
 
             if(!(cmd instanceof ArrayList)) {
                 return;
@@ -210,8 +227,8 @@ final class ExpressionInvokerService {
                 postRunnable(targetView, new Runnable() {
                     @Override
                     public void run() {
-                        targetView.setTranslationX((float) getRealSize(x1));
-                        targetView.setTranslationY((float) getRealSize(y1));
+                        targetView.setTranslationX((float) getRealSize(x1,translator));
+                        targetView.setTranslationY((float) getRealSize(y1,translator));
                     }
                 });
             }
@@ -221,8 +238,11 @@ final class ExpressionInvokerService {
     private static final class TranslateXInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull Object cmd, @NonNull Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String,Object> config) {
             if(!(cmd instanceof Double)) {
                 return;
             }
@@ -230,7 +250,7 @@ final class ExpressionInvokerService {
             postRunnable(targetView, new Runnable() {
                 @Override
                 public void run() {
-                    targetView.setTranslationX((float) getRealSize(d1));
+                    targetView.setTranslationX((float) getRealSize(d1,translator));
                 }
             });
         }
@@ -239,8 +259,11 @@ final class ExpressionInvokerService {
     private static final class TranslateYInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull Object cmd, @NonNull Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String,Object> config) {
             if(!(cmd instanceof Double)) {
                 return;
             }
@@ -248,7 +271,7 @@ final class ExpressionInvokerService {
             postRunnable(targetView, new Runnable() {
                 @Override
                 public void run() {
-                    targetView.setTranslationY((float) getRealSize(d2));
+                    targetView.setTranslationY((float) getRealSize(d2,translator));
                 }
             });
         }
@@ -257,8 +280,11 @@ final class ExpressionInvokerService {
     private static final class ScaleInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull final Object cmd, @NonNull final Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull final Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull final Map<String,Object> config) {
             postRunnable(targetView, new Runnable() {
                 @Override
                 public void run() {
@@ -298,8 +324,11 @@ final class ExpressionInvokerService {
     private static final class ScaleXInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull final Object cmd, @NonNull final Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull final Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull final Map<String,Object> config) {
             if(!(cmd instanceof Double)) {
                 return;
             }
@@ -324,8 +353,11 @@ final class ExpressionInvokerService {
     private static final class ScaleYInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull final Object cmd, @NonNull final Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull final Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull final Map<String,Object> config) {
             if(!(cmd instanceof Double)) {
                 return;
             }
@@ -350,8 +382,11 @@ final class ExpressionInvokerService {
     private static final class RotateInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull final Object cmd, @NonNull final Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull final Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull final Map<String,Object> config) {
 
             if(!(cmd instanceof Double)) {
                 return;
@@ -384,8 +419,11 @@ final class ExpressionInvokerService {
     private static final class RotateXInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull final Object cmd, @NonNull final Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull final Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull final Map<String,Object> config) {
             if(!(cmd instanceof Double)) {
                 return;
             }
@@ -417,8 +455,11 @@ final class ExpressionInvokerService {
     private static final class RotateYInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull final Object cmd, @NonNull final Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull final Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull final Map<String,Object> config) {
             if(!(cmd instanceof Double)) {
                 return;
             }
@@ -450,14 +491,17 @@ final class ExpressionInvokerService {
     private static final class WidthInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull Object cmd, @NonNull Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String,Object> config) {
             if(!(cmd instanceof Double)) {
                 return;
             }
             double d8 = (double) cmd;
             final ViewGroup.LayoutParams params1 = targetView.getLayoutParams();
-            params1.width = (int) getRealSize(d8);
+            params1.width = (int) getRealSize(d8,translator);
             postRunnable(targetView, new Runnable() {
                 @Override
                 public void run() {
@@ -470,14 +514,17 @@ final class ExpressionInvokerService {
     private static final class HeightInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull Object cmd, @NonNull Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String,Object> config) {
             if(!(cmd instanceof Double)) {
                 return;
             }
             double d9 = (double) cmd;
             final ViewGroup.LayoutParams params2 = targetView.getLayoutParams();
-            params2.height = (int) getRealSize(d9);
+            params2.height = (int) getRealSize(d9,translator);
             postRunnable(targetView, new Runnable() {
                 @Override
                 public void run() {
@@ -490,8 +537,11 @@ final class ExpressionInvokerService {
     private static final class BackgroundInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull WXComponent component, @NonNull final View targetView,
-                           @NonNull Object cmd, @NonNull Map<String,Object> config) {
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String,Object> config) {
             if(!(cmd instanceof Integer)) {
                 return;
             }
@@ -508,8 +558,11 @@ final class ExpressionInvokerService {
     private static final class ColorInvoker implements IExpressionInvoker {
 
         @Override
-        public void invoke(@NonNull final WXComponent component, @NonNull final View targetView,
-                           @NonNull final Object cmd, @NonNull Map<String, Object> config) {
+        public void invoke(@NonNull final WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull final Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String, Object> config) {
             if(!(cmd instanceof Integer)) {
                 return;
             }
@@ -546,8 +599,8 @@ final class ExpressionInvokerService {
         }
     }
 
-    private static double getRealSize(double size) {
-        return size * WXViewUtils.getScreenWidth() / (double) WXEnvironment.sDefaultWidth;
+    private static double getRealSize(double size,@NonNull PlatformManager.IDeviceResolutionTranslator translator) {
+        return translator.webToNative(size);
     }
 
 

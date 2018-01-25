@@ -4,8 +4,7 @@ import android.animation.ArgbEvaluator;
 import android.graphics.Color;
 import android.text.TextUtils;
 
-import com.taobao.weex.WXEnvironment;
-import com.taobao.weex.utils.WXViewUtils;
+import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
 
 import org.json.JSONException;
 
@@ -196,14 +195,6 @@ class JSMath {
     };
 
 
-    private static Object real = new JSFunctionInterface() {
-        @Override
-        public Object execute(ArrayList<Object> arguments) throws NumberFormatException, JSONException {
-            double d = (double) arguments.get(0);
-            return (double) WXViewUtils.getRealPxByWidth((float) d);
-        }
-    };
-
     private static Object rgb = new JSFunctionInterface() {
         @Override
         public Object execute(ArrayList<Object> arguments) throws NumberFormatException, JSONException {
@@ -268,9 +259,9 @@ class JSMath {
         }
     };
 
-    static void applyXYToScope(Map<String, Object> scope, double x,double y){
-        scope.put("x",(x* WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth()));
-        scope.put("y",(y* WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth()));
+    static void applyXYToScope(Map<String, Object> scope, double x, double y, PlatformManager.IDeviceResolutionTranslator translator){
+        scope.put("x", translator.nativeToWeb(x));
+        scope.put("y", translator.nativeToWeb(y));
         scope.put("internal_x",x);
         scope.put("internal_y",y);
     }
@@ -297,15 +288,15 @@ class JSMath {
     }
 
     static void applyScrollValuesToScope(Map<String,Object> scope, double x, double y
-                    , double dx, double dy, double tdx, double tdy) {
-        scope.put("x",(x* WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth()));
-        scope.put("y",(y* WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth()));
+                    , double dx, double dy, double tdx, double tdy, PlatformManager.IDeviceResolutionTranslator translator) {
+        scope.put("x", translator.nativeToWeb(x));
+        scope.put("y", translator.nativeToWeb(y));
 
-        scope.put("dx",(dx* WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth()));
-        scope.put("dy",(dy* WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth()));
+        scope.put("dx", translator.nativeToWeb(dx));
+        scope.put("dy", translator.nativeToWeb(dy));
 
-        scope.put("tdx",(tdx* WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth()));
-        scope.put("tdy",(tdy* WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth()));
+        scope.put("tdx", translator.nativeToWeb(tdx));
+        scope.put("tdy", translator.nativeToWeb(tdy));
 
         scope.put("internal_x",x);
         scope.put("internal_y",y);
@@ -344,8 +335,6 @@ class JSMath {
         scope.put("translate",JSMath.translate);
         scope.put("scale",JSMath.scale);
         scope.put("matrix",JSMath.matrix);
-
-        scope.put("real",JSMath.real);
 
         //rgb
         scope.put("rgb",JSMath.rgb);

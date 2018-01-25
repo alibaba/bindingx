@@ -13,8 +13,6 @@ import com.alibaba.android.bindingx.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
 import com.alibaba.android.bindingx.plugin.weex.LogProxy;
 import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
-import com.taobao.weex.WXEnvironment;
-import com.taobao.weex.utils.WXViewUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -127,7 +125,7 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
         float deltaY = curY - downY;
         try {
             //消费所有的表达式
-            JSMath.applyXYToScope(mScope, deltaX, deltaY);
+            JSMath.applyXYToScope(mScope, deltaX, deltaY, mPlatformManager.getResolutionTranslator());
             if(!evaluateExitExpression(mExitExpressionPair,mScope)) {
                 consumeExpression(mExpressionHoldersMap, mScope, EventType.TYPE_PAN);
             }
@@ -244,8 +242,8 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
         if (mCallback != null) {
             Map<String, Object> param = new HashMap<>();
             param.put("state", state);
-            double x = dx * WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth();
-            double y = dy * WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth();
+            double x = mPlatformManager.getResolutionTranslator().nativeToWeb(dx);
+            double y = mPlatformManager.getResolutionTranslator().nativeToWeb(dy);
             param.put("deltaX", x);
             param.put("deltaY", y);
             mCallback.callback(param);

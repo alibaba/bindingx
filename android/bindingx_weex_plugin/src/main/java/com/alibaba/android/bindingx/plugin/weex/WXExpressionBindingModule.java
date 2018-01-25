@@ -29,7 +29,7 @@ public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModu
     @Deprecated
     public void enableBinding(@Nullable String sourceRef, @Nullable String eventType) {
         if(mPlatformManager == null) {
-            mPlatformManager = WXExpressionBindingV2Module.createPlatformManager();
+            mPlatformManager = WXExpressionBindingV2Module.createPlatformManager(mWXSDKInstance);
         }
         if (mExpressionBindingCore == null) {
             mExpressionBindingCore = new ExpressionBindingCore(mPlatformManager);

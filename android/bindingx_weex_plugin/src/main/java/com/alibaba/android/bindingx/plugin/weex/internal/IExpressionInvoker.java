@@ -3,6 +3,7 @@ package com.alibaba.android.bindingx.plugin.weex.internal;
 import android.support.annotation.NonNull;
 import android.view.View;
 
+import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
 import com.taobao.weex.ui.component.WXComponent;
 
 import java.util.Map;
@@ -21,9 +22,13 @@ interface IExpressionInvoker {
      * @param component 组件名称
      * @param targetView 组件对应的native view
      * @param cmd 值
+     * @param translator 分辨率计算
      * @param config 扩展配置
      *
      * */
-    void invoke(@NonNull WXComponent component, @NonNull View targetView,
-                @NonNull Object cmd, @NonNull Map<String, Object> config);
+    void invoke(@NonNull WXComponent component,
+                @NonNull View targetView,
+                @NonNull Object cmd,
+                @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                @NonNull Map<String, Object> config);
 }

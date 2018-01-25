@@ -211,7 +211,8 @@ abstract class AbstractEventHandler implements IEventHandler {
                 }
                 //apply transform to target view.
                 //此操作需要在UI线程
-                ExpressionInvokerService.findInvoker(holder.prop).invoke(targetComponent, targetView, obj, holder.config);
+                ExpressionInvokerService.findInvoker(holder.prop)
+                        .invoke(targetComponent, targetView, obj, mPlatformManager.getResolutionTranslator(), holder.config);
             }
         }
 

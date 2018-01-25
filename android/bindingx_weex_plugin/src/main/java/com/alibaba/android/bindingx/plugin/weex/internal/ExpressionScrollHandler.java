@@ -13,7 +13,6 @@ import com.alibaba.android.bindingx.plugin.weex.ExpressionBindingCore;
 import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
 import com.alibaba.android.bindingx.plugin.weex.LogProxy;
 import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
-import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.bridge.WXBridgeManager;
 import com.taobao.weex.common.Constants;
 import com.taobao.weex.ui.component.WXComponent;
@@ -22,7 +21,6 @@ import com.taobao.weex.ui.component.list.WXListComponent;
 import com.taobao.weex.ui.view.WXScrollView;
 import com.taobao.weex.ui.view.listview.WXRecyclerView;
 import com.taobao.weex.ui.view.refresh.wrapper.BounceRecyclerView;
-import com.taobao.weex.utils.WXViewUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -125,7 +123,7 @@ public class ExpressionScrollHandler extends AbstractEventHandler{
 
         try {
             //消费所有的表达式
-            JSMath.applyScrollValuesToScope(mScope, contentOffsetX, contentOffsetY, dx, dy, tdx, tdy);
+            JSMath.applyScrollValuesToScope(mScope, contentOffsetX, contentOffsetY, dx, dy, tdx, tdy, mPlatformManager.getResolutionTranslator());
             if(!evaluateExitExpression(mExitExpressionPair,mScope)) {
                 consumeExpression(mExpressionHoldersMap, mScope, EventType.TYPE_SCROLL);
             }
@@ -192,18 +190,18 @@ public class ExpressionScrollHandler extends AbstractEventHandler{
         if (mCallback != null) {
             Map<String, Object> param = new HashMap<>();
             param.put("state", state);
-            double x = contentOffsetX * WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth();
-            double y = contentOffsetY * WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth();
+            double x = mPlatformManager.getResolutionTranslator().nativeToWeb(contentOffsetX);
+            double y = mPlatformManager.getResolutionTranslator().nativeToWeb(contentOffsetY);
             param.put("x", x);
             param.put("y", y);
 
-            double _dx = dx * WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth();
-            double _dy = dy * WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth();
+            double _dx = mPlatformManager.getResolutionTranslator().nativeToWeb(dx);
+            double _dy = mPlatformManager.getResolutionTranslator().nativeToWeb(dy);
             param.put("dx", _dx);
             param.put("dy", _dy);
 
-            double _tdx = tdx * WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth();
-            double _tdy = tdy * WXEnvironment.sDefaultWidth / (double) WXViewUtils.getScreenWidth();
+            double _tdx = mPlatformManager.getResolutionTranslator().nativeToWeb(tdx);
+            double _tdy = mPlatformManager.getResolutionTranslator().nativeToWeb(tdy);
             param.put("tdx", _tdx);
             param.put("tdy", _tdy);
 

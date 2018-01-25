@@ -19,16 +19,17 @@ public class PlatformManager {
     private PlatformManager() {
     }
 
-    @Nullable
+    @NonNull
     public IDeviceResolutionTranslator getResolutionTranslator() {
         return mResolutionTranslator;
     }
 
-    @Nullable
+    @NonNull
     public IViewFinder getViewFinder() {
         return mViewFinder;
     }
 
+    @NonNull
     public IViewUpdater getViewUpdater() {
         return mViewUpdater;
     }
@@ -77,17 +78,17 @@ public class PlatformManager {
             return factory;
         }
 
-        public Builder withDeviceResolutionTranslator(IDeviceResolutionTranslator translator) {
+        public Builder withDeviceResolutionTranslator(@NonNull IDeviceResolutionTranslator translator) {
             this.deviceResolutionTranslator = translator;
             return this;
         }
 
-        public Builder withViewFinder(IViewFinder finder) {
+        public Builder withViewFinder(@NonNull IViewFinder finder) {
             this.viewFinder =  finder;
             return this;
         }
 
-        public Builder withViewUpdater(IViewUpdater viewUpdater) {
+        public Builder withViewUpdater(@NonNull IViewUpdater viewUpdater) {
             this.viewUpdater = viewUpdater;
             return this;
         }
