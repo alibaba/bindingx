@@ -197,6 +197,11 @@ abstract class AbstractEventHandler implements IEventHandler {
                     LogProxy.e("failed to execute expression,expression result is null");
                     continue;
                 }
+                if((obj instanceof Double) && Double.isNaN((Double) obj) ||
+                        (obj instanceof Float && Float.isNaN((Float)obj))) {
+                    LogProxy.e("failed to execute expression,expression result is NaN");
+                    continue;
+                }
                 //apply transform to target view.
                 //此操作需要在UI线程
                 ExpressionInvokerService.findInvoker(holder.prop).invoke(targetComponent, targetView, obj, holder.config);
