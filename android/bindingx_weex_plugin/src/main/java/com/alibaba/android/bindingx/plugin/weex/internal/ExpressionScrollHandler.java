@@ -35,7 +35,7 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-public class ExpressionScrollHandler extends AbstractEventHandler{
+public class ExpressionScrollHandler extends AbstractScrollEventHandler{
 
     private boolean isStart = false;
 

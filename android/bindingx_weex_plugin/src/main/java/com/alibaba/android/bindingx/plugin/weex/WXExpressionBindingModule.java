@@ -1,8 +1,11 @@
 package com.alibaba.android.bindingx.plugin.weex;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionPair;
+import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionScrollHandler;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.annotation.JSMethod;
 import com.taobao.weex.bridge.JSCallback;
@@ -33,6 +36,13 @@ public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModu
         }
         if (mExpressionBindingCore == null) {
             mExpressionBindingCore = new ExpressionBindingCore(mPlatformManager);
+            mExpressionBindingCore.registerEventHandler(EventType.TYPE_SCROLL,
+                    new ExpressionBindingCore.ObjectCreator<IEventHandler, Context, PlatformManager>() {
+                        @Override
+                        public IEventHandler createWith(@NonNull Context context, @NonNull PlatformManager manager, Object... extension) {
+                            return new ExpressionScrollHandler(context, manager, extension);
+                        }
+                    });
         }
 
         //空实现。 此方法仅为了与iOS兼容

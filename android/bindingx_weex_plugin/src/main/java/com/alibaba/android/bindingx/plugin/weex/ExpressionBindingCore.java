@@ -7,7 +7,6 @@ import android.text.TextUtils;
 
 import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionOrientationHandler;
 import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionPair;
-import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionScrollHandler;
 import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionTimingHandler;
 import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionTouchHandler;
 import com.alibaba.android.bindingx.plugin.weex.internal.Utils;
@@ -48,12 +47,6 @@ public class ExpressionBindingCore {
             @Override
             public IEventHandler createWith(@NonNull Context context,@NonNull PlatformManager manager, Object... extension) {
                 return new ExpressionOrientationHandler(context, manager, extension);
-            }
-        });
-        registerEventHandler(EventType.TYPE_SCROLL, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
-            @Override
-            public IEventHandler createWith(@NonNull Context context,@NonNull PlatformManager manager, Object... extension) {
-                return new ExpressionScrollHandler(context, manager, extension);
             }
         });
         registerEventHandler(EventType.TYPE_TIMING, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
@@ -306,6 +299,13 @@ public class ExpressionBindingCore {
         }
     }
 
+    /**
+     * register an eventHandler to handle a specific EventType.
+     *
+     * @param eventType the event type name like pan/orientation
+     * @param creator a factory to create an instance of {@link IEventHandler}
+     *
+     * */
     public void registerEventHandler(String eventType, ObjectCreator<IEventHandler, Context, PlatformManager> creator) {
         if (TextUtils.isEmpty(eventType) || creator == null) {
             return;

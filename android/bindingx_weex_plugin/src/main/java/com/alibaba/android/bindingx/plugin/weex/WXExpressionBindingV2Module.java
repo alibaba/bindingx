@@ -1,5 +1,6 @@
 package com.alibaba.android.bindingx.plugin.weex;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
+import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionScrollHandler;
 import com.alibaba.android.bindingx.plugin.weex.internal.Utils;
 import com.alibaba.android.bindingx.plugin.weex.internal.WXModuleUtils;
 import com.taobao.weex.WXSDKEngine;
@@ -49,6 +51,14 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
         }
         if (mExpressionBindingCore == null) {
             mExpressionBindingCore = new ExpressionBindingCore(mPlatformManager);
+
+            mExpressionBindingCore.registerEventHandler(EventType.TYPE_SCROLL,
+                    new ExpressionBindingCore.ObjectCreator<IEventHandler, Context, PlatformManager>() {
+                @Override
+                public IEventHandler createWith(@NonNull Context context,@NonNull PlatformManager manager, Object... extension) {
+                    return new ExpressionScrollHandler(context, manager, extension);
+                }
+            });
         }
 
         //空实现。 此方法仅为了与iOS兼容
