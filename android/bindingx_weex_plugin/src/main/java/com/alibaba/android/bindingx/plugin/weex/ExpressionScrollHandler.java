@@ -1,4 +1,4 @@
-package com.alibaba.android.bindingx.plugin.weex.internal;
+package com.alibaba.android.bindingx.plugin.weex;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,11 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.alibaba.android.bindingx.plugin.weex.EventType;
-import com.alibaba.android.bindingx.plugin.weex.ExpressionBindingCore;
-import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
-import com.alibaba.android.bindingx.plugin.weex.LogProxy;
-import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
+import com.alibaba.android.bindingx.plugin.weex.internal.AbstractScrollEventHandler;
+import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionPair;
+import com.alibaba.android.bindingx.plugin.weex.internal.WXModuleUtils;
 import com.taobao.weex.bridge.WXBridgeManager;
 import com.taobao.weex.common.Constants;
 import com.taobao.weex.ui.component.WXComponent;
@@ -24,24 +22,25 @@ import com.taobao.weex.ui.view.refresh.wrapper.BounceRecyclerView;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
  * Description:
  *
- * 监听contentOffset
+ * scroll event handler implementation for weex.
+ *
+ * support components:
+ *
+ * 1. List: http://weex-project.io/cn/references/components/list.html
+ * 2. Scroller: http://weex-project.io/cn/references/components/scroller.html
+ * 3. AppBarLayout(android): NA
  *
  * Created by rowandjj(chuyi)<br/>
  */
 
-public class ExpressionScrollHandler extends AbstractScrollEventHandler{
+public class ExpressionScrollHandler extends AbstractScrollEventHandler {
 
-    private boolean isStart = false;
-
-    private int mX,mY;
-
-    private RecyclerView.OnScrollListener mOnScrollListener;
+    private RecyclerView.OnScrollListener mListOnScrollListener;
     private WXScrollView.WXScrollViewListener mWxScrollViewListener;
     private AppBarLayout.OnOffsetChangedListener mOnOffsetChangedListener;
 
@@ -85,8 +84,8 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler{
                             sOffsetHolderMap.put(sourceRef,new ContentOffsetHolder(0,0));
                         }
                     }
-                    mOnScrollListener = new InnerScrollListener(isVertical);
-                    recyclerView.addOnScrollListener(mOnScrollListener);
+                    mListOnScrollListener = new InnerListScrollListener(isVertical);
+                    recyclerView.addOnScrollListener(mListOnScrollListener);
                     return true;
                 }
             }
@@ -98,40 +97,6 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler{
         }
         return false;
     }
-
-    /**
-     * @param contentOffsetX 横向绝对偏移(px)
-     * @param contentOffsetY 纵向绝对偏移(px)
-     * @param dx 相对上一次onScroll事件的横向的偏移
-     * @param dy 相对上一次onScroll事件的纵向的偏移
-     * @param tdx 距离最近一次"拐点"的横向偏移
-     * @param tdy 距离最近一次"拐点"的纵向偏移
-     * */
-    private void handleScrollEvent(int contentOffsetX, int contentOffsetY, int dx, int dy,
-                                   int tdx, int tdy) {
-        LogProxy.d(String.format(Locale.CHINA,
-                "[ExpressionScrollHandler] scroll changed. (contentOffsetX:%d,contentOffsetY:%d,dx:%d,dy:%d,tdx:%d,tdy:%d)",
-                    contentOffsetX,contentOffsetY,dx,dy,tdx,tdy));
-
-        this.mX = contentOffsetX;
-        this.mY = contentOffsetY;
-
-        if(!isStart) {
-            isStart = true;
-            fireEventByState(ExpressionConstants.STATE_START,contentOffsetX,contentOffsetY,dx,dy,tdx,tdy);
-        }
-
-        try {
-            //消费所有的表达式
-            JSMath.applyScrollValuesToScope(mScope, contentOffsetX, contentOffsetY, dx, dy, tdx, tdy, mPlatformManager.getResolutionTranslator());
-            if(!evaluateExitExpression(mExitExpressionPair,mScope)) {
-                consumeExpression(mExpressionHoldersMap, mScope, EventType.TYPE_SCROLL);
-            }
-        } catch (Exception e) {
-            LogProxy.e("runtime error", e);
-        }
-    }
-
 
     @Override
     public void onStart(@NonNull String sourceRef, @NonNull String eventType) {
@@ -149,14 +114,12 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler{
 
     @Override
     public boolean onDisable(@NonNull String sourceRef, @NonNull String eventType) {
-        clearExpressions();
-        isStart = false;
-        fireEventByState(ExpressionConstants.STATE_END, mX, mY,0,0,0,0);
+        super.onDisable(sourceRef,eventType);
         if(sOffsetHolderMap != null && !TextUtils.isEmpty(mSourceRef)) {
             ContentOffsetHolder h = sOffsetHolderMap.get(mSourceRef);
             if(h != null) {
-                h.x = mX;
-                h.y = mY;
+                h.x = mContentOffsetX;
+                h.y = mContentOffsetY;
             }
         }
 
@@ -179,8 +142,8 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler{
             BounceRecyclerView hostView = list.getHostView();
             if (hostView != null) {
                 WXRecyclerView recyclerView = hostView.getInnerView();
-                if (recyclerView != null && mOnScrollListener != null) {
-                    recyclerView.removeOnScrollListener(mOnScrollListener);
+                if (recyclerView != null && mListOnScrollListener != null) {
+                    recyclerView.removeOnScrollListener(mListOnScrollListener);
                     return true;
                 }
             }
@@ -188,49 +151,18 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler{
         return false;
     }
 
-    private void fireEventByState(@ExpressionConstants.State String state, float contentOffsetX, float contentOffsetY,
-                                  float dx, float dy, float tdx, float tdy) {
-        if (mCallback != null) {
-            Map<String, Object> param = new HashMap<>();
-            param.put("state", state);
-            double x = mPlatformManager.getResolutionTranslator().nativeToWeb(contentOffsetX);
-            double y = mPlatformManager.getResolutionTranslator().nativeToWeb(contentOffsetY);
-            param.put("x", x);
-            param.put("y", y);
-
-            double _dx = mPlatformManager.getResolutionTranslator().nativeToWeb(dx);
-            double _dy = mPlatformManager.getResolutionTranslator().nativeToWeb(dy);
-            param.put("dx", _dx);
-            param.put("dy", _dy);
-
-            double _tdx = mPlatformManager.getResolutionTranslator().nativeToWeb(tdx);
-            double _tdy = mPlatformManager.getResolutionTranslator().nativeToWeb(tdy);
-            param.put("tdx", _tdx);
-            param.put("tdy", _tdy);
-
-            mCallback.callback(param);
-            LogProxy.d(">>>>>>>>>>>fire event:(" + state + "," + x + "," + y + ","+ _dx  +","+ _dy +"," + _tdx +"," + _tdy +")");
-        }
-    }
-
 
     @Override
     public void onDestroy() {
-        mOnScrollListener = null;
+        super.onDestroy();
+        mListOnScrollListener = null;
         mWxScrollViewListener = null;
         mOnOffsetChangedListener = null;
-        isStart = false;
         if(sOffsetHolderMap != null) {
             sOffsetHolderMap.clear();
         }
     }
 
-    @Override
-    protected void onExit(@NonNull Map<String, Object> scope) {
-        float contentOffsetX = (float) scope.get("internal_x");
-        float contentOffsetY = (float) scope.get("internal_y");
-        fireEventByState(ExpressionConstants.STATE_EXIT, contentOffsetX, contentOffsetY,0,0,0,0);
-    }
 
     private class InnerAppBarOffsetChangedListener implements AppBarLayout.OnOffsetChangedListener {
         private int mContentOffsetY=0;
@@ -239,7 +171,7 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler{
         private int mLastDy=0;
         @Override
         public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-            verticalOffset = -verticalOffset;
+            verticalOffset = -verticalOffset;// normalize.
             final int dy = verticalOffset - mContentOffsetY;
             mContentOffsetY = verticalOffset;
             if(dy == 0) {
@@ -255,14 +187,14 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler{
             final int tdy = mContentOffsetY - mTy;
             mLastDy = dy;
             if(isTurning) {
-                fireEventByState(ExpressionConstants.STATE_TURNING,0,mContentOffsetY,
+                ExpressionScrollHandler.super.fireEventByState(ExpressionConstants.STATE_TURNING,0,mContentOffsetY,
                         0,dy,0,tdy);
             }
 
             WXBridgeManager.getInstance().post(new Runnable() {
                 @Override
                 public void run() {
-                    handleScrollEvent(0,mContentOffsetY,0,dy,0,tdy);
+                    ExpressionScrollHandler.super.handleScrollEvent(0,mContentOffsetY,0,dy,0,tdy);
                 }
             },mInstanceId);
         }
@@ -304,14 +236,14 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler{
 
             if(isTurning) {
                 // 通知
-                fireEventByState(ExpressionConstants.STATE_TURNING,mContentOffsetX,mContentOffsetY,
+                ExpressionScrollHandler.super.fireEventByState(ExpressionConstants.STATE_TURNING,mContentOffsetX,mContentOffsetY,
                         dx,dy,tdx,tdy);
             }
 
             WXBridgeManager.getInstance().post(new Runnable() {
                 @Override
                 public void run() {
-                    handleScrollEvent(mContentOffsetX,mContentOffsetY,dx,dy,tdx,tdy);
+                    ExpressionScrollHandler.super.handleScrollEvent(mContentOffsetX,mContentOffsetY,dx,dy,tdx,tdy);
                 }
             },mInstanceId);
         }
@@ -332,7 +264,7 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler{
         }
     }
 
-    private class InnerScrollListener extends RecyclerView.OnScrollListener{
+    private class InnerListScrollListener extends RecyclerView.OnScrollListener{
         private int mContentOffsetX=0;
         private int mContentOffsetY=0;
 
@@ -341,7 +273,7 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler{
 
         private boolean isVertical;
 
-        InnerScrollListener(boolean isVertical){
+        InnerListScrollListener(boolean isVertical){
             this.isVertical = isVertical;
             if(!TextUtils.isEmpty(mSourceRef) && sOffsetHolderMap != null) {
                 ContentOffsetHolder holder = sOffsetHolderMap.get(mSourceRef);
@@ -390,7 +322,7 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler{
             WXBridgeManager.getInstance().post(new Runnable() {
                 @Override
                 public void run() {
-                    handleScrollEvent(mContentOffsetX,mContentOffsetY,dx,dy,tdx,tdy);
+                    ExpressionScrollHandler.super.handleScrollEvent(mContentOffsetX,mContentOffsetY,dx,dy,tdx,tdy);
                 }
             },mInstanceId);
         }

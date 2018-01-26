@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionPair;
-import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionScrollHandler;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.annotation.JSMethod;
 import com.taobao.weex.bridge.JSCallback;

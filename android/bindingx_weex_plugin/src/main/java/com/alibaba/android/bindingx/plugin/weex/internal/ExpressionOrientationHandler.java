@@ -120,6 +120,7 @@ public class ExpressionOrientationHandler extends AbstractEventHandler implement
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if (mOrientationDetector != null) {
             mOrientationDetector.removeOrientationChangedListener(this);
             mOrientationDetector.stop();

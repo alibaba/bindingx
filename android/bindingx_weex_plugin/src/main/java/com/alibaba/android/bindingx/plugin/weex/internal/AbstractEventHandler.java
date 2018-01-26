@@ -1,6 +1,7 @@
 package com.alibaba.android.bindingx.plugin.weex.internal;
 
 import android.content.Context;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -28,21 +29,21 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-abstract class AbstractEventHandler implements IEventHandler {
+public abstract class AbstractEventHandler implements IEventHandler {
 
-    volatile Map<String/*targetRef*/, List<ExpressionHolder>> mExpressionHoldersMap;
-    /*package*/ ExpressionBindingCore.JavaScriptCallback mCallback;
-    final Map<String, Object> mScope = new HashMap<>();
-    String mInstanceId;
-    String mAnchorInstanceId;
-    Context mContext;
-    PlatformManager mPlatformManager;
+    protected volatile Map<String/*targetRef*/, List<ExpressionHolder>> mExpressionHoldersMap;
+    protected ExpressionBindingCore.JavaScriptCallback mCallback;
+    protected final Map<String, Object> mScope = new HashMap<>();
+    protected String mInstanceId;
+    protected String mAnchorInstanceId;
+    protected Context mContext;
+    protected PlatformManager mPlatformManager;
 
-    ExpressionPair mExitExpressionPair;
+    protected ExpressionPair mExitExpressionPair;
 
-    Cache<String, Expression> mCachedExpressionMap = new Cache<>(16);
+    private Cache<String, Expression> mCachedExpressionMap = new Cache<>(16);
 
-    AbstractEventHandler(Context context, PlatformManager manager, Object... extension) {
+    public AbstractEventHandler(Context context, PlatformManager manager, Object... extension) {
         mContext = context;
         mPlatformManager = manager;
         mInstanceId = (extension != null && extension.length > 0 && extension[0] instanceof String) ? ((String)extension[0]) : null;
@@ -68,6 +69,12 @@ abstract class AbstractEventHandler implements IEventHandler {
             mScope.clear();
         }
         applyFunctionsToScope();
+    }
+
+    @Override
+    @CallSuper
+    public void onDestroy() {
+        mCachedExpressionMap.clear();
     }
 
     private void applyFunctionsToScope() {

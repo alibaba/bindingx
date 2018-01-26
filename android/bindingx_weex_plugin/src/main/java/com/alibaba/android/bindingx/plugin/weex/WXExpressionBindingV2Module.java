@@ -10,7 +10,6 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
-import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionScrollHandler;
 import com.alibaba.android.bindingx.plugin.weex.internal.Utils;
 import com.alibaba.android.bindingx.plugin.weex.internal.WXModuleUtils;
 import com.taobao.weex.WXSDKEngine;

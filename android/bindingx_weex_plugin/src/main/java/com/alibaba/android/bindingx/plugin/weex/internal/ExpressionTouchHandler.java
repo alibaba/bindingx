@@ -223,6 +223,7 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if (mExpressionHoldersMap != null) {
             mExpressionHoldersMap.clear();
             mExpressionHoldersMap = null;
@@ -231,7 +232,6 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
         mCallback = null;
         isFlickGestureAvailable = false;
         isPanGestureAvailable = false;
-        mCachedExpressionMap.clear();
     }
 
     @Override

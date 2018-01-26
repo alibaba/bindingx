@@ -105,6 +105,7 @@ public class ExpressionTimingHandler extends AbstractEventHandler implements Ani
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         clearExpressions();
 
         if(mAnimationFrame != null) {
