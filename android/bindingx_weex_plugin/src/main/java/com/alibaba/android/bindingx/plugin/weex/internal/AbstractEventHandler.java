@@ -11,7 +11,6 @@ import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
 import com.alibaba.android.bindingx.plugin.weex.IEventHandler;
 import com.alibaba.android.bindingx.plugin.weex.LogProxy;
 import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
-import com.taobao.weex.ui.component.WXComponent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -179,12 +178,8 @@ abstract class AbstractEventHandler implements IEventHandler {
                     continue;
                 }
                 String instanceId = TextUtils.isEmpty(holder.targetInstanceId)? mInstanceId : holder.targetInstanceId;
-                WXComponent targetComponent = WXModuleUtils.findComponentByRef(instanceId, holder.targetRef);
-                if (targetComponent == null) {
-                    LogProxy.e("failed to execute expression,target component not found.[ref:" + holder.targetRef + "]");
-                    continue;
-                }
-                View targetView = targetComponent.getHostView();
+
+                View targetView = mPlatformManager.getViewFinder().findViewBy(holder.targetRef, instanceId);
                 if (targetView == null) {
                     LogProxy.e("failed to execute expression,target view not found.[ref:" + holder.targetRef + "]");
                     continue;
@@ -213,9 +208,15 @@ abstract class AbstractEventHandler implements IEventHandler {
                     continue;
                 }
                 //apply transform to target view.
-                //此操作需要在UI线程
-                ExpressionInvokerService.findInvoker(holder.prop)
-                        .invoke(targetComponent, targetView, obj, mPlatformManager.getResolutionTranslator(), holder.config);
+                mPlatformManager.getViewUpdater().synchronouslyUpdateViewOnUIThread(
+                        targetView,
+                        holder.prop,
+                        obj,
+                        mPlatformManager.getResolutionTranslator(),
+                        holder.config,
+                        holder.targetRef,/*additional params for weex*/
+                        instanceId       /*additional params for weex*/
+                );
             }
         }
 

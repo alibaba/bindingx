@@ -40,8 +40,8 @@ public class MainActivity extends AbstractWeexActivity {
             @Override
             public void run() {
                 if(TextUtils.isEmpty(mUrl)) {
-                    //http://dotwe.org/vue/00bef13ac311ee9c4389b3a7bda67868
-                    renderPageByURL("http://dotwe.org/raw/dist/00bef13ac311ee9c4389b3a7bda67868.bundle.wx");
+                    //http://dotwe.org/vue/a5fa354c925705165063d0b5d0aaff6c
+                    renderPageByURL("http://dotwe.org/raw/dist/a5fa354c925705165063d0b5d0aaff6c.bundle.wx");
                 } else {
                     renderPageByURL(mUrl);
                 }

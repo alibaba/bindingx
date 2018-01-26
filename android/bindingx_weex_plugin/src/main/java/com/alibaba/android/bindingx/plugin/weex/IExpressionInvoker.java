@@ -1,9 +1,8 @@
-package com.alibaba.android.bindingx.plugin.weex.internal;
+package com.alibaba.android.bindingx.plugin.weex;
 
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
 import com.taobao.weex.ui.component.WXComponent;
 
 import java.util.Map;
@@ -14,7 +13,7 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-interface IExpressionInvoker {
+public interface IExpressionInvoker {
 
     /**
      * 执行视图变换

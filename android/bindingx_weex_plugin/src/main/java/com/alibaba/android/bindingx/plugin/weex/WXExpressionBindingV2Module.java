@@ -189,12 +189,36 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
                     }
                 })
                 .withViewUpdater(new PlatformManager.IViewUpdater() {
+
                     @Override
                     public void synchronouslyUpdateViewOnUIThread(@NonNull View targetView,
                                                                   @NonNull String propertyName,
                                                                   @NonNull Object propertyValue,
+                                                                  @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                                                                  @NonNull Map<String, Object> config,
                                                                   Object... extension) {
-                        //TODO
+                        if(extension == null
+                                || extension.length <= 0
+                                || extension.length > 2
+                                || !(extension[0] instanceof String)
+                                || !(extension[1] instanceof String)) {
+                            return;
+                        }
+                        String ref = (String) extension[0];
+                        String instanceId = (String) extension[1];
+
+                        WXComponent targetComponent = WXModuleUtils.findComponentByRef(instanceId, ref);
+                        if(targetComponent == null) {
+                            LogProxy.e("unexpected error. component not found [ref:"+ref+",instanceId:"+instanceId+"]");
+                            return;
+                        }
+                        ExpressionInvokerService.findInvoker(propertyName).invoke(
+                                targetComponent,
+                                targetView,
+                                propertyValue,
+                                translator,
+                                config);
+
                     }
                 })
                 .withDeviceResolutionTranslator(new PlatformManager.IDeviceResolutionTranslator() {

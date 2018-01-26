@@ -1,4 +1,4 @@
-package com.alibaba.android.bindingx.plugin.weex.internal;
+package com.alibaba.android.bindingx.plugin.weex;
 
 import android.content.Context;
 import android.os.Build;
@@ -14,8 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.alibaba.android.bindingx.plugin.weex.LogProxy;
-import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXScroller;
 import com.taobao.weex.ui.component.WXText;

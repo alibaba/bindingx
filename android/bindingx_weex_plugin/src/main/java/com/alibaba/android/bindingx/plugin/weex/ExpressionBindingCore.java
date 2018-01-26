@@ -40,25 +40,25 @@ public class ExpressionBindingCore {
         this.mPlatformManager = platformManager;
         registerEventHandler(EventType.TYPE_PAN, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
             @Override
-            public IEventHandler createWith(Context context, PlatformManager manager, Object... extension) {
+            public IEventHandler createWith(@NonNull Context context,@NonNull PlatformManager manager, Object... extension) {
                 return new ExpressionTouchHandler(context, manager, extension);
             }
         });
         registerEventHandler(EventType.TYPE_ORIENTATION, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
             @Override
-            public IEventHandler createWith(Context context,PlatformManager manager, Object... extension) {
+            public IEventHandler createWith(@NonNull Context context,@NonNull PlatformManager manager, Object... extension) {
                 return new ExpressionOrientationHandler(context, manager, extension);
             }
         });
         registerEventHandler(EventType.TYPE_SCROLL, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
             @Override
-            public IEventHandler createWith(Context context, PlatformManager manager, Object... extension) {
+            public IEventHandler createWith(@NonNull Context context,@NonNull PlatformManager manager, Object... extension) {
                 return new ExpressionScrollHandler(context, manager, extension);
             }
         });
         registerEventHandler(EventType.TYPE_TIMING, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
             @Override
-            public IEventHandler createWith(Context context, PlatformManager manager, Object... extension) {
+            public IEventHandler createWith(@NonNull Context context,@NonNull PlatformManager manager, Object... extension) {
                 return new ExpressionTimingHandler(context, manager, extension);
             }
         });
@@ -332,7 +332,7 @@ public class ExpressionBindingCore {
      * Provide instance of {@code Type}.
      */
     public interface ObjectCreator<Type, ParamA, ParamB> {
-        Type createWith(ParamA p1, ParamB p2, Object... extension);
+        Type createWith(@NonNull ParamA p1,@NonNull ParamB p2, Object... extension);
     }
 
     /**
