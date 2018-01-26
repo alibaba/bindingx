@@ -20,8 +20,11 @@ public interface IEventHandler {
 
     void onStart(@NonNull String sourceRef, @NonNull String eventType);
 
-    void onBindExpression(@NonNull String eventType, @Nullable Map<String, Object> globalConfig, @Nullable ExpressionPair exitExpressionPair,
-                          @NonNull List<Map<String, Object>> expressionArgs, @Nullable ExpressionBindingCore.JavaScriptCallback callback);
+    void onBindExpression(@NonNull String eventType,
+                          @Nullable Map<String, Object> globalConfig,
+                          @Nullable ExpressionPair exitExpressionPair,
+                          @NonNull List<Map<String, Object>> expressionArgs,
+                          @Nullable ExpressionBindingCore.JavaScriptCallback callback);
 
     boolean onDisable(@NonNull String sourceRef, @NonNull String eventType);
 

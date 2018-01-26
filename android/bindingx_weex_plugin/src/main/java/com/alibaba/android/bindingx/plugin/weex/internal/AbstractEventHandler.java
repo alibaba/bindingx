@@ -55,8 +55,11 @@ abstract class AbstractEventHandler implements IEventHandler {
     }
 
     @Override
-    public void onBindExpression(@NonNull String eventType, @Nullable Map<String,Object> globalConfig, @Nullable ExpressionPair exitExpressionPair,
-                                 @NonNull List<Map<String, Object>> expressionArgs, @Nullable ExpressionBindingCore.JavaScriptCallback callback) {
+    public void onBindExpression(@NonNull String eventType,
+                                 @Nullable Map<String,Object> globalConfig,
+                                 @Nullable ExpressionPair exitExpressionPair,
+                                 @NonNull List<Map<String, Object>> expressionArgs,
+                                 @Nullable ExpressionBindingCore.JavaScriptCallback callback) {
         clearExpressions();
         transformArgs(eventType, expressionArgs);
         this.mCallback = callback;

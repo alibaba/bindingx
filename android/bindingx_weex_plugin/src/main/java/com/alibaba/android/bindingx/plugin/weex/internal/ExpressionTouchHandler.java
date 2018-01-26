@@ -188,8 +188,11 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
     }
 
     @Override
-    public void onBindExpression(@NonNull String eventType, @Nullable Map<String,Object> globalConfig, @Nullable ExpressionPair exitExpressionPair,
-                                 @NonNull List<Map<String, Object>> expressionArgs, @Nullable ExpressionBindingCore.JavaScriptCallback callback) {
+    public void onBindExpression(@NonNull String eventType,
+                                 @Nullable Map<String,Object> globalConfig,
+                                 @Nullable ExpressionPair exitExpressionPair,
+                                 @NonNull List<Map<String, Object>> expressionArgs,
+                                 @Nullable ExpressionBindingCore.JavaScriptCallback callback) {
         super.onBindExpression(eventType,globalConfig, exitExpressionPair, expressionArgs, callback);
     }
 
