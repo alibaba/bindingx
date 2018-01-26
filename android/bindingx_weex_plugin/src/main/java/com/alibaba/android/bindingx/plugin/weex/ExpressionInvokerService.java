@@ -1,19 +1,18 @@
 package com.alibaba.android.bindingx.plugin.weex;
 
-import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.android.bindingx.plugin.weex.internal.Utils;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXScroller;
 import com.taobao.weex.ui.component.WXText;
@@ -287,9 +286,9 @@ final class ExpressionInvokerService {
                 @Override
                 public void run() {
                     int perspective = WXUtils.getInt(config.get(PERSPECTIVE));
-                    perspective = normalizedPerspectiveValue(targetView.getContext(),perspective);
+                    perspective = Utils.normalizedPerspectiveValue(targetView.getContext(),perspective);
 
-                    Pair<Float,Float> pivot = parseTransformOrigin(
+                    Pair<Float,Float> pivot = Utils.parseTransformOrigin(
                             WXUtils.getString(config.get(TRANSFORM_ORIGIN),null),targetView);
 
                     if(perspective != 0) {
@@ -333,7 +332,7 @@ final class ExpressionInvokerService {
             postRunnable(targetView, new Runnable() {
                 @Override
                 public void run() {
-                    Pair<Float,Float> pivot = parseTransformOrigin(
+                    Pair<Float,Float> pivot = Utils.parseTransformOrigin(
                             WXUtils.getString(config.get(TRANSFORM_ORIGIN),null),targetView);
 
                     if(pivot != null) {
@@ -362,7 +361,7 @@ final class ExpressionInvokerService {
             postRunnable(targetView, new Runnable() {
                 @Override
                 public void run() {
-                    Pair<Float,Float> pivot = parseTransformOrigin(
+                    Pair<Float,Float> pivot = Utils.parseTransformOrigin(
                             WXUtils.getString(config.get(TRANSFORM_ORIGIN),null),targetView);
 
                     if(pivot != null) {
@@ -394,9 +393,9 @@ final class ExpressionInvokerService {
                 @Override
                 public void run() {
                     int perspective = WXUtils.getInt(config.get(PERSPECTIVE));
-                    perspective = normalizedPerspectiveValue(targetView.getContext(),perspective);
+                    perspective = Utils.normalizedPerspectiveValue(targetView.getContext(),perspective);
 
-                    Pair<Float,Float> pivot = parseTransformOrigin(
+                    Pair<Float,Float> pivot = Utils.parseTransformOrigin(
                             WXUtils.getString(config.get(TRANSFORM_ORIGIN),null),targetView);
 
                     if(perspective != 0) {
@@ -429,9 +428,9 @@ final class ExpressionInvokerService {
                 @Override
                 public void run() {
                     int perspective = WXUtils.getInt(config.get(PERSPECTIVE));
-                    perspective = normalizedPerspectiveValue(targetView.getContext(),perspective);
+                    perspective = Utils.normalizedPerspectiveValue(targetView.getContext(),perspective);
 
-                    Pair<Float,Float> pivot = parseTransformOrigin(
+                    Pair<Float,Float> pivot = Utils.parseTransformOrigin(
                             WXUtils.getString(config.get(TRANSFORM_ORIGIN),null),targetView);
 
                     if(perspective != 0) {
@@ -465,9 +464,9 @@ final class ExpressionInvokerService {
                 @Override
                 public void run() {
                     int perspective = WXUtils.getInt(config.get(PERSPECTIVE));
-                    perspective = normalizedPerspectiveValue(targetView.getContext(),perspective);
+                    perspective = Utils.normalizedPerspectiveValue(targetView.getContext(),perspective);
 
-                    Pair<Float,Float> pivot = parseTransformOrigin(
+                    Pair<Float,Float> pivot = Utils.parseTransformOrigin(
                             WXUtils.getString(config.get(TRANSFORM_ORIGIN),null),targetView);
 
                     if(perspective != 0) {
@@ -601,7 +600,6 @@ final class ExpressionInvokerService {
         return translator.webToNative(size);
     }
 
-
     @Nullable
     private static View findScrollTarget(@NonNull WXComponent component) {
         if(!(component instanceof WXScroller)) {
@@ -610,59 +608,5 @@ final class ExpressionInvokerService {
         }
         WXScroller scroller = (WXScroller) component;
         return scroller.getInnerView();
-    }
-
-
-    private static int normalizedPerspectiveValue(@NonNull Context context, int raw) {
-        //refer: react-native # BaseViewManager
-        // The following converts the matrix's perspective to a camera distance
-        // such that the camera perspective looks the same on Android and iOS
-        float scale = context.getApplicationContext().getResources().getDisplayMetrics().density;
-        return (int) (scale * raw * 5)/*CAMERA_DISTANCE_NORMALIZATION_MULTIPLIER*/;
-    }
-
-    @Nullable
-    private static Pair<Float,Float> parseTransformOrigin(@Nullable String value, @NonNull View view) {
-        if(TextUtils.isEmpty(value)) {
-            return null;
-        }
-        int firstSpace = value.indexOf(' ');
-        if (firstSpace != -1) {
-            int i = firstSpace;
-            for (; i < value.length(); i++) {
-                if (value.charAt(i) != ' ') {
-                    break;
-                }
-            }
-
-            if (i < value.length() && value.charAt(i) != ' ') {
-                String x = value.substring(0, firstSpace).trim();
-                String y = value.substring(i, value.length()).trim();
-
-                float pivotX,pivotY;
-                if("left".equals(x)) {
-                    pivotX = 0f;
-                } else if("right".equals(x)) {
-                    pivotX = view.getWidth();
-                } else if("center".equals(x)) {
-                    pivotX = view.getWidth()/2;
-                } else {
-                    pivotX = view.getWidth()/2;
-                }
-
-                if("top".equals(y)) {
-                    pivotY = 0;
-                } else if("bottom".equals(y)) {
-                    pivotY = view.getHeight();
-                } else if("center".equals(y)) {
-                    pivotY = view.getHeight()/2;
-                } else {
-                    pivotY = view.getHeight()/2;
-                }
-
-                return new Pair<>(pivotX,pivotY);
-            }
-        }
-        return null;
     }
 }

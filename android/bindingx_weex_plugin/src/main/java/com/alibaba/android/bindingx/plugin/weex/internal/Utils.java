@@ -1,8 +1,11 @@
 package com.alibaba.android.bindingx.plugin.weex.internal;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Pair;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -148,5 +151,58 @@ public final class Utils {
             }
         }
         return normalizedRotation;
+    }
+
+    public static int normalizedPerspectiveValue(@NonNull Context context, int raw) {
+        //refer: react-native # BaseViewManager
+        // The following converts the matrix's perspective to a camera distance
+        // such that the camera perspective looks the same on Android and iOS
+        float scale = context.getApplicationContext().getResources().getDisplayMetrics().density;
+        return (int) (scale * raw * 5)/*CAMERA_DISTANCE_NORMALIZATION_MULTIPLIER*/;
+    }
+
+    @Nullable
+    public static Pair<Float,Float> parseTransformOrigin(@Nullable String value, @NonNull View view) {
+        if(TextUtils.isEmpty(value)) {
+            return null;
+        }
+        int firstSpace = value.indexOf(' ');
+        if (firstSpace != -1) {
+            int i = firstSpace;
+            for (; i < value.length(); i++) {
+                if (value.charAt(i) != ' ') {
+                    break;
+                }
+            }
+
+            if (i < value.length() && value.charAt(i) != ' ') {
+                String x = value.substring(0, firstSpace).trim();
+                String y = value.substring(i, value.length()).trim();
+
+                float pivotX,pivotY;
+                if("left".equals(x)) {
+                    pivotX = 0f;
+                } else if("right".equals(x)) {
+                    pivotX = view.getWidth();
+                } else if("center".equals(x)) {
+                    pivotX = view.getWidth()/2;
+                } else {
+                    pivotX = view.getWidth()/2;
+                }
+
+                if("top".equals(y)) {
+                    pivotY = 0;
+                } else if("bottom".equals(y)) {
+                    pivotY = view.getHeight();
+                } else if("center".equals(y)) {
+                    pivotY = view.getHeight()/2;
+                } else {
+                    pivotY = view.getHeight()/2;
+                }
+
+                return new Pair<>(pivotX,pivotY);
+            }
+        }
+        return null;
     }
 }
