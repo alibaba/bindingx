@@ -24,7 +24,7 @@ public interface IEventHandler {
                           @Nullable Map<String, Object> globalConfig,
                           @Nullable ExpressionPair exitExpressionPair,
                           @NonNull List<Map<String, Object>> expressionArgs,
-                          @Nullable ExpressionBindingCore.JavaScriptCallback callback);
+                          @Nullable BindingXCore.JavaScriptCallback callback);
 
     boolean onDisable(@NonNull String sourceRef, @NonNull String eventType);
 

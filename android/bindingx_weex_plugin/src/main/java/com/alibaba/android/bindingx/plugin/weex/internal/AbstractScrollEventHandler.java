@@ -4,8 +4,7 @@ import android.content.Context;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 
-import com.alibaba.android.bindingx.plugin.weex.EventType;
-import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
+import com.alibaba.android.bindingx.plugin.weex.BindingXEventType;
 import com.alibaba.android.bindingx.plugin.weex.LogProxy;
 import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
 
@@ -35,7 +34,7 @@ public abstract class AbstractScrollEventHandler extends AbstractEventHandler {
     public boolean onDisable(@NonNull String sourceRef, @NonNull String eventType) {
         clearExpressions();
         isStart = false;
-        fireEventByState(ExpressionConstants.STATE_END, mContentOffsetX, mContentOffsetY,0,0,0,0);
+        fireEventByState(BindingXConstants.STATE_END, mContentOffsetX, mContentOffsetY,0,0,0,0);
         return true;
     }
 
@@ -43,7 +42,7 @@ public abstract class AbstractScrollEventHandler extends AbstractEventHandler {
     protected void onExit(@NonNull Map<String, Object> scope) {
         float contentOffsetX = (float) scope.get("internal_x");
         float contentOffsetY = (float) scope.get("internal_y");
-        this.fireEventByState(ExpressionConstants.STATE_EXIT, contentOffsetX, contentOffsetY,0,0,0,0);
+        this.fireEventByState(BindingXConstants.STATE_EXIT, contentOffsetX, contentOffsetY,0,0,0,0);
     }
 
     @Override
@@ -72,22 +71,22 @@ public abstract class AbstractScrollEventHandler extends AbstractEventHandler {
 
         if(!isStart) {
             isStart = true;
-            fireEventByState(ExpressionConstants.STATE_START,contentOffsetX,contentOffsetY,dx,dy,tdx,tdy);
+            fireEventByState(BindingXConstants.STATE_START,contentOffsetX,contentOffsetY,dx,dy,tdx,tdy);
         }
 
         try {
             //消费所有的表达式
             JSMath.applyScrollValuesToScope(mScope, contentOffsetX, contentOffsetY, dx, dy, tdx, tdy, mPlatformManager.getResolutionTranslator());
             if(!evaluateExitExpression(mExitExpressionPair,mScope)) {
-                consumeExpression(mExpressionHoldersMap, mScope, EventType.TYPE_SCROLL);
+                consumeExpression(mExpressionHoldersMap, mScope, BindingXEventType.TYPE_SCROLL);
             }
         } catch (Exception e) {
             LogProxy.e("runtime error", e);
         }
     }
 
-    protected void fireEventByState(@ExpressionConstants.State String state, float contentOffsetX, float contentOffsetY,
-                                  float dx, float dy, float tdx, float tdy) {
+    protected void fireEventByState(@BindingXConstants.State String state, float contentOffsetX, float contentOffsetY,
+                                    float dx, float dy, float tdx, float tdy) {
         if (mCallback != null) {
             Map<String, Object> param = new HashMap<>();
             param.put("state", state);

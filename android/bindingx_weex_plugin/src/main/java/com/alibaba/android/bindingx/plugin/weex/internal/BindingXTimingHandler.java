@@ -6,9 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 import android.view.animation.AnimationUtils;
 
-import com.alibaba.android.bindingx.plugin.weex.EventType;
-import com.alibaba.android.bindingx.plugin.weex.ExpressionBindingCore;
-import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
+import com.alibaba.android.bindingx.plugin.weex.BindingXEventType;
+import com.alibaba.android.bindingx.plugin.weex.BindingXCore;
 import com.alibaba.android.bindingx.plugin.weex.LogProxy;
 import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
 
@@ -22,14 +21,14 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-public class ExpressionTimingHandler extends AbstractEventHandler implements AnimationFrame.Callback {
+public class BindingXTimingHandler extends AbstractEventHandler implements AnimationFrame.Callback {
 
     private long mStartTime = 0;
 
     private AnimationFrame mAnimationFrame;
     private boolean isFinish = false;
 
-    public ExpressionTimingHandler(Context context, PlatformManager manager, Object... extension) {
+    public BindingXTimingHandler(Context context, PlatformManager manager, Object... extension) {
         super(context, manager, extension);
         if(mAnimationFrame == null) {
             mAnimationFrame = AnimationFrame.newInstance();
@@ -53,14 +52,14 @@ public class ExpressionTimingHandler extends AbstractEventHandler implements Ani
                                  @Nullable Map<String,Object> globalConfig,
                                  @Nullable ExpressionPair exitExpressionPair,
                                  @NonNull List<Map<String, Object>> expressionArgs,
-                                 @Nullable ExpressionBindingCore.JavaScriptCallback callback) {
+                                 @Nullable BindingXCore.JavaScriptCallback callback) {
         super.onBindExpression(eventType,globalConfig, exitExpressionPair, expressionArgs, callback);
 
         if(mAnimationFrame == null) {
             mAnimationFrame = AnimationFrame.newInstance();
         }
 
-        fireEventByState(ExpressionConstants.STATE_START, 0);
+        fireEventByState(BindingXConstants.STATE_START, 0);
 
         //先清空消息
         mAnimationFrame.clear();
@@ -83,7 +82,7 @@ public class ExpressionTimingHandler extends AbstractEventHandler implements Ani
             JSMath.applyTimingValuesToScope(mScope, deltaT);
             //timing与其他类型不一样，需要先消费表达式，后执行边界条件,否则最后一帧可能无法执行到
             if(!isFinish) {
-                consumeExpression(mExpressionHoldersMap, mScope, EventType.TYPE_TIMING);
+                consumeExpression(mExpressionHoldersMap, mScope, BindingXEventType.TYPE_TIMING);
             }
             isFinish = evaluateExitExpression(mExitExpressionPair,mScope);
         } catch (Exception e) {
@@ -93,7 +92,7 @@ public class ExpressionTimingHandler extends AbstractEventHandler implements Ani
 
     @Override
     public boolean onDisable(@NonNull String sourceRef, @NonNull String eventType) {
-        fireEventByState(ExpressionConstants.STATE_END, (System.currentTimeMillis() - mStartTime));
+        fireEventByState(BindingXConstants.STATE_END, (System.currentTimeMillis() - mStartTime));
         clearExpressions();
         if(mAnimationFrame != null) {
             mAnimationFrame.clear();
@@ -118,7 +117,7 @@ public class ExpressionTimingHandler extends AbstractEventHandler implements Ani
     @Override
     protected void onExit(@NonNull Map<String, Object> scope) {
         double t = (double) scope.get("t");
-        fireEventByState(ExpressionConstants.STATE_EXIT, (long) t);
+        fireEventByState(BindingXConstants.STATE_EXIT, (long) t);
 
         //清空消息 防止空转
         if(mAnimationFrame != null) {
@@ -127,7 +126,7 @@ public class ExpressionTimingHandler extends AbstractEventHandler implements Ani
         mStartTime = 0;
     }
 
-    private void fireEventByState(@ExpressionConstants.State String state, long t) {
+    private void fireEventByState(@BindingXConstants.State String state, long t) {
         if (mCallback != null) {
             Map<String, Object> param = new HashMap<>();
             param.put("state", state);

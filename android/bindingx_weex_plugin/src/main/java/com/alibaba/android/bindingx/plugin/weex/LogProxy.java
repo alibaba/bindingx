@@ -2,6 +2,8 @@ package com.alibaba.android.bindingx.plugin.weex;
 
 import android.util.Log;
 
+import com.alibaba.android.bindingx.plugin.weex.internal.BindingXConstants;
+
 /**
  * Description:
  *
@@ -15,61 +17,61 @@ public final class LogProxy {
 
     public static void i(String message) {
         if(sEnableLog) {
-            Log.i(ExpressionConstants.TAG, message);
+            Log.i(BindingXConstants.TAG, message);
         }
     }
 
     public static void i(String message, Throwable e) {
         if(sEnableLog) {
-            Log.i(ExpressionConstants.TAG,message, e);
+            Log.i(BindingXConstants.TAG,message, e);
         }
     }
 
     public static void v(String message) {
         if(sEnableLog) {
-            Log.v(ExpressionConstants.TAG, message);
+            Log.v(BindingXConstants.TAG, message);
         }
     }
 
     public static void v(String message, Throwable e) {
         if(sEnableLog) {
-            Log.v(ExpressionConstants.TAG,message, e);
+            Log.v(BindingXConstants.TAG,message, e);
         }
     }
 
     public static void d(String message) {
         if(sEnableLog) {
-            Log.d(ExpressionConstants.TAG, message);
+            Log.d(BindingXConstants.TAG, message);
         }
     }
 
     public static void d(String message, Throwable e) {
         if(sEnableLog) {
-            Log.d(ExpressionConstants.TAG,message, e);
+            Log.d(BindingXConstants.TAG,message, e);
         }
     }
 
     public static void w(String message) {
         if(sEnableLog) {
-            Log.w(ExpressionConstants.TAG, message);
+            Log.w(BindingXConstants.TAG, message);
         }
     }
 
     public static void w(String message, Throwable e) {
         if(sEnableLog) {
-            Log.w(ExpressionConstants.TAG,message, e);
+            Log.w(BindingXConstants.TAG,message, e);
         }
     }
 
     public static void e(String message) {
         if(sEnableLog) {
-            Log.e(ExpressionConstants.TAG, message);
+            Log.e(BindingXConstants.TAG, message);
         }
     }
 
     public static void e(String message, Throwable e) {
         if(sEnableLog) {
-            Log.e(ExpressionConstants.TAG,message, e);
+            Log.e(BindingXConstants.TAG,message, e);
         }
     }
 

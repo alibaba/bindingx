@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.bindingx.plugin.weex.internal.AbstractScrollEventHandler;
+import com.alibaba.android.bindingx.plugin.weex.internal.BindingXConstants;
 import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionPair;
 import com.alibaba.android.bindingx.plugin.weex.internal.WXModuleUtils;
 import com.taobao.weex.bridge.WXBridgeManager;
@@ -38,7 +39,7 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-public class ExpressionScrollHandler extends AbstractScrollEventHandler {
+public class BindingXScrollHandler extends AbstractScrollEventHandler {
 
     private RecyclerView.OnScrollListener mListOnScrollListener;
     private WXScrollView.WXScrollViewListener mWxScrollViewListener;
@@ -49,7 +50,7 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler {
 
     private String mSourceRef;
 
-    public ExpressionScrollHandler(Context context, PlatformManager manager, Object... extension) {
+    public BindingXScrollHandler(Context context, PlatformManager manager, Object... extension) {
         super(context,manager,extension);
     }
 
@@ -108,7 +109,7 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler {
                                  @Nullable Map<String,Object> globalConfig,
                                  @Nullable ExpressionPair exitExpressionPair,
                                  @NonNull List<Map<String, Object>> expressionArgs,
-                                 @Nullable ExpressionBindingCore.JavaScriptCallback callback) {
+                                 @Nullable BindingXCore.JavaScriptCallback callback) {
         super.onBindExpression(eventType,globalConfig, exitExpressionPair, expressionArgs, callback);
     }
 
@@ -187,14 +188,14 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler {
             final int tdy = mContentOffsetY - mTy;
             mLastDy = dy;
             if(isTurning) {
-                ExpressionScrollHandler.super.fireEventByState(ExpressionConstants.STATE_TURNING,0,mContentOffsetY,
+                BindingXScrollHandler.super.fireEventByState(BindingXConstants.STATE_TURNING,0,mContentOffsetY,
                         0,dy,0,tdy);
             }
 
             WXBridgeManager.getInstance().post(new Runnable() {
                 @Override
                 public void run() {
-                    ExpressionScrollHandler.super.handleScrollEvent(0,mContentOffsetY,0,dy,0,tdy);
+                    BindingXScrollHandler.super.handleScrollEvent(0,mContentOffsetY,0,dy,0,tdy);
                 }
             },mInstanceId);
         }
@@ -236,14 +237,14 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler {
 
             if(isTurning) {
                 // 通知
-                ExpressionScrollHandler.super.fireEventByState(ExpressionConstants.STATE_TURNING,mContentOffsetX,mContentOffsetY,
+                BindingXScrollHandler.super.fireEventByState(BindingXConstants.STATE_TURNING,mContentOffsetX,mContentOffsetY,
                         dx,dy,tdx,tdy);
             }
 
             WXBridgeManager.getInstance().post(new Runnable() {
                 @Override
                 public void run() {
-                    ExpressionScrollHandler.super.handleScrollEvent(mContentOffsetX,mContentOffsetY,dx,dy,tdx,tdy);
+                    BindingXScrollHandler.super.handleScrollEvent(mContentOffsetX,mContentOffsetY,dx,dy,tdx,tdy);
                 }
             },mInstanceId);
         }
@@ -315,14 +316,14 @@ public class ExpressionScrollHandler extends AbstractScrollEventHandler {
 
             if(isTurning) {
                 // 通知
-                fireEventByState(ExpressionConstants.STATE_TURNING,mContentOffsetX,mContentOffsetY,
+                fireEventByState(BindingXConstants.STATE_TURNING,mContentOffsetX,mContentOffsetY,
                         dx,dy,tdx,tdy);
             }
 
             WXBridgeManager.getInstance().post(new Runnable() {
                 @Override
                 public void run() {
-                    ExpressionScrollHandler.super.handleScrollEvent(mContentOffsetX,mContentOffsetY,dx,dy,tdx,tdy);
+                    BindingXScrollHandler.super.handleScrollEvent(mContentOffsetX,mContentOffsetY,dx,dy,tdx,tdy);
                 }
             },mInstanceId);
         }

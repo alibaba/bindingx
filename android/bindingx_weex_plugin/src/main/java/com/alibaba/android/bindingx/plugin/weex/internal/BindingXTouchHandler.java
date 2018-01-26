@@ -8,9 +8,8 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.alibaba.android.bindingx.plugin.weex.EventType;
-import com.alibaba.android.bindingx.plugin.weex.ExpressionBindingCore;
-import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
+import com.alibaba.android.bindingx.plugin.weex.BindingXEventType;
+import com.alibaba.android.bindingx.plugin.weex.BindingXCore;
 import com.alibaba.android.bindingx.plugin.weex.LogProxy;
 import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
 
@@ -21,7 +20,7 @@ import java.util.Map;
 /**
  * 处理手势相关
  */
-public class ExpressionTouchHandler extends AbstractEventHandler implements View.OnTouchListener, GestureDetector.OnGestureListener {
+public class BindingXTouchHandler extends AbstractEventHandler implements View.OnTouchListener, GestureDetector.OnGestureListener {
     private float mDownX;
     private float mDownY;
 
@@ -33,7 +32,7 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
     private boolean isPanGestureAvailable;
     private boolean isFlickGestureAvailable;
 
-    public ExpressionTouchHandler(Context context, PlatformManager manager, Object... extension) {
+    public BindingXTouchHandler(Context context, PlatformManager manager, Object... extension) {
         super(context, manager, extension);
         mGestureDetector = new GestureDetector(context, this);
     }
@@ -61,13 +60,13 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
                 case MotionEvent.ACTION_DOWN:
                     mDownX = event.getRawX();
                     mDownY = event.getRawY();
-                    fireEventByState(ExpressionConstants.STATE_START, 0, 0);
+                    fireEventByState(BindingXConstants.STATE_START, 0, 0);
                     break;
                 case MotionEvent.ACTION_MOVE:
                     if (mDownX == 0 && mDownY == 0) {
                         mDownX = event.getRawX();
                         mDownY = event.getRawY();
-                        fireEventByState(ExpressionConstants.STATE_START, 0, 0);
+                        fireEventByState(BindingXConstants.STATE_START, 0, 0);
                         break;
                     }
                     mDx = event.getRawX() - mDownX;
@@ -77,7 +76,7 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
                     mDownX = 0;
                     mDownY = 0;
                     clearExpressions();
-                    fireEventByState(ExpressionConstants.STATE_END, mDx, mDy);
+                    fireEventByState(BindingXConstants.STATE_END, mDx, mDy);
                     //bugFixed:we must reset dx & dy every time.
                     mDx = 0;
                     mDy = 0;
@@ -86,7 +85,7 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
                     mDownX = 0;
                     mDownY = 0;
                     clearExpressions();
-                    fireEventByState(ExpressionConstants.STATE_CANCEL, mDx, mDy);
+                    fireEventByState(BindingXConstants.STATE_CANCEL, mDx, mDy);
                     break;
             }
         } catch (Exception e) {
@@ -127,7 +126,7 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
             //消费所有的表达式
             JSMath.applyXYToScope(mScope, deltaX, deltaY, mPlatformManager.getResolutionTranslator());
             if(!evaluateExitExpression(mExitExpressionPair,mScope)) {
-                consumeExpression(mExpressionHoldersMap, mScope, EventType.TYPE_PAN);
+                consumeExpression(mExpressionHoldersMap, mScope, BindingXEventType.TYPE_PAN);
             }
         } catch (Exception e) {
             LogProxy.e("runtime error", e);
@@ -178,10 +177,10 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
     @Override
     public void onStart(@NonNull String sourceRef, @NonNull String eventType) {
         switch (eventType) {
-            case EventType.TYPE_PAN:
+            case BindingXEventType.TYPE_PAN:
                 this.setPanGestureAvailable(true);
                 break;
-            case EventType.TYPE_FLICK:
+            case BindingXEventType.TYPE_FLICK:
                 this.setFlickGestureAvailable(true);
                 break;
         }
@@ -192,17 +191,17 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
                                  @Nullable Map<String,Object> globalConfig,
                                  @Nullable ExpressionPair exitExpressionPair,
                                  @NonNull List<Map<String, Object>> expressionArgs,
-                                 @Nullable ExpressionBindingCore.JavaScriptCallback callback) {
+                                 @Nullable BindingXCore.JavaScriptCallback callback) {
         super.onBindExpression(eventType,globalConfig, exitExpressionPair, expressionArgs, callback);
     }
 
     @Override
     public boolean onDisable(@NonNull String sourceRef, @NonNull String eventType) {
         switch (eventType) {
-            case EventType.TYPE_PAN:
+            case BindingXEventType.TYPE_PAN:
                 this.setPanGestureAvailable(false);
                 break;
-            case EventType.TYPE_FLICK:
+            case BindingXEventType.TYPE_FLICK:
                 this.setFlickGestureAvailable(false);
                 break;
         }
@@ -238,10 +237,10 @@ public class ExpressionTouchHandler extends AbstractEventHandler implements View
     protected void onExit(@NonNull Map<String, Object> scope) {
         float deltaX = (float) scope.get("internal_x");
         float deltaY = (float) scope.get("internal_y");
-        fireEventByState(ExpressionConstants.STATE_EXIT, deltaX, deltaY);
+        fireEventByState(BindingXConstants.STATE_EXIT, deltaX, deltaY);
     }
 
-    private void fireEventByState(@ExpressionConstants.State String state, float dx, float dy) {
+    private void fireEventByState(@BindingXConstants.State String state, float dx, float dy) {
         if (mCallback != null) {
             Map<String, Object> param = new HashMap<>();
             param.put("state", state);

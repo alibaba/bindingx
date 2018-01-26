@@ -11,14 +11,14 @@ import com.taobao.weex.common.WXException;
  * Created by rowandjj(chuyi)<br/>
  */
 
-public class Binding {
-    private Binding(){}
+public class BindingX {
+    private BindingX(){}
 
     /**
      * register binding module
      * */
     public static void register() throws WXException{
         WXSDKEngine.registerModule("expressionBinding", WXExpressionBindingModule.class);
-        WXSDKEngine.registerModule("binding", WXExpressionBindingV2Module.class);
+        WXSDKEngine.registerModule("binding", WXBindingXModule.class);
     }
 }

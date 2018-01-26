@@ -5,10 +5,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionOrientationHandler;
+import com.alibaba.android.bindingx.plugin.weex.internal.BindingXConstants;
+import com.alibaba.android.bindingx.plugin.weex.internal.BindingXOrientationHandler;
 import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionPair;
-import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionTimingHandler;
-import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionTouchHandler;
+import com.alibaba.android.bindingx.plugin.weex.internal.BindingXTimingHandler;
+import com.alibaba.android.bindingx.plugin.weex.internal.BindingXTouchHandler;
 import com.alibaba.android.bindingx.plugin.weex.internal.Utils;
 
 import org.json.JSONObject;
@@ -24,7 +25,7 @@ import java.util.UUID;
  * Created by rowandjj(chuyi)<br/>
  */
 
-public class ExpressionBindingCore {
+public class BindingXCore {
     private Map<String/*token*/, Map<String/*event type*/, IEventHandler>> mBindingCouples;
     private final Map<String, ObjectCreator<IEventHandler, Context, PlatformManager>> mInternalEventHandlerCreatorMap =
             new HashMap<>(8);
@@ -35,24 +36,24 @@ public class ExpressionBindingCore {
      * @param platformManager a class that provide platform-compatible APIs.
      *                        The platform includes Weex and ReactNative.
      * */
-    public ExpressionBindingCore(@NonNull PlatformManager platformManager) {
+    public BindingXCore(@NonNull PlatformManager platformManager) {
         this.mPlatformManager = platformManager;
-        registerEventHandler(EventType.TYPE_PAN, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
+        registerEventHandler(BindingXEventType.TYPE_PAN, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
             @Override
             public IEventHandler createWith(@NonNull Context context,@NonNull PlatformManager manager, Object... extension) {
-                return new ExpressionTouchHandler(context, manager, extension);
+                return new BindingXTouchHandler(context, manager, extension);
             }
         });
-        registerEventHandler(EventType.TYPE_ORIENTATION, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
+        registerEventHandler(BindingXEventType.TYPE_ORIENTATION, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
             @Override
             public IEventHandler createWith(@NonNull Context context,@NonNull PlatformManager manager, Object... extension) {
-                return new ExpressionOrientationHandler(context, manager, extension);
+                return new BindingXOrientationHandler(context, manager, extension);
             }
         });
-        registerEventHandler(EventType.TYPE_TIMING, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
+        registerEventHandler(BindingXEventType.TYPE_TIMING, new ObjectCreator<IEventHandler, Context, PlatformManager>() {
             @Override
             public IEventHandler createWith(@NonNull Context context,@NonNull PlatformManager manager, Object... extension) {
-                return new ExpressionTimingHandler(context, manager, extension);
+                return new BindingXTimingHandler(context, manager, extension);
             }
         });
     }
@@ -64,9 +65,9 @@ public class ExpressionBindingCore {
                          @Nullable String instanceId,
                          @NonNull Map<String, Object> params,
                          @NonNull JavaScriptCallback callback) {
-        String eventType = Utils.getStringValue(params, ExpressionConstants.KEY_EVENT_TYPE);
-        String config = Utils.getStringValue(params, ExpressionConstants.KEY_OPTIONS);
-        String anchorInstanceId = Utils.getStringValue(params, ExpressionConstants.KEY_INSTANCE_ID);
+        String eventType = Utils.getStringValue(params, BindingXConstants.KEY_EVENT_TYPE);
+        String config = Utils.getStringValue(params, BindingXConstants.KEY_OPTIONS);
+        String anchorInstanceId = Utils.getStringValue(params, BindingXConstants.KEY_INSTANCE_ID);
 
         //全局配置
         Map<String, Object> configMap = null;
@@ -78,9 +79,9 @@ public class ExpressionBindingCore {
             }
         }
 
-        ExpressionPair exitExpressionPair = Utils.getExpressionPair(params, ExpressionConstants.KEY_EXIT_EXPRESSION);
+        ExpressionPair exitExpressionPair = Utils.getExpressionPair(params, BindingXConstants.KEY_EXIT_EXPRESSION);
 
-        String anchor = Utils.getStringValue(params, ExpressionConstants.KEY_ANCHOR); //可能为空
+        String anchor = Utils.getStringValue(params, BindingXConstants.KEY_ANCHOR); //可能为空
         List<Map<String, Object>> expressionArgs = Utils.getRuntimeProps(params);
 
         return doBind(anchor, anchorInstanceId, eventType, configMap, exitExpressionPair, expressionArgs, callback, context, instanceId);
@@ -90,8 +91,8 @@ public class ExpressionBindingCore {
         if (params == null) {
             return;
         }
-        String eventType = Utils.getStringValue(params, ExpressionConstants.KEY_EVENT_TYPE);
-        String token = Utils.getStringValue(params, ExpressionConstants.KEY_TOKEN);
+        String eventType = Utils.getStringValue(params, BindingXConstants.KEY_EVENT_TYPE);
+        String token = Utils.getStringValue(params, BindingXConstants.KEY_TOKEN);
 
         doUnbind(token, eventType);
     }

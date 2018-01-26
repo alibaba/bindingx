@@ -16,7 +16,7 @@ import java.util.Map;
  * Description:
  *
  * old binding APIs which will be removed later.
- * you should use {@link WXExpressionBindingV2Module} instead.
+ * you should use {@link WXBindingXModule} instead.
  *
  * Created by rowandjj(chuyi)<br/>
  */
@@ -24,22 +24,22 @@ import java.util.Map;
 @Deprecated
 public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModule {
 
-    private ExpressionBindingCore mExpressionBindingCore;
+    private BindingXCore mExpressionBindingCore;
     private PlatformManager mPlatformManager;
 
     @JSMethod
     @Deprecated
     public void enableBinding(@Nullable String sourceRef, @Nullable String eventType) {
         if(mPlatformManager == null) {
-            mPlatformManager = WXExpressionBindingV2Module.createPlatformManager(mWXSDKInstance);
+            mPlatformManager = WXBindingXModule.createPlatformManager(mWXSDKInstance);
         }
         if (mExpressionBindingCore == null) {
-            mExpressionBindingCore = new ExpressionBindingCore(mPlatformManager);
-            mExpressionBindingCore.registerEventHandler(EventType.TYPE_SCROLL,
-                    new ExpressionBindingCore.ObjectCreator<IEventHandler, Context, PlatformManager>() {
+            mExpressionBindingCore = new BindingXCore(mPlatformManager);
+            mExpressionBindingCore.registerEventHandler(BindingXEventType.TYPE_SCROLL,
+                    new BindingXCore.ObjectCreator<IEventHandler, Context, PlatformManager>() {
                         @Override
                         public IEventHandler createWith(@NonNull Context context, @NonNull PlatformManager manager, Object... extension) {
-                            return new ExpressionScrollHandler(context, manager, extension);
+                            return new BindingXScrollHandler(context, manager, extension);
                         }
                     });
         }
@@ -61,7 +61,7 @@ public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModu
                 null,
                 exitExpressionPair,
                 expressionArgs,
-                new ExpressionBindingCore.JavaScriptCallback() {
+                new BindingXCore.JavaScriptCallback() {
                     @Override
                     public void callback(Object params) {
                         if (callback != null) {

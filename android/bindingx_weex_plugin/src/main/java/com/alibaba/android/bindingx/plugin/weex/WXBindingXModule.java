@@ -10,6 +10,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
+import com.alibaba.android.bindingx.plugin.weex.internal.BindingXConstants;
 import com.alibaba.android.bindingx.plugin.weex.internal.Utils;
 import com.alibaba.android.bindingx.plugin.weex.internal.WXModuleUtils;
 import com.taobao.weex.WXSDKEngine;
@@ -38,9 +39,9 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
+public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
 
-    private ExpressionBindingCore mExpressionBindingCore;
+    private BindingXCore mExpressionBindingCore;
     private PlatformManager mPlatformManager;
 
     @JSMethod(uiThread = false)
@@ -49,13 +50,13 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
             mPlatformManager = createPlatformManager(mWXSDKInstance);
         }
         if (mExpressionBindingCore == null) {
-            mExpressionBindingCore = new ExpressionBindingCore(mPlatformManager);
+            mExpressionBindingCore = new BindingXCore(mPlatformManager);
 
-            mExpressionBindingCore.registerEventHandler(EventType.TYPE_SCROLL,
-                    new ExpressionBindingCore.ObjectCreator<IEventHandler, Context, PlatformManager>() {
+            mExpressionBindingCore.registerEventHandler(BindingXEventType.TYPE_SCROLL,
+                    new BindingXCore.ObjectCreator<IEventHandler, Context, PlatformManager>() {
                 @Override
                 public IEventHandler createWith(@NonNull Context context,@NonNull PlatformManager manager, Object... extension) {
-                    return new ExpressionScrollHandler(context, manager, extension);
+                    return new BindingXScrollHandler(context, manager, extension);
                 }
             });
         }
@@ -70,7 +71,7 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
                 mWXSDKInstance == null ? null : mWXSDKInstance.getContext(),
                 mWXSDKInstance == null ? null : mWXSDKInstance.getInstanceId(),
                 params == null ? Collections.<String, Object>emptyMap() : params,
-                new ExpressionBindingCore.JavaScriptCallback() {
+                new BindingXCore.JavaScriptCallback() {
                     @Override
                     public void callback(Object params) {
                         if (callback != null) {
@@ -79,7 +80,7 @@ public class WXExpressionBindingV2Module extends WXSDKEngine.DestroyableModule {
                     }
                 });
         Map<String, String> result = new HashMap<>(2);
-        result.put(ExpressionConstants.KEY_TOKEN, token);
+        result.put(BindingXConstants.KEY_TOKEN, token);
         return result;
     }
 

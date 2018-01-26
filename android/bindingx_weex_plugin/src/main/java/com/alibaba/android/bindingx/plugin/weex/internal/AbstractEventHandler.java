@@ -7,8 +7,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.alibaba.android.bindingx.plugin.weex.ExpressionBindingCore;
-import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
+import com.alibaba.android.bindingx.plugin.weex.BindingXCore;
 import com.alibaba.android.bindingx.plugin.weex.IEventHandler;
 import com.alibaba.android.bindingx.plugin.weex.LogProxy;
 import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
@@ -32,7 +31,7 @@ import java.util.Map;
 public abstract class AbstractEventHandler implements IEventHandler {
 
     protected volatile Map<String/*targetRef*/, List<ExpressionHolder>> mExpressionHoldersMap;
-    protected ExpressionBindingCore.JavaScriptCallback mCallback;
+    protected BindingXCore.JavaScriptCallback mCallback;
     protected final Map<String, Object> mScope = new HashMap<>();
     protected String mInstanceId;
     protected String mAnchorInstanceId;
@@ -59,7 +58,7 @@ public abstract class AbstractEventHandler implements IEventHandler {
                                  @Nullable Map<String,Object> globalConfig,
                                  @Nullable ExpressionPair exitExpressionPair,
                                  @NonNull List<Map<String, Object>> expressionArgs,
-                                 @Nullable ExpressionBindingCore.JavaScriptCallback callback) {
+                                 @Nullable BindingXCore.JavaScriptCallback callback) {
         clearExpressions();
         transformArgs(eventType, expressionArgs);
         this.mCallback = callback;
@@ -87,13 +86,13 @@ public abstract class AbstractEventHandler implements IEventHandler {
             mExpressionHoldersMap = new HashMap<>();
         }
         for (Map<String, Object> arg : originalArgs) {
-            String targetRef = Utils.getStringValue(arg,ExpressionConstants.KEY_ELEMENT);
-            String targetInstanceId = Utils.getStringValue(arg, ExpressionConstants.KEY_INSTANCE_ID);
-            String property = Utils.getStringValue(arg,ExpressionConstants.KEY_PROPERTY);
+            String targetRef = Utils.getStringValue(arg, BindingXConstants.KEY_ELEMENT);
+            String targetInstanceId = Utils.getStringValue(arg, BindingXConstants.KEY_INSTANCE_ID);
+            String property = Utils.getStringValue(arg, BindingXConstants.KEY_PROPERTY);
 
-            ExpressionPair expressionPair = Utils.getExpressionPair(arg,ExpressionConstants.KEY_EXPRESSION);
+            ExpressionPair expressionPair = Utils.getExpressionPair(arg, BindingXConstants.KEY_EXPRESSION);
 
-            String config = Utils.getStringValue(arg,ExpressionConstants.KEY_CONFIG);
+            String config = Utils.getStringValue(arg, BindingXConstants.KEY_CONFIG);
             Map<String,Object> configMap = null;
             if(!TextUtils.isEmpty(config)) {
                 try {

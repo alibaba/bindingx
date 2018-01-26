@@ -1,4 +1,4 @@
-package com.alibaba.android.bindingx.plugin.weex;
+package com.alibaba.android.bindingx.plugin.weex.internal;
 
 import android.support.annotation.StringDef;
 
@@ -11,7 +11,7 @@ import java.lang.annotation.RetentionPolicy;
  * Created by rowandjj(chuyi)<br/>
  */
 
-public class ExpressionConstants {
+public class BindingXConstants {
     public static final String TAG = "ExpressionBinding";
 
     public static final String STATE_START = "start";
@@ -40,8 +40,8 @@ public class ExpressionConstants {
     public static final String KEY_ORIGIN = "origin";
 
     @Retention(RetentionPolicy.SOURCE)
-    @StringDef({ExpressionConstants.STATE_START, ExpressionConstants.STATE_END,
-            ExpressionConstants.STATE_CANCEL, ExpressionConstants.STATE_EXIT, ExpressionConstants.STATE_TURNING})
+    @StringDef({BindingXConstants.STATE_START, BindingXConstants.STATE_END,
+            BindingXConstants.STATE_CANCEL, BindingXConstants.STATE_EXIT, BindingXConstants.STATE_TURNING})
     public @interface State {
     }
 }

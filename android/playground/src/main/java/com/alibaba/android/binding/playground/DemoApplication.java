@@ -3,7 +3,7 @@ package com.alibaba.android.binding.playground;
 import android.app.Application;
 import android.text.TextUtils;
 
-import com.alibaba.android.bindingx.plugin.weex.Binding;
+import com.alibaba.android.bindingx.plugin.weex.BindingX;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.appfram.navigator.IActivityNavBarSetter;
@@ -86,7 +86,7 @@ public class DemoApplication extends Application {
         });
 
         try {
-            Binding.register();
+            BindingX.register();
         } catch (WXException e) {
         }
     }

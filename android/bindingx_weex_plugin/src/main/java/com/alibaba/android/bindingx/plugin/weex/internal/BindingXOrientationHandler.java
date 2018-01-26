@@ -6,9 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.alibaba.android.bindingx.plugin.weex.EventType;
-import com.alibaba.android.bindingx.plugin.weex.ExpressionBindingCore;
-import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
+import com.alibaba.android.bindingx.plugin.weex.BindingXEventType;
+import com.alibaba.android.bindingx.plugin.weex.BindingXCore;
 import com.alibaba.android.bindingx.plugin.weex.LogProxy;
 import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
 
@@ -24,7 +23,7 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-public class ExpressionOrientationHandler extends AbstractEventHandler implements OrientationDetector.OnOrientationChangedListener {
+public class BindingXOrientationHandler extends AbstractEventHandler implements OrientationDetector.OnOrientationChangedListener {
 
     private boolean isStarted = false;
 
@@ -48,7 +47,7 @@ public class ExpressionOrientationHandler extends AbstractEventHandler implement
     private LinkedList<Double> mRecordsAlpha = new LinkedList<>();
 
 
-    public ExpressionOrientationHandler(Context context, PlatformManager manager, Object... extension) {
+    public BindingXOrientationHandler(Context context, PlatformManager manager, Object... extension) {
         super(context,manager, extension);
         if (context != null) {
             mOrientationDetector = OrientationDetector.getInstance(context);
@@ -76,14 +75,14 @@ public class ExpressionOrientationHandler extends AbstractEventHandler implement
                                  @Nullable Map<String,Object> globalConfig,
                                  @Nullable ExpressionPair exitExpressionPair,
                                  @NonNull List<Map<String, Object>> expressionArgs,
-                                 @Nullable ExpressionBindingCore.JavaScriptCallback callback) {
+                                 @Nullable BindingXCore.JavaScriptCallback callback) {
         super.onBindExpression(eventType,globalConfig, exitExpressionPair, expressionArgs, callback);
 
         // 获取配置
         String sceneType = null;
         if(globalConfig != null) {
             // 目前有2d和3d两种配置
-            sceneType = (String) globalConfig.get(ExpressionConstants.KEY_SCENE_TYPE);
+            sceneType = (String) globalConfig.get(BindingXConstants.KEY_SCENE_TYPE);
             if(TextUtils.isEmpty(sceneType)) {
                 sceneType = "2d";
             } else {
@@ -112,7 +111,7 @@ public class ExpressionOrientationHandler extends AbstractEventHandler implement
             return false;
         }
 
-        fireEventByState(ExpressionConstants.STATE_END, mLastAlpha, mLastBeta, mLastGamma);
+        fireEventByState(BindingXConstants.STATE_END, mLastAlpha, mLastBeta, mLastGamma);
         return mOrientationDetector.removeOrientationChangedListener(this);
 //         不要stop()。如果一个页面多个orientation监听，那么disable一个，会暂停所有的
 //        mOrientationDetector.stop();
@@ -145,7 +144,7 @@ public class ExpressionOrientationHandler extends AbstractEventHandler implement
 
         if(!isStarted) {
             isStarted = true;
-            fireEventByState(ExpressionConstants.STATE_START, alpha, beta, gamma);
+            fireEventByState(BindingXConstants.STATE_START, alpha, beta, gamma);
             mStartAlpha = alpha;
             mStartBeta = beta;
             mStartGamma = gamma;
@@ -175,7 +174,7 @@ public class ExpressionOrientationHandler extends AbstractEventHandler implement
             //消费所有的表达式
             JSMath.applyOrientationValuesToScope(mScope,alpha,beta,gamma,mStartAlpha,mStartBeta,mStartGamma, x,y,z);
             if(!evaluateExitExpression(mExitExpressionPair,mScope)) {
-                consumeExpression(mExpressionHoldersMap, mScope, EventType.TYPE_ORIENTATION);
+                consumeExpression(mExpressionHoldersMap, mScope, BindingXEventType.TYPE_ORIENTATION);
             }
 
         } catch (Exception e) {
@@ -272,10 +271,10 @@ public class ExpressionOrientationHandler extends AbstractEventHandler implement
         double alpha = (double) scope.get("alpha");
         double beta = (double) scope.get("beta");
         double gamma = (double) scope.get("gamma");
-        fireEventByState(ExpressionConstants.STATE_EXIT, alpha, beta, gamma);
+        fireEventByState(BindingXConstants.STATE_EXIT, alpha, beta, gamma);
     }
 
-    private void fireEventByState(@ExpressionConstants.State String state, double alpha, double beta, double gamma) {
+    private void fireEventByState(@BindingXConstants.State String state, double alpha, double beta, double gamma) {
         if (mCallback != null) {
             Map<String, Object> param = new HashMap<>();
             param.put("state", state);

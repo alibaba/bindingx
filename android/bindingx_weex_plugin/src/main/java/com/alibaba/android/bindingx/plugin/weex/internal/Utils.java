@@ -4,8 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.alibaba.android.bindingx.plugin.weex.ExpressionConstants;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -81,7 +79,7 @@ public final class Utils {
     @Nullable
     @SuppressWarnings("unchecked")
     public static List<Map<String, Object>> getRuntimeProps(@NonNull Map<String,Object> params) {
-        Object result = params.get(ExpressionConstants.KEY_RUNTIME_PROPS);
+        Object result = params.get(BindingXConstants.KEY_RUNTIME_PROPS);
         if(result == null) {
             return null;
         }
@@ -101,8 +99,8 @@ public final class Utils {
 
         try {
             JSONObject jsonObject = new JSONObject(raw);
-            String origin = jsonObject.optString(ExpressionConstants.KEY_ORIGIN,null);
-            String transformed = jsonObject.optString(ExpressionConstants.KEY_TRANSFORMED,null);
+            String origin = jsonObject.optString(BindingXConstants.KEY_ORIGIN,null);
+            String transformed = jsonObject.optString(BindingXConstants.KEY_TRANSFORMED,null);
             if(TextUtils.isEmpty(origin) && TextUtils.isEmpty(transformed)) {
                 //说明是老的协议
                 return ExpressionPair.create(null,raw);
