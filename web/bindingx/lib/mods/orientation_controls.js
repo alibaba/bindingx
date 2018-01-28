@@ -70,7 +70,6 @@ function DeviceOrientationControls(object) {
   }
 
   var onDeviceOrientationChangeEvent = function onDeviceOrientationChangeEvent(e) {
-
     var alpha = e.alpha;
     var beta = e.beta;
     var gamma = e.gamma;
@@ -106,14 +105,12 @@ function DeviceOrientationControls(object) {
   };
 
   var onScreenOrientationChangeEvent = function onScreenOrientationChangeEvent() {
-
     scope.screenOrientation = window.orientation || 0;
   };
 
   // The angles alpha, beta and gamma form a set of intrinsic Tait-Bryan angles of type Z-X'-Y''
 
   var setObjectQuaternion = function () {
-
     var zee = new _vector2.default(0, 0, 1);
 
     var euler = new _euler2.default();
@@ -123,7 +120,6 @@ function DeviceOrientationControls(object) {
     var q1 = new _quaternion2.default(-Math.sqrt(0.5), 0, 0, Math.sqrt(0.5)); // - PI/2 around the x-axis
 
     return function (quaternion, alpha, beta, gamma, orient) {
-
       euler.set(beta, alpha, -gamma, 'YXZ'); // 'ZXY' for the device, but 'YXZ' for us
 
       quaternion.setFromEuler(euler); // orient the device

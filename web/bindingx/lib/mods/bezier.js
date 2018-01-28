@@ -20,7 +20,6 @@ function Bezier(x1, y1, x2, y2, epsilon) {
   };
 
   return function (t) {
-
     var x = t,
         t0,
         t1,

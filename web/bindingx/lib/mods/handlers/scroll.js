@@ -21,7 +21,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function isTurner(prev, now) {
-
   return prev / now < 0;
 }
 
@@ -98,8 +97,8 @@ var ScrollHandler = function (_CommonHandler) {
 
     var anchor = binding.options.anchor;
 
-    _this.tx = anchor.scrollLeft;
-    _this.ty = anchor.scrollTop;
+    _this.tx = (0, _utils.pxTo750)(anchor.scrollLeft);
+    _this.ty = (0, _utils.pxTo750)(anchor.scrollTop);
     anchor.addEventListener('scroll', _this._onScroll);
     return _this;
   }

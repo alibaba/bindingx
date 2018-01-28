@@ -4,9 +4,11 @@
  * @param string matrix
  * @return object
  */
+import {isWeb} from 'universal-env';
+
 
 // TODO matrix4 3D场景下待实现  目前仅仅实现matrix  2D
-const matrixToTransformObj = function(matrix) {
+const matrixToTransformObj = function (matrix) {
   // this happens when there was no rotation yet in CSS
   if (matrix === 'none') {
     matrix = 'matrix(0,0,0,0,0)';
@@ -36,18 +38,21 @@ function clamp(n, min, max) {
   return n < min ? min : n > max ? max : n;
 }
 
-const vendor = (function() {
-  var el = document.createElement('div').style;
-  var vendors = ['t', 'webkitT', 'MozT', 'msT', 'OT'],
-    transform,
-    i = 0,
-    l = vendors.length;
-  for (; i < l; i++) {
-    transform = vendors[i] + 'ransform';
-    if (transform in el) return vendors[i].substr(0, vendors[i].length - 1);
-  }
-  return false;
-})();
+let vendor;
+if (isWeb) {
+  vendor = (function () {
+    var el = document.createElement('div').style;
+    var vendors = ['t', 'webkitT', 'MozT', 'msT', 'OT'],
+      transform,
+      i = 0,
+      l = vendors.length;
+    for (; i < l; i++) {
+      transform = vendors[i] + 'ransform';
+      if (transform in el) return vendors[i].substr(0, vendors[i].length - 1);
+    }
+    return false;
+  })();
+}
 
 /**
  *  add vendor to attribute
@@ -61,11 +66,22 @@ function prefixStyle(attrName) {
   return vendor + attrName.charAt(0).toUpperCase() + attrName.substr(1);
 }
 
+function requireModule(moduleName) {
+  try {
+    if (typeof weex !== undefined && weex.requireModule) { // eslint-disable-line
+      return weex.requireModule(moduleName);  // eslint-disable-line
+    }
+  } catch (err) {
+  }
+  return window.require('@weex-module/' + moduleName);
+};
+
 
 export {
   matrixToTransformObj,
   pxTo750,
   px,
   clamp,
-  prefixStyle
+  prefixStyle,
+  requireModule
 };

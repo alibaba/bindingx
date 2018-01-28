@@ -11,7 +11,6 @@ var _objectAssign2 = _interopRequireDefault(_objectAssign);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Quaternion(x, y, z, w) {
-
   this._x = x || 0;
   this._y = y || 0;
   this._z = z || 0;
@@ -28,51 +27,42 @@ Quaternion.prototype = {
   constructor: Quaternion,
 
   get x() {
-
     return this._x;
   },
 
   set x(value) {
-
     this._x = value;
     this.onChangeCallback();
   },
 
   get y() {
-
     return this._y;
   },
 
   set y(value) {
-
     this._y = value;
     this.onChangeCallback();
   },
 
   get z() {
-
     return this._z;
   },
 
   set z(value) {
-
     this._z = value;
     this.onChangeCallback();
   },
 
   get w() {
-
     return this._w;
   },
 
   set w(value) {
-
     this._w = value;
     this.onChangeCallback();
   },
 
   set: function set(x, y, z, w) {
-
     this._x = x;
     this._y = y;
     this._z = z;
@@ -84,12 +74,10 @@ Quaternion.prototype = {
   },
 
   clone: function clone() {
-
     return new this.constructor(this._x, this._y, this._z, this._w);
   },
 
   copy: function copy(quaternion) {
-
     this._x = quaternion.x;
     this._y = quaternion.y;
     this._z = quaternion.z;
@@ -101,9 +89,7 @@ Quaternion.prototype = {
   },
 
   setFromEuler: function setFromEuler(euler, update) {
-
     if ((euler && euler.isEuler) === false) {
-
       throw new Error('THREE.Quaternion: .setFromEuler() now expects an Euler rotation rather than a Vector3 and order.');
     }
 
@@ -121,37 +107,31 @@ Quaternion.prototype = {
     var order = euler.order;
 
     if (order === 'XYZ') {
-
       this._x = s1 * c2 * c3 + c1 * s2 * s3;
       this._y = c1 * s2 * c3 - s1 * c2 * s3;
       this._z = c1 * c2 * s3 + s1 * s2 * c3;
       this._w = c1 * c2 * c3 - s1 * s2 * s3;
     } else if (order === 'YXZ') {
-
       this._x = s1 * c2 * c3 + c1 * s2 * s3;
       this._y = c1 * s2 * c3 - s1 * c2 * s3;
       this._z = c1 * c2 * s3 - s1 * s2 * c3;
       this._w = c1 * c2 * c3 + s1 * s2 * s3;
     } else if (order === 'ZXY') {
-
       this._x = s1 * c2 * c3 - c1 * s2 * s3;
       this._y = c1 * s2 * c3 + s1 * c2 * s3;
       this._z = c1 * c2 * s3 + s1 * s2 * c3;
       this._w = c1 * c2 * c3 - s1 * s2 * s3;
     } else if (order === 'ZYX') {
-
       this._x = s1 * c2 * c3 - c1 * s2 * s3;
       this._y = c1 * s2 * c3 + s1 * c2 * s3;
       this._z = c1 * c2 * s3 - s1 * s2 * c3;
       this._w = c1 * c2 * c3 + s1 * s2 * s3;
     } else if (order === 'YZX') {
-
       this._x = s1 * c2 * c3 + c1 * s2 * s3;
       this._y = c1 * s2 * c3 + s1 * c2 * s3;
       this._z = c1 * c2 * s3 - s1 * s2 * c3;
       this._w = c1 * c2 * c3 - s1 * s2 * s3;
     } else if (order === 'XZY') {
-
       this._x = s1 * c2 * c3 - c1 * s2 * s3;
       this._y = c1 * s2 * c3 - s1 * c2 * s3;
       this._z = c1 * c2 * s3 + s1 * s2 * c3;
@@ -164,7 +144,6 @@ Quaternion.prototype = {
   },
 
   setFromAxisAngle: function setFromAxisAngle(axis, angle) {
-
     // http://www.euclideanspace.com/maths/geometry/rotations/conversions/angleToQuaternion/index.htm
 
     // assumes axis is normalized
@@ -211,9 +190,7 @@ Quaternion.prototype = {
   // },
 
   multiply: function multiply(q, p) {
-
     if (p !== undefined) {
-
       console.warn('THREE.Quaternion: .multiply() now only accepts one argument. Use .multiplyQuaternions( a, b ) instead.');
       return this.multiplyQuaternions(q, p);
     }
@@ -222,7 +199,6 @@ Quaternion.prototype = {
   },
 
   multiplyQuaternions: function multiplyQuaternions(a, b) {
-
     // from http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/code/index.htm
 
     var qax = a._x,
@@ -245,7 +221,6 @@ Quaternion.prototype = {
   },
 
   slerp: function slerp(qb, t) {
-
     if (t === 0) return this;
     if (t === 1) return this.copy(qb);
 
@@ -259,7 +234,6 @@ Quaternion.prototype = {
     var cosHalfTheta = w * qb._w + x * qb._x + y * qb._y + z * qb._z;
 
     if (cosHalfTheta < 0) {
-
       this._w = -qb._w;
       this._x = -qb._x;
       this._y = -qb._y;
@@ -267,12 +241,10 @@ Quaternion.prototype = {
 
       cosHalfTheta = -cosHalfTheta;
     } else {
-
       this.copy(qb);
     }
 
     if (cosHalfTheta >= 1.0) {
-
       this._w = w;
       this._x = x;
       this._y = y;
@@ -284,7 +256,6 @@ Quaternion.prototype = {
     var sinHalfTheta = Math.sqrt(1.0 - cosHalfTheta * cosHalfTheta);
 
     if (Math.abs(sinHalfTheta) < 0.001) {
-
       this._w = 0.5 * (w + this._w);
       this._x = 0.5 * (x + this._x);
       this._y = 0.5 * (y + this._y);
@@ -308,7 +279,6 @@ Quaternion.prototype = {
   },
 
   onChange: function onChange(callback) {
-
     this.onChangeCallback = callback;
 
     return this;
@@ -321,12 +291,10 @@ Quaternion.prototype = {
 (0, _objectAssign2.default)(Quaternion, {
 
   slerp: function slerp(qa, qb, qm, t) {
-
     return qm.copy(qa).slerp(qb, t);
   },
 
   slerpFlat: function slerpFlat(dst, dstOffset, src0, srcOffset0, src1, srcOffset1, t) {
-
     // fuzz-free, array-based Quaternion SLERP operation
 
     var x0 = src0[srcOffset0 + 0],
@@ -339,7 +307,6 @@ Quaternion.prototype = {
         w1 = src1[srcOffset1 + 3];
 
     if (w0 !== w1 || x0 !== x1 || y0 !== y1 || z0 !== z1) {
-
       var s = 1 - t,
           cos = x0 * x1 + y0 * y1 + z0 * z1 + w0 * w1,
           dir = cos >= 0 ? 1 : -1,
@@ -347,7 +314,6 @@ Quaternion.prototype = {
 
       // Skip the Slerp for tiny steps to avoid numeric problems:
       if (sqrSin > Number.EPSILON) {
-
         var sin = Math.sqrt(sqrSin),
             len = Math.atan2(sin, cos * dir);
 
@@ -364,7 +330,6 @@ Quaternion.prototype = {
 
       // Normalize in case we just did a lerp:
       if (s === 1 - t) {
-
         var f = 1 / Math.sqrt(x0 * x0 + y0 * y0 + z0 * z0 + w0 * w0);
 
         x0 *= f;

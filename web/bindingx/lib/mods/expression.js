@@ -20,7 +20,6 @@ function strictlyEqual(v1, v2) {
 }
 
 function execute(node, scope) {
-
   var type = node.type;
   var children = node.children;
   switch (type) {

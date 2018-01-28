@@ -10,33 +10,56 @@ var _universalEnv = require('universal-env');
 
 var _expression_parser = require('./mods/expression_parser');
 
+var _utils = require('./mods/utils');
+
 var isSupportNewBinding = true;
 var isSupportBinding = true;
 var WeexBinding = void 0;
 var WebBinding = {};
 if (_universalEnv.isWeb) {
   WebBinding = require('./mods/binding');
-}
-try {
-  WeexBinding = __weex_require__('@weex-module/binding');
-  isSupportNewBinding = typeof WeexBinding.bind === 'function' && typeof WeexBinding.unbind === 'function' && typeof WeexBinding.unbindAll === 'function' && typeof WeexBinding.getComputedStyle === 'function';
-} catch (e) {
-  isSupportNewBinding = false;
-}
-
-if (!isSupportNewBinding) {
+} else {
   try {
-    WeexBinding = __weex_require__('@weex-module/expressionBinding');
-  } catch (err) {
-    isSupportBinding = false;
+    WeexBinding = (0, _utils.requireModule)('bindingx');
+    isSupportNewBinding = true;
+  } catch (e) {
+    isSupportNewBinding = false;
   }
+  if (!WeexBinding || !WeexBinding.bind) {
+    try {
+      WeexBinding = (0, _utils.requireModule)('binding');
+      isSupportNewBinding = true;
+    } catch (e) {
+      isSupportNewBinding = false;
+    }
+  }
+  isSupportNewBinding = !!WeexBinding && WeexBinding.bind && WeexBinding.unbind;
+  if (!isSupportNewBinding) {
+    try {
+      WeexBinding = (0, _utils.requireModule)('expressionBinding');
+      isSupportBinding = true;
+    } catch (err) {
+      isSupportBinding = false;
+    }
+  }
+  isSupportBinding = !!WeexBinding && (WeexBinding.bind || WeexBinding.createBinding);
 }
 
 function formatExpression(expression) {
-  if (expression && expression.origin) {
-    expression.transformed = expression.transformed || (0, _expression_parser.parse)(expression.origin);
+  if (expression === undefined) return;
+  try {
+    expression = JSON.parse(expression);
+  } catch (err) {}
+  var resultExpression = {};
+  if (typeof expression === 'string') {
+    resultExpression.origin = expression;
+  } else if (expression) {
+    resultExpression.origin = expression.origin;
+    resultExpression.transformed = expression.transformed;
   }
-  return expression;
+  if (!resultExpression.transformed && !resultExpression.origin) return;
+  resultExpression.transformed = resultExpression.transformed || (0, _expression_parser.parse)(resultExpression.origin);
+  return resultExpression;
 }
 
 // 统一回调参数
@@ -93,25 +116,26 @@ exports.default = {
       });
     }
 
-    if (_universalEnv.isWeex && WeexBinding) {
-      if (isSupportNewBinding) {
-        return WeexBinding.bind(options, options && options.eventType === 'timing' ? fixCallback(callback) : callback);
-      } else {
-        WeexBinding.enableBinding(options.anchor, options.eventType);
-        // 处理expression的参数格式
-        var expressionArgs = options.props.map(function (prop) {
-          return {
-            element: prop.element,
-            property: prop.property,
-            expression: prop.expression.transformed
-          };
-        });
-        WeexBinding.createBinding(options.anchor, options.eventType, '', expressionArgs, callback);
-        return;
+    if (_universalEnv.isWeex) {
+      if (WeexBinding && isSupportBinding) {
+        if (isSupportNewBinding) {
+          return WeexBinding.bind(options, options && options.eventType === 'timing' ? fixCallback(callback) : callback);
+        } else {
+          WeexBinding.enableBinding(options.anchor, options.eventType);
+          // 处理expression的参数格式
+          var expressionArgs = options.props.map(function (prop) {
+            return {
+              element: prop.element,
+              property: prop.property,
+              expression: prop.expression.transformed
+            };
+          });
+          WeexBinding.createBinding(options.anchor, options.eventType, '', expressionArgs, callback);
+        }
       }
+    } else {
+      return WebBinding.bind(options, callback);
     }
-
-    return WebBinding.bind(options, callback);
   },
 
   /**
@@ -124,26 +148,30 @@ exports.default = {
     if (!options) {
       throw new Error('should pass options for binding');
     }
-    if (_universalEnv.isWeex && WeexBinding) {
-      if (isSupportNewBinding) {
-        return WeexBinding.unbind(options);
-      } else {
-        return WeexBinding.disableBinding(options.anchor, options.eventType);
+    if (_universalEnv.isWeex) {
+      if (WeexBinding && isSupportBinding) {
+        if (isSupportNewBinding) {
+          return WeexBinding.unbind(options);
+        } else {
+          return WeexBinding.disableBinding(options.anchor, options.eventType);
+        }
       }
-      return;
+    } else {
+      return WebBinding.unbind(options);
     }
-    return WebBinding.unbind(options);
   },
   unbindAll: function unbindAll() {
-    if (_universalEnv.isWeex && WeexBinding) {
-      if (isSupportNewBinding) {
-        return WeexBinding.unbindAll();
-      } else {
-        return WeexBinding.disableAll();
+    if (_universalEnv.isWeex) {
+      if (WeexBinding && isSupportBinding) {
+        if (isSupportNewBinding) {
+          return WeexBinding.unbindAll();
+        } else {
+          return WeexBinding.disableAll();
+        }
       }
-      return;
+    } else {
+      return WebBinding.unbindAll();
     }
-    return WebBinding.unbindAll();
   },
   getComputedStyle: function getComputedStyle(el) {
     if (_universalEnv.isWeex) {

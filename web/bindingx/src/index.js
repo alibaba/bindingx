@@ -4,6 +4,7 @@
 
 import {isWeex, isWeb} from 'universal-env';
 import {parse} from './mods/expression_parser';
+import {requireModule} from './mods/utils';
 
 let isSupportNewBinding = true;
 let isSupportBinding = true;
@@ -11,23 +12,31 @@ let WeexBinding;
 let WebBinding = {};
 if (isWeb) {
   WebBinding = require('./mods/binding');
-}
-try {
-  WeexBinding = __weex_require__('@weex-module/binding');
-  isSupportNewBinding = typeof WeexBinding.bind === 'function'
-    && typeof WeexBinding.unbind === 'function'
-    && typeof WeexBinding.unbindAll === 'function'
-    && typeof WeexBinding.getComputedStyle === 'function';
-} catch (e) {
-  isSupportNewBinding = false;
-}
-
-if (!isSupportNewBinding) {
+} else {
   try {
-    WeexBinding = __weex_require__('@weex-module/expressionBinding');
-  } catch (err) {
-    isSupportBinding = false;
+    WeexBinding = requireModule('bindingx');
+    isSupportNewBinding = true;
+  } catch (e) {
+    isSupportNewBinding = false;
   }
+  if (!WeexBinding || !WeexBinding.bind) {
+    try {
+      WeexBinding = requireModule('binding');
+      isSupportNewBinding = true;
+    } catch (e) {
+      isSupportNewBinding = false;
+    }
+  }
+  isSupportNewBinding = !!WeexBinding && WeexBinding.bind && WeexBinding.unbind;
+  if (!isSupportNewBinding) {
+    try {
+      WeexBinding = requireModule('expressionBinding');
+      isSupportBinding = true;
+    } catch (err) {
+      isSupportBinding = false;
+    }
+  }
+  isSupportBinding = !!WeexBinding && (WeexBinding.bind || WeexBinding.createBinding);
 }
 
 
@@ -102,25 +111,26 @@ export default {
       });
     }
 
-    if (isWeex && WeexBinding) {
-      if (isSupportNewBinding) {
-        return WeexBinding.bind(options, options && options.eventType === 'timing' ? fixCallback(callback) : callback);
-      } else {
-        WeexBinding.enableBinding(options.anchor, options.eventType);
-        // 处理expression的参数格式
-        let expressionArgs = options.props.map((prop) => {
-          return {
-            element: prop.element,
-            property: prop.property,
-            expression: prop.expression.transformed
-          };
-        });
-        WeexBinding.createBinding(options.anchor, options.eventType, '', expressionArgs, callback);
-        return;
+    if (isWeex) {
+      if (WeexBinding && isSupportBinding) {
+        if (isSupportNewBinding) {
+          return WeexBinding.bind(options, options && options.eventType === 'timing' ? fixCallback(callback) : callback);
+        } else {
+          WeexBinding.enableBinding(options.anchor, options.eventType);
+          // 处理expression的参数格式
+          let expressionArgs = options.props.map((prop) => {
+            return {
+              element: prop.element,
+              property: prop.property,
+              expression: prop.expression.transformed
+            };
+          });
+          WeexBinding.createBinding(options.anchor, options.eventType, '', expressionArgs, callback);
+        }
       }
+    } else {
+      return WebBinding.bind(options, callback);
     }
-
-    return WebBinding.bind(options, callback);
   },
   /**
    *  @param {object} options
@@ -132,26 +142,30 @@ export default {
     if (!options) {
       throw new Error('should pass options for binding');
     }
-    if (isWeex && WeexBinding) {
-      if (isSupportNewBinding) {
-        return WeexBinding.unbind(options);
-      } else {
-        return WeexBinding.disableBinding(options.anchor, options.eventType);
+    if (isWeex) {
+      if (WeexBinding && isSupportBinding) {
+        if (isSupportNewBinding) {
+          return WeexBinding.unbind(options);
+        } else {
+          return WeexBinding.disableBinding(options.anchor, options.eventType);
+        }
       }
-      return;
+    } else {
+      return WebBinding.unbind(options);
     }
-    return WebBinding.unbind(options);
   },
   unbindAll() {
-    if (isWeex && WeexBinding) {
-      if (isSupportNewBinding) {
-        return WeexBinding.unbindAll();
-      } else {
-        return WeexBinding.disableAll();
+    if (isWeex) {
+      if (WeexBinding && isSupportBinding) {
+        if (isSupportNewBinding) {
+          return WeexBinding.unbindAll();
+        } else {
+          return WeexBinding.disableAll();
+        }
       }
-      return;
+    } else {
+      return WebBinding.unbindAll();
     }
-    return WebBinding.unbindAll();
   },
   getComputedStyle(el) {
     if (isWeex) {

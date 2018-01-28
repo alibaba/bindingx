@@ -21,7 +21,6 @@ var _quaternion2 = _interopRequireDefault(_quaternion);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Vector3(x, y, z) {
-
   this.x = x || 0;
   this.y = y || 0;
   this.z = z || 0;
@@ -34,7 +33,6 @@ Vector3.prototype = {
   isVector3: true,
 
   set: function set(x, y, z) {
-
     this.x = x;
     this.y = y;
     this.z = z;
@@ -43,13 +41,10 @@ Vector3.prototype = {
   },
 
   applyEuler: function () {
-
     var quaternion;
 
     return function applyEuler(euler) {
-
       if ((euler && euler.isEuler) === false) {
-
         console.error('THREE.Vector3: .applyEuler() now expects an Euler rotation rather than a Vector3 and order.');
       }
 
@@ -60,7 +55,6 @@ Vector3.prototype = {
   }(),
 
   applyQuaternion: function applyQuaternion(q) {
-
     var x = this.x,
         y = this.y,
         z = this.z;

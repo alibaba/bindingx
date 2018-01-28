@@ -131,7 +131,6 @@ function SyntacticalParser() {
   var hash = {};
 
   function closureNode(node) {
-
     hash[JSON.stringify(node)] = node;
 
     var queue = Object.getOwnPropertyNames(node);
@@ -303,7 +302,6 @@ function JavaScriptExpression(text) {
     } catch (e) {}
   };
   function checkSimple(symbol) {
-
     var curr = symbol;
     while (curr.childNodes.length <= 1 && curr.name !== 'MemberExpression') {
       // console.log(curr.name)
