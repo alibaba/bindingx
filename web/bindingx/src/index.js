@@ -32,10 +32,22 @@ if (!isSupportNewBinding) {
 
 
 function formatExpression(expression) {
-  if (expression && expression.origin) {
-    expression.transformed = expression.transformed || parse(expression.origin);
+  if (expression === undefined) return;
+  try {
+    expression = JSON.parse(expression);
+  } catch (err) {
+
   }
-  return expression;
+  let resultExpression = {};
+  if (typeof expression === 'string') {
+    resultExpression.origin = expression;
+  } else if (expression) {
+    resultExpression.origin = expression.origin;
+    resultExpression.transformed = expression.transformed;
+  }
+  if (!resultExpression.transformed && !resultExpression.origin) return;
+  resultExpression.transformed = resultExpression.transformed || parse(resultExpression.origin);
+  return resultExpression;
 }
 
 // 统一回调参数

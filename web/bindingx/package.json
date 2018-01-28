@@ -1,0 +1,17 @@
+{
+  "name": "bindingx",
+  "version": "0.0.2",
+  "description": "bindingx,expression,binding,weex",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bindingx",
+    "expression",
+    "binding",
+    "weex"
+  ],
+  "author": "",
+  "license": "Apache-2.0"
+}
