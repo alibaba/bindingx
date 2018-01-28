@@ -129,4 +129,26 @@ public final class Utils {
         Collections.addAll(list, elements);
         return list;
     }
+
+    /**
+     * parse rotation to (-180, 180]
+     * */
+    public static float normalizeRotation(float rotation) {
+        rotation = rotation % 360;
+        float normalizedRotation;
+        if(rotation >= 0) {
+            if(rotation >= 0 && rotation <= 180) {
+                normalizedRotation = rotation;
+            } else {
+                normalizedRotation = (rotation % 180) - 180;
+            }
+        } else {
+            if(rotation > -180 && rotation < 0) {
+                normalizedRotation = rotation;
+            } else {
+                normalizedRotation = 180 + (rotation % 180);
+            }
+        }
+        return normalizedRotation;
+    }
 }
