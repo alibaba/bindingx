@@ -1,6 +1,6 @@
 {
   "name": "bindingx",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "bindingx,expression,binding,weex",
   "main": "lib/index.js",
   "scripts": {
@@ -12,6 +12,11 @@
     "binding",
     "weex"
   ],
+  "dependencies": {
+    "object-assign": "^4.1.1",
+    "simple-lodash": "^0.0.2",
+    "universal-env": "0.x.x"
+  },
   "author": "",
   "license": "Apache-2.0"
 }
