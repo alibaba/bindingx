@@ -1,4 +1,4 @@
-package com.alibaba.android.bindingx.plugin.weex.internal;
+package com.alibaba.android.bindingx.core.internal;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -10,7 +10,7 @@ import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.alibaba.android.bindingx.plugin.weex.LogProxy;
+import com.alibaba.android.bindingx.core.LogProxy;
 
 import java.util.ArrayList;
 import java.util.HashSet;

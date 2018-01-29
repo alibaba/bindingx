@@ -1,4 +1,4 @@
-package com.alibaba.android.bindingx.plugin.weex.internal;
+package com.alibaba.android.bindingx.core.internal;
 
 import android.content.Context;
 import android.support.annotation.CallSuper;
@@ -7,10 +7,10 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.alibaba.android.bindingx.plugin.weex.BindingXCore;
-import com.alibaba.android.bindingx.plugin.weex.IEventHandler;
-import com.alibaba.android.bindingx.plugin.weex.LogProxy;
-import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
+import com.alibaba.android.bindingx.core.BindingXCore;
+import com.alibaba.android.bindingx.core.IEventHandler;
+import com.alibaba.android.bindingx.core.LogProxy;
+import com.alibaba.android.bindingx.core.PlatformManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;

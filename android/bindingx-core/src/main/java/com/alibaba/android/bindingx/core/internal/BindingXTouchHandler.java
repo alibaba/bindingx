@@ -1,4 +1,4 @@
-package com.alibaba.android.bindingx.plugin.weex.internal;
+package com.alibaba.android.bindingx.core.internal;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,10 +8,10 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.alibaba.android.bindingx.plugin.weex.BindingXEventType;
-import com.alibaba.android.bindingx.plugin.weex.BindingXCore;
-import com.alibaba.android.bindingx.plugin.weex.LogProxy;
-import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
+import com.alibaba.android.bindingx.core.BindingXCore;
+import com.alibaba.android.bindingx.core.BindingXEventType;
+import com.alibaba.android.bindingx.core.LogProxy;
+import com.alibaba.android.bindingx.core.PlatformManager;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,6 +1,7 @@
-package com.alibaba.android.bindingx.plugin.weex.internal;
+package com.alibaba.android.bindingx.core.internal;
 
-import com.alibaba.android.bindingx.plugin.weex.LogProxy;
+
+import com.alibaba.android.bindingx.core.LogProxy;
 
 import org.json.JSONArray;
 import org.json.JSONException;

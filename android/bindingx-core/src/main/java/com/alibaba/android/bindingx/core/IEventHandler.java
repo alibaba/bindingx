@@ -1,9 +1,9 @@
-package com.alibaba.android.bindingx.plugin.weex;
+package com.alibaba.android.bindingx.core;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionPair;
+import com.alibaba.android.bindingx.core.internal.ExpressionPair;
 
 import java.util.List;
 import java.util.Map;

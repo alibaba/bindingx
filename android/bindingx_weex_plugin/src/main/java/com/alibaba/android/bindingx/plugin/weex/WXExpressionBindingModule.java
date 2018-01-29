@@ -4,7 +4,11 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionPair;
+import com.alibaba.android.bindingx.core.BindingXCore;
+import com.alibaba.android.bindingx.core.BindingXEventType;
+import com.alibaba.android.bindingx.core.IEventHandler;
+import com.alibaba.android.bindingx.core.PlatformManager;
+import com.alibaba.android.bindingx.core.internal.ExpressionPair;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.annotation.JSMethod;
 import com.taobao.weex.bridge.JSCallback;

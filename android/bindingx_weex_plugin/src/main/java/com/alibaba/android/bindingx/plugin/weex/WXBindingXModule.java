@@ -10,8 +10,13 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
-import com.alibaba.android.bindingx.plugin.weex.internal.BindingXConstants;
-import com.alibaba.android.bindingx.plugin.weex.internal.Utils;
+import com.alibaba.android.bindingx.core.BindingXCore;
+import com.alibaba.android.bindingx.core.BindingXEventType;
+import com.alibaba.android.bindingx.core.IEventHandler;
+import com.alibaba.android.bindingx.core.LogProxy;
+import com.alibaba.android.bindingx.core.PlatformManager;
+import com.alibaba.android.bindingx.core.internal.BindingXConstants;
+import com.alibaba.android.bindingx.core.internal.Utils;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.annotation.JSMethod;

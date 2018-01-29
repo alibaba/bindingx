@@ -8,9 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.alibaba.android.bindingx.plugin.weex.internal.AbstractScrollEventHandler;
-import com.alibaba.android.bindingx.plugin.weex.internal.BindingXConstants;
-import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionPair;
+import com.alibaba.android.bindingx.core.BindingXCore;
+import com.alibaba.android.bindingx.core.LogProxy;
+import com.alibaba.android.bindingx.core.PlatformManager;
+import com.alibaba.android.bindingx.core.internal.AbstractScrollEventHandler;
+import com.alibaba.android.bindingx.core.internal.BindingXConstants;
+import com.alibaba.android.bindingx.core.internal.ExpressionPair;
 import com.taobao.weex.bridge.WXBridgeManager;
 import com.taobao.weex.common.Constants;
 import com.taobao.weex.ui.component.WXComponent;

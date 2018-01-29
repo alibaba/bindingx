@@ -1,12 +1,12 @@
-package com.alibaba.android.bindingx.plugin.weex.internal;
+package com.alibaba.android.bindingx.core.internal;
 
 import android.content.Context;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 
-import com.alibaba.android.bindingx.plugin.weex.BindingXEventType;
-import com.alibaba.android.bindingx.plugin.weex.LogProxy;
-import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
+import com.alibaba.android.bindingx.core.BindingXEventType;
+import com.alibaba.android.bindingx.core.LogProxy;
+import com.alibaba.android.bindingx.core.PlatformManager;
 
 import java.util.HashMap;
 import java.util.Locale;

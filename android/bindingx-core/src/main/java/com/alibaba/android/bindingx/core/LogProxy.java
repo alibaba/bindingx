@@ -1,8 +1,8 @@
-package com.alibaba.android.bindingx.plugin.weex;
+package com.alibaba.android.bindingx.core;
 
 import android.util.Log;
 
-import com.alibaba.android.bindingx.plugin.weex.internal.BindingXConstants;
+import com.alibaba.android.bindingx.core.internal.BindingXConstants;
 
 /**
  * Description:

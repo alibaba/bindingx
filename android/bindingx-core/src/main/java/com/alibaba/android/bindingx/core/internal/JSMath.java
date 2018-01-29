@@ -1,10 +1,10 @@
-package com.alibaba.android.bindingx.plugin.weex.internal;
+package com.alibaba.android.bindingx.core.internal;
 
 import android.animation.ArgbEvaluator;
 import android.graphics.Color;
 import android.text.TextUtils;
 
-import com.alibaba.android.bindingx.plugin.weex.PlatformManager;
+import com.alibaba.android.bindingx.core.PlatformManager;
 
 import org.json.JSONException;
 

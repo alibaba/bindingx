@@ -1,16 +1,16 @@
-package com.alibaba.android.bindingx.plugin.weex;
+package com.alibaba.android.bindingx.core;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.alibaba.android.bindingx.plugin.weex.internal.BindingXConstants;
-import com.alibaba.android.bindingx.plugin.weex.internal.BindingXOrientationHandler;
-import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionPair;
-import com.alibaba.android.bindingx.plugin.weex.internal.BindingXTimingHandler;
-import com.alibaba.android.bindingx.plugin.weex.internal.BindingXTouchHandler;
-import com.alibaba.android.bindingx.plugin.weex.internal.Utils;
+import com.alibaba.android.bindingx.core.internal.BindingXConstants;
+import com.alibaba.android.bindingx.core.internal.BindingXOrientationHandler;
+import com.alibaba.android.bindingx.core.internal.ExpressionPair;
+import com.alibaba.android.bindingx.core.internal.BindingXTimingHandler;
+import com.alibaba.android.bindingx.core.internal.BindingXTouchHandler;
+import com.alibaba.android.bindingx.core.internal.Utils;
 
 import org.json.JSONObject;
 

@@ -1,7 +1,9 @@
-package com.alibaba.android.bindingx.plugin.weex;
+package com.alibaba.android.bindingx.core;
 
 /**
  * Description:
+ *
+ * BindingX built-in event types
  *
  * Created by rowandjj(chuyi)<br/>
  */
