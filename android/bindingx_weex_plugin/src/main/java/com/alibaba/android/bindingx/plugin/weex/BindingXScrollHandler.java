@@ -11,7 +11,6 @@ import android.view.View;
 import com.alibaba.android.bindingx.plugin.weex.internal.AbstractScrollEventHandler;
 import com.alibaba.android.bindingx.plugin.weex.internal.BindingXConstants;
 import com.alibaba.android.bindingx.plugin.weex.internal.ExpressionPair;
-import com.alibaba.android.bindingx.plugin.weex.internal.WXModuleUtils;
 import com.taobao.weex.bridge.WXBridgeManager;
 import com.taobao.weex.common.Constants;
 import com.taobao.weex.ui.component.WXComponent;

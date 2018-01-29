@@ -1,4 +1,4 @@
-package com.alibaba.android.bindingx.plugin.weex.internal;
+package com.alibaba.android.bindingx.plugin.weex;
 
 import android.support.annotation.Nullable;
 import android.view.View;

@@ -12,7 +12,6 @@ import android.view.View;
 
 import com.alibaba.android.bindingx.plugin.weex.internal.BindingXConstants;
 import com.alibaba.android.bindingx.plugin.weex.internal.Utils;
-import com.alibaba.android.bindingx.plugin.weex.internal.WXModuleUtils;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.annotation.JSMethod;
