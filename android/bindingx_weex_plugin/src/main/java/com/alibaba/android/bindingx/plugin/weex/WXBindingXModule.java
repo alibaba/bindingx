@@ -148,7 +148,7 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
             int r = Color.red(backgroundColor);
             int g = Color.green(backgroundColor);
             int b = Color.blue(backgroundColor);
-            map.put("background-color", String.format(Locale.CHINA, "rgba(%d,%d,%d,%f)", r, g, b, a));
+            map.put("background-color", String.format(Locale.getDefault(), "rgba(%d,%d,%d,%f)", r, g, b, a));
         }
 
         if (component instanceof WXText && sourceView instanceof WXTextView) {
@@ -164,7 +164,7 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
                         int r = Color.red(fontColor);
                         int g = Color.green(fontColor);
                         int b = Color.blue(fontColor);
-                        map.put("color", String.format(Locale.CHINA, "rgba(%d,%d,%d,%f)", r, g, b, a));
+                        map.put("color", String.format(Locale.getDefault(), "rgba(%d,%d,%d,%f)", r, g, b, a));
                     }
                 }
             }

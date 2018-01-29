@@ -176,7 +176,7 @@ public abstract class AbstractEventHandler implements IEventHandler {
         }
 
         //执行表达式
-        LogProxy.d(String.format(Locale.CHINA, "consume expression with %d tasks. event type is %s",args.size(),currentState));
+        LogProxy.d(String.format(Locale.getDefault(), "consume expression with %d tasks. event type is %s",args.size(),currentState));
         for (List<ExpressionHolder> holderList : args.values()) {
             for (ExpressionHolder holder : holderList) {
                 if (!currentState.equals(holder.eventType)) {
