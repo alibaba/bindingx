@@ -30,8 +30,8 @@ public class MainApplication extends Application implements ReactApplication {
 
         @Override
         protected String getJSMainModuleName() {
-            //TODO
-            return "index";
+            // same as default
+            return "index.android";
         }
     };
 

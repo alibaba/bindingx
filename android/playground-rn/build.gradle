@@ -9,6 +9,13 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // Got problem:
+        // dlopen failed: libgnustl_shared.so is 32-bit instead of 64-bit
+        // https://github.com/facebook/react-native/issues/11027
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
     }
     buildTypes {
         release {
