@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.alibaba.android.binding.playground"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -21,10 +21,9 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation 'com.taobao.android:weex_sdk:0.17.0'
-
-    implementation project(':bindingx_weex_plugin')
     implementation project(':bindingx-core')
+    implementation project(':bindingx_weex_plugin')
+    implementation 'com.taobao.android:weex_sdk:0.17.0'
 
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
