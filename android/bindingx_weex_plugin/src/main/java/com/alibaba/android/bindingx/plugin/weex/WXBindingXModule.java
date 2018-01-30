@@ -45,33 +45,35 @@ import java.util.Map;
 
 public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
 
-    private BindingXCore mExpressionBindingCore;
+    private BindingXCore mBindingXCore;
     private PlatformManager mPlatformManager;
 
-    @JSMethod(uiThread = false)
-    public void prepare(Map<String, Object> params) {
+    private void prepareInternal() {
         if(mPlatformManager == null) {
             mPlatformManager = createPlatformManager(mWXSDKInstance);
         }
-        if (mExpressionBindingCore == null) {
-            mExpressionBindingCore = new BindingXCore(mPlatformManager);
+        if (mBindingXCore == null) {
+            mBindingXCore = new BindingXCore(mPlatformManager);
 
-            mExpressionBindingCore.registerEventHandler(BindingXEventType.TYPE_SCROLL,
+            mBindingXCore.registerEventHandler(BindingXEventType.TYPE_SCROLL,
                     new BindingXCore.ObjectCreator<IEventHandler, Context, PlatformManager>() {
-                @Override
-                public IEventHandler createWith(@NonNull Context context,@NonNull PlatformManager manager, Object... extension) {
-                    return new BindingXScrollHandler(context, manager, extension);
-                }
-            });
+                        @Override
+                        public IEventHandler createWith(@NonNull Context context,@NonNull PlatformManager manager, Object... extension) {
+                            return new BindingXScrollHandler(context, manager, extension);
+                        }
+                    });
         }
+    }
 
-        //空实现。 此方法仅为了与iOS兼容
+    @JSMethod(uiThread = false)
+    public void prepare(Map<String, Object> params) {
+        prepareInternal();
     }
 
     @JSMethod(uiThread = false)
     public Map<String, String> bind(Map<String, Object> params, final JSCallback callback) {
-        prepare(null);
-        String token = mExpressionBindingCore.doBind(
+        prepareInternal();
+        String token = mBindingXCore.doBind(
                 mWXSDKInstance == null ? null : mWXSDKInstance.getContext(),
                 mWXSDKInstance == null ? null : mWXSDKInstance.getInstanceId(),
                 params == null ? Collections.<String, Object>emptyMap() : params,
@@ -90,15 +92,15 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
 
     @JSMethod(uiThread = false)
     public void unbind(Map<String, Object> params) {
-        if (mExpressionBindingCore != null) {
-            mExpressionBindingCore.doUnbind(params);
+        if (mBindingXCore != null) {
+            mBindingXCore.doUnbind(params);
         }
     }
 
     @JSMethod(uiThread = false)
     public void unbindAll() {
-        if (mExpressionBindingCore != null) {
-            mExpressionBindingCore.doRelease();
+        if (mBindingXCore != null) {
+            mBindingXCore.doRelease();
         }
     }
 
@@ -109,7 +111,7 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
 
     @JSMethod(uiThread = false)
     public Map<String, Object> getComputedStyle(@Nullable String ref) {
-        prepare(null);
+        prepareInternal();
         PlatformManager.IDeviceResolutionTranslator resolutionTranslator = mPlatformManager.getResolutionTranslator();
 
         WXComponent component = WXModuleUtils.findComponentByRef(mWXSDKInstance.getInstanceId(), ref);
@@ -178,9 +180,9 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
         WXBridgeManager.getInstance().post(new Runnable() {
             @Override
             public void run() {
-                if (mExpressionBindingCore != null) {
-                    mExpressionBindingCore.doRelease();
-                    mExpressionBindingCore = null;
+                if (mBindingXCore != null) {
+                    mBindingXCore.doRelease();
+                    mBindingXCore = null;
                 }
             }
         }, null);
@@ -257,8 +259,8 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
         WXBridgeManager.getInstance().post(new Runnable() {
             @Override
             public void run() {
-                if (mExpressionBindingCore != null) {
-                    mExpressionBindingCore.onActivityPause();
+                if (mBindingXCore != null) {
+                    mBindingXCore.onActivityPause();
                 }
             }
         }, null);
@@ -269,8 +271,8 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
         WXBridgeManager.getInstance().post(new Runnable() {
             @Override
             public void run() {
-                if (mExpressionBindingCore != null) {
-                    mExpressionBindingCore.onActivityResume();
+                if (mBindingXCore != null) {
+                    mBindingXCore.onActivityResume();
                 }
             }
         }, null);
