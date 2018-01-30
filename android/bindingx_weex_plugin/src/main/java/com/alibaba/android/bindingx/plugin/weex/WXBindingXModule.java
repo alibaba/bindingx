@@ -214,8 +214,7 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
                                                                   @NonNull Map<String, Object> config,
                                                                   Object... extension) {
                         if(extension == null
-                                || extension.length <= 0
-                                || extension.length > 2
+                                || extension.length < 2
                                 || !(extension[0] instanceof String)
                                 || !(extension[1] instanceof String)) {
                             return;

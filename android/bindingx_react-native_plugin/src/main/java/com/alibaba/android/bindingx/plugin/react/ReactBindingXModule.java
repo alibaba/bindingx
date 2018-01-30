@@ -1,8 +1,10 @@
 package com.alibaba.android.bindingx.plugin.react;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.bindingx.core.BindingXCore;
@@ -210,8 +212,18 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
                     @Nullable
                     @Override
                     public View findViewBy(String ref, Object... extension) {
-                        //TODO
-                        return null;
+                        Activity host = reactContext.getCurrentActivity();
+                        if(host == null || TextUtils.isEmpty(ref)) {
+                            return null;
+                        }
+                        try {
+                            ref = ref.trim();
+                            double value = Double.valueOf(ref);
+                            return host.findViewById((int) value);
+                        } catch (NumberFormatException e) {
+                            LogProxy.e("number format error", e);
+                            return null;
+                        }
                     }
                 })
                 .withViewUpdater(new PlatformManager.IViewUpdater() {
