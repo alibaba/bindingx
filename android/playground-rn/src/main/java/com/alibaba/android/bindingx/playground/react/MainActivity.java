@@ -10,8 +10,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-
         //TODO
-        return null;
+        return "BindingXSample";
     }
 }
