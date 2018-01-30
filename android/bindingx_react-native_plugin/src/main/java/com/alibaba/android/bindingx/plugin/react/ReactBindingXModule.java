@@ -2,6 +2,8 @@ package com.alibaba.android.bindingx.plugin.react;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -29,9 +31,6 @@ import com.facebook.react.uimanager.UIManagerModule;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 
 /**
  * Description:
@@ -47,7 +46,7 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
     private BindingXCore mBindingXCore;
     private PlatformManager mPlatformManager;
 
-    private ExecutorService mExecutorService;
+    private InternalWorkerThread mWorkerThread = null;
 
     /*package*/ ReactBindingXModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -96,8 +95,8 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
         });
     }
 
-    //TODO 测试下callback是否可以使用多次
     @ReactMethod
+    @SuppressWarnings("unchecked")
     //A native module is supposed to invoke its callback only once. It can, however, store the callback and invoke it later.
     public void bind(final ReadableMap params,final Callback callback) {
         executeAsynchronously(new Runnable() {
@@ -112,9 +111,12 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
                         new BindingXCore.JavaScriptCallback() {
                             @Override
                             public void callback(Object params) {
-                                if (callback != null) {
-                                    callback.invoke(params);
-                                }
+                                //TODO callback只能调用一次!!!!
+//                                if (callback != null && params != null) {
+//                                    if(params instanceof Map) {
+//                                        callback.invoke(Arguments.makeNativeMap((Map<String,Object>) params));
+//                                    }
+//                                }
                             }
                         });
                 //        Map<String, String> result = new HashMap<>(2);
@@ -266,26 +268,55 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
     }
 
 
-    private void executeAsynchronously(@Nullable final Runnable runnable) {
-        if (mExecutorService == null) {
-            mExecutorService = Executors.newSingleThreadExecutor(new ThreadFactory() {
-                @Override
-                public Thread newThread(@NonNull Runnable r) {
-                    return new Thread(r, "bindingX-thread");
-                }
-            });
+    @Override
+    public void onCatalystInstanceDestroy() {
+        super.onCatalystInstanceDestroy();
+        //TODO 这里销毁是否合适???
+        if(mWorkerThread != null) {
+            mWorkerThread.quit();
+            mWorkerThread = null;
         }
-        if(runnable != null) {
-            mExecutorService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        runnable.run();
-                    } catch (Exception e) {
-                        LogProxy.e("unexpected internal error.", e);
+    }
+
+    private void executeAsynchronously(@Nullable final Runnable runnable) {
+        if(mWorkerThread == null) {
+            mWorkerThread = new InternalWorkerThread("bindingX-thread");
+        }
+        mWorkerThread.postRunnableGuarded(runnable);
+    }
+
+
+    static class InternalWorkerThread extends HandlerThread {
+
+        private Handler mHandler;
+
+        /*package*/ InternalWorkerThread(String name) {
+            super(name);
+            start();
+            mHandler = new Handler(this.getLooper());
+        }
+
+        /*package*/ void postRunnableGuarded(final Runnable runnable) {
+            if(runnable != null && mHandler != null && isAlive()) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            runnable.run();
+                        }catch (Exception e) {
+                            LogProxy.e("unexpected internal error", e);
+                        }
                     }
-                }
-            });
+                });
+            }
+        }
+
+        @Override
+        public boolean quit() {
+            if(mHandler != null) {
+                mHandler.removeCallbacksAndMessages(null);
+            }
+            return super.quit();
         }
     }
 }
