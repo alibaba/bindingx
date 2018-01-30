@@ -26,5 +26,5 @@ dependencies {
     compileOnly 'com.android.support:appcompat-v7:26.1.0'
     compileOnly 'com.android.support:design:26.1.0'
     compileOnly 'com.android.support:support-annotations:26.1.0'
-    implementation project(':bindingx-core')
+    compileOnly project(':bindingx-core')
 }
