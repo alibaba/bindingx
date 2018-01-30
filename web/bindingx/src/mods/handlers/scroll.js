@@ -20,8 +20,8 @@ export default class ScrollHandler extends CommonHandler {
   constructor(binding) {
     super(binding);
     let {anchor} = binding.options;
-    this.tx = anchor.scrollLeft;
-    this.ty = anchor.scrollTop;
+    this.tx = pxTo750(anchor.scrollLeft);
+    this.ty = pxTo750(anchor.scrollTop);
     anchor.addEventListener('scroll', this._onScroll);
   }
 

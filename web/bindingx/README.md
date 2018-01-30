@@ -3,13 +3,13 @@
 ## Install
 
 ```bash
-$ npm install universal-binding --save
+$ npm install bindingx --save
 ```
 
 ## Usage
 
 ```jsx
-import Binding from 'universal-binding';
+import Binding from 'bindingx';
 ```
 
 
@@ -66,8 +66,13 @@ import Binding from 'universal-binding';
 ```jsx
 // demo
 import {createElement, Component, render} from 'rax';
-import Binding from '@ali/universal-binding';
+import Binding from 'bindingx';
 import View from 'rax-view';
+import {isWeex} from 'universal-env';
+
+function getEl(el){
+   return isWeex ? findDOMNode(el).ref : findDOMNode(el);
+}
 
 class App extends Component {
 
@@ -83,7 +88,7 @@ class App extends Component {
   }
 
   bindEl(){
-    let blockEl = this.refs.block;
+    let blockEl = getEl(this.refs.block);
     let token = Binding.bind({
       anchor: blockEl,
       eventType: 'pan',
