@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.alibaba.android.binding.playground"
+        applicationId "com.alibaba.android.bindingx.playground.weex"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1

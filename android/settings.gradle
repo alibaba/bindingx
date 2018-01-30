@@ -1,3 +1,3 @@
 rootProject.name = 'binding-lib'
 
-include ':playground', ':bindingx_weex_plugin', ':bindingx-core', ':bindingx_react-native_plugin'
+include ':playground-weex', ':bindingx_weex_plugin', ':bindingx-core', ':bindingx_react-native_plugin', ':playground-rn'
