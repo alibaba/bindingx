@@ -14,7 +14,7 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-public interface IExpressionInvoker {
+public interface IWXViewUpdater {
 
     /**
      * 执行视图变换

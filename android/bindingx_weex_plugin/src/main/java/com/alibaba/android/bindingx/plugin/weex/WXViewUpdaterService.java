@@ -31,8 +31,8 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-final class ExpressionInvokerService {
-    private static final Map<String,IExpressionInvoker> sExpressionInvokerMap;
+final class WXViewUpdaterService {
+    private static final Map<String,IWXViewUpdater> sExpressionInvokerMap;
     private static final NOpInvoker EMPTY_INVOKER = new NOpInvoker();
 
     private static final String PERSPECTIVE = "perspective";
@@ -66,8 +66,8 @@ final class ExpressionInvokerService {
     }
 
     @NonNull
-    static IExpressionInvoker findInvoker(@NonNull String prop) {
-        IExpressionInvoker invoker = sExpressionInvokerMap.get(prop);
+    static IWXViewUpdater findInvoker(@NonNull String prop) {
+        IWXViewUpdater invoker = sExpressionInvokerMap.get(prop);
         if(invoker == null) {
             LogProxy.e("unknown property [" + prop + "]");
             return EMPTY_INVOKER;
@@ -75,7 +75,7 @@ final class ExpressionInvokerService {
         return invoker;
     }
 
-    private static final class NOpInvoker implements IExpressionInvoker {
+    private static final class NOpInvoker implements IWXViewUpdater {
         @Override
         public void invoke(@NonNull WXComponent component,
                            @NonNull View targetView,
@@ -95,7 +95,7 @@ final class ExpressionInvokerService {
     }
 
     //内容滚动
-    private static final class ContentOffsetInvoker implements IExpressionInvoker {
+    private static final class ContentOffsetInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -134,7 +134,7 @@ final class ExpressionInvokerService {
         }
     }
 
-    private static final class ContentOffsetXInvoker implements IExpressionInvoker {
+    private static final class ContentOffsetXInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -159,7 +159,7 @@ final class ExpressionInvokerService {
         }
     }
 
-    private static final class ContentOffsetYInvoker implements IExpressionInvoker {
+    private static final class ContentOffsetYInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -184,7 +184,7 @@ final class ExpressionInvokerService {
         }
     }
 
-    private static final class OpacityInvoker implements IExpressionInvoker {
+    private static final class OpacityInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -206,7 +206,7 @@ final class ExpressionInvokerService {
         }
     }
 
-    private static final class TranslateInvoker implements IExpressionInvoker {
+    private static final class TranslateInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -234,7 +234,7 @@ final class ExpressionInvokerService {
         }
     }
 
-    private static final class TranslateXInvoker implements IExpressionInvoker {
+    private static final class TranslateXInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -255,7 +255,7 @@ final class ExpressionInvokerService {
         }
     }
 
-    private static final class TranslateYInvoker implements IExpressionInvoker {
+    private static final class TranslateYInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -276,7 +276,7 @@ final class ExpressionInvokerService {
         }
     }
 
-    private static final class ScaleInvoker implements IExpressionInvoker {
+    private static final class ScaleInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -320,7 +320,7 @@ final class ExpressionInvokerService {
         }
     }
 
-    private static final class ScaleXInvoker implements IExpressionInvoker {
+    private static final class ScaleXInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -349,7 +349,7 @@ final class ExpressionInvokerService {
         }
     }
 
-    private static final class ScaleYInvoker implements IExpressionInvoker {
+    private static final class ScaleYInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -378,7 +378,7 @@ final class ExpressionInvokerService {
         }
     }
 
-    private static final class RotateInvoker implements IExpressionInvoker {
+    private static final class RotateInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -415,7 +415,7 @@ final class ExpressionInvokerService {
         }
     }
 
-    private static final class RotateXInvoker implements IExpressionInvoker {
+    private static final class RotateXInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -451,7 +451,7 @@ final class ExpressionInvokerService {
     }
 
 
-    private static final class RotateYInvoker implements IExpressionInvoker {
+    private static final class RotateYInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -487,7 +487,7 @@ final class ExpressionInvokerService {
     }
 
 
-    private static final class WidthInvoker implements IExpressionInvoker {
+    private static final class WidthInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -510,7 +510,7 @@ final class ExpressionInvokerService {
         }
     }
 
-    private static final class HeightInvoker implements IExpressionInvoker {
+    private static final class HeightInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -533,7 +533,7 @@ final class ExpressionInvokerService {
         }
     }
 
-    private static final class BackgroundInvoker implements IExpressionInvoker {
+    private static final class BackgroundInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull WXComponent component,
@@ -554,7 +554,7 @@ final class ExpressionInvokerService {
         }
     }
 
-    private static final class ColorInvoker implements IExpressionInvoker {
+    private static final class ColorInvoker implements IWXViewUpdater {
 
         @Override
         public void invoke(@NonNull final WXComponent component,
