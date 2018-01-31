@@ -230,22 +230,42 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
                 })
                 .withViewUpdater(new PlatformManager.IViewUpdater() {
                     @Override
-                    public void synchronouslyUpdateViewOnUIThread(@NonNull View targetView,
-                                                                  @NonNull String propertyName,
-                                                                  @NonNull Object propertyValue,
-                                                                  @NonNull PlatformManager.IDeviceResolutionTranslator translator,
-                                                                  @NonNull Map<String, Object> config,
+                    public void synchronouslyUpdateViewOnUIThread(@NonNull final View targetView,
+                                                                  @NonNull final String propertyName,
+                                                                  @NonNull final Object propertyValue,
+                                                                  @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
+                                                                  @NonNull final Map<String, Object> config,
                                                                   Object... extension) {
-                        if(reactContext != null) {
+                        String ref = null;
+                        if(extension != null && extension.length >= 1 && extension[0] instanceof String) {
+                            ref = (String) extension[0];
+                        }
+                        if(reactContext != null && !TextUtils.isEmpty(ref)) {
+                            int tag = -1;
+                            ref = ref.trim();
+                            try {
+                                double value = Double.valueOf(ref);
+                                tag = (int) value;
+                            }catch (Exception e) {
+                                //ignore
+                            }
+                            final int finalTag = tag;
                             UIManagerModule module = reactContext.getNativeModule(UIManagerModule.class);
-                            if(module != null) {
-                                UIImplementation implementation = module.getUIImplementation();
+                            if(module != null && tag != -1) {
+                                final UIImplementation implementation = module.getUIImplementation();
                                 if(implementation != null) {
                                     UiThreadUtil.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            //TODO
-//                                           implementation.synchronouslyUpdateViewOnUIThread();
+                                            RNViewUpdaterService.findInvoker(propertyName).invoke(
+                                                    finalTag,
+                                                    targetView,
+                                                    propertyValue,
+                                                    translator,
+                                                    config,
+                                                    implementation
+
+                                            );
                                         }
                                     });
                                 }
