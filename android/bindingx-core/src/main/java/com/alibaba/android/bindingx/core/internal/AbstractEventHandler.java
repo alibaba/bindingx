@@ -93,11 +93,11 @@ public abstract class AbstractEventHandler implements IEventHandler {
 
             ExpressionPair expressionPair = Utils.getExpressionPair(arg, BindingXConstants.KEY_EXPRESSION);
 
-            String config = Utils.getStringValue(arg, BindingXConstants.KEY_CONFIG);
+            Object configObj = arg.get(BindingXConstants.KEY_CONFIG);
             Map<String,Object> configMap = null;
-            if(!TextUtils.isEmpty(config)) {
+            if(configObj != null && configObj instanceof Map) {
                 try {
-                    configMap = Utils.toMap(new JSONObject(config));
+                    configMap = Utils.toMap(new JSONObject((Map) configObj));
                 }catch (Exception e) {
                     LogProxy.e("parse config failed", e);
                 }

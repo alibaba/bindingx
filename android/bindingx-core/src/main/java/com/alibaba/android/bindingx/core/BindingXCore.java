@@ -66,14 +66,13 @@ public class BindingXCore {
                          @NonNull Map<String, Object> params,
                          @NonNull JavaScriptCallback callback) {
         String eventType = Utils.getStringValue(params, BindingXConstants.KEY_EVENT_TYPE);
-        String config = Utils.getStringValue(params, BindingXConstants.KEY_OPTIONS);
         String anchorInstanceId = Utils.getStringValue(params, BindingXConstants.KEY_INSTANCE_ID);
 
-        //全局配置
+        Object configObj = params.get(BindingXConstants.KEY_OPTIONS);
         Map<String, Object> configMap = null;
-        if (!TextUtils.isEmpty(config)) {
+        if(configObj != null && configObj instanceof Map) {
             try {
-                configMap = Utils.toMap(new JSONObject(config));
+                configMap = Utils.toMap(new JSONObject((Map)configObj));
             } catch (Exception e) {
                 LogProxy.e("parse external config failed.\n", e);
             }
