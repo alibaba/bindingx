@@ -31,6 +31,7 @@ public abstract class AbstractScrollEventHandler extends AbstractEventHandler {
     }
 
     @Override
+    @CallSuper
     public boolean onDisable(@NonNull String sourceRef, @NonNull String eventType) {
         clearExpressions();
         isStart = false;
