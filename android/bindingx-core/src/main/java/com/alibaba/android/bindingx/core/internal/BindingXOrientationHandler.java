@@ -281,6 +281,7 @@ public class BindingXOrientationHandler extends AbstractEventHandler implements 
             param.put("alpha", alpha);
             param.put("beta", beta);
             param.put("gamma", gamma);
+            param.put(BindingXConstants.KEY_TOKEN, mToken);
 
             mCallback.callback(param);
             LogProxy.d(">>>>>>>>>>>fire event:(" + state + "," + alpha + "," + beta + "," + gamma + ")");

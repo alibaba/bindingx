@@ -14,8 +14,8 @@ import com.alibaba.android.bindingx.core.BindingXEventType;
 import com.alibaba.android.bindingx.core.IEventHandler;
 import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
+import com.alibaba.android.bindingx.core.internal.BindingXConstants;
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -25,12 +25,17 @@ import com.facebook.react.bridge.UiThreadUtil;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.module.annotations.ReactModule;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.uimanager.UIImplementation;
 import com.facebook.react.uimanager.UIManagerModule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Description:
@@ -39,7 +44,7 @@ import java.util.Map;
  */
 
 @ReactModule(name = ReactBindingXModule.NAME)
-public final class ReactBindingXModule extends ReactContextBaseJavaModule implements LifecycleEventListener{
+public final class ReactBindingXModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
     /*package*/ static final String NAME = "bindingX";
 
@@ -55,7 +60,7 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
     @Override
     public void initialize() {
         super.initialize();
-        if(getReactApplicationContext() != null) {
+        if (getReactApplicationContext() != null) {
             getReactApplicationContext().addLifecycleEventListener(this);
         }
     }
@@ -66,7 +71,7 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
     }
 
     private void prepareInternal() {
-        if(mPlatformManager == null) {
+        if (mPlatformManager == null) {
             mPlatformManager = createPlatformManager(getReactApplicationContext());
         }
         if (mBindingXCore == null) {
@@ -95,40 +100,49 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
         });
     }
 
-    @ReactMethod
+    @ReactMethod(isBlockingSynchronousMethod = true)
     @SuppressWarnings("unchecked")
-    //A native module is supposed to invoke its callback only once. It can, however, store the callback and invoke it later.
-    public void bind(final ReadableMap params,final Callback callback) {
+    public WritableMap bind(final ReadableMap params) {
+        final CountDownLatch latch = new CountDownLatch(1);
+        final List<String> resultHolder = new ArrayList<>(2);
         executeAsynchronously(new Runnable() {
             @Override
             public void run() {
-                prepareInternal();
-
-                String token = mBindingXCore.doBind(
-                        getReactApplicationContext(),
-                        null,// react native don't need it
-                        params == null ? Collections.<String, Object>emptyMap() : params.toHashMap(),
-                        new BindingXCore.JavaScriptCallback() {
-                            @Override
-                            public void callback(Object params) {
-                                //TODO callback只能调用一次!!!!
-//                                if (callback != null && params != null) {
-//                                    if(params instanceof Map) {
-//                                        callback.invoke(Arguments.makeNativeMap((Map<String,Object>) params));
-//                                    }
-//                                }
-                            }
-                        });
-                //        Map<String, String> result = new HashMap<>(2);
-                //        result.put(BindingXConstants.KEY_TOKEN, token);
-                //        return result;
+                try {
+                    prepareInternal();
+                    String token = mBindingXCore.doBind(
+                            getReactApplicationContext(),
+                            null,// react native don't need it
+                            params == null ? Collections.<String, Object>emptyMap() : params.toHashMap(),
+                            new BindingXCore.JavaScriptCallback() {
+                                @Override
+                                public void callback(Object params) {
+                                    ReactApplicationContext context = getReactApplicationContext();
+                                    if(context != null) {
+                                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                                .emit("stateChanged",Arguments.makeNativeMap((Map<String,Object>)params));
+                                    }
+                                }
+                            });
+                    resultHolder.add(token);
+                }finally {
+                    latch.countDown();
+                }
             }
         });
+        try {
+            latch.await(2000, TimeUnit.MILLISECONDS);
+        }catch (Exception e) {
+            //ignore
+        }
+
+        String token = resultHolder.size() > 0 ? resultHolder.get(0) : null;
+        return Arguments.makeNativeMap(Collections.<String,Object>singletonMap(BindingXConstants.KEY_TOKEN, token));
     }
 
     @ReactMethod
     public void unbind(final ReadableMap params) {
-        if(params == null) {
+        if (params == null) {
             return;
         }
         executeAsynchronously(new Runnable() {
@@ -155,9 +169,8 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
 
 
     /**
-     *
      * notice: using default mqt_js thread
-     * */
+     */
     @ReactMethod
     @SuppressWarnings("unused")
     public WritableMap getComputedStyle(@Nullable String ref) {
@@ -166,9 +179,8 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
     }
 
     /**
-     *
      * notice: using default mqt_js thread
-     * */
+     */
     @ReactMethod(isBlockingSynchronousMethod = true)
     @SuppressWarnings("unused")
     public WritableArray supportFeatures() {
@@ -215,7 +227,7 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
                     @Override
                     public View findViewBy(String ref, Object... extension) {
                         Activity host = reactContext.getCurrentActivity();
-                        if(host == null || TextUtils.isEmpty(ref)) {
+                        if (host == null || TextUtils.isEmpty(ref)) {
                             return null;
                         }
                         try {
@@ -237,23 +249,23 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
                                                                   @NonNull final Map<String, Object> config,
                                                                   Object... extension) {
                         String ref = null;
-                        if(extension != null && extension.length >= 1 && extension[0] instanceof String) {
+                        if (extension != null && extension.length >= 1 && extension[0] instanceof String) {
                             ref = (String) extension[0];
                         }
-                        if(reactContext != null && !TextUtils.isEmpty(ref)) {
+                        if (reactContext != null && !TextUtils.isEmpty(ref)) {
                             int tag = -1;
                             ref = ref.trim();
                             try {
                                 double value = Double.valueOf(ref);
                                 tag = (int) value;
-                            }catch (Exception e) {
+                            } catch (Exception e) {
                                 //ignore
                             }
                             final int finalTag = tag;
                             UIManagerModule module = reactContext.getNativeModule(UIManagerModule.class);
-                            if(module != null && tag != -1) {
+                            if (module != null && tag != -1) {
                                 final UIImplementation implementation = module.getUIImplementation();
-                                if(implementation != null) {
+                                if (implementation != null) {
                                     UiThreadUtil.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -291,15 +303,14 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
     @Override
     public void onCatalystInstanceDestroy() {
         super.onCatalystInstanceDestroy();
-        //TODO 这里销毁是否合适???
-        if(mWorkerThread != null) {
+        if (mWorkerThread != null) {
             mWorkerThread.quit();
             mWorkerThread = null;
         }
     }
 
     private void executeAsynchronously(@Nullable final Runnable runnable) {
-        if(mWorkerThread == null) {
+        if (mWorkerThread == null) {
             mWorkerThread = new InternalWorkerThread("bindingX-thread");
         }
         mWorkerThread.postRunnableGuarded(runnable);
@@ -317,13 +328,13 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
         }
 
         /*package*/ void postRunnableGuarded(final Runnable runnable) {
-            if(runnable != null && mHandler != null && isAlive()) {
+            if (runnable != null && mHandler != null && isAlive()) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
                         try {
                             runnable.run();
-                        }catch (Exception e) {
+                        } catch (Exception e) {
                             LogProxy.e("unexpected internal error", e);
                         }
                     }
@@ -333,7 +344,7 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
 
         @Override
         public boolean quit() {
-            if(mHandler != null) {
+            if (mHandler != null) {
                 mHandler.removeCallbacksAndMessages(null);
             }
             return super.quit();

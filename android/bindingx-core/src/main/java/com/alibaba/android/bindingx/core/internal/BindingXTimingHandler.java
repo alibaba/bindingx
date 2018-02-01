@@ -131,6 +131,7 @@ public class BindingXTimingHandler extends AbstractEventHandler implements Anima
             Map<String, Object> param = new HashMap<>();
             param.put("state", state);
             param.put("t", t);
+            param.put(BindingXConstants.KEY_TOKEN, mToken);
 
             mCallback.callback(param);
             LogProxy.d(">>>>>>>>>>>fire event:(" + state + "," + t + ")");

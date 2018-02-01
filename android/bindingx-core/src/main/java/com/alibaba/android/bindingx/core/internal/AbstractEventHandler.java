@@ -35,6 +35,7 @@ public abstract class AbstractEventHandler implements IEventHandler {
     protected final Map<String, Object> mScope = new HashMap<>();
     protected String mInstanceId;
     protected String mAnchorInstanceId;
+    protected String mToken;
     protected Context mContext;
     protected PlatformManager mPlatformManager;
 
@@ -237,6 +238,11 @@ public abstract class AbstractEventHandler implements IEventHandler {
             mExpressionHoldersMap = null;
         }
         mExitExpressionPair = null;
+    }
+
+    @Override
+    public void setToken(String token) {
+        this.mToken = token;
     }
 
     static class Cache<K, V> extends LinkedHashMap<K, V> {

@@ -35,4 +35,6 @@ public interface IEventHandler {
     void onActivityResume();
 
     void setAnchorInstanceId(String anchorInstanceId);
+
+    void setToken(String token);
 }

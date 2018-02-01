@@ -14,6 +14,7 @@ import java.lang.annotation.RetentionPolicy;
 public class BindingXConstants {
     public static final String TAG = "ExpressionBinding";
 
+    public static final String STATE_READY = "ready";
     public static final String STATE_START = "start";
     public static final String STATE_END = "end";
     public static final String STATE_CANCEL = "cancel";

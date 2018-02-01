@@ -190,6 +190,7 @@ public class BindingXCore {
             if (targetHandler != null) {//创建成功
                 /*可能anchor不在当前instance中*/
                 targetHandler.setAnchorInstanceId(anchorInstanceId);
+                targetHandler.setToken(token);
                 //初始化
                 if (targetHandler.onCreate(token, eventType)) {
                     targetHandler.onStart(token, eventType);

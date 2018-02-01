@@ -104,6 +104,7 @@ public abstract class AbstractScrollEventHandler extends AbstractEventHandler {
             double _tdy = mPlatformManager.getResolutionTranslator().nativeToWeb(tdy);
             param.put("tdx", _tdx);
             param.put("tdy", _tdy);
+            param.put(BindingXConstants.KEY_TOKEN, mToken);
 
             mCallback.callback(param);
             LogProxy.d(">>>>>>>>>>>fire event:(" + state + "," + x + "," + y + ","+ _dx  +","+ _dy +"," + _tdx +"," + _tdy +")");

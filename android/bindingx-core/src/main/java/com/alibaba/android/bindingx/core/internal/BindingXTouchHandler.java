@@ -248,6 +248,7 @@ public class BindingXTouchHandler extends AbstractEventHandler implements View.O
             double y = mPlatformManager.getResolutionTranslator().nativeToWeb(dy);
             param.put("deltaX", x);
             param.put("deltaY", y);
+            param.put(BindingXConstants.KEY_TOKEN, mToken);
             mCallback.callback(param);
             LogProxy.d(">>>>>>>>>>>fire event:(" + state + "," + x + "," + y + ")");
         }
