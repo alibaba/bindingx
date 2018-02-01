@@ -15,6 +15,7 @@ import {
 
 import AnimatedBall from './AnimatedBall';
 import TimingDemo from './TimingDemo';
+import OrientationDemo from './OrientationDemo';
 
 export default class App extends Component<{}> {
 
@@ -55,6 +56,13 @@ export default class App extends Component<{}> {
             style={[styles.wrapper,styles.margin]}
         >
           <Text style={styles.text}>Timing Demo</Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight
+            onPress={this.onExamplePress.bind(this,OrientationDemo)}
+            style={[styles.wrapper,styles.margin]}
+        >
+          <Text style={styles.text}>Orientation Demo</Text>
         </TouchableHighlight>
 
       </ScrollView>
