@@ -46,7 +46,7 @@ export default class App extends Component<{}> {
           onPress={this.onExamplePress.bind(this,AnimatedBall)}
           style={styles.wrapper}
           >
-          <Text style={styles.text}>Animated Ball</Text>
+          <Text style={styles.text}>Pan Demo</Text>
         </TouchableHighlight>
 
       </ScrollView>

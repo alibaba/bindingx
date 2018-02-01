@@ -6,21 +6,44 @@ import {
     NativeModules,
     findNodeHandle,
     TouchableHighlight,
-    ToastAndroid
+    ToastAndroid,
+    PanResponder
 } from 'react-native';
+
+import { DeviceEventEmitter } from 'react-native';
 
 export default class AnimatedBall extends Component {
 
+  _panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: (evt, gestureState) => true,
+    onPanResponderGrant: (evt, gestureState) => {
+      this.onBind();
+    }
+  });
+
+  _x = 0;
+  _y = 0;
+
+  componentWillMount() {
+    let self = this;
+    DeviceEventEmitter.addListener('stateChanged', function(e: Event) {
+        if(e.state === 'end') {
+          self._x += e.deltaX;
+          self._y += e.deltaY;
+        }
+    });
+  }
+
   onBind(){
 
-    let expression_x_origin = "x+" + 0;
-    let expression_x_transformed = '{"type":"+","children":[{"type":"Identifier","value":"x"},{"type":"NumericLiteral","value":"'+0+'"}]}';
+    let expression_x_origin = "x+" + this._x;
+    let expression_x_transformed = '{"type":"+","children":[{"type":"Identifier","value":"x"},{"type":"NumericLiteral","value":"'+this._x+'"}]}';
 
-    let expression_y_origin = "y+" + 0;
-    let expression_y_transformed = '{"type":"+","children":[{"type":"Identifier","value":"y"},{"type":"NumericLiteral","value":"'+0+'"}]}';
+    let expression_y_origin = "y+" + this._y;
+    let expression_y_transformed = '{"type":"+","children":[{"type":"Identifier","value":"y"},{"type":"NumericLiteral","value":"'+this._y+'"}]}';
 
     let anchor = findNodeHandle(this.refs._anchor);
-    NativeModules.bindingX.bind({
+    let token = NativeModules.bindingX.bind({
       eventType:'pan',
       anchor:anchor,
       props:[
@@ -39,10 +62,8 @@ export default class AnimatedBall extends Component {
             origin:expression_y_origin
         }}
       ]
-    }, function(e){
-        ToastAndroid.show('A pikachu appeared nearby !'+JSON.stringify(e), ToastAndroid.SHORT);
     });
-
+    ToastAndroid.show('token>>>>>'+JSON.stringify(token), ToastAndroid.SHORT);
   }
 
   onUnBind(){
@@ -57,29 +78,10 @@ export default class AnimatedBall extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text
-          ref="my_text"
-          style={styles.instructions}>
-          REACT NATIVE Awesome Binding
-        </Text>
-
-        <TouchableHighlight
-          onPress={()=>{this.onBind()}}
-          style={styles.wrapper}
-          >
-          <Text style={styles.text}>bind</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight
-          onPress={()=>{this.onUnBind()}}
-          style={[styles.wrapper,styles.margin]}
-          >
-          <Text style={styles.text}>unbind</Text>
-        </TouchableHighlight>
-
         <View
             ref="_anchor"
             style={styles.anchor}
+            {...this._panResponder.panHandlers}
         />
 
       </View>
