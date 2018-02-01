@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
 
+import com.alibaba.android.bindingx.core.LogProxy;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -95,26 +97,34 @@ public final class Utils {
 
     @Nullable
     public static ExpressionPair getExpressionPair(@NonNull Map<String,Object> params, @NonNull String key) {
-        String raw = getStringValue(params,key);
-        if(TextUtils.isEmpty(raw)) {
+        Object value = params.get(key);
+        if(value == null) {
             return null;
-        }
-
-        try {
-            JSONObject jsonObject = new JSONObject(raw);
+        } else if(value instanceof String) {
+            // old fashion
+            return ExpressionPair.create(null, (String) value);
+        } else if(value instanceof Map) {
+            Map map = (Map) value;
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(map);
+            }catch (Throwable e) {
+                LogProxy.e("unexpected json parse error.", e);
+            }
+            if(jsonObject == null) {
+                return ExpressionPair.create(null, null);
+            }
             String origin = jsonObject.optString(BindingXConstants.KEY_ORIGIN,null);
             String transformed = jsonObject.optString(BindingXConstants.KEY_TRANSFORMED,null);
             if(TextUtils.isEmpty(origin) && TextUtils.isEmpty(transformed)) {
-                //说明是老的协议
-                return ExpressionPair.create(null,raw);
+                return ExpressionPair.create(null, null);
+            } else {
+                //new style
+                return ExpressionPair.create(origin,transformed);
             }
-            //新协议
-            return ExpressionPair.create(origin,transformed);
-        }catch (Exception e) {
-            //转换失败
-            return ExpressionPair.create(null,raw);
+        } else {
+            return null;
         }
-
     }
 
     @SafeVarargs

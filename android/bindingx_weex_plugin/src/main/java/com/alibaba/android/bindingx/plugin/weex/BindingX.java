@@ -20,5 +20,6 @@ public class BindingX {
     public static void register() throws WXException{
         WXSDKEngine.registerModule("expressionBinding", WXExpressionBindingModule.class);
         WXSDKEngine.registerModule("binding", WXBindingXModule.class);
+        WXSDKEngine.registerModule("bindingX", WXBindingXModule.class);
     }
 }
