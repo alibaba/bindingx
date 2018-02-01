@@ -2,12 +2,15 @@ package com.alibaba.android.bindingx.plugin.react;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.alibaba.android.bindingx.core.BindingXCore;
 import com.alibaba.android.bindingx.core.BindingXEventType;
@@ -15,6 +18,7 @@ import com.alibaba.android.bindingx.core.IEventHandler;
 import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
 import com.alibaba.android.bindingx.core.internal.BindingXConstants;
+import com.alibaba.android.bindingx.core.internal.Utils;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -32,7 +36,9 @@ import com.facebook.react.uimanager.UIManagerModule;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -167,15 +173,55 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
         });
     }
 
-
-    /**
-     * notice: using default mqt_js thread
-     */
     @ReactMethod
     @SuppressWarnings("unused")
     public WritableMap getComputedStyle(@Nullable String ref) {
-        //TODO
-        return null;
+        prepareInternal();
+        PlatformManager.IDeviceResolutionTranslator resolutionTranslator = mPlatformManager.getResolutionTranslator();
+        PlatformManager.IViewFinder viewFinder = mPlatformManager.getViewFinder();
+        View sourceView = viewFinder.findViewBy(ref);
+        if (sourceView == null) {
+            return Arguments.makeNativeMap(Collections.<String,Object>emptyMap());
+        }
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("translateX", resolutionTranslator.nativeToWeb(sourceView.getTranslationX()));
+        map.put("translateY", resolutionTranslator.nativeToWeb(sourceView.getTranslationY()));
+
+        map.put("rotateX", Utils.normalizeRotation(sourceView.getRotationX()));
+        map.put("rotateY", Utils.normalizeRotation(sourceView.getRotationY()));
+        map.put("rotateZ", Utils.normalizeRotation(sourceView.getRotation()));
+
+        map.put("scaleX", sourceView.getScaleX());
+        map.put("scaleY", sourceView.getScaleY());
+
+        map.put("opacity", sourceView.getAlpha());
+
+        if (sourceView.getBackground() != null) {
+            int backgroundColor = Color.BLACK;
+            if (sourceView.getBackground() instanceof ColorDrawable) {
+                backgroundColor = ((ColorDrawable) sourceView.getBackground()).getColor();
+            }
+
+            double a = Color.alpha(backgroundColor) / 255.0d;
+            int r = Color.red(backgroundColor);
+            int g = Color.green(backgroundColor);
+            int b = Color.blue(backgroundColor);
+            map.put("background-color", String.format(Locale.getDefault(), "rgba(%d,%d,%d,%f)", r, g, b, a));
+        }
+
+        if (sourceView instanceof TextView) {
+            TextView realView = (TextView) sourceView;
+            int fontColor = realView.getCurrentTextColor();
+            double a = Color.alpha(fontColor) / 255.0d;
+            int r = Color.red(fontColor);
+            int g = Color.green(fontColor);
+            int b = Color.blue(fontColor);
+            map.put("color", String.format(Locale.getDefault(), "rgba(%d,%d,%d,%f)", r, g, b, a));
+        }
+
+        return Arguments.makeNativeMap(map);
     }
 
     /**

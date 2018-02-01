@@ -137,13 +137,6 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
                         dx,dy,tdx,tdy);
             }
 
-//            WXBridgeManager.getInstance().post(new Runnable() {
-//                @Override
-//                public void run() {
-//
-//                }
-//            },mInstanceId);
-            //TODO 切换线程
             BindingXScrollHandler.super.handleScrollEvent(mContentOffsetX,mContentOffsetY,dx,dy,tdx,tdy);
         }
     }
