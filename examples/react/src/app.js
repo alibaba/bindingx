@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 import AnimatedBall from './AnimatedBall';
+import TimingDemo from './TimingDemo';
 
 export default class App extends Component<{}> {
 
@@ -44,9 +45,16 @@ export default class App extends Component<{}> {
 
         <TouchableHighlight
           onPress={this.onExamplePress.bind(this,AnimatedBall)}
-          style={styles.wrapper}
+          style={[styles.wrapper,styles.margin]}
           >
           <Text style={styles.text}>Pan Demo</Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight
+            onPress={this.onExamplePress.bind(this,TimingDemo)}
+            style={[styles.wrapper,styles.margin]}
+        >
+          <Text style={styles.text}>Timing Demo</Text>
         </TouchableHighlight>
 
       </ScrollView>
