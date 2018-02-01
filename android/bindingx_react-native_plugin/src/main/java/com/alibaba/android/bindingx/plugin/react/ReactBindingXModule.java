@@ -3,7 +3,6 @@ package com.alibaba.android.bindingx.plugin.react;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
@@ -32,6 +31,7 @@ import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.uimanager.UIImplementation;
 import com.facebook.react.uimanager.UIManagerModule;
+import com.facebook.react.views.view.ReactViewBackgroundDrawable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -173,13 +173,13 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
         });
     }
 
-    @ReactMethod
+    @ReactMethod(isBlockingSynchronousMethod = true)
     @SuppressWarnings("unused")
-    public WritableMap getComputedStyle(@Nullable String ref) {
+    public WritableMap getComputedStyle(int ref) {
         prepareInternal();
         PlatformManager.IDeviceResolutionTranslator resolutionTranslator = mPlatformManager.getResolutionTranslator();
         PlatformManager.IViewFinder viewFinder = mPlatformManager.getViewFinder();
-        View sourceView = viewFinder.findViewBy(ref);
+        View sourceView = viewFinder.findViewBy(String.valueOf(ref));
         if (sourceView == null) {
             return Arguments.makeNativeMap(Collections.<String,Object>emptyMap());
         }
@@ -200,8 +200,8 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
 
         if (sourceView.getBackground() != null) {
             int backgroundColor = Color.BLACK;
-            if (sourceView.getBackground() instanceof ColorDrawable) {
-                backgroundColor = ((ColorDrawable) sourceView.getBackground()).getColor();
+            if (sourceView.getBackground() instanceof ReactViewBackgroundDrawable) {
+                backgroundColor = ((ReactViewBackgroundDrawable) sourceView.getBackground()).getColor();
             }
 
             double a = Color.alpha(backgroundColor) / 255.0d;
