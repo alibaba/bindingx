@@ -72,6 +72,14 @@ export default class ScrollViewDemo extends Component {
                         origin: '1+max(100,y)/100',
                         transformed: "{\"type\":\"+\",\"children\":[{\"type\":\"NumericLiteral\",\"value\":1},{\"type\":\"/\",\"children\":[{\"type\":\"CallExpression\",\"children\":[{\"type\":\"Identifier\",\"value\":\"min\"},{\"type\":\"Arguments\",\"children\":[{\"type\":\"NumericLiteral\",\"value\":100},{\"type\":\"Identifier\",\"value\":\"y\"}]}]},{\"type\":\"NumericLiteral\",\"value\":100}]}]}"
                     }
+                },
+                {
+                    element: target,
+                    property: 'background-color',
+                    expression: {
+                        origin: "evaluateColor('#0000ff','#ff0000',min(200,y)/200)",
+                        transformed: "{\"type\":\"CallExpression\",\"children\":[{\"type\":\"Identifier\",\"value\":\"evaluateColor\"},{\"type\":\"Arguments\",\"children\":[{\"type\":\"StringLiteral\",\"value\":\"'#0000ff'\"},{\"type\":\"StringLiteral\",\"value\":\"'#ff0000'\"},{\"type\":\"/\",\"children\":[{\"type\":\"CallExpression\",\"children\":[{\"type\":\"Identifier\",\"value\":\"min\"},{\"type\":\"Arguments\",\"children\":[{\"type\":\"NumericLiteral\",\"value\":200},{\"type\":\"Identifier\",\"value\":\"y\"}]}]},{\"type\":\"NumericLiteral\",\"value\":200}]}]}]}"
+                    }
                 }
             ]
         });
