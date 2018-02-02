@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
@@ -22,7 +24,7 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-final class RNViewUpdaterService {
+final class RNViewUpdateService {
     private static final Map<String,IRNViewUpdater> sExpressionInvokerMap;
     private static final NOpInvoker EMPTY_INVOKER = new NOpInvoker();
 
@@ -45,15 +47,16 @@ final class RNViewUpdaterService {
         sExpressionInvokerMap.put("transform.rotateX",new RotateXInvoker());
         sExpressionInvokerMap.put("transform.rotateY",new RotateYInvoker());
 
-//        sExpressionInvokerMap.put("width",new WidthInvoker());
-//        sExpressionInvokerMap.put("height",new HeightInvoker());
-
         sExpressionInvokerMap.put("background-color",new BackgroundInvoker());
         sExpressionInvokerMap.put("color", new ColorInvoker());
 
-//        sExpressionInvokerMap.put("scroll.contentOffset", new ContentOffsetInvoker());
-//        sExpressionInvokerMap.put("scroll.contentOffsetX", new ContentOffsetXInvoker());
-//        sExpressionInvokerMap.put("scroll.contentOffsetY", new ContentOffsetYInvoker());
+        sExpressionInvokerMap.put("scroll.contentOffset", new ContentOffsetInvoker());
+        sExpressionInvokerMap.put("scroll.contentOffsetX", new ContentOffsetXInvoker());
+        sExpressionInvokerMap.put("scroll.contentOffsetY", new ContentOffsetYInvoker());
+
+        // dangerous. Not Recommended.
+        sExpressionInvokerMap.put("width",new WidthInvoker());
+        sExpressionInvokerMap.put("height",new HeightInvoker());
     }
 
     @NonNull
@@ -425,7 +428,87 @@ final class RNViewUpdaterService {
                 return;
             }
             final int d = (int) cmd;
-            //TODO
+            if(targetView instanceof TextView) {
+                ((TextView) targetView).setTextColor(d);
+            }
+        }
+    }
+
+
+    private static final class ContentOffsetInvoker implements IRNViewUpdater {
+
+        @Override
+        public void invoke(int tag,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String,Object> config,
+                           @NonNull UIImplementation implementation) {
+
+            if(!(targetView instanceof ScrollView)) {
+                return;
+            }
+
+            ScrollView scrollView = (ScrollView) targetView;
+            if(cmd instanceof Double) {
+                final double val = (double) cmd;
+                scrollView.setScrollX((int) getRealSize(val,translator));
+                scrollView.setScrollY((int) getRealSize(val,translator));
+            } else if(cmd instanceof ArrayList) {
+                ArrayList<Object> l = (ArrayList<Object>) cmd;
+                if(l.size() >= 2 && l.get(0) instanceof Double && l.get(1) instanceof Double) {
+                    final double x = (double) l.get(0);
+                    final double y = (double) l.get(1);
+                    scrollView.setScrollX((int) getRealSize(x,translator));
+                    scrollView.setScrollY((int) getRealSize(y,translator));
+                }
+
+            }
+        }
+    }
+
+    private static final class ContentOffsetXInvoker implements IRNViewUpdater {
+
+        @Override
+        public void invoke(int tag,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String,Object> config,
+                           @NonNull UIImplementation implementation) {
+            if(!(targetView instanceof ScrollView)) {
+                return;
+            }
+
+            ScrollView scrollView = (ScrollView) targetView;
+            if(!(cmd instanceof Double)) {
+                return;
+            }
+            final double val = (double) cmd;
+            scrollView.setScrollX((int) getRealSize(val,translator));
+        }
+    }
+
+    private static final class ContentOffsetYInvoker implements IRNViewUpdater {
+
+        @Override
+        public void invoke(int tag,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String,Object> config,
+                           @NonNull UIImplementation implementation) {
+
+            if(!(targetView instanceof ScrollView)) {
+                return;
+            }
+
+            ScrollView scrollView = (ScrollView) targetView;
+            if(!(cmd instanceof Double)) {
+                return;
+            }
+            final double val = (double) cmd;
+            scrollView.setScrollY((int) getRealSize(val,translator));
         }
     }
 

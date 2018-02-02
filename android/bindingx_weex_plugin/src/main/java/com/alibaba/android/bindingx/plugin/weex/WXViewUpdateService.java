@@ -31,7 +31,7 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-final class WXViewUpdaterService {
+final class WXViewUpdateService {
     private static final Map<String,IWXViewUpdater> sExpressionInvokerMap;
     private static final NOpInvoker EMPTY_INVOKER = new NOpInvoker();
 
