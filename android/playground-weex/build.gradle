@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: "com.github.hierynomus.license"
 
 android {
     compileSdkVersion 26
@@ -32,4 +33,11 @@ dependencies {
     implementation 'com.android.support:support-annotations:26.1.0'
     implementation "com.alibaba:fastjson:1.1.46.android"
     implementation 'com.squareup.picasso:picasso:2.5.2'
+}
+
+if(file('../../LICENSE.md').exists()){
+    license {
+        header = file('../../LICENSE.md')
+    }
+    preBuild.dependsOn licenseFormat
 }
