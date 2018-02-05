@@ -10,9 +10,14 @@ target 'BindingDemoRN' do
   'RCTText',
   'RCTNetwork’,
   'RCTWebSocket',
-  'BatchedBridge',
+  'CxxBridge',
   ]
   
   pod 'yoga', :path => '/Users/duixiang/alibaba/rn/rntest/node_modules/react-native/ReactCommon/yoga'
+  
+  # Third party deps podspec link
+  pod 'DoubleConversion', :podspec => '/Users/duixiang/alibaba/rn/rntest/node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'GLog', :podspec => '/Users/duixiang/alibaba/rn/rntest/node_modules/react-native/third-party-podspecs/GLog.podspec'
+  pod 'Folly', :podspec => '/Users/duixiang/alibaba/rn/rntest/node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 end

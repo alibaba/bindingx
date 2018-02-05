@@ -15,6 +15,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "EBExpressionProperty.h"
 
 typedef void (^KeepAliveCallback)(_Nonnull id result, BOOL keepAlive);
 typedef void (^EBGetPanGestureCallback)(BOOL isHorizontal, BOOL isVertical);
@@ -28,13 +29,15 @@ extern void PerformBlockOnBridgeThread(void (^ _Nonnull block)(void));
 
 + (CGFloat)factor;
 
-+ (void)execute:(NSDictionary *_Nullable)style to:(id _Nullable )target;
++ (void)execute:(EBExpressionProperty *_Nullable)model to:(id _Nullable )target;
 
-+ (UIPanGestureRecognizer *_Nullable)getPanGestureForComponent:(id _Nullable )source callback:(EBGetPanGestureCallback)callback;
++ (UIPanGestureRecognizer *_Nullable)getPanGestureForComponent:(id _Nullable )source callback:(EBGetPanGestureCallback _Nonnull )callback;
 
-+ (void)addScrollDelegate:(id _Nullable )delegate source:(id _Nullable )source;
++ (void)addScrollDelegate:(id<UIScrollViewDelegate> _Nullable )delegate source:(id _Nullable )source;
 
-+ (void)removeScrollDelegate:(id _Nullable )delegate source:(id _Nullable )source;
++ (void)removeScrollDelegate:(id<UIScrollViewDelegate> _Nullable )delegate source:(id _Nullable )source;
+
++ (UIView *_Nullable)getViewByRef:(id _Nullable )ref;
 
 @end
 

@@ -85,8 +85,9 @@
         UIGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
         self.gesture = panGesture;
         self.gesture.delegate = self;
-        // TODO view of source
-        [self.source addGestureRecognizer:self.gesture];
+        
+        UIView* view = [EBUtility getViewByRef:self.source];
+        [view addGestureRecognizer:self.gesture];
     }
     
     if (self.gesture.delegate && self.gesture.delegate != self) {
@@ -109,8 +110,8 @@
     
     if (!keepAlive) {
         // free resouces
-        self.targetExpression = nil;
-        self.callback = nil;
+//        self.targetExpression = nil;
+//        self.callback = nil;
     }
 }
 

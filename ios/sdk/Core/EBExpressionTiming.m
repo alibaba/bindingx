@@ -78,7 +78,7 @@
     self.duration = 0;
     
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(handleDisplay)];
-    [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+    [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     [self.displayLink setPaused:NO];
     
     [self fireStateChangedEvent:@"start"];

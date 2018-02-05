@@ -16,7 +16,7 @@
 
 #import "EBExpressionOrientation.h"
 #import "EBGypoOrientationEvaluator.h"
-#import <CoreMotion/CoreMotion.h>
+#import "EBGyroManager.h"
 
 #define SUPPORT_SCENE_TYPES (@[@"2d",@"3d"])
 #define SCENE_TYPE_2D @"2d"
@@ -83,11 +83,9 @@
     }
     
     __weak typeof(self) welf = self;
-    _motionManager.gyroUpdateInterval = 1/60;
-    NSOperationQueue* queue = [[NSOperationQueue alloc] init];
-    [_motionManager startGyroUpdatesToQueue:queue withHandler:^(CMGyroData * _Nullable gyroData, NSError * _Nullable error) {
-        [welf handleUpdates:gyroData.rotationRate.x beta:gyroData.rotationRate.y gamma:gyroData.rotationRate.z];
-    }];
+    [EBGyroManager watchOrientation:^BOOL(double alpha, double beta, double gamma) {
+        return [welf handleUpdates:alpha beta:beta gamma:gamma];
+    } withInterval:1/60];
     
     [self fireStateChangedEvent:@"start" alpha:0 beta:0 gamma:0];
 }
@@ -103,7 +101,9 @@
 }
     
 - (void)stopWatchOrientation {
-    [_motionManager stopGyroUpdates];
+    [EBGyroManager removeOrientation:^BOOL(double alpha, double beta, double gamma) {
+        return NO;
+    }];
 }
 
 #pragma mark - privateMethods

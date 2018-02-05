@@ -14,29 +14,14 @@
  * limitations under the License.
  */
 
-#import "EBUtility.h"
+#import <Foundation/Foundation.h>
 
-@implementation EBUtility
+typedef BOOL (^EBDeviceOrientationCallback)(double alpha, double beta, double gamma);
 
-+ (BOOL)isBlankString:(NSString *)string {
-    
-    if (string == nil || string == NULL || [string isKindOfClass:[NSNull class]]) {
-        return true;
-    }
-    if (![string isKindOfClass:[NSString class]]) {
-        NSLog(@"%@ is not a string", string);
-        return true;
-    }
-    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
-        return true;
-    }
-    
-    return false;
-}
+@interface EBGyroManager : NSObject
 
-+ (CGFloat)factor
-{
-    return 1;
-}
++ (void)watchOrientation:(EBDeviceOrientationCallback _Nonnull)callback withInterval:(NSTimeInterval)interval;
+
++ (void)removeOrientation:(EBDeviceOrientationCallback _Nonnull)callback;
 
 @end

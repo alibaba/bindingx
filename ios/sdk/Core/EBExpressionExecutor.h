@@ -21,6 +21,4 @@
 
 + (void)change:(EBExpressionProperty **)model property:(NSString *)propertyName config:(NSDictionary*)config to:(NSObject *)result;
 
-+ (void)execute:(EBExpressionProperty *)model to:(id)target;
-
 @end

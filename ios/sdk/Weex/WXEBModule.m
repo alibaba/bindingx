@@ -228,6 +228,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
     EBExpressionHandler *handler = [self handlerForToken:token expressionType:exprType];
     if (!handler) {
         WX_LOG(WXLogFlagWarning, @"disableBinding can't find handler handler");
+        pthread_mutex_unlock(&mutex);
         return;
     }
     

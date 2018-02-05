@@ -154,7 +154,7 @@
         }
         
         // execute
-        [EBExpressionExecutor execute:model to:target];
+        [EBUtility execute:model to:target];
     }
     
     // exit expression
