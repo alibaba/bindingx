@@ -63,7 +63,7 @@
 - (void)initGesture {
     if (self.exprType == WXExpressionTypePan && !self.gesture) {
         __weak typeof(self) welf = self;
-        PerformBlockOnMainThread(^{
+        EBPerformBlockOnMainThread(^{
             [welf addGuestureOnMainThread];
         });
     }
@@ -105,13 +105,13 @@
     result[@"state"] =  [self stateToString:sender.state];
     
     if (self.callback) {
-        self.callback(result, keepAlive);
+        self.callback(self.source, result, keepAlive);
     }
     
     if (!keepAlive) {
         // free resouces
-//        self.targetExpression = nil;
-//        self.callback = nil;
+        self.targetExpression = nil;
+        self.callback = nil;
     }
 }
 
@@ -120,7 +120,7 @@
     result[@"state"] =  @"exit";
     
     if (self.callback) {
-        self.callback(result, YES);
+        self.callback(self.source, result, YES);
     }
 }
 

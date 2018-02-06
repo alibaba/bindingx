@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
+#import <React/RCTEventEmitter.h>
 #import <React/RCTBridgeModule.h>
 
-@interface RNEBModule : NSObject <RCTBridgeModule>
+@interface RNEBModule : RCTEventEmitter
 
 @end

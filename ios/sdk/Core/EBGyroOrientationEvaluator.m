@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-#import "EBGypoOrientationEvaluator.h"
-#import "EBGypoVector3.h"
-#import "EBGypoEuler.h"
+#import "EBGyroOrientationEvaluator.h"
+#import "EBGyroVector3.h"
+#import "EBGyroEuler.h"
 
-@interface EBGypoOrientationEvaluator()
+@interface EBGyroOrientationEvaluator()
 
 @property (nonatomic, assign) BOOL enabled;
 @property (nonatomic, assign) int screenOrientation;
@@ -31,32 +31,32 @@
 @property (nonatomic, assign) double constraintBetaOffset;
 @property (nonatomic, assign) double constraintGammaOffset;
 
-@property (nonatomic, strong) EBGypoQuaternion *quaternion;
-@property (nonatomic, strong) EBGypoQuaternion *q0;
-@property (nonatomic, strong) EBGypoQuaternion *q1;
-@property (nonatomic, strong) EBGypoVector3 *zee;
-@property (nonatomic, strong) EBGypoEuler *euler;
+@property (nonatomic, strong) EBGyroQuaternion *quaternion;
+@property (nonatomic, strong) EBGyroQuaternion *q0;
+@property (nonatomic, strong) EBGyroQuaternion *q1;
+@property (nonatomic, strong) EBGyroVector3 *zee;
+@property (nonatomic, strong) EBGyroEuler *euler;
 
 @end
 
 
-@implementation EBGypoOrientationEvaluator
+@implementation EBGyroOrientationEvaluator
 
 - (instancetype)initWithConstraintAlpha:(NSNumber *)constraintAlpha constraintBeta:(NSNumber *)constraintBeta constraintGamma:(NSNumber *)constraintGamma {
     if (self = [self init]) {
         self.constraintAlpha = constraintAlpha;
         self.constraintBeta = constraintBeta;
         self.constraintGamma = constraintGamma;
-        self.quaternion = [EBGypoQuaternion quaternionWithX:0 y:0 z:0 w:1];
-        self.zee = [EBGypoVector3 vectorWithX:0 y:0 z:1];
-        self.q0 = [EBGypoQuaternion quaternionWithX:0 y:0 z:0 w:0];
-        self.q1 = [EBGypoQuaternion quaternionWithX:sqrt(0.5) y:0 z:0 w:sqrt(0.5)];
-        self.euler = [EBGypoEuler new];
+        self.quaternion = [EBGyroQuaternion quaternionWithX:0 y:0 z:0 w:1];
+        self.zee = [EBGyroVector3 vectorWithX:0 y:0 z:1];
+        self.q0 = [EBGyroQuaternion quaternionWithX:0 y:0 z:0 w:0];
+        self.q1 = [EBGyroQuaternion quaternionWithX:sqrt(0.5) y:0 z:0 w:sqrt(0.5)];
+        self.euler = [EBGyroEuler new];
     }
     return self;
 }
 
-- (EBGypoQuaternion *)calculateWithDeviceAlpha:(double)deviceAlpha deviceBeta:(double)deviceBeta  deviceGamma:(double)deviceGamma {
+- (EBGyroQuaternion *)calculateWithDeviceAlpha:(double)deviceAlpha deviceBeta:(double)deviceBeta  deviceGamma:(double)deviceGamma {
     double alpha = _constraintAlpha != nil ? [_constraintAlpha doubleValue] : (deviceAlpha + _constraintAlphaOffset);// Z
     double beta = _constraintBeta != nil ? [_constraintBeta doubleValue] : (deviceBeta + _constraintBetaOffset);// X
     double gamma = _constraintGamma != nil ? [_constraintGamma doubleValue] : (deviceGamma + _constraintGammaOffset);// Y

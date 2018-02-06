@@ -14,10 +14,12 @@ import {
     TouchableHighlight,
     ToastAndroid,
     PanResponder,
-    ScrollView
+    ScrollView,
+    Platform,
+    NativeEventEmitter,
+    DeviceEventEmitter,
 } from 'react-native';
-
-import { DeviceEventEmitter } from 'react-native';
+import { bindingX } from 'NativeModules';
 
 export default class ScrollViewDemo extends Component {
 
@@ -26,9 +28,17 @@ export default class ScrollViewDemo extends Component {
 
     componentWillMount() {
         let self = this;
-        DeviceEventEmitter.addListener('stateChanged', function(e: Event) {
+        if(Platform.OS=='ios'){
+          const bindingXEmitter = new NativeEventEmitter(bindingX);
+          bindingXEmitter.addListener('BindingX', (result) => {
+            console.log(result);
+          });
+        } else {
+          DeviceEventEmitter.addListener('stateChanged', function(e: Event) {
             ToastAndroid.show('event:'+JSON.stringify(e), ToastAndroid.SHORT);
-        });
+          });
+        }
+        
     }
 
 
@@ -145,7 +155,7 @@ export default class ScrollViewDemo extends Component {
                 >
                     <Text style={{
                         textAlign: 'center',
-                        color: '#ffffff'
+                        color: '#ffffff',
                     }}>Target</Text>
                 </View>
 

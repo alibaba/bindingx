@@ -15,7 +15,7 @@
  */
 
 #import "EBExpressionOrientation.h"
-#import "EBGypoOrientationEvaluator.h"
+#import "EBGyroOrientationEvaluator.h"
 #import "EBGyroManager.h"
 
 #define SUPPORT_SCENE_TYPES (@[@"2d",@"3d"])
@@ -36,9 +36,9 @@
     
     NSString *_sceneType;
     
-    EBGypoOrientationEvaluator *_evaluatorX;
-    EBGypoOrientationEvaluator *_evaluatorY;
-    EBGypoOrientationEvaluator *_evaluator3D;
+    EBGyroOrientationEvaluator *_evaluatorX;
+    EBGyroOrientationEvaluator *_evaluatorY;
+    EBGyroOrientationEvaluator *_evaluator3D;
     NSMutableArray<NSNumber *> *_alphaRecords;
     CMMotionManager* _motionManager;
     
@@ -63,7 +63,7 @@
 - (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)targetExpression
          options:(NSDictionary *)options
        exitExpression:(NSString *)exitExpression
-             callback:(KeepAliveCallback)callback {
+             callback:(EBKeepAliveCallback)callback {
     [super updateTargetExpression:targetExpression
             options:options
           exitExpression:exitExpression
@@ -76,10 +76,10 @@
         _sceneType = SCENE_TYPE_2D;
     }
     if ([_sceneType isEqualToString:SCENE_TYPE_2D]) {
-        _evaluatorX = [[EBGypoOrientationEvaluator alloc] initWithConstraintAlpha:nil constraintBeta:@(90.0) constraintGamma:nil];
-        _evaluatorY = [[EBGypoOrientationEvaluator alloc] initWithConstraintAlpha:@(0.0) constraintBeta:nil constraintGamma:@(90.0)];
+        _evaluatorX = [[EBGyroOrientationEvaluator alloc] initWithConstraintAlpha:nil constraintBeta:@(90.0) constraintGamma:nil];
+        _evaluatorY = [[EBGyroOrientationEvaluator alloc] initWithConstraintAlpha:@(0.0) constraintBeta:nil constraintGamma:@(90.0)];
     } else {
-        _evaluator3D = [[EBGypoOrientationEvaluator alloc] initWithConstraintAlpha:nil constraintBeta:nil constraintGamma:nil];
+        _evaluator3D = [[EBGyroOrientationEvaluator alloc] initWithConstraintAlpha:nil constraintBeta:nil constraintGamma:nil];
     }
     
     __weak typeof(self) welf = self;
@@ -93,8 +93,7 @@
 - (void)removeExpressionBinding {
     [super removeExpressionBinding];
     [self stopWatchOrientation];
-    // 非主线程则为eb dealloc调用，无需执行回调，否则将crash
-    // 另外这里的主线程是由于ebmodule在主线程下，否则应该判断和ebmodule同线程
+    
     if ([NSThread isMainThread]) {
         [self fireStateChangedEvent:@"end" alpha:_lastAlpha beta:_lastBeta gamma:_lastGamma];
     }
@@ -126,18 +125,18 @@
         double formatAlpha = [self formatAlpha:alpha startAlpha:_startAlpha];
         
         if ([_sceneType isEqualToString:SCENE_TYPE_2D]) {
-            EBGypoQuaternion *quaternionX = [_evaluatorX calculateWithDeviceAlpha:formatAlpha deviceBeta:beta deviceGamma:gamma];
-            EBGypoQuaternion *quaternionY = [_evaluatorY calculateWithDeviceAlpha:formatAlpha deviceBeta:beta deviceGamma:gamma];
-            EBGypoVector3 *vecX = [EBGypoVector3 vectorWithX:0 y:0 z:1];
+            EBGyroQuaternion *quaternionX = [_evaluatorX calculateWithDeviceAlpha:formatAlpha deviceBeta:beta deviceGamma:gamma];
+            EBGyroQuaternion *quaternionY = [_evaluatorY calculateWithDeviceAlpha:formatAlpha deviceBeta:beta deviceGamma:gamma];
+            EBGyroVector3 *vecX = [EBGyroVector3 vectorWithX:0 y:0 z:1];
             [vecX applyQuaternionW:quaternionX.w x:quaternionX.x y:quaternionX.y z:quaternionX.z];
             
-            EBGypoVector3 *vecY = [EBGypoVector3 vectorWithX:0 y:1 z:1];
+            EBGyroVector3 *vecY = [EBGyroVector3 vectorWithX:0 y:1 z:1];
             [vecY applyQuaternionW:quaternionY.w x:quaternionY.x y:quaternionY.y z:quaternionY.z];
             
             x = 90 - acos(vecX.x) * 180 / M_PI;
             y = 90 - acos(vecY.y) * 180 / M_PI;
         } else {
-            EBGypoQuaternion *quaternion = [_evaluator3D calculateWithDeviceAlpha:formatAlpha deviceBeta:beta deviceGamma:gamma];
+            EBGyroQuaternion *quaternion = [_evaluator3D calculateWithDeviceAlpha:formatAlpha deviceBeta:beta deviceGamma:gamma];
             x = quaternion.x;
             y = quaternion.y;
             z = quaternion.z;
@@ -211,7 +210,7 @@
                              @"state": state};
     
     if (self.callback) {
-        self.callback(result, YES);
+        self.callback(self.source, result, YES);
     }
 }
 

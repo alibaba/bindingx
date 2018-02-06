@@ -21,6 +21,8 @@
 #import <React/RCTUIManager.h>
 #import <React/RCTUIManagerUtils.h>
 
+#define BINDING_EVENT_NAME @"BindingX"
+
 @interface RNEBModule ()
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, EBExpressionHandler *> *> *sourceMap;
@@ -31,9 +33,7 @@
     pthread_mutex_t mutex;
 }
 
-RCT_EXPORT_MODULE(Binding)
-
-@synthesize bridge = _bridge;
+RCT_EXPORT_MODULE(bindingX)
 
 - (dispatch_queue_t)methodQueue
 {
@@ -52,48 +52,52 @@ RCT_EXPORT_MODULE(Binding)
     pthread_mutex_destroy(&mutex);
 }
 
+- (NSArray<NSString *> *)supportedEvents
+{
+    return @[BINDING_EVENT_NAME];
+}
+
 RCT_EXPORT_METHOD(prepare:(NSDictionary *)dictionary)
 {
-    [EBUtility setUIManager:_bridge.uiManager];
+    [EBUtility setUIManager:self.bridge.uiManager];
     NSString *anchor = dictionary[@"anchor"];
     NSString *eventType = dictionary[@"eventType"];
     
     WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
     if (exprType == WXExpressionTypeUndefined) {
-        NSLog(@"prepare binding eventType error");
+        RCTLog(@"prepare binding eventType error");
         return;
     }
-
+    
     __weak typeof(self) welf = self;
     RCTExecuteOnUIManagerQueue(^{
         // find sourceRef & targetRef
         UIView* sourceComponent = [EBUtility getViewByRef:anchor];
         if (!sourceComponent && (exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
-            NSLog(@"prepare binding can't find component");
+            RCTLog(@"prepare binding can't find component");
             return;
         }
-
+        
         pthread_mutex_lock(&mutex);
-
+        
         EBExpressionHandler *handler = [welf handlerForToken:anchor expressionType:exprType];
         if (!handler) {
             // create handler for key
             handler = [EBExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
             [welf putHandler:handler forToken:anchor expressionType:exprType];
         }
-
+        
         pthread_mutex_unlock(&mutex);
     });
     
 }
 
-RCT_EXPORT_METHOD(bind:(NSDictionary *)dictionary
-                  callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *,bind:(NSDictionary *)dictionary)
 {
-    [EBUtility setUIManager:_bridge.uiManager];
+    [EBUtility setUIManager:self.bridge.uiManager];
     if (!dictionary) {
-        NSLog(@"bind params error, need json input");
-        return;
+        RCTLog(@"bind params error, need json input");
+        return nil;
     }
     
     NSString *eventType =  dictionary[@"eventType"];
@@ -103,23 +107,26 @@ RCT_EXPORT_METHOD(bind:(NSDictionary *)dictionary
     NSDictionary *options = dictionary[@"options"];
     
     if ([EBUtility isBlankString:eventType] || !props || props.count == 0) {
-        NSLog(@"bind params error");
-        callback(@[[NSNull null],@{@"state":@"error",@"msg":@"bind params error"}]);
-        return;
+        RCTLog(@"bind params error");
+        //        callback(@[[NSNull null],@{@"state":@"error",@"msg":@"bind params error"}]);
+        return nil;
     }
     
     WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
     if (exprType == WXExpressionTypeUndefined) {
-        NSLog( @"bind params handler error");
-        callback(@[@{@"state":@"error",@"msg":@"bind params handler error"}]);
-        return;
+        RCTLog( @"bind params handler error");
+        //        callback(@[@{@"state":@"error",@"msg":@"bind params handler error"}]);
+        return nil;
     }
     
+    if ([token isKindOfClass:NSNumber.class]) {
+        token = [(NSNumber *)token stringValue];
+    }
     if ([EBUtility isBlankString:token]){
         if ((exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
-            NSLog(@"bind params handler error");
-            callback(@[[NSNull null],@{@"state":@"error",@"msg":@"anchor cannot be blank when type is pan or scroll"}]);
-            return;
+            RCTLog(@"bind params handler error");
+            //            callback(@[[NSNull null],@{@"state":@"error",@"msg":@"anchor cannot be blank when type is pan or scroll"}]);
+            return nil;
         } else {
             token = [[NSUUID UUID] UUIDString];
         }
@@ -127,7 +134,7 @@ RCT_EXPORT_METHOD(bind:(NSDictionary *)dictionary
     
     __weak typeof(self) welf = self;
     RCTExecuteOnUIManagerQueue(^{
-
+        
         NSMapTable<id, NSDictionary *> *targetExpression = [NSMapTable new];
         for (NSDictionary *targetDic in props) {
             NSString *targetRef = targetDic[@"element"];
@@ -135,7 +142,7 @@ RCT_EXPORT_METHOD(bind:(NSDictionary *)dictionary
             NSString *expression = targetDic[@"expression"];
             
             if (targetRef) {
-
+                
                 NSMutableDictionary *propertyDic = [[targetExpression  objectForKey:targetRef] mutableCopy];
                 if (!propertyDic) {
                     propertyDic = [NSMutableDictionary dictionary];
@@ -150,29 +157,36 @@ RCT_EXPORT_METHOD(bind:(NSDictionary *)dictionary
                 [targetExpression setObject:propertyDic forKey:targetRef];
             }
         }
-
+        
         // find handler for key
         pthread_mutex_lock(&mutex);
-
+        
         EBExpressionHandler *handler = [welf handlerForToken:token expressionType:exprType];
         if (!handler) {
             // create handler for key
             handler = [EBExpressionHandler handlerWithExpressionType:exprType source:token];
             [welf putHandler:handler forToken:token expressionType:exprType];
         }
-
+        
         [handler updateTargetExpression:targetExpression
-                       options:options
-                exitExpression:exitExpression
-                      callback:^(id  _Nonnull result, BOOL keepAlive) {
-                          
-                          // TODO 改为keepAlive
-                          callback(result);
-                          
-                      }];
-
+                                options:options
+                         exitExpression:exitExpression
+                               callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
+                                   id body = nil;
+                                   if ([result isKindOfClass:NSDictionary.class]) {
+                                       body = [result mutableCopy];
+                                       [body setObject:source forKey:@"token"];
+                                   } else {
+                                       body = result;
+                                   }
+                                   [welf sendEventWithName:BINDING_EVENT_NAME body:body];
+                                   if (keepAlive) {
+                                       [welf stopObserving];
+                                   }
+                               }];
         pthread_mutex_unlock(&mutex);
     });
+    return @{@"token":token};
 }
 
 RCT_EXPORT_METHOD(unbind:(NSDictionary *)options)
@@ -191,7 +205,7 @@ RCT_EXPORT_METHOD(unbind:(NSDictionary *)options)
     
     WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
     if (exprType == WXExpressionTypeUndefined) {
-        NSLog(@"disableBinding params handler error");
+        RCTLog(@"disableBinding params handler error");
         return;
     }
     
@@ -234,8 +248,63 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSArray *, supportFeatures)
 
 RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *, getComputedStyle:(NSString *)sourceRef)
 {
-    return @{};
+    if ([EBUtility isBlankString:sourceRef]) {
+        NSLog(@"getComputedStyle params error");
+        return nil;
+    }
+    
+    __block NSMutableDictionary *styles = [NSMutableDictionary new];
+    
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    // find sourceRef & targetRef
+    UIView* view = [EBUtility getViewByRef:sourceRef];
+    if (!view) {
+        RCTLog(@"getComputedStyle can't find source component");
+        return nil;
+    }
+    RCTExecuteOnMainQueue(^{
+        CALayer *layer = view.layer;
+        styles[@"translateX"] = [self transformFactor:@"transform.translation.x" layer:layer];
+        styles[@"translateY"] = [self transformFactor:@"transform.translation.y" layer:layer];
+        styles[@"scaleX"] = [self transformFactor:@"transform.scale.x" layer:layer];
+        styles[@"scaleY"] = [self transformFactor:@"transform.scale.y" layer:layer];
+        styles[@"rotateX"] = [self transformFactor:@"transform.rotation.x" layer:layer];
+        styles[@"rotateY"] = [self transformFactor:@"transform.rotation.y" layer:layer];
+        styles[@"rotateZ"] = [self transformFactor:@"transform.rotation.z" layer:layer];
+        styles[@"opacity"] = [layer valueForKeyPath:@"opacity"];
+        
+        styles[@"background-color"] = [self colorAsString:layer.backgroundColor];
+        
+        //            if ([sourceComponent isKindOfClass:NSClassFromString(@"WXTextComponent")]) {
+        //                Ivar ivar = class_getInstanceVariable(NSClassFromString(@"WXTextComponent"), "_color");
+        //                UIColor *color = (UIColor *)object_getIvar(sourceComponent, ivar);
+        //                if (color) {
+        //                    styles[@"color"] = [self colorAsString:color.CGColor];
+        //                }
+        //            }
+        
+        dispatch_semaphore_signal(semaphore);
+    });
+    
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    return styles;
 }
+
+- (NSNumber *)transformFactor:(NSString *)key layer:(CALayer* )layer {
+    CGFloat factor = [EBUtility factor];
+    id value = [layer valueForKeyPath:key];
+    if(value){
+        return [NSNumber numberWithDouble:([value doubleValue] / factor)];
+    }
+    return nil;
+}
+
+- (NSString *)colorAsString:(CGColorRef)cgColor
+{
+    const CGFloat *components = CGColorGetComponents(cgColor);
+    return [NSString stringWithFormat:@"rgba(%d,%d,%d,%f)", (int)(components[0]*255), (int)(components[1]*255), (int)(components[2]*255), components[3]];
+}
+
 
 #pragma mark - Handler Map
 - (NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, EBExpressionHandler *> *> *)sourceMap {

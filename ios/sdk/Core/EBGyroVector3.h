@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@interface EBGypoVector3: NSObject
+@interface EBGyroVector3: NSObject
 
 @property(nonatomic,assign) double x;
 @property(nonatomic,assign) double y;

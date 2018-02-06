@@ -203,7 +203,9 @@ double bezier(double x1,double y1,double x2,double y2,double epsilon,double t){
         if (fabs(d2) < 1e-6) break;
         t2 = t2 - xx / d2;
     }
-    t0 = 0, t1 = 1, t2 = x;
+    t0 = 0;
+    t1 = 1;
+    t2 = x;
     if (t2 < t0) return curveY(t0,y1,y2);
     if (t2 > t1) return curveY(t1,y1,y2);
     

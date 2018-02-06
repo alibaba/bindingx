@@ -41,11 +41,11 @@
 @property (nonatomic, assign) CGFloat height;
 
 @property (nonatomic, assign) BOOL isBackgroundColorChanged;
-@property (nonatomic, strong) NSString *backgroundColor;
+@property (nonatomic, strong) NSObject *backgroundColor;
 
 //仅支持TextComponent
 @property (nonatomic, assign) BOOL isColorChanged;
-@property (nonatomic, strong) NSString *color;
+@property (nonatomic, strong) NSObject *color;
 
 @property (nonatomic, assign) BOOL isAlphaChanged;
 @property (nonatomic, assign) CGFloat alpha;

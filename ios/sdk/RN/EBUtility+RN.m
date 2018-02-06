@@ -19,15 +19,14 @@
 #import <React/RCTUtils.h>
 #import <React/RCTScrollView.h>
 
-void PerformBlockOnBridgeThread(void (^ _Nonnull block)(void))
+void EBPerformBlockOnBridgeThread(void (^ _Nonnull block)(void))
 {
-    block();
-    //    WXPerformBlockOnBridgeThread(^{
-    //        block();
-    //    });
+    RCTExecuteOnUIManagerQueue(^{
+        block();
+    });
 }
 
-void PerformBlockOnMainThread(void (^ _Nonnull block)(void))
+void EBPerformBlockOnMainThread(void (^ _Nonnull block)(void))
 {
     RCTExecuteOnMainQueue(^{
         block();
@@ -48,6 +47,9 @@ __weak static RCTUIManager* _uiManager = nil;
 
 + (void)execute:(EBExpressionProperty *)model to:(id)target
 {
+//    UIView *view = [self getViewByRef:target];
+    
+    
     NSMutableDictionary *styles = [NSMutableDictionary dictionary];
     if (model.isTransformChanged) {
         NSMutableArray *transform = [NSMutableArray new];
@@ -100,7 +102,6 @@ __weak static RCTUIManager* _uiManager = nil;
     UIView* view = [EBUtility getViewByRef:source];
     for (UIGestureRecognizer *obj in view.gestureRecognizers) {
         if ([obj  isKindOfClass:[UIPanGestureRecognizer class]]) {
-            
             //            callback(
             //                     [view.events containsObject:@"horizontalpan"],
             //                     [view.events containsObject:@"verticalpan"]

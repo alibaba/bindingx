@@ -80,10 +80,10 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
             [*model setAlpha:[EBExpressionExecutor unpackSingleRet:result]];
             break;
         case WXEPViewPropertyBackgroundColor:
-            [EBExpressionExecutor makeBackgroundColor:result model:model];
+            [*model setBackgroundColor:result];
             break;
         case WXEPViewPropertyColor:
-            [EBExpressionExecutor makeColor:result model:model];
+            [*model setColor:result];
             break;
         case WXEPViewPropertyLeft:
             [*model setLeft:[EBExpressionExecutor unpackSingleRet:result]];
@@ -183,43 +183,10 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
     (*model).contentOffsetY = [y doubleValue] * factor;
 }
 
-+ (void)makeBackgroundColor:(NSObject *)result model:(EBExpressionProperty **)model {
-    (*model).backgroundColor = [EBExpressionExecutor hexFromUIColor:[EBExpressionExecutor makeColor:result]];
-}
-
-+ (void)makeColor:(NSObject *)result model:(EBExpressionProperty **)model {
-    (*model).color = [EBExpressionExecutor hexFromUIColor:[EBExpressionExecutor makeColor:result]];
-}
-
-+ (UIColor *)makeColor:(NSObject *)result {
-    id r, g, b, a = @(1);
-    [_(r, g, b, a) unpackFrom:result];
-    
-    return [UIColor colorWithRed:[r doubleValue]/255.0f green:[g doubleValue]/255.0f blue:[b doubleValue]/255.0f alpha:[a doubleValue]];
-}
-
 + (CGFloat)unpackSingleRet:(NSObject *)result {
     id a;
     [_(a) unpackFrom:result];
     return [a doubleValue];
-}
-
-+ (NSString *)hexFromUIColor:(UIColor *)color {
-    if (CGColorGetNumberOfComponents(color.CGColor) < 4) {
-        const CGFloat *components = CGColorGetComponents(color.CGColor);
-        color = [UIColor colorWithRed:components[0]
-                                green:components[0]
-                                 blue:components[0]
-                                alpha:components[1]];
-    }
-    
-    if (CGColorSpaceGetModel(CGColorGetColorSpace(color.CGColor)) != kCGColorSpaceModelRGB) {
-        return [NSString stringWithFormat:@"#FFFFFF"];
-    }
-    
-    return [NSString stringWithFormat:@"#%02X%02X%02X", (int)((CGColorGetComponents(color.CGColor))[0]*255.0),
-            (int)((CGColorGetComponents(color.CGColor))[1]*255.0),
-            (int)((CGColorGetComponents(color.CGColor))[2]*255.0)];
 }
 
 @end

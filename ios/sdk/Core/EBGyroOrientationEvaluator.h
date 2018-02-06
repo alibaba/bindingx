@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-@interface EBGypoEuler: NSObject
+#import "EBGyroQuaternion.h"
 
-@property(nonatomic,assign) double x;
-@property(nonatomic,assign) double y;
-@property(nonatomic,assign) double z;
-@property(nonatomic,copy) NSString *order;
+@interface EBGyroOrientationEvaluator: NSObject
 
-+ (instancetype)eulerWithX:(double)x y:(double)y z:(double)z order:(NSString *)order;
+- (instancetype)initWithConstraintAlpha:(NSNumber *)constraintAlpha constraintBeta:(NSNumber *)constraintBeta constraintGamma:(NSNumber *)constraintGamma;
 
-- (void)setValueWithX:(double)x y:(double)y z:(double)z order:(NSString *)order;
+
+- (EBGyroQuaternion *)calculateWithDeviceAlpha:(double)deviceAlpha deviceBeta:(double)deviceBeta  deviceGamma:(double)deviceGamma;
 
 @end

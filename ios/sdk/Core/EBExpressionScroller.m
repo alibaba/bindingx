@@ -25,8 +25,8 @@
 
 @property (nonatomic, assign) CGPoint lastOffset;
 @property (nonatomic, assign) CGPoint lastDOffset;
-@property (nonatomic, assign) CGPoint turnOffset;//拐点
-@property (nonatomic, assign) BOOL turnChange;//拐点
+@property (nonatomic, assign) CGPoint turnOffset;
+@property (nonatomic, assign) BOOL turnChange;
 
 @end
 
@@ -47,8 +47,6 @@
 - (void)removeExpressionBinding {
     [EBUtility removeScrollDelegate:self source:self.source];
     
-    // 非主线程则为eb dealloc调用，无需执行回调，否则将crash
-    // 另外这里的主线程是由于ebmodule在主线程下，否则应该判断ebmodule同线程
     if ([NSThread isMainThread]) {
         [self fireStateChangedEvent:@"end"];
     }
@@ -61,8 +59,7 @@
         NSDictionary *scope = [self setUpScope:scrollView];
         
         __block __weak typeof(self) welf = self;
-        PerformBlockOnBridgeThread(^{
-            //切换到bridge线程，解决turn fire后表达式异步执行造成的抖动问题
+        EBPerformBlockOnBridgeThread(^{
             if (_turnChange) {
                 [welf fireTurnEvent:scope];
                 return;
@@ -117,11 +114,10 @@
                              @"state": state};
     
     if (self.callback) {
-        self.callback(result, YES);
+        self.callback(self.source, result, YES);
     }
 }
 
-// 拐点触发回调
 - (void)fireTurnEvent:(NSDictionary* )scope {
     NSDictionary *result = @{
                              @"x": scope[@"x"],
@@ -133,7 +129,7 @@
                              @"state": @"turn"
                              };
     if (self.callback) {
-        self.callback(result, YES);
+        self.callback(self.source, result, YES);
     }
 }
 

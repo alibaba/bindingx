@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, WXExpressionType) {
 @property (nonatomic, weak) id source;
 
 @property (nonatomic, copy) NSString *exitExpression;
-@property (nonatomic, copy) KeepAliveCallback callback;
+@property (nonatomic, copy) EBKeepAliveCallback callback;
 @property (nonatomic, strong) NSMapTable<id, NSDictionary *> *targetExpression;
 @property (nonatomic, strong) NSDictionary *options;
 
@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, WXExpressionType) {
 - (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)targetExpression
          options:(NSDictionary *)options
        exitExpression:(NSString *)exitExpression
-             callback:(KeepAliveCallback)callback;
+             callback:(EBKeepAliveCallback)callback;
 
 - (void)removeExpressionBinding;
 

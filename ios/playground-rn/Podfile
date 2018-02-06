@@ -5,7 +5,7 @@ platform :ios, '8.0'
 target 'BindingDemoRN' do
   pod 'Binding', :path => '../binding-react-native.podspec'
 
-  pod 'React', :path => '/Users/duixiang/alibaba/rn/rntest/node_modules/react-native/React.podspec', :subspecs => [
+  pod 'React', :path => '../../node_modules/react-native/React.podspec', :subspecs => [
   'Core',
   'RCTText',
   'RCTNetwork’,
@@ -13,11 +13,11 @@ target 'BindingDemoRN' do
   'CxxBridge',
   ]
   
-  pod 'yoga', :path => '/Users/duixiang/alibaba/rn/rntest/node_modules/react-native/ReactCommon/yoga'
+  pod 'yoga', :path => '../../node_modules/react-native/ReactCommon/yoga'
   
   # Third party deps podspec link
-  pod 'DoubleConversion', :podspec => '/Users/duixiang/alibaba/rn/rntest/node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
-  pod 'GLog', :podspec => '/Users/duixiang/alibaba/rn/rntest/node_modules/react-native/third-party-podspecs/GLog.podspec'
-  pod 'Folly', :podspec => '/Users/duixiang/alibaba/rn/rntest/node_modules/react-native/third-party-podspecs/Folly.podspec'
+  pod 'DoubleConversion', :podspec => '../../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'GLog', :podspec => '../../node_modules/react-native/third-party-podspecs/GLog.podspec'
+  pod 'Folly', :podspec => '../../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 end

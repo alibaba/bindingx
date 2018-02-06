@@ -45,7 +45,7 @@
 - (void)updateTargetExpression:(NSMapTable<id,NSDictionary *> *)targetExpression
          options:(NSDictionary *)options
        exitExpression:(NSString *)exitExpression
-             callback:(KeepAliveCallback)callback {
+             callback:(EBKeepAliveCallback)callback {
     [super updateTargetExpression:targetExpression
             options:options
           exitExpression:exitExpression
@@ -112,7 +112,7 @@
                              @"state": state};
     
     if (self.callback) {
-        self.callback(result, YES);
+        self.callback(self.source, result, YES);
     }
 }
 

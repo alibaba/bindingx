@@ -194,13 +194,13 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         [handler updateTargetExpression:targetExpression
                   options:options
                 exitExpression:exitExpression
-                      callback:^(id  _Nonnull result, BOOL keepAlive) {
+                      callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
                           callback(result,keepAlive);
                       }];
         
         pthread_mutex_unlock(&mutex);
     });
-    return  [NSDictionary dictionaryWithObject:token forKey:@"token"];
+    return @{@"token":token};
 }
 
 - (void)unbind:(NSDictionary *)dictionary {
@@ -260,7 +260,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
 
 - (NSDictionary *)getComputedStyle:(NSString *)sourceRef {
     if ([WXUtility isBlankString:sourceRef]) {
-        WX_LOG(WXLogFlagWarning, @"createBinding params error");
+        WX_LOG(WXLogFlagWarning, @"getComputedStyle params error");
         return nil;
     }
     
@@ -271,7 +271,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         // find sourceRef & targetRef
         WXComponent *sourceComponent = [weexInstance componentForRef:sourceRef];
         if (!sourceComponent) {
-            WX_LOG(WXLogFlagWarning, @"createBinding can't find source component");
+            WX_LOG(WXLogFlagWarning, @"getComputedStyle can't find source component");
             return;
         }
         WXPerformBlockSyncOnMainThread(^{

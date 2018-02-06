@@ -17,11 +17,11 @@
 #import <Foundation/Foundation.h>
 #import "EBExpressionProperty.h"
 
-typedef void (^KeepAliveCallback)(_Nonnull id result, BOOL keepAlive);
+typedef void (^EBKeepAliveCallback)(_Nonnull id source ,_Nonnull id result, BOOL keepAlive);
 typedef void (^EBGetPanGestureCallback)(BOOL isHorizontal, BOOL isVertical);
 
-extern void PerformBlockOnMainThread(void (^ _Nonnull block)(void));
-extern void PerformBlockOnBridgeThread(void (^ _Nonnull block)(void));
+extern void EBPerformBlockOnMainThread(void (^ _Nonnull block)(void));
+extern void EBPerformBlockOnBridgeThread(void (^ _Nonnull block)(void));
 
 @interface EBUtility: NSObject
 

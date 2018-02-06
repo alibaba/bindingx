@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-#import "EBGypoEuler.h"
+#import "EBGyroEuler.h"
 
 #define ROTATION_ORDERS (@[@"XYZ",@"YZX",@"ZXY",@"XZY",@"YXZ",@"ZYX"])
 #define DEFAULT_ORDER @"XYZ"
 
-@implementation EBGypoEuler
+@implementation EBGyroEuler
 
 + (instancetype)eulerWithX:(double)x y:(double)y z:(double)z order:(NSString *)order {
-    EBGypoEuler *euler = [[EBGypoEuler alloc] initWithX:x y:y z:z order:order];
+    EBGyroEuler *euler = [[EBGyroEuler alloc] initWithX:x y:y z:z order:order];
     return euler;
 }
 

@@ -15,10 +15,10 @@
  */
 
 #import <CoreMotion/CoreMotion.h>
-#import "EBGypoVector3.h"
-#import "EBGypoEuler.h"
+#import "EBGyroVector3.h"
+#import "EBGyroEuler.h"
 
-@interface EBGypoQuaternion: NSObject
+@interface EBGyroQuaternion: NSObject
 
 @property(nonatomic,assign) double x;
 @property(nonatomic,assign) double y;
@@ -27,10 +27,10 @@
 
 + (instancetype)quaternionWithX:(double)x y:(double)y z:(double)z w:(double)w;
 
-- (instancetype)setFromAxisAngle:(EBGypoVector3 *)axis angle:(double)angle;
-- (instancetype)setFromEuler:(EBGypoEuler *)euler;
-- (instancetype)multiply:(EBGypoQuaternion *)q p:(EBGypoQuaternion *)p;
-- (instancetype)multiplyQuaternions:(EBGypoQuaternion *)a b:(EBGypoQuaternion *)b;
+- (instancetype)setFromAxisAngle:(EBGyroVector3 *)axis angle:(double)angle;
+- (instancetype)setFromEuler:(EBGyroEuler *)euler;
+- (instancetype)multiply:(EBGyroQuaternion *)q p:(EBGyroQuaternion *)p;
+- (instancetype)multiplyQuaternions:(EBGyroQuaternion *)a b:(EBGyroQuaternion *)b;
 
 @end
 

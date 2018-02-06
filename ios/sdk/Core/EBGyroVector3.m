@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-#import "EBGypoVector3.h"
+#import "EBGyroVector3.h"
 
-@implementation EBGypoVector3
+@implementation EBGyroVector3
 
 + (instancetype)vectorWithX:(double)x y:(double)y z:(double)z {
-    EBGypoVector3 *vector3 = [[EBGypoVector3 alloc] initWithX:x y:y z:z];
+    EBGyroVector3 *vector3 = [[EBGyroVector3 alloc] initWithX:x y:y z:z];
     return vector3;
 }
 

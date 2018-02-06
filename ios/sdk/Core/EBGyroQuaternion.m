@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-#import "EBGypoQuaternion.h"
-#import "EBGypoVector3.h"
+#import "EBGyroQuaternion.h"
+#import "EBGyroVector3.h"
 
-@implementation EBGypoQuaternion
+@implementation EBGyroQuaternion
 
 + (instancetype)quaternionWithX:(double)x y:(double)y z:(double)z w:(double)w {
-    EBGypoQuaternion *quaternion = [[EBGypoQuaternion alloc] initWithWithX:x y:y z:z w:w];
+    EBGyroQuaternion *quaternion = [[EBGyroQuaternion alloc] initWithWithX:x y:y z:z w:w];
     return quaternion;
 }
 
@@ -34,7 +34,7 @@
     return self;
 }
 
-- (instancetype)setFromEuler:(EBGypoEuler *)euler {
+- (instancetype)setFromEuler:(EBGyroEuler *)euler {
     if(euler == nil) {
         return nil;
     }
@@ -95,7 +95,7 @@
     return self;
 }
 
-- (instancetype)setFromAxisAngle:(EBGypoVector3 *)axis angle:(double)angle {
+- (instancetype)setFromAxisAngle:(EBGyroVector3 *)axis angle:(double)angle {
     double halfAngle = angle / 2;
     double s = sin(halfAngle);
     
@@ -106,14 +106,14 @@
     return self;
 }
 
-- (instancetype)multiply:(EBGypoQuaternion *)q p:(EBGypoQuaternion *)p {
+- (instancetype)multiply:(EBGyroQuaternion *)q p:(EBGyroQuaternion *)p {
     if(p != nil) {
         return [self multiplyQuaternions:q b:p];
     }
     return [self multiplyQuaternions:self b:q];
 }
 
-- (instancetype)multiplyQuaternions:(EBGypoQuaternion *)a b:(EBGypoQuaternion *)b {
+- (instancetype)multiplyQuaternions:(EBGyroQuaternion *)a b:(EBGyroQuaternion *)b {
     
     double qax = a.x, qay = a.y, qaz = a.z, qaw = a.w;
     double qbx = b.x, qby = b.y, qbz = b.z, qbw = b.w;
