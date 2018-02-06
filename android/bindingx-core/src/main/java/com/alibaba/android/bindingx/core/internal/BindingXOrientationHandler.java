@@ -1,3 +1,18 @@
+/**
+ * Copyright 2018 Alibaba Group
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.alibaba.android.bindingx.core.internal;
 
 import android.content.Context;
@@ -19,7 +34,9 @@ import java.util.Map;
 /**
  * Description:
  *
- * 处理设备方向相关
+ * A built-in implementation of {@link com.alibaba.android.bindingx.core.IEventHandler} which handle device orientation
+ * change event.
+ *
  * Created by rowandjj(chuyi)<br/>
  */
 
@@ -78,10 +95,10 @@ public class BindingXOrientationHandler extends AbstractEventHandler implements 
                                  @Nullable BindingXCore.JavaScriptCallback callback) {
         super.onBindExpression(eventType,globalConfig, exitExpressionPair, expressionArgs, callback);
 
-        // 获取配置
+        // get config
         String sceneType = null;
         if(globalConfig != null) {
-            // 目前有2d和3d两种配置
+            // for now, we have two types named 2d and 3d
             sceneType = (String) globalConfig.get(BindingXConstants.KEY_SCENE_TYPE);
             if(TextUtils.isEmpty(sceneType)) {
                 sceneType = "2d";
@@ -113,8 +130,6 @@ public class BindingXOrientationHandler extends AbstractEventHandler implements 
 
         fireEventByState(BindingXConstants.STATE_END, mLastAlpha, mLastBeta, mLastGamma);
         return mOrientationDetector.removeOrientationChangedListener(this);
-//         不要stop()。如果一个页面多个orientation监听，那么disable一个，会暂停所有的
-//        mOrientationDetector.stop();
     }
 
     @Override
@@ -133,7 +148,6 @@ public class BindingXOrientationHandler extends AbstractEventHandler implements 
 
     @Override
     public void onOrientationChanged(double alpha, double beta, double gamma) {
-        //精度不需要太高，四舍五入即可
         alpha = Math.round(alpha);
         beta = Math.round(beta);
         gamma = Math.round(gamma);
@@ -171,7 +185,6 @@ public class BindingXOrientationHandler extends AbstractEventHandler implements 
         mLastGamma = gamma;
 
         try {
-            //消费所有的表达式
             JSMath.applyOrientationValuesToScope(mScope,alpha,beta,gamma,mStartAlpha,mStartBeta,mStartGamma, x,y,z);
             if(!evaluateExitExpression(mExitExpressionPair,mScope)) {
                 consumeExpression(mExpressionHoldersMap, mScope, BindingXEventType.TYPE_ORIENTATION);

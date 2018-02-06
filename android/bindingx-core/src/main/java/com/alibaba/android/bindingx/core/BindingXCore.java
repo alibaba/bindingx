@@ -1,3 +1,18 @@
+/**
+ * Copyright 2018 Alibaba Group
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.alibaba.android.bindingx.core;
 
 import android.content.Context;
@@ -21,6 +36,9 @@ import java.util.UUID;
 
 /**
  * Description:
+ *
+ * The core class of BindingX. This class is used to create {@link IEventHandler}
+ * by name, bind or unbind expression, and update views according to the result of expressions.
  *
  * Created by rowandjj(chuyi)<br/>
  */
@@ -59,7 +77,14 @@ public class BindingXCore {
     }
 
     /**
-     * @return 如果成功，则返回token，否则返回null
+     *
+     * bind event handler by params.
+     *
+     * @param context the android {@link Context} instance
+     * @param instanceId the additional instance id
+     * @param params the params which include expression/properties/elements and so on
+     * @param callback the callback that will be invoked later
+     * @return return token if success or null otherwise
      */
     public String doBind(@Nullable Context context,
                          @Nullable String instanceId,
@@ -80,12 +105,16 @@ public class BindingXCore {
 
         ExpressionPair exitExpressionPair = Utils.getExpressionPair(params, BindingXConstants.KEY_EXIT_EXPRESSION);
 
-        String anchor = Utils.getStringValue(params, BindingXConstants.KEY_ANCHOR); //可能为空
+        String anchor = Utils.getStringValue(params, BindingXConstants.KEY_ANCHOR); // maybe nullable
         List<Map<String, Object>> expressionArgs = Utils.getRuntimeProps(params);
 
         return doBind(anchor, anchorInstanceId, eventType, configMap, exitExpressionPair, expressionArgs, callback, context, instanceId);
     }
 
+    /**
+     * unbind event handler
+     *
+     * */
     public void doUnbind(@Nullable Map<String, Object> params) {
         if (params == null) {
             return;
@@ -97,6 +126,10 @@ public class BindingXCore {
     }
 
 
+    /**
+     * unbind event handler
+     *
+     * */
     public void doUnbind(@Nullable String token, @Nullable String eventType) {
         LogProxy.d("disable binding [" + token + "," + eventType + "]");
         if (TextUtils.isEmpty(token) || TextUtils.isEmpty(eventType)) {
@@ -162,38 +195,37 @@ public class BindingXCore {
             return null;
         }
 
-        // 生成token，如果是pan/scroll类型，那token即view ref.
+        // generate token. If event type is pan or scroll, then the token will be view's ref
         final String token = TextUtils.isEmpty(anchor) ? generateToken() : anchor;
 
         if (mBindingCouples == null) {
             mBindingCouples = new HashMap<>();
         }
 
-        //根据sourceRef寻找事件处理器集合
+        // look for the collections of eventHandlers by token.
         Map<String/*eventType*/, IEventHandler> handlerMap = mBindingCouples.get(token);
-        //根据eventType寻找目标处理器
+        // look for the target event handler by event type
         IEventHandler targetHandler;
-        if (handlerMap != null && (targetHandler = handlerMap.get(eventType)) != null) {/*处理器存在*/
-            //通知handler
+        if (handlerMap != null && (targetHandler = handlerMap.get(eventType)) != null) {/*event handler exists*/
+            //notify that event handler
             LogProxy.d("you have already enabled binding,[token:" + token + ",type:" + eventType + "]");
             targetHandler.onStart(token, eventType);
             LogProxy.d("enableBinding success.[token:" + token + ",type:" + eventType + "]");
-        } else {/*不存在*/
-            //集合未创建 则创建之,并插入
+        } else {/*not exists*/
+            // create the collection and insert to it if collections is empty
             if (handlerMap == null) {
                 handlerMap = new HashMap<>(4);
                 mBindingCouples.put(token, handlerMap);
             }
-            //创建handler
+            // create event handler
             targetHandler = createEventHandler(context, instanceId, eventType);
-            if (targetHandler != null) {//创建成功
-                /*可能anchor不在当前instance中*/
+            if (targetHandler != null) {//create success
+                /*maybe anchor is not in current instance*/
                 targetHandler.setAnchorInstanceId(anchorInstanceId);
                 targetHandler.setToken(token);
-                //初始化
                 if (targetHandler.onCreate(token, eventType)) {
                     targetHandler.onStart(token, eventType);
-                    //添加到handlerMap
+                    // put to the handler map
                     handlerMap.put(eventType, targetHandler);
                     LogProxy.d("enableBinding success.[token:" + token + ",type:" + eventType + "]");
                 } else {
@@ -212,15 +244,15 @@ public class BindingXCore {
 
 
     /**
-     * @param anchor             锚点。是一个view的引用(ref)。可能为空。Notice: ref全局唯一。
-     * @param anchorInstanceId   weex实例id。代表anchor所在的weex实例。默认是当前module所在实例。可能为空。
-     * @param eventType          事件类型。如pan、scroll等。
-     * @param globalConfig       全局配置。
-     * @param exitExpressionPair 边界条件表达式。
-     * @param expressionArgs     运行时参数。用于控制视图变换。
-     * @param callback           事件回调。
-     * @param context            上下文
-     * @param instanceId         页面id。可选
+     * @param anchor             a reference of some view. Maybe null
+     * @param anchorInstanceId   optional instance id of anchor
+     * @param eventType          event type such as pan
+     * @param globalConfig       global config
+     * @param exitExpressionPair exit expression
+     * @param expressionArgs     runtime props
+     * @param callback           result callback
+     * @param context            android context
+     * @param instanceId         optional instance id
      */
     public String doBind(@Nullable String anchor,
                          @Nullable String anchorInstanceId,

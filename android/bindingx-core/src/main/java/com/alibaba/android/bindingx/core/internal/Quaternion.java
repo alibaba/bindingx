@@ -1,3 +1,18 @@
+/**
+ * Copyright 2018 Alibaba Group
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.alibaba.android.bindingx.core.internal;
 
 import android.support.annotation.Nullable;
@@ -5,7 +20,7 @@ import android.support.annotation.Nullable;
 /**
  * Description:
  *
- *  四元数
+ *  a quaternion data structure
  *
  * Created by rowandjj(chuyi)<br/>
  */
@@ -26,7 +41,7 @@ class Quaternion {
     }
 
     /**
-     * 欧拉角转四元数
+     * euler to quaternion
      * */
     @Nullable
     Quaternion setFromEuler(Euler euler) {
@@ -91,7 +106,7 @@ class Quaternion {
     }
 
     /**
-     * 轴角转四元数
+     * axis ange to quaternion
      * */
     Quaternion setFromAxisAngle(Vector3 axis, double angle) {
         double halfAngle = angle / 2;

@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: "com.github.hierynomus.license"
+
 
 android {
     compileSdkVersion 26
@@ -34,4 +36,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
+
+
+if(file('../../LICENSE.md').exists()){
+    license {
+        header = file('../../LICENSE.md')
+    }
+    preBuild.dependsOn licenseFormat
 }
