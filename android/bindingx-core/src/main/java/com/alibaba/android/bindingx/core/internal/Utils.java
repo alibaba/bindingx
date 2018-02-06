@@ -36,12 +36,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Description:
- *
- * Created by rowandjj(chuyi)<br/>
- */
-
 public final class Utils {
 
     private Utils(){}
@@ -179,7 +173,6 @@ public final class Utils {
     }
 
     public static int normalizedPerspectiveValue(@NonNull Context context, int raw) {
-        //refer: react-native # BaseViewManager
         // The following converts the matrix's perspective to a camera distance
         // such that the camera perspective looks the same on Android and iOS
         float scale = context.getApplicationContext().getResources().getDisplayMetrics().density;

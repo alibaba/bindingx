@@ -25,10 +25,10 @@ import android.support.annotation.Nullable;
 
 public class ExpressionPair {
 
-    //原生表达式
+    // the original expression
     public final String origin;
 
-    //转化后表达式
+    // the expression that has been transformed to abstract syntax tree
     public final String transformed;
 
     public ExpressionPair(String origin,String transformed) {

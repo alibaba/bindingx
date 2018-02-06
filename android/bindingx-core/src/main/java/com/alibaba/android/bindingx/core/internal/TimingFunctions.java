@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * Description:
  *
- * 一组预置的缓动函数
+ * pre-built timing functions that can be used in expressions
  *
  * Created by rowandjj(chuyi)<br/>
  */

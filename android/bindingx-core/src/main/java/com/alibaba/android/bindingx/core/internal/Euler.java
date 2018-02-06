@@ -19,7 +19,7 @@ import android.text.TextUtils;
 
 /**
  * Description:
- * 欧拉角
+ * an euler data structure
  *
  * Created by rowandjj(chuyi)<br/>
  */

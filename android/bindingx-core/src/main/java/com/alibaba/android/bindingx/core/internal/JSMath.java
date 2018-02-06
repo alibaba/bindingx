@@ -26,6 +26,10 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * pre-built math functions that can be used in expressions
+ *
+ * */
 class JSMath {
 
     private JSMath(){}

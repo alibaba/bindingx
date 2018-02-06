@@ -41,18 +41,11 @@ class OrientationEvaluator {
         this.constraintGamma = constraintGamma;
     }
 
-    /**
-     * @param deviceAlpha 陀螺仪alpha数据
-     * @param deviceBeta 陀螺仪beta数据
-     * @param deviceGamma 陀螺仪gamma数据
-     * @param normalizedAlpha 校正后的alpha
-     * */
     Quaternion calculate(double deviceAlpha, double deviceBeta, double deviceGamma, double normalizedAlpha) {
         double alpha = Math.toRadians(constraintAlpha != null ? constraintAlpha : (normalizedAlpha + constraintAlphaOffset));// Z
         double beta = Math.toRadians(constraintBeta != null ? constraintBeta : (deviceBeta + constraintBetaOffset));// X
         double gamma = Math.toRadians(constraintGamma != null ? constraintGamma : (deviceGamma + constraintGammaOffset));// Y
 
-        // 设备方向写死为0 纵向
         setObjectQuaternion(quaternion, alpha, beta, gamma, 0);
         return quaternion;
     }

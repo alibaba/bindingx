@@ -219,7 +219,7 @@ public class BindingXCore {
             }
             // create event handler
             targetHandler = createEventHandler(context, instanceId, eventType);
-            if (targetHandler != null) {//创建成功
+            if (targetHandler != null) {//create success
                 /*maybe anchor is not in current instance*/
                 targetHandler.setAnchorInstanceId(anchorInstanceId);
                 targetHandler.setToken(token);

@@ -18,6 +18,8 @@ package com.alibaba.android.bindingx.core.internal;
 /**
  * Description:
  *
+ * a vector3 data structure
+ *
  * Created by rowandjj(chuyi)<br/>
  */
 class Vector3 {

@@ -35,7 +35,7 @@ import java.util.Set;
 /**
  * Description:
  *
- * 获取 Device Orientation
+ * Detect device orientation by native sensors
  *
  * Created by rowandjj(chuyi)<br/>
  */
@@ -108,9 +108,6 @@ class OrientationDetector implements SensorEventListener {
         }
     }
 
-    /**
-     * 切记不需要监听的时候调用removeOrientationChangedListener
-     */
     void addOrientationChangedListener(@NonNull OnOrientationChangedListener listener) {
         if (this.mListeners != null && !mListeners.contains(listener)) {
             this.mListeners.add(listener);

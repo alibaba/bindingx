@@ -20,7 +20,7 @@ import android.support.annotation.Nullable;
 /**
  * Description:
  *
- *  四元数
+ *  a quaternion data structure
  *
  * Created by rowandjj(chuyi)<br/>
  */
@@ -41,7 +41,7 @@ class Quaternion {
     }
 
     /**
-     * 欧拉角转四元数
+     * euler to quaternion
      * */
     @Nullable
     Quaternion setFromEuler(Euler euler) {
@@ -106,7 +106,7 @@ class Quaternion {
     }
 
     /**
-     * 轴角转四元数
+     * axis ange to quaternion
      * */
     Quaternion setFromAxisAngle(Vector3 axis, double angle) {
         double halfAngle = angle / 2;
