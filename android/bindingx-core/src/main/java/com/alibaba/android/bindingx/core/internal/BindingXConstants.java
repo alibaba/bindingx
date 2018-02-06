@@ -23,6 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Description:
  *
+ * global constants
+ *
  * Created by rowandjj(chuyi)<br/>
  */
 

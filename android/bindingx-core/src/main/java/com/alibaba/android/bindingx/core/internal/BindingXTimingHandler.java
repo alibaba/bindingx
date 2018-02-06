@@ -33,6 +33,8 @@ import java.util.Map;
 /**
  * Description:
  *
+ * An built-in implementation of {@link com.alibaba.android.bindingx.core.IEventHandler} which handle timing event.
+ *
  * Created by rowandjj(chuyi)<br/>
  */
 

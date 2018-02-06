@@ -26,6 +26,8 @@ import android.view.Choreographer;
 /**
  * Description:
  *
+ * Coordinates the timing of animations
+ *
  * Created by rowandjj(chuyi)<br/>
  */
 
