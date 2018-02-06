@@ -22,7 +22,9 @@ import android.view.View;
 import java.util.Map;
 
 /**
- * Description:
+ * this class provides unified interfaces to handle the difference between weex and RN. Plugins such as
+ * weex should implement all these interface. You can use {@link PlatformManager.Builder} to construct
+ * an instance.
  *
  * Created by rowandjj(chuyi)<br/>
  */
@@ -51,17 +53,26 @@ public class PlatformManager {
         return mViewUpdater;
     }
 
+    /**
+     * Interface for translate device resolution.
+     * */
     public interface IDeviceResolutionTranslator {
         double webToNative(double rawSize, Object... extension);
         double nativeToWeb(double rawSize, Object... extension);
     }
 
+    /**
+     * Interface for find {@link View} by reference.
+     * */
     public interface IViewFinder {
 
         @Nullable
         View findViewBy(String ref, Object... extension);
     }
 
+    /**
+     * Interface for update {@link View}
+     * */
     public interface IViewUpdater {
 
         /**

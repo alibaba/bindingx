@@ -22,7 +22,8 @@ import com.alibaba.android.bindingx.core.internal.BindingXConstants;
 /**
  * Description:
  *
- * a wrapper for {@link Log}
+ * a wrapper for {@link Log}.
+ * In release mode, you can set {@link LogProxy#sEnableLog} to false.
  *
  * Created by rowandjj(chuyi)<br/>
  */
