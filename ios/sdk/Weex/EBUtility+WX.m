@@ -79,10 +79,10 @@ void EBPerformBlockOnMainThread(void (^block)(void))
         styles[@"height"] = @(model.height);
     }
     if (model.isBackgroundColorChanged) {
-        styles[@"backgroundColor"] = model.backgroundColor;
+        styles[@"backgroundColor"] = [self makeColor:model.backgroundColor];
     }
     if (model.isColorChanged) {
-        styles[@"color"] = model.color;
+        styles[@"color"] = [self makeColor:model.color];
     }
     if (model.isAlphaChanged) {
         styles[@"opacity"] = @(model.alpha);
@@ -165,37 +165,18 @@ void EBPerformBlockOnMainThread(void (^block)(void))
     [source removeScrollDelegate:delegate];
 }
 
-//+ (void)makeBackgroundColor:(NSObject *)result model:(EBExpressionProperty **)model {
-//    (*model).backgroundColor = [self hexFromUIColor:[self makeColor:result]];
-//}
-//
-//+ (void)makeColor:(NSObject *)result model:(EBExpressionProperty **)model {
-//    (*model).color = [self hexFromUIColor:[self makeColor:result]];
-//}
-//
-//+ (UIColor *)makeColor:(NSObject *)result {
-//    id r, g, b, a = @(1);
-//    [_(r, g, b, a) unpackFrom:result];
-//
-//    return [UIColor colorWithRed:[r doubleValue]/255.0f green:[g doubleValue]/255.0f blue:[b doubleValue]/255.0f alpha:[a doubleValue]];
-//}
-//
-//+ (NSString *)hexFromUIColor:(UIColor *)color {
-//    if (CGColorGetNumberOfComponents(color.CGColor) < 4) {
-//        const CGFloat *components = CGColorGetComponents(color.CGColor);
-//        color = [UIColor colorWithRed:components[0]
-//                                green:components[0]
-//                                 blue:components[0]
-//                                alpha:components[1]];
-//    }
-//
-//    if (CGColorSpaceGetModel(CGColorGetColorSpace(color.CGColor)) != kCGColorSpaceModelRGB) {
-//        return [NSString stringWithFormat:@"#FFFFFF"];
-//    }
-//
-//    return [NSString stringWithFormat:@"#%02X%02X%02X", (int)((CGColorGetComponents(color.CGColor))[0]*255.0),
-//            (int)((CGColorGetComponents(color.CGColor))[1]*255.0),
-//            (int)((CGColorGetComponents(color.CGColor))[2]*255.0)];
-//}
++ (NSString *)makeColor:(NSObject *)result {
+    NSNumber *r, *g, *b, *a = @(1);
+    NSArray *colorArray = (NSArray *)result;
+    if ([colorArray isKindOfClass:NSArray.class] && colorArray.count >= 3) {
+        r = colorArray[0];
+        g = colorArray[1];
+        b = colorArray[2];
+        if (colorArray.count > 3) {
+            a = colorArray[3];
+        }
+    }
+    return [NSString stringWithFormat:@"rgba(%d,%d,%d,%lf)", [r intValue],[g intValue],[b intValue],[a doubleValue]];
+}
 #pragma clang diagnostic pop
 @end

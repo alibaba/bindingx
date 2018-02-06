@@ -32,7 +32,7 @@
 
 @synthesize weexInstance;
 
-WX_PlUGIN_EXPORT_MODULE(binding, WXEBModule)
+WX_PlUGIN_EXPORT_MODULE(bindingx, WXEBModule)
 WX_EXPORT_METHOD(@selector(prepare:))
 WX_EXPORT_METHOD_SYNC(@selector(bind:callback:))
 WX_EXPORT_METHOD(@selector(unbind:))

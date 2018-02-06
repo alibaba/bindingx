@@ -33,7 +33,7 @@
     pthread_mutex_t mutex;
 }
 
-RCT_EXPORT_MODULE(bindingX)
+RCT_EXPORT_MODULE(bindingx)
 
 - (dispatch_queue_t)methodQueue
 {

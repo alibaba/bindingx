@@ -47,8 +47,6 @@ __weak static RCTUIManager* _uiManager = nil;
 
 + (void)execute:(EBExpressionProperty *)model to:(id)target
 {
-//    UIView *view = [self getViewByRef:target];
-    
     
     NSMutableDictionary *styles = [NSMutableDictionary dictionary];
     if (model.isTransformChanged) {
@@ -95,6 +93,18 @@ __weak static RCTUIManager* _uiManager = nil;
             [_uiManager synchronouslyUpdateViewOnUIThread:reactTag viewName:viewName props:styles];
         });
     });
+    
+    UIView *view = [self getViewByRef:target];
+    if ((model.isContentOffsetXChanged || model.isContentOffsetYChanged) && [view isKindOfClass:RCTScrollView.class]) {
+        RCTScrollView *scroller= (RCTScrollView *)view;
+        CGFloat offsetX = (model.isContentOffsetXChanged ? model.contentOffsetX : scroller.scrollView.contentOffset.x);
+        CGFloat offsetY = (model.isContentOffsetYChanged ? model.contentOffsetY : scroller.scrollView.contentOffset.y);
+        offsetX = MIN(offsetX, scroller.contentSize.width-view.frame.size.width);
+        offsetX = MAX(0, offsetX);
+        offsetY = MIN(offsetY, scroller.contentSize.height-view.frame.size.height);
+        offsetY = MAX(0, offsetY);
+        [scroller scrollToOffset:CGPointMake(offsetX, offsetY) animated:NO];
+    }
 }
 
 + (UIPanGestureRecognizer *_Nullable)getPanGestureForComponent:(id _Nullable )source callback:(EBGetPanGestureCallback)callback
@@ -102,10 +112,6 @@ __weak static RCTUIManager* _uiManager = nil;
     UIView* view = [EBUtility getViewByRef:source];
     for (UIGestureRecognizer *obj in view.gestureRecognizers) {
         if ([obj  isKindOfClass:[UIPanGestureRecognizer class]]) {
-            //            callback(
-            //                     [view.events containsObject:@"horizontalpan"],
-            //                     [view.events containsObject:@"verticalpan"]
-            //                     );
             callback(true,true);
             return (UIPanGestureRecognizer *)obj;
         }

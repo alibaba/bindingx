@@ -51,6 +51,7 @@
         [sharedScope setValue:EBJSMath.cbrt forKey:@"cbrt"];
 
         [sharedScope setValue:EBJSTransform.asArray forKey:@"asArray"];
+        [sharedScope setValue:EBJSTransform.asArray forKey:@"rgb"];
         [sharedScope setValue:EBJSTransform.asArray forKey:@"rgba"];
         [sharedScope setValue:EBJSTransform.translate forKey:@"translate"];
         [sharedScope setValue:EBJSTransform.scale forKey:@"scale"];

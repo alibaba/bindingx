@@ -128,16 +128,8 @@
             id expression = expressionDic[@"expression"];
             NSDictionary *config = expressionDic[@"config"];
             
-            NSDictionary* expressionTree = nil;
-            NSString* originExpression = nil;
-            if ([expression isKindOfClass:NSString.class]) {
-                // expressionbinding V1
-                expressionTree = [NSJSONSerialization JSONObjectWithData:[(NSString *)expression dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
-            } else if ([expression isKindOfClass:NSDictionary.class]) {
-                // expressionbinding V2
-                expressionTree = [NSJSONSerialization JSONObjectWithData:[(NSString *)(NSDictionary *)expression[@"transformed"] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
-                originExpression = (NSString *)(NSDictionary *)expression[@"origin"];
-            }
+            NSDictionary *expressionTree = [NSJSONSerialization JSONObjectWithData:[(NSString *)(NSDictionary *)expression[@"transformed"] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
+            NSString *originExpression = (NSString *)(NSDictionary *)expression[@"origin"];
             NSObject *result = nil;
             if (expressionTree && expressionTree.count > 0) {
                 result = [[[EBExpression alloc] initWithRoot:expressionTree] executeInScope:scope];
