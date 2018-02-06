@@ -26,6 +26,8 @@ import java.util.List;
 /**
  * Description:
  *
+ * React Native BindingX module
+ *
  * Created by rowandjj(chuyi)<br/>
  */
 

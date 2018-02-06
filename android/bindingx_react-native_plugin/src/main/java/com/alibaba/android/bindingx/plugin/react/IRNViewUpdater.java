@@ -26,6 +26,8 @@ import java.util.Map;
 /**
  * Description:
  *
+ * Interface for update native view in React Native
+ *
  * Created by rowandjj(chuyi)<br/>
  */
 

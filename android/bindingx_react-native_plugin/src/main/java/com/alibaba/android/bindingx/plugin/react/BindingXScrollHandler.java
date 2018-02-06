@@ -28,6 +28,9 @@ import com.alibaba.android.bindingx.core.internal.BindingXConstants;
 /**
  * Description:
  *
+ * A built-in implementation of {@link com.alibaba.android.bindingx.core.IEventHandler} which handle
+ * scroll events.
+ *
  * Created by rowandjj(chuyi)<br/>
  */
 

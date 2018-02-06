@@ -15,12 +15,6 @@
  */
 package com.alibaba.android.bindingx.plugin.react;
 
-/**
- * Description:
- *
- * Created by rowandjj(chuyi)<br/>
- */
-
 public class RNUtils {
 
     public static int getInt(Object value, int defaultValue) {

@@ -61,6 +61,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Description:
  *
+ * BindingX APIs which will expose to JavaScript.
+ *
  * Created by rowandjj(chuyi)<br/>
  */
 
