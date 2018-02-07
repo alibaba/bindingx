@@ -1,0 +1,10 @@
+examples
+coverage
+docs
+node_modules/*
+
+test
+
+.editorconfig
+.esdocrc
+.eslintrc

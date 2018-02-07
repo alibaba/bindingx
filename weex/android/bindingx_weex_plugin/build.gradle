@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+apply plugin: "com.github.hierynomus.license"
+
+android {
+    compileSdkVersion 26
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 26
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    // provided
+    compileOnly 'com.taobao.android:weex_sdk:0.17.0'
+    compileOnly 'com.android.support:recyclerview-v7:26.1.0'
+    compileOnly 'com.android.support:appcompat-v7:26.1.0'
+    compileOnly 'com.android.support:design:26.1.0'
+    compileOnly 'com.android.support:support-annotations:26.1.0'
+    compileOnly project(path: ':bindingx-core')
+
+    annotationProcessor 'org.weex.plugin:processor:1.0.2'
+}
+
+if(file('../../LICENSE.md').exists()){
+    license {
+        header = file('../../LICENSE.md')
+    }
+    preBuild.dependsOn licenseFormat
+}
