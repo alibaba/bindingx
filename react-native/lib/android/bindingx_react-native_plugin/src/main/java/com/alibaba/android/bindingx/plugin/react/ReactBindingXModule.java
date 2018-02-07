@@ -69,7 +69,7 @@ import java.util.concurrent.TimeUnit;
 @ReactModule(name = ReactBindingXModule.NAME)
 public final class ReactBindingXModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
-    /*package*/ static final String NAME = "bindingX";
+    /*package*/ static final String NAME = "bindingx";
 
     private BindingXCore mBindingXCore;
     private PlatformManager mPlatformManager;

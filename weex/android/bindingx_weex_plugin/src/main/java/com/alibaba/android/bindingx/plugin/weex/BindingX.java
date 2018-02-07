@@ -21,7 +21,7 @@ import com.taobao.weex.common.WXException;
 /**
  * Description:
  *
- * register binding module
+ * register bindingx module manually
  *
  * Created by rowandjj(chuyi)<br/>
  */
@@ -35,6 +35,6 @@ public class BindingX {
     public static void register() throws WXException{
         WXSDKEngine.registerModule("expressionBinding", WXExpressionBindingModule.class);
         WXSDKEngine.registerModule("binding", WXBindingXModule.class);
-        WXSDKEngine.registerModule("bindingX", WXBindingXModule.class);
+        WXSDKEngine.registerModule("bindingx", WXBindingXModule.class);
     }
 }

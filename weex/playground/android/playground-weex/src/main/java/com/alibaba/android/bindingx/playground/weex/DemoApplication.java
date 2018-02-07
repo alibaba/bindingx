@@ -100,9 +100,13 @@ public class DemoApplication extends Application {
             }
         });
 
+        // register bindingx module manually
         try {
             BindingX.register();
         } catch (WXException e) {
         }
+
+        // register bindingx module automatically by annotation processor
+//        WeexPluginContainer.loadAll(getApplicationContext());
     }
 }

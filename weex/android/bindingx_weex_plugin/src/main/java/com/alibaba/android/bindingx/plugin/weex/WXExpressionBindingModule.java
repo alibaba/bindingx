@@ -24,6 +24,7 @@ import com.alibaba.android.bindingx.core.BindingXEventType;
 import com.alibaba.android.bindingx.core.IEventHandler;
 import com.alibaba.android.bindingx.core.PlatformManager;
 import com.alibaba.android.bindingx.core.internal.ExpressionPair;
+import com.alibaba.weex.plugin.annotation.WeexModule;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.annotation.JSMethod;
 import com.taobao.weex.bridge.JSCallback;
@@ -41,6 +42,7 @@ import java.util.Map;
  */
 
 @Deprecated
+@WeexModule(name = "expressionBinding")
 public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModule {
 
     private BindingXCore mExpressionBindingCore;
@@ -62,8 +64,6 @@ public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModu
                         }
                     });
         }
-
-        //空实现。 此方法仅为了与iOS兼容
     }
 
     @JSMethod

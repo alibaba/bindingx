@@ -26,6 +26,8 @@ dependencies {
     implementation project(path: ':bindingx_weex_plugin')
     implementation 'com.taobao.android:weex_sdk:0.17.0'
 
+    implementation 'org.weex.plugin:plugin-loader:1.0.0'
+
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:appcompat-v7:26.1.0'
