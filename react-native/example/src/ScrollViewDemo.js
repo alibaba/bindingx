@@ -38,7 +38,7 @@ export default class ScrollViewDemo extends Component {
             ToastAndroid.show('event:'+JSON.stringify(e), ToastAndroid.SHORT);
           });
         }
-        
+
     }
 
 
@@ -47,7 +47,7 @@ export default class ScrollViewDemo extends Component {
         let target = findNodeHandle(this.refs._target);
 
 
-        let token = NativeModules.bindingX.bind({
+        let token = NativeModules.bindingx.bind({
             eventType: 'scroll',
             anchor: anchor,
             props: [
@@ -101,14 +101,14 @@ export default class ScrollViewDemo extends Component {
         if(this._token === null) {
             return;
         }
-        NativeModules.bindingX.unbind({
+        NativeModules.bindingx.unbind({
             token:this._token,
             eventType:'scroll'
         });
     }
 
     getComputedStyle(){
-        let styles = NativeModules.bindingX.getComputedStyle(findNodeHandle(this.refs._target));
+        let styles = NativeModules.bindingx.getComputedStyle(findNodeHandle(this.refs._target));
         ToastAndroid.show('styles:'+JSON.stringify(styles), ToastAndroid.SHORT);
     }
 

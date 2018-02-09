@@ -30,7 +30,7 @@ export default class TimingDemo extends Component {
 
     onBind(){
         let anchor = findNodeHandle(this.refs._anchor);
-        let token = NativeModules.bindingX.bind({
+        let token = NativeModules.bindingx.bind({
             eventType: 'orientation',
             options: {
                 sceneType: '2d' //2d场景会返回x,y分量
@@ -62,7 +62,7 @@ export default class TimingDemo extends Component {
         if(this._token === null) {
             return;
         }
-        NativeModules.bindingX.unbind({
+        NativeModules.bindingx.unbind({
             token:this._token,
             eventType:'orientation'
         });

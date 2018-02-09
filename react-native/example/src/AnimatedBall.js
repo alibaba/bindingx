@@ -43,7 +43,7 @@ export default class AnimatedBall extends Component {
     let expression_y_transformed = '{"type":"+","children":[{"type":"Identifier","value":"y"},{"type":"NumericLiteral","value":"'+this._y+'"}]}';
 
     let anchor = findNodeHandle(this.refs._anchor);
-    let token = NativeModules.bindingX.bind({
+    let token = NativeModules.bindingx.bind({
       eventType:'pan',
       anchor:anchor,
       props:[
@@ -69,7 +69,7 @@ export default class AnimatedBall extends Component {
   onUnBind(){
     let anchor = findNodeHandle(this.refs._anchor);
 
-    NativeModules.bindingX.unbind({
+    NativeModules.bindingx.unbind({
       token:anchor,
       eventType:'pan'
     });

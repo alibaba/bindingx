@@ -43,7 +43,7 @@ export default class TimingDemo extends Component {
         let o_transformed = "{\"type\":\"+\",\"children\":[{\"type\":\"*\",\"children\":[{\"type\":\"NumericLiteral\",\"value\":0.5},{\"type\":\"-\",\"children\":[{\"type\":\"NumericLiteral\",\"value\":1},{\"type\":\"/\",\"children\":[{\"type\":\"Identifier\",\"value\":\"t\"},{\"type\":\"NumericLiteral\",\"value\":2000}]}]}]},{\"type\":\"NumericLiteral\",\"value\":0.5}]}";
 
         let anchor = findNodeHandle(this.refs._anchor);
-        let token = NativeModules.bindingX.bind({
+        let token = NativeModules.bindingx.bind({
             eventType:'timing',
             exitExpression: {
               transformed: exit_transformed,
@@ -84,7 +84,7 @@ export default class TimingDemo extends Component {
         if(this._token === null) {
             return;
         }
-        NativeModules.bindingX.unbind({
+        NativeModules.bindingx.unbind({
             token:this._token,
             eventType:'timing'
         });
