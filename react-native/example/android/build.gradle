@@ -30,6 +30,10 @@ allprojects {
     }
 }
 
+subprojects { subproject ->
+    apply plugin: "com.github.hierynomus.license"
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

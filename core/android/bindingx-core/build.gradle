@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: "com.github.hierynomus.license"
 
 android {
     compileSdkVersion 26
@@ -7,7 +6,7 @@ android {
 
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -35,9 +34,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
 
-if(file('../../LICENSE.md').exists()){
+if(file('../../../LICENSE.md').exists()){
     license {
-        header = file('../../LICENSE.md')
+        header = file('../../../LICENSE.md')
     }
     preBuild.dependsOn licenseFormat
 }
