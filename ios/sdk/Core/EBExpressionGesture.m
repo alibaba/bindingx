@@ -247,7 +247,11 @@
     } else if (sender.state == UIGestureRecognizerStateChanged) {
         @try {
             NSDictionary *scope = [self setUpScopeForGesture:sender];
-            [self executeExpression:scope];
+            BOOL exit = ![self executeExpression:scope];
+            if (exit) {
+                [self fireExitEvent:sender];
+                return;
+            }
         } @catch (NSException *exception) {
             NSLog(@"%@",exception);
         }

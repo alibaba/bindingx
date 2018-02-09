@@ -66,7 +66,7 @@
             }
             BOOL exit = ![welf executeExpression:scope];
             if (exit) {
-                [welf fireStateChangedEvent:@"end"];
+                [welf fireStateChangedEvent:@"exit"];
                 return;
             }
         });
