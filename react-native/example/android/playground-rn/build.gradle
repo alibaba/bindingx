@@ -37,7 +37,7 @@ dependencies {
     implementation 'com.android.support:support-annotations:26.1.0'
 }
 
-if(file('../../../../LICENSE.md').exists()){
+if(file('../../../../LICENSE.md').exists() && plugins.hasPlugin("com.github.hierynomus.license")){
     license {
         header = file('../../../../LICENSE.md')
     }

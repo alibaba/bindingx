@@ -1,0 +1,43 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply from: 'constants.gradle'
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                // Add your description here
+                name projectName
+                description projectDesc
+                url siteUrl
+
+                packaging 'aar'
+
+                groupId mavenGroup
+                artifactId mavenArtifactId
+                version mavenVersion
+
+
+                // Set your license
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'Rowandjj'
+                        name '栗子'
+                        email 'rjchuyi@gmail.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}

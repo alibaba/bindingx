@@ -37,7 +37,7 @@ dependencies {
 }
 
 
-if(file('../../../../LICENSE.md').exists()){
+if(file('../../../../LICENSE.md').exists() && plugins.hasPlugin("com.github.hierynomus.license")){
     license {
         header = file('../../../../LICENSE.md')
     }
