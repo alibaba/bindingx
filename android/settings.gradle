@@ -1,3 +1,0 @@
-rootProject.name = 'binding-lib'
-
-include ':playground', ':binding_weex_plugin'
