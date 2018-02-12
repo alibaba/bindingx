@@ -5,6 +5,7 @@ npm-debug.log
 .idea/*
 .project
 */.idea
+.vscode
 
 
 ######################### ignore for iOS ##############################
