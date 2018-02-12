@@ -13,7 +13,7 @@
 
 <script>
 
-	const plugin = weex.requireModule('BindingxWeexPlugin');
+	const plugin = weex.requireModule('bindingx');
 	module.exports = {
 		data: {
 			value: '',

@@ -19,7 +19,7 @@ import {
     NativeEventEmitter,
     DeviceEventEmitter,
 } from 'react-native';
-import { bindingX } from 'NativeModules';
+import { bindingx } from 'NativeModules';
 
 export default class ScrollViewDemo extends Component {
 
@@ -29,7 +29,7 @@ export default class ScrollViewDemo extends Component {
     componentWillMount() {
         let self = this;
         if(Platform.OS=='ios'){
-          const bindingXEmitter = new NativeEventEmitter(bindingX);
+          const bindingXEmitter = new NativeEventEmitter(bindingx);
           bindingXEmitter.addListener('BindingX', (result) => {
             console.log(result);
           });
@@ -45,6 +45,7 @@ export default class ScrollViewDemo extends Component {
     onBind(){
         let anchor = findNodeHandle(this.refs._anchor);
         let target = findNodeHandle(this.refs._target);
+        let text = findNodeHandle(this.refs._text);
 
 
         let token = NativeModules.bindingx.bind({
@@ -86,6 +87,14 @@ export default class ScrollViewDemo extends Component {
                 {
                     element: target,
                     property: 'background-color',
+                    expression: {
+                        origin: "evaluateColor('#0000ff','#ff0000',min(200,y)/200)",
+                        transformed: "{\"type\":\"CallExpression\",\"children\":[{\"type\":\"Identifier\",\"value\":\"evaluateColor\"},{\"type\":\"Arguments\",\"children\":[{\"type\":\"StringLiteral\",\"value\":\"'#0000ff'\"},{\"type\":\"StringLiteral\",\"value\":\"'#ff0000'\"},{\"type\":\"/\",\"children\":[{\"type\":\"CallExpression\",\"children\":[{\"type\":\"Identifier\",\"value\":\"min\"},{\"type\":\"Arguments\",\"children\":[{\"type\":\"NumericLiteral\",\"value\":200},{\"type\":\"Identifier\",\"value\":\"y\"}]}]},{\"type\":\"NumericLiteral\",\"value\":200}]}]}]}"
+                    }
+                },
+                {
+                    element: text,
+                    property: 'color',
                     expression: {
                         origin: "evaluateColor('#0000ff','#ff0000',min(200,y)/200)",
                         transformed: "{\"type\":\"CallExpression\",\"children\":[{\"type\":\"Identifier\",\"value\":\"evaluateColor\"},{\"type\":\"Arguments\",\"children\":[{\"type\":\"StringLiteral\",\"value\":\"'#0000ff'\"},{\"type\":\"StringLiteral\",\"value\":\"'#ff0000'\"},{\"type\":\"/\",\"children\":[{\"type\":\"CallExpression\",\"children\":[{\"type\":\"Identifier\",\"value\":\"min\"},{\"type\":\"Arguments\",\"children\":[{\"type\":\"NumericLiteral\",\"value\":200},{\"type\":\"Identifier\",\"value\":\"y\"}]}]},{\"type\":\"NumericLiteral\",\"value\":200}]}]}]}"
@@ -153,7 +162,7 @@ export default class ScrollViewDemo extends Component {
                   }}
 
                 >
-                    <Text style={{
+                    <Text ref="_text" style={{
                         textAlign: 'center',
                         color: '#ffffff',
                     }}>Target</Text>
