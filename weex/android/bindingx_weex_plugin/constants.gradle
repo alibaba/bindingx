@@ -6,12 +6,12 @@ ext {
     projectName = 'maven'
     projectDesc = 'bindingx weex plugin'
 
-    siteUrl = 'https://github.com/alibaba/bindingx'//TODO
-    gitUrl = 'git@github.com:alibaba/bindingx.git'//TODO
+    siteUrl = 'https://github.com/alibaba/bindingx'
+    gitUrl = 'git@github.com:alibaba/bindingx.git'
 
     mavenGroup = 'com.alibaba.android'
     mavenArtifactId = 'bindingx_weex_plugin'
-    mavenVersion = '0.0.1'
+    mavenVersion = '1.0.0'
 
     orgName = 'rowandjj'
 }

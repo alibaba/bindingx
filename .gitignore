@@ -4,8 +4,10 @@ node_modules
 npm-debug.log
 .idea/*
 .project
+*/.idea
 
 
+######################### ignore for iOS ##############################
 # Created by https://www.gitignore.io/api/objective-c
 
 ### Objective-C ###
@@ -73,4 +75,4 @@ fastlane/screenshots
 
 *.gcno
 .xcodecoverageignore
-
+######################### ignore for iOS ##############################
