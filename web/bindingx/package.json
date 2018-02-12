@@ -1,9 +1,12 @@
 {
   "name": "bindingx",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "description": "bindingx,expression,binding,weex",
   "main": "lib/index.js",
   "scripts": {
+    "start-rax": "node webpack.dev.rax.config.js",
+    "start-vue": "node webpack.dev.vue.config.js",
+    "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -13,9 +16,44 @@
     "weex"
   ],
   "dependencies": {
+    "bindingx-parser": "0.0.x",
+    "bindingx-web-polyfill": "0.0.x",
     "object-assign": "^4.1.1",
     "simple-lodash": "^0.0.2",
     "universal-env": "0.x.x"
+  },
+  "devDependencies": {
+    "@ali/weex-vue-render": "^1.0.12",
+    "autoprefixer": "^8.0.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-rax": "^0.5.2",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "bindingx-parser": "^0.0.1",
+    "chalk": "^2.3.0",
+    "css-loader": "^0.28.9",
+    "file-loader": "^1.1.6",
+    "postcss-plugin-px2rem": "^0.7.0",
+    "postcss-plugin-weex": "^0.1.6",
+    "rax": "^0.5.3",
+    "rax-listview": "^0.5.2",
+    "rax-picker": "^0.5.2",
+    "rax-text": "^0.5.2",
+    "rax-view": "^0.5.2",
+    "rax-webpack-plugin": "^0.5.2",
+    "vue": "^2.5.13",
+    "vue-loader": "^14.1.1",
+    "vue-style-loader": "^3.1.2",
+    "vue-template-compiler": "^2.5.13",
+    "webpack": "^3.8.1",
+    "webpack-concat-plugin": "^2.4.2",
+    "webpack-dev-server": "^2.7.1",
+    "webpack-merge": "^4.1.1",
+    "weex-loader": "^0.7.2",
+    "weex-vue-precompiler": "^0.1.17"
   },
   "author": "",
   "license": "Apache-2.0"

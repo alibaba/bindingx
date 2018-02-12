@@ -1,4 +1,4 @@
-# Binding
+# BindingX
 
 ## Install
 
@@ -22,7 +22,7 @@ import Binding from 'bindingx';
 |:---------------|:--------|:----|:----------|
 |bind|{object} options|{object}|bind an expression|
 |unbind|{object} options| void |unbind an expression|
-|unbindAll|无| void |unbind for all|
+|unbindAll|| void |unbind for all|
 
 ### Arguments Introduction
 

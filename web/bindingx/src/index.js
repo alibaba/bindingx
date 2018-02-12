@@ -3,15 +3,25 @@
 'use strict';
 
 import {isWeex, isWeb} from 'universal-env';
-import {parse} from './mods/expression_parser';
-import {requireModule} from './mods/utils';
+import {parse} from 'bindingx-parser';
+
+function requireModule(moduleName) {
+  try {
+    if (typeof weex !== undefined && weex.requireModule) { // eslint-disable-line
+      return weex.requireModule(moduleName);  // eslint-disable-line
+    }
+  } catch (err) {
+  }
+  return window.require('@weex-module/' + moduleName);
+};
+
 
 let isSupportNewBinding = true;
 let isSupportBinding = true;
 let WeexBinding;
 let WebBinding = {};
 if (isWeb) {
-  WebBinding = require('./mods/binding');
+  WebBinding = require('bindingx-web-polyfill');
 } else {
   try {
     WeexBinding = requireModule('bindingx');
@@ -27,7 +37,7 @@ if (isWeb) {
       isSupportNewBinding = false;
     }
   }
-  isSupportNewBinding = !!WeexBinding && WeexBinding.bind && WeexBinding.unbind;
+  isSupportNewBinding = !!(WeexBinding && WeexBinding.bind && WeexBinding.unbind);
   if (!isSupportNewBinding) {
     try {
       WeexBinding = requireModule('expressionBinding');
@@ -36,7 +46,7 @@ if (isWeb) {
       isSupportBinding = false;
     }
   }
-  isSupportBinding = !!WeexBinding && (WeexBinding.bind || WeexBinding.createBinding);
+  isSupportBinding = !!(WeexBinding && (WeexBinding.bind || WeexBinding.createBinding));
 }
 
 
