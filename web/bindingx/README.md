@@ -1,4 +1,4 @@
-# Binding
+# BindingX
 
 ## Install
 
@@ -22,7 +22,7 @@ import Binding from 'bindingx';
 |:---------------|:--------|:----|:----------|
 |bind|{object} options|{object}|bind an expression|
 |unbind|{object} options| void |unbind an expression|
-|unbindAll|无| void |unbind for all|
+|unbindAll|| void |unbind for all|
 
 ### Arguments Introduction
 
@@ -54,7 +54,7 @@ import Binding from 'bindingx';
 
 - elements for animation
    - element {ElementReference|HTMLElement}
-	- expression {Object}
+	- expression {Object|String}
 		- origin {String} binding expression
 		- transformed {String}
 	- property {String} property for animation
@@ -63,10 +63,11 @@ import Binding from 'bindingx';
 
 ## Example
 
+### RAX
+
 ```jsx
-// demo
 import {createElement, Component, render} from 'rax';
-import Binding from 'bindingx';
+import bindingx from 'bindingx';
 import View from 'rax-view';
 import {isWeex} from 'universal-env';
 
@@ -89,23 +90,19 @@ class App extends Component {
 
   bindEl(){
     let blockEl = getEl(this.refs.block);
-    let token = Binding.bind({
+    let token = bindingx.bind({
       anchor: blockEl,
       eventType: 'pan',
       props: [
         {
           element: blockEl,
           property: 'transform.translateX',
-          expression: {
-            transformed: `{\"type\":\"+\",\"children\":[{\"type\":\"Identifier\",\"value\":\"x\"},{\"type\":\"NumericLiteral\",\"value\":\"${this.x}\"}]}`
-          }
+          expression: `x+${this.x}`
         },
         {
           element: blockEl,
           property: 'transform.translateY',
-          expression: {
-             transformed: `{\"type\":\"+\",\"children\":[{\"type\":\"Identifier\",\"value\":\"y\"},{\"type\":\"NumericLiteral\",\"value\":\"${this.y}\"}]}`
-          }
+          expression: `y+${this.y}`
         }]
       },(e)=>{
 
@@ -131,6 +128,94 @@ class App extends Component {
 }
 
 render(<App />);
+```
+
+### Vue
+
+```
+<template>
+    <scroller class="scroller" >
+        <div :ref="'box'" class="box" @touchstart="ontouchstart"  @appear="onappear"></div>
+    </scroller>
+</template>
+
+<style scoped>
+    .scroller {
+        flex: 1;
+
+    }
+    .box {
+        border-width: 2px;
+        border-style: solid;
+        border-color: #BBBBBB;
+        width: 250px;
+        height: 250px;
+        margin-top: 250px;
+        margin-left: 250px;
+        background-color: #EEEEEE;
+        margin-bottom:500px;
+    }
+</style>
+
+<script>
+  import {isWeex} from 'universal-env';
+  import bindingx from '../../src/index';
+
+  function getEl(el) {
+    if (typeof el === 'string' || typeof el === 'number') return el;
+    return isWeex ? el.ref : el instanceof HTMLElement ? el : el.$el;
+  }
+
+
+  export default {
+    data () {
+      return {
+        x: 0,
+        y: 0,
+        flag: 0
+      }
+    },
+    methods: {
+      onappear () {
+        this.bind();
+      },
+      bind () {
+        var box = getEl(this.$refs.box);
+        bindingx.bind({
+          anchor: box,
+          eventType: 'pan',
+          props: [
+            {
+              element: box,
+              property: 'transform.translateX',
+              expression: {
+                origin: `x+${this.x}`,
+                transformed: `{\"type\":\"+\",\"children\":[{\"type\":\"Identifier\",\"value\":\"x\"},{\"type\":\"NumericLiteral\",\"value\":\"${this.x}\"}]}`
+              }
+            },
+            {
+              element: box,
+              property: 'transform.translateY',
+              expression: {
+                origin: `y+${this.y}`,
+                transformed: `{\"type\":\"+\",\"children\":[{\"type\":\"Identifier\",\"value\":\"y\"},{\"type\":\"NumericLiteral\",\"value\":\"${this.y}\"}]}`
+              }
+            }
+          ]
+        }, (e) => {
+          if (e.state === 'end') {
+            this.x += e.deltaX;
+            this.y += e.deltaY;
+          }
+        });
+      },
+      ontouchstart (event) {
+        this.bind();
+      }
+    }
+  }
+</script>
+
 ```
 
 

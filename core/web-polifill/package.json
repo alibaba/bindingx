@@ -1,0 +1,35 @@
+{
+  "name": "bindingx-web-polyfill",
+  "version": "0.0.2",
+  "description": "The web polyfill for BindingX.",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "webpack-dev-server --config webpack.dev.config.js",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bindingx",
+    "web",
+    "html5",
+    "polyfill"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "bindingx-parser": "^0.0.1",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.7.1"
+  },
+  "dependencies": {
+    "animation-util": "^1.0.10",
+    "object-assign": "^4.1.1",
+    "simple-lodash": "^0.0.3"
+  }
+}
