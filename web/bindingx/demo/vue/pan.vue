@@ -33,7 +33,6 @@
 
 
   export default {
-//    name:'app',
     data () {
       return {
         x: 0,
