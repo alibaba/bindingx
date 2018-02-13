@@ -30,7 +30,14 @@ describe('parse', function(){
   it('should parse  min max function ',function(){
     let result = parse(`max(0,min(1,x))`);
     expect(result).to.be.a('string');
-    expect(result).to.be.equal('{"type":"NumericLiteral","value":-1}');
+    expect(result).to.be.equal('{"type":"CallExpression","children":[{"type":"Identifier","value":"max"},{"type":"Arguments","children":[{"type":"NumericLiteral","value":0},{"type":"CallExpression","children":[{"type":"Identifier","value":"min"},{"type":"Arguments","children":[{"type":"NumericLiteral","value":1},{"type":"Identifier","value":"x"}]}]}]}]}');
+  });
+
+
+  it('should parse  a function with a negative value ',function(){
+    let result = parse(`easeOutElastic(t,309,-200,1000)`);
+    expect(result).to.be.a('string');
+    expect(result).to.be.equal('{"type":"CallExpression","children":[{"type":"Identifier","value":"easeOutElastic"},{"type":"Arguments","children":[{"type":"Identifier","value":"t"},{"type":"NumericLiteral","value":309},{"type":"NumericLiteral","value":-200},{"type":"NumericLiteral","value":1000}]}]}');
   });
 
 
