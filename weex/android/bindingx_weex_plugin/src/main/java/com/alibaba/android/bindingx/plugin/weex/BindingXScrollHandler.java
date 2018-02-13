@@ -185,7 +185,7 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
     private class InnerAppBarOffsetChangedListener implements AppBarLayout.OnOffsetChangedListener {
         private int mContentOffsetY=0;
 
-        private int mTy=0; // 拐点
+        private int mTy=0;
         private int mLastDy=0;
         @Override
         public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -222,10 +222,9 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
         private int mContentOffsetX=0;
         private int mContentOffsetY=0;
 
-        private int mTx=0,mTy=0; // 拐点
+        private int mTx=0,mTy=0;
         private int mLastDx=0,mLastDy=0;
 
-        /**scroller 监听. 其中x和y是相对起始位置的偏移量*/
         @Override
         public void onScroll(WXScrollView wxScrollView, int x, int y) {
 
@@ -240,12 +239,11 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
             }
 
             boolean isTurning = false;
-            if(!isSameDirection(dy, mLastDy)) {// 发现拐点 只可能是纵向的
+            if(!isSameDirection(dy, mLastDy)) {
                 mTy = mContentOffsetY;
                 isTurning = true;
             }
 
-            // 计算delta拐点
             final int tdx = mContentOffsetX - mTx;
             final int tdy = mContentOffsetY - mTy;
 
@@ -253,7 +251,6 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
             mLastDy = dy;
 
             if(isTurning) {
-                // 通知
                 BindingXScrollHandler.super.fireEventByState(BindingXConstants.STATE_TURNING,mContentOffsetX,mContentOffsetY,
                         dx,dy,tdx,tdy);
             }
@@ -286,7 +283,7 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
         private int mContentOffsetX=0;
         private int mContentOffsetY=0;
 
-        private int mTx=0,mTy=0; // 拐点
+        private int mTx=0,mTy=0;
         private int mLastDx=0,mLastDy=0;
 
         private boolean isVertical;
@@ -302,29 +299,27 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
             }
         }
 
-        /**list 监听. 其中dx和dy是相对上一次的偏移量*/
         @Override
         public void onScrolled(RecyclerView recyclerView, final int dx, final int dy) {
-            // RecyclerView#computeVerticalScrollOffset 并不能准确计算contentOffset
-            // 因此自行根据dx/dy计算。 但是这种方式如果注册listener时，recyclerView
-            // 已经滚动了，则会丢失已滚动的距离。所以建议页面一打开就注册。
+            // RecyclerView#computeVerticalScrollOffset not calculate contentOffset accurately
+            // so we calculate that ourselves. But if recyclerView already scrolls before we register
+            // the listener, then we'll missing that scrolled distance.
+            // so you should bind it as early as possible
 
             mContentOffsetX += dx;
             mContentOffsetY += dy;
 
             boolean isTurning = false;
-            if(!isSameDirection(dx,mLastDx) && !isVertical) {// 发现拐点 并且是横向list
-                //更新拐点
+            if(!isSameDirection(dx,mLastDx) && !isVertical) {
                 mTx = mContentOffsetX;
                 isTurning = true;
             }
 
-            if(!isSameDirection(dy, mLastDy) && isVertical) {// 发现拐点 并且是纵向的
+            if(!isSameDirection(dy, mLastDy) && isVertical) {
                 mTy = mContentOffsetY;
                 isTurning = true;
             }
 
-            // 计算delta拐点
             final int tdx = mContentOffsetX - mTx;
             final int tdy = mContentOffsetY - mTy;
 
@@ -332,7 +327,6 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
             mLastDy = dy;
 
             if(isTurning) {
-                // 通知
                 fireEventByState(BindingXConstants.STATE_TURNING,mContentOffsetX,mContentOffsetY,
                         dx,dy,tdx,tdy);
             }
