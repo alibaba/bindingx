@@ -16,6 +16,7 @@ var lex = {
   StringLiteral: /"(?:[^"\n\\\r\u2028\u2029]|\\(?:['"\\bfnrtv\n\r\u2028\u2029]|\r\n)|\\x[0-9a-fA-F]{2}|\\u[0-9a-fA-F]{4}|\\[^0-9ux'"\\bfnrtv\n\\\r\u2028\u2029])*"|'(?:[^'\n\\\r\u2028\u2029]|\\(?:['"\\bfnrtv\n\r\u2028\u2029]|\r\n)|\\x[0-9a-fA-F]{2}|\\u[0-9a-fA-F]{4}|\\[^0-9ux'"\\bfnrtv\n\\\r\u2028\u2029])*'/,
   RegularExpressionLiteral: /\/(?:\[(?:\\[\s\S]|[^\]])*\]|[^*\/\\\n\r\u2028\u2029]|\\[^\n\r\u2028\u2029])(?:\[(?:\\[\s\S]|[^\]])*\]|[^\/\\\n\r\u2028\u2029]|\\[^\n\r\u2028\u2029])*\/[0-9a-zA-Z]*/
 };
+
 function XRegExp(xregexps, rootname, flag) {
   var expnames = [rootname];
 
@@ -54,6 +55,7 @@ function XRegExp(xregexps, rootname, flag) {
       }
     });
 }
+
 function LexicalParser() {
   var inputElementDiv = new XRegExp(lex, 'InputElementDiv', 'g');
   var inputElementRegExp = new XRegExp(lex, 'InputElementRegExp', 'g');
@@ -88,6 +90,7 @@ function LexicalParser() {
     return token;
   };
 }
+
 var rules = {
   'IdentifierName': [['Identifier']],
   'Literal': [['NullLiteral'], ['BooleanLiteral'], ['NumericLiteral'], ['StringLiteral'], ['RegularExpressionLiteral']],
@@ -113,6 +116,7 @@ var rules = {
   'Program': [['Expression']]
 
 };
+
 function Symbol(symbolName, token) {
   this.name = symbolName;
   this.token = token;
@@ -128,6 +132,7 @@ function Symbol(symbolName, token) {
     return str;
   };
 }
+
 function SyntacticalParser() {
   var currentRule;
   var root = {
@@ -226,6 +231,7 @@ function SyntacticalParser() {
     }
   });
 }
+
 function Parser() {
   this.lexicalParser = new LexicalParser();
   this.syntacticalParser = new SyntacticalParser();
@@ -321,6 +327,7 @@ function JavaScriptExpression(text) {
     } catch (e) {
     }
   };
+
   function checkSimple(symbol) {
 
     var curr = symbol;
@@ -401,7 +408,20 @@ function JavaScriptExpression(text) {
 function visit(tree) {
   var childNodes = tree.childNodes.slice().reverse();
   var children = childNodes.filter(e =>
-  !e.token || !e.token.Punctuator);
+    !e.token || !e.token.Punctuator);
+  // console.log('childNodes:',childNodes)
+  // console.log('tree.name:', tree.name)
+
+  if (tree.name === 'UnaryExpression') {
+    if (childNodes.length === 2 && childNodes[0].name === '-' && children.length === 1) {
+      var res = visit(children[0]);
+      // console.log(res)
+      res.value = -res.value;
+      return res;
+    }
+    // console.log('childNodes:', childNodes)
+    // console.log('children:', children)
+  }
 
   if (tree.name === 'Arguments') {
     var argumentList = [];
@@ -423,8 +443,11 @@ function visit(tree) {
   }
 
 
-  if (children && children.length === 1)
-    return visit(children[0]);
+  if (children && children.length === 1) {
+    var res = visit(children[0]);
+    // console.log(res)
+    return res;
+  }
 
   if (tree.token && ['NullLiteral', 'BooleanLiteral', 'NumericLiteral', 'StringLiteral', 'Identifier'].some(e => tree.token[e])) {
     var type = Object.keys(tree.token).filter(e => e.match(/Literal/) || e.match(/Identifier/))[0];
@@ -436,6 +459,8 @@ function visit(tree) {
       'Identifier': tree.token,
     }[type];
 
+    // console.log({type,value,token:tree.token})
+    //
     return {
       type: type,
       value: value
@@ -456,6 +481,7 @@ function visit(tree) {
 
 function parse(originExp) {
   let exp = new JavaScriptExpression(originExp);
+  // console.log(exp.tree)
   return JSON.stringify(visit(exp.tree), null);
 }
 

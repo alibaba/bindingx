@@ -1,5 +1,5 @@
 {
-  "name": "bindingx",
+  "name": "weex-bindingx",
   "version": "0.0.10",
   "description": "bindingx,expression,binding,weex",
   "main": "lib/index.js",
