@@ -18,6 +18,7 @@ package com.alibaba.android.bindingx.core.internal;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.annotation.WorkerThread;
 import android.view.animation.AnimationUtils;
 
@@ -52,6 +53,12 @@ public class BindingXTimingHandler extends AbstractEventHandler implements Anima
         } else {
             mAnimationFrame.clear();
         }
+    }
+
+    @VisibleForTesting
+    /*package*/ BindingXTimingHandler(Context context, PlatformManager manager, AnimationFrame frame, Object... extension) {
+        super(context, manager, extension);
+        mAnimationFrame = frame;
     }
 
     @Override
