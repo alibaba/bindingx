@@ -39,8 +39,8 @@ public class BindingXTouchHandler extends AbstractEventHandler implements View.O
     private float mDownX;
     private float mDownY;
 
-    private float mDx;
-    private float mDy;
+    private double mDx;
+    private double mDy;
 
     private GestureDetector mGestureDetector;
 
@@ -248,12 +248,12 @@ public class BindingXTouchHandler extends AbstractEventHandler implements View.O
 
     @Override
     protected void onExit(@NonNull Map<String, Object> scope) {
-        float deltaX = (float) scope.get("internal_x");
-        float deltaY = (float) scope.get("internal_y");
+        double deltaX = (double) scope.get("internal_x");
+        double deltaY = (double) scope.get("internal_y");
         fireEventByState(BindingXConstants.STATE_EXIT, deltaX, deltaY);
     }
 
-    private void fireEventByState(@BindingXConstants.State String state, float dx, float dy) {
+    private void fireEventByState(@BindingXConstants.State String state, double dx, double dy) {
         if (mCallback != null) {
             Map<String, Object> param = new HashMap<>();
             param.put("state", state);
