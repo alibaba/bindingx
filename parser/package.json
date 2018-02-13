@@ -4,7 +4,7 @@
   "description": "Expression parser for bindingx",
   "main": "lib/index.js",
   "scripts": {
-    "test": "mocha test/pase-test.js"
+    "test": "mocha test/parse-test.js"
   },
   "keywords": [
     "bindingx",
