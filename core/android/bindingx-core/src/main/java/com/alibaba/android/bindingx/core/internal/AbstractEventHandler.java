@@ -40,6 +40,10 @@ import java.util.Map;
 /**
  * Description:
  *
+ * An abstract class which implement {@link IEventHandler} interface.
+ * This class handles general logic of 'bind expression' and 'consume expression'
+ * and so on. The specific implementation of {@link IEventHandler} should inherit this class.
+ *
  * Created by rowandjj(chuyi)<br/>
  */
 
@@ -136,12 +140,13 @@ public abstract class AbstractEventHandler implements IEventHandler {
     }
 
     /**
-     * 执行边界条件
+     * evaluate exit expression.
+     * If expression returns true, then all expressions will be clear.
      *
-     * @param exitExpression 边界条件表达式
-     * @param scope 已经赋值过的scope(内部包含未知变量的当前值，比如x/y等)
+     * @param exitExpression exit expression
+     * @param scope variables which has been assigned
      *
-     * @return true代表边界条件满足
+     * @return true if expression return true and false otherwise
      * */
     boolean evaluateExitExpression(ExpressionPair exitExpression, @NonNull Map<String,Object> scope) {
         boolean exit = false;
@@ -156,7 +161,7 @@ public abstract class AbstractEventHandler implements IEventHandler {
             }
         }
         if (exit) {
-            //发送事件、清空所有表达式
+            // clear expressions
             clearExpressions();
             try {
                 onExit(scope);
@@ -170,17 +175,15 @@ public abstract class AbstractEventHandler implements IEventHandler {
     }
 
     /**
-     * 消费表达式
+     * consume all the expressions that bind before.
      *
-     * Notice: 确保scope已经赋值
-     *
-     * @param args 表达式集合
-     * @param scope 已经赋值过的scope(内部包含未知变量的当前值，比如x/y等)
-     * @param currentState 当前eventType
+     * @param args an list which holds an array of {@link ExpressionHolder}
+     * @param scope variables which has been assigned
+     * @param currentType current event type
      *
      * */
     void consumeExpression(@Nullable Map<String, List<ExpressionHolder>> args, @NonNull Map<String,Object> scope,
-                           @NonNull String currentState) throws IllegalArgumentException, JSONException {
+                           @NonNull String currentType) throws IllegalArgumentException, JSONException {
         //https://developer.mozilla.org/zh-CN/docs/Web/CSS/transform
         if (args == null) {
             LogProxy.e("expression args is null");
@@ -191,12 +194,11 @@ public abstract class AbstractEventHandler implements IEventHandler {
             return;
         }
 
-        //执行表达式
-        LogProxy.d(String.format(Locale.getDefault(), "consume expression with %d tasks. event type is %s",args.size(),currentState));
+        LogProxy.d(String.format(Locale.getDefault(), "consume expression with %d tasks. event type is %s",args.size(),currentType));
         for (List<ExpressionHolder> holderList : args.values()) {
             for (ExpressionHolder holder : holderList) {
-                if (!currentState.equals(holder.eventType)) {
-                    LogProxy.d("skip expression with wrong event type.[expected:" + currentState + ",found:" + holder.eventType + "]");
+                if (!currentType.equals(holder.eventType)) {
+                    LogProxy.d("skip expression with wrong event type.[expected:" + currentType + ",found:" + holder.eventType + "]");
                     continue;
                 }
                 String instanceId = TextUtils.isEmpty(holder.targetInstanceId)? mInstanceId : holder.targetInstanceId;
