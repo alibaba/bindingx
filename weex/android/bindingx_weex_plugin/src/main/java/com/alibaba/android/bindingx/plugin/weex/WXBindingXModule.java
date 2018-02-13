@@ -20,6 +20,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -63,6 +64,13 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
 
     private BindingXCore mBindingXCore;
     private PlatformManager mPlatformManager;
+
+    public WXBindingXModule(){}
+
+    @VisibleForTesting
+    /*package*/ WXBindingXModule(BindingXCore core) {
+        this.mBindingXCore = core;
+    }
 
     private void prepareInternal() {
         if(mPlatformManager == null) {
