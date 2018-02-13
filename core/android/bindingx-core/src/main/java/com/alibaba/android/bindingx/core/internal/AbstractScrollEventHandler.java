@@ -69,12 +69,12 @@ public abstract class AbstractScrollEventHandler extends AbstractEventHandler {
     }
 
     /**
-     * @param contentOffsetX 横向绝对偏移(px)
-     * @param contentOffsetY 纵向绝对偏移(px)
-     * @param dx 相对上一次onScroll事件的横向的偏移
-     * @param dy 相对上一次onScroll事件的纵向的偏移
-     * @param tdx 距离最近一次"拐点"的横向偏移
-     * @param tdy 距离最近一次"拐点"的纵向偏移
+     * @param contentOffsetX the absolute horizontal offset in pixel
+     * @param contentOffsetY the absolute vertical offset in pixel
+     * @param dx The amount of horizontal scroll relative to last onscroll event
+     * @param dy The amount of vertical scroll offset relative to last onscroll event
+     * @param tdx The amount of horizontal scroll offset relative to last inflection point
+     * @param tdy The amount of vertical scroll offset relative to last inflection point
      * */
     protected void handleScrollEvent(int contentOffsetX, int contentOffsetY, int dx, int dy,
                                    int tdx, int tdy) {
@@ -91,7 +91,6 @@ public abstract class AbstractScrollEventHandler extends AbstractEventHandler {
         }
 
         try {
-            //消费所有的表达式
             JSMath.applyScrollValuesToScope(mScope, contentOffsetX, contentOffsetY, dx, dy, tdx, tdy, mPlatformManager.getResolutionTranslator());
             if(!evaluateExitExpression(mExitExpressionPair,mScope)) {
                 consumeExpression(mExpressionHoldersMap, mScope, BindingXEventType.TYPE_SCROLL);

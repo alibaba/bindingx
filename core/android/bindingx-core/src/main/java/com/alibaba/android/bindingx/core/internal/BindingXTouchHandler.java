@@ -138,7 +138,6 @@ public class BindingXTouchHandler extends AbstractEventHandler implements View.O
         float deltaX = curX - downX;
         float deltaY = curY - downY;
         try {
-            //消费所有的表达式
             JSMath.applyXYToScope(mScope, deltaX, deltaY, mPlatformManager.getResolutionTranslator());
             if(!evaluateExitExpression(mExitExpressionPair,mScope)) {
                 consumeExpression(mExpressionHoldersMap, mScope, BindingXEventType.TYPE_PAN);
@@ -221,7 +220,6 @@ public class BindingXTouchHandler extends AbstractEventHandler implements View.O
                 break;
         }
 
-        //如果所有手势都不支持的话，那么可以清除touchHandler
         if (!this.isPanGestureAvailable() && !this.isFlickGestureAvailable()) {
             String instanceId = TextUtils.isEmpty(mAnchorInstanceId) ? mInstanceId : mAnchorInstanceId;
             View hostView = mPlatformManager.getViewFinder().findViewBy(sourceRef, instanceId);

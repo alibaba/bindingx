@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 
 import com.alibaba.android.bindingx.core.LogProxy;
 
@@ -64,7 +65,8 @@ class OrientationDetector implements SensorEventListener {
     private double[] mRotationAngles;
 
     // Lazily initialized when registering for notifications.
-    private SensorManagerProxy mSensorManagerProxy;
+    @VisibleForTesting
+    /*package*/ SensorManagerProxy mSensorManagerProxy;
 
     // The only instance of that class and its associated lock.
     private static OrientationDetector sSingleton;
@@ -450,7 +452,8 @@ class OrientationDetector implements SensorEventListener {
         return sensorManager.registerListener(this, type, rateInMicroseconds, getHandler());
     }
 
-    private void gotOrientation(double alpha, double beta, double gamma) {
+    @VisibleForTesting
+    /*package*/ void gotOrientation(double alpha, double beta, double gamma) {
         if (mListeners != null) {
             try {
                 for (OnOrientationChangedListener listener : mListeners) {
@@ -478,9 +481,4 @@ class OrientationDetector implements SensorEventListener {
     interface OnOrientationChangedListener {
         void onOrientationChanged(double alpha, double beta, double gamma);
     }
-
-
-
-
-
 }

@@ -20,6 +20,9 @@ import android.support.annotation.Nullable;
 /**
  * Description:
  *
+ * This class holds an expression which include origin expression and
+ * the transformed expression.
+ *
  * Created by rowandjj(chuyi)<br/>
  */
 
