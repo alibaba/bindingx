@@ -78,7 +78,6 @@ public class BindingXTimingHandler extends AbstractEventHandler implements Anima
 
         fireEventByState(BindingXConstants.STATE_START, 0);
 
-        //先清空消息
         mAnimationFrame.clear();
         mAnimationFrame.requestAnimationFrame(this);
     }
@@ -95,9 +94,7 @@ public class BindingXTimingHandler extends AbstractEventHandler implements Anima
         }
 
         try {
-            //消费所有的表达式
             JSMath.applyTimingValuesToScope(mScope, deltaT);
-            //timing与其他类型不一样，需要先消费表达式，后执行边界条件,否则最后一帧可能无法执行到
             if(!isFinish) {
                 consumeExpression(mExpressionHoldersMap, mScope, BindingXEventType.TYPE_TIMING);
             }
@@ -136,7 +133,6 @@ public class BindingXTimingHandler extends AbstractEventHandler implements Anima
         double t = (double) scope.get("t");
         fireEventByState(BindingXConstants.STATE_EXIT, (long) t);
 
-        //清空消息 防止空转
         if(mAnimationFrame != null) {
             mAnimationFrame.clear();
         }
