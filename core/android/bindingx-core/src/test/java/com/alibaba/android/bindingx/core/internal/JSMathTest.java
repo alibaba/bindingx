@@ -63,9 +63,9 @@ public class JSMathTest {
         assertThat(scope.get("round"),allOf(notNullValue(),instanceOf(JSFunctionInterface.class)));
         assertThat(scope.get("max"),allOf(notNullValue(),instanceOf(JSFunctionInterface.class)));
         assertThat(scope.get("min"),allOf(notNullValue(),instanceOf(JSFunctionInterface.class)));
-        assertThat(scope.get("PI"),allOf(notNullValue(),instanceOf(JSFunctionInterface.class)));
+        assertThat(scope.get("PI"), notNullValue());
 
-        assertThat(scope.get("E"),allOf(notNullValue(),instanceOf(JSFunctionInterface.class)));
+        assertThat(scope.get("E"), notNullValue());
         assertThat(scope.get("rgb"),allOf(notNullValue(),instanceOf(JSFunctionInterface.class)));
         assertThat(scope.get("rgba"),allOf(notNullValue(),instanceOf(JSFunctionInterface.class)));
         assertThat(scope.get("evaluateColor"),allOf(notNullValue(),instanceOf(JSFunctionInterface.class)));
