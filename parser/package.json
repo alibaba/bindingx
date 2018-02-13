@@ -1,6 +1,6 @@
 {
   "name": "bindingx-parser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Expression parser for bindingx",
   "main": "lib/index.js",
   "scripts": {

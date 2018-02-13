@@ -4,7 +4,7 @@ import View from 'rax-view';
 import {isWeex} from 'universal-env';
 import bindingx from '../../src/';
 
-function getEl(el){
+function getEl(el) {
   return isWeex ? findDOMNode(el).ref : findDOMNode(el);
 }
 
@@ -21,31 +21,27 @@ class App extends Component {
 
   bindExp = () => {
     let block = getEl(this.refs.block);
-      bindingx.bind({
-        anchor: block,
-        eventType: 'pan',
-        props: [
-          {
-            element: block,
-            property: 'transform.translateX',
-            expression: {
-              origin: `x+${this.x}`,
-            }
-          },
-          {
-            element: block,
-            property: 'transform.translateY',
-            expression: {
-              origin: `y+${this.y}`,
-            }
-          }
-        ]
-      }, (e) => {
-        if (e.state === 'end') {
-          this.x += e.deltaX;
-          this.y += e.deltaY;
+    bindingx.bind({
+      anchor: block,
+      eventType: 'pan',
+      props: [
+        {
+          element: block,
+          property: 'transform.translateX',
+          expression: `x+${this.x}`
+        },
+        {
+          element: block,
+          property: 'transform.translateY',
+          expression: `y+${this.y}`
         }
-      });
+      ]
+    }, (e) => {
+      if (e.state === 'end') {
+        this.x += e.deltaX;
+        this.y += e.deltaY;
+      }
+    });
   }
 }
 

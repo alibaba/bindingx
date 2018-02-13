@@ -146,7 +146,6 @@ function SyntacticalParser() {
 
     var queue = Object.getOwnPropertyNames(node);
     while (queue.length) {
-      // console.log(queue);
       var symbolName = queue.shift();
       if (!rules[symbolName])
         continue;
@@ -185,8 +184,6 @@ function SyntacticalParser() {
   var statusStack = [root];
   var current = root;
   this.insertSymbol = function insertSymbol(symbol, haveLineTerminator) {
-    // console.log(symbol);
-    // console.log(symbolStack)
     while (!current[symbol.name] && current.$reduce) {
       var count = current.$count;
       var newsymbol = new Symbol(current.$reduce);
@@ -209,7 +206,6 @@ function SyntacticalParser() {
   Object.defineProperty(this, 'grammarTree', {
     'get': function () {
       try {
-        // console.log("get!");
         while (current.$reduce) {
           var count = current.$count;
           var newsymbol = new Symbol(current.$reduce);
@@ -250,7 +246,6 @@ function Parser() {
     this.lexicalParser.source = source;
     var useDiv = false;
     while (token = this.lexicalParser.getNextToken(useDiv)) {
-      // console.log(token);
       if (onInputElement)
         onInputElement(token);
       try {
@@ -332,7 +327,6 @@ function JavaScriptExpression(text) {
 
     var curr = symbol;
     while (curr.childNodes.length <= 1 && curr.name !== 'MemberExpression') {
-      // console.log(curr.name)
       curr = curr.childNodes[0];
     }
     // TODO: need to point out "[……]"
@@ -409,18 +403,13 @@ function visit(tree) {
   var childNodes = tree.childNodes.slice().reverse();
   var children = childNodes.filter(e =>
     !e.token || !e.token.Punctuator);
-  // console.log('childNodes:',childNodes)
-  // console.log('tree.name:', tree.name)
-
   if (tree.name === 'UnaryExpression') {
+    // negative number support
     if (childNodes.length === 2 && childNodes[0].name === '-' && children.length === 1) {
       var res = visit(children[0]);
-      // console.log(res)
       res.value = -res.value;
       return res;
     }
-    // console.log('childNodes:', childNodes)
-    // console.log('children:', children)
   }
 
   if (tree.name === 'Arguments') {
@@ -445,7 +434,6 @@ function visit(tree) {
 
   if (children && children.length === 1) {
     var res = visit(children[0]);
-    // console.log(res)
     return res;
   }
 
@@ -459,8 +447,6 @@ function visit(tree) {
       'Identifier': tree.token,
     }[type];
 
-    // console.log({type,value,token:tree.token})
-    //
     return {
       type: type,
       value: value
@@ -481,7 +467,6 @@ function visit(tree) {
 
 function parse(originExp) {
   let exp = new JavaScriptExpression(originExp);
-  // console.log(exp.tree)
   return JSON.stringify(visit(exp.tree), null);
 }
 
