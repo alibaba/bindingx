@@ -1,0 +1,38 @@
+{
+  "modules": [
+    {
+      "name": "bindingx",
+      "className": "com.alibaba.android.bindingx.plugin.weex.WXBindingXModule",
+      "methods": [
+        "prepare",
+        "bind",
+        "unbind",
+        "unbindAll",
+        "supportFeatures",
+        "getComputedStyle"
+      ]
+    },
+    {
+      "name": "binding",
+      "className": "com.alibaba.android.bindingx.plugin.weex.WXBindingXModule",
+      "methods": [
+        "prepare",
+        "bind",
+        "unbind",
+        "unbindAll",
+        "supportFeatures",
+        "getComputedStyle"
+      ]
+    },
+    {
+      "name": "expressionBinding",
+      "className": "com.alibaba.android.bindingx.plugin.weex.WXExpressionBindingModule",
+      "methods": [
+        "enableBinding",
+        "createBinding",
+        "disableBinding",
+        "disableAll"
+      ]
+    }
+  ]
+}

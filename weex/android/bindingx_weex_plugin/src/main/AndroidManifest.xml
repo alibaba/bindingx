@@ -1,2 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.alibaba.android.bindingx.plugin.weex"/>
+          package="com.alibaba.android.bindingx.plugin.weex">
+
+    <application>
+        <service
+            android:name=".WXBindingXModuleService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="bindingx"/>
+                <action android:name="binding"/>
+                <action android:name="expressionBinding"/>
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>
