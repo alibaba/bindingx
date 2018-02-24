@@ -23,7 +23,6 @@
 #import "EBExpressionScope.h"
 #import "EBExpressionTiming.h"
 #import "EBExpressionOrientation.h"
-#import <JavaScriptCore/JavaScriptCore.h>
 #import "EBUtility.h"
 
 @interface EBExpressionHandler ()
@@ -41,18 +40,18 @@
     return self;
 }
 
-- (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)targetExpression
-         options:(NSDictionary *)options
-       exitExpression:(NSString *)exitExpression
-             callback:(EBKeepAliveCallback)callback {
-    self.targetExpression = targetExpression;
+- (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)expressionMap
+                       options:(NSDictionary *)options
+                exitExpression:(NSDictionary *)exitExpression
+                      callback:(EBKeepAliveCallback)callback {
+    self.expressionMap = expressionMap;
     self.exitExpression = exitExpression;
     self.callback = callback;
     self.options = options;
 }
 
 - (void)removeExpressionBinding {
-    self.targetExpression = nil;
+    self.expressionMap = nil;
 }
 
 + (WXExpressionType)stringToExprType:(NSString *)typeStr {
@@ -84,81 +83,13 @@
     }
 }
 
-- (BOOL)shouldExit:(NSDictionary *)scope {
-    NSString* exitExpressionTransformed = self.exitExpression;
-    if ([exitExpressionTransformed isKindOfClass:NSString.class]) {
-        if( [EBUtility isBlankString:exitExpressionTransformed]) {
-            return NO;
-        }
-    } else if ([exitExpressionTransformed isKindOfClass:NSDictionary.class]) {
-        exitExpressionTransformed = (NSString *)((NSDictionary *)exitExpressionTransformed)[@"transformed"];
-    }
-    
-    if (!exitExpressionTransformed) {
-        return NO;
-    }
-    NSDictionary *expressionTree  = [NSJSONSerialization JSONObjectWithData:[exitExpressionTransformed dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
-    if (!expressionTree || expressionTree.count == 0) {
-        return NO;
-    }
-    
-    NSObject *result = [[[EBExpression alloc] initWithRoot:expressionTree] executeInScope:scope];
-    if (!result) {
-        return NO;
-    }
-    
-    if ([result isKindOfClass:[NSNumber class]]) {
-        return [(NSNumber *)result boolValue];
-    } else if ([result isKindOfClass:[NSString class]]) {
-        return [(NSString *)result boolValue];
-    }
-    
-    return NO;
-}
-
 - (BOOL)executeExpression:(NSDictionary *)scope {
-    
-    for (id target in self.targetExpression) {
-        NSDictionary *epMap = [self.targetExpression objectForKey:target];
-        EBExpressionProperty *model = [[EBExpressionProperty alloc] init];
-        
-        // gather property
-        for (NSString *property in epMap) {
-            NSDictionary *expressionDic = epMap[property];
-            id expression = expressionDic[@"expression"];
-            NSDictionary *config = expressionDic[@"config"];
-            
-            NSDictionary *expressionTree = [NSJSONSerialization JSONObjectWithData:[(NSString *)(NSDictionary *)expression[@"transformed"] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
-            NSString *originExpression = (NSString *)(NSDictionary *)expression[@"origin"];
-            NSObject *result = nil;
-            if (expressionTree && expressionTree.count > 0) {
-                result = [[[EBExpression alloc] initWithRoot:expressionTree] executeInScope:scope];
-            } else if (originExpression) {
-                JSContext* context = [JSContext new];
-                for (NSString *key in scope) {
-                    [context setObject:scope[key] forKeyedSubscript:key];
-                }
-                result = [[context evaluateScript:originExpression] toObject];
-            }
-            if (result) {
-                [EBExpressionExecutor change:&model property:property config:config to:result];
-            }
-        }
-        
-        // execute
-        [EBUtility execute:model to:target];
-    }
-    
-    // exit expression
-    if ([self shouldExit:scope]) {
-        return NO;
-    }
-    return YES;
+    return [EBExpressionExecutor executeExpression:_expressionMap exitExpression:_exitExpression scope:scope];
 }
 
 - (NSMutableDictionary *)generalScope {
-    NSMutableDictionary *scope = [EBExpressionScope generalScope];
-    return scope;
+    return [EBExpressionScope generalScope];
 }
 
 @end
+

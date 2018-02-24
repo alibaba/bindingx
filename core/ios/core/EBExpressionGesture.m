@@ -110,7 +110,7 @@
     
     if (!keepAlive) {
         // free resouces
-        self.targetExpression = nil;
+        self.expressionMap = nil;
         self.callback = nil;
     }
 }

@@ -101,7 +101,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
 }
 
 - (NSDictionary *)bind:(NSDictionary *)dictionary
-          callback:(WXKeepAliveCallback)callback {
+              callback:(WXKeepAliveCallback)callback {
     
     if (!dictionary) {
         WX_LOG(WXLogFlagWarning, @"bind params error, need json input");
@@ -111,7 +111,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
     NSString *eventType =  dictionary[@"eventType"];
     NSArray *props = dictionary[@"props"];
     NSString *token = dictionary[@"anchor"];
-    NSString *exitExpression = dictionary[@"exitExpression"];
+    NSDictionary *exitExpression = dictionary[@"exitExpression"];
     NSDictionary *options = dictionary[@"options"];
     
     if ([WXUtility isBlankString:eventType] || !props || props.count == 0) {
@@ -159,7 +159,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         for (NSDictionary *targetDic in props) {
             NSString *targetRef = targetDic[@"element"];
             NSString *property = targetDic[@"property"];
-            NSString *expression = targetDic[@"expression"];
+            NSDictionary *expression = targetDic[@"expression"];
             NSString *instanceId = targetDic[@"instanceId"];
             
             WXComponent *targetComponent = nil;
@@ -182,7 +182,8 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
                     propertyDic = [NSMutableDictionary dictionary];
                 }
                 NSMutableDictionary *expDict = [NSMutableDictionary dictionary];
-                expDict[@"expression"] = expression;
+                expDict[@"expression"] = [self parseExpression:expression];
+                
                 if( targetDic[@"config"] )
                 {
                     expDict[@"config"] = targetDic[@"config"];
@@ -203,11 +204,11 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         }
         
         [handler updateTargetExpression:targetExpression
-                  options:options
-                exitExpression:exitExpression
-                      callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
-                          callback(result,keepAlive);
-                      }];
+                                options:options
+                         exitExpression:[self parseExpression:exitExpression]
+                               callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
+                                   callback(result,keepAlive);
+                               }];
         
         pthread_mutex_unlock(&mutex);
     });
@@ -360,6 +361,23 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
     if (handlerMap) {
         [handlerMap removeObjectForKey:[NSNumber numberWithInteger:exprType]];
     }
+}
+
+- (id)parseExpression:(NSDictionary *)expression
+{
+    if ([expression isKindOfClass:NSDictionary.class]) {
+        NSString* transformedExpressionStr = expression[@"transformed"];
+        if (transformedExpressionStr && [transformedExpressionStr isKindOfClass:NSString.class]) {
+            return [NSJSONSerialization JSONObjectWithData:[transformedExpressionStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
+        }
+        else {
+            return expression[@"origin"];
+        }
+    } else if ([expression isKindOfClass:NSString.class]) {
+        NSString* expressionStr = (NSString *)expression;
+        return [NSJSONSerialization JSONObjectWithData:[expressionStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
+    }
+    return nil;
 }
 
 

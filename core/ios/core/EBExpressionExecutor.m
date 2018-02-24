@@ -19,6 +19,8 @@
 #import "NSObject+EBTuplePacker.h"
 #import <objc/message.h>
 #import "EBUtility.h"
+#import "EBExpression.h"
+#import <JavaScriptCore/JavaScriptCore.h>
 
 typedef NS_ENUM(NSInteger, WXEPViewProperty) {
     WXEPViewPropertyUndefined = 0,
@@ -47,6 +49,65 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
 };
 
 @implementation EBExpressionExecutor
+
++ (BOOL)executeExpression:(NSMapTable *)expressionMap exitExpression:(NSDictionary *)exitExpression scope:(NSDictionary *)scope {
+    
+    for (id target in expressionMap) {
+        NSDictionary *expressionDictionary = [expressionMap objectForKey:target];
+        EBExpressionProperty *model = [[EBExpressionProperty alloc] init];
+        
+        // gather property
+        for (NSString *property in expressionDictionary) {
+            NSDictionary *expressionDic = expressionDictionary[property];
+            id expression = expressionDic[@"expression"];
+            NSDictionary *config = expressionDic[@"config"];
+            
+            NSObject *result = nil;
+            if ([expression isKindOfClass:NSDictionary.class]) {
+                result = [[[EBExpression alloc] initWithRoot:expression] executeInScope:scope];
+            } else if ([expression isKindOfClass:NSString.class]) {
+                JSContext* context = [JSContext new];
+                for (NSString *key in scope) {
+                    [context setObject:scope[key] forKeyedSubscript:key];
+                }
+                result = [[context evaluateScript:expression] toObject];
+            }
+            if (result) {
+                [EBExpressionExecutor change:&model property:property config:config to:result];
+            }
+        }
+        
+        // execute
+        [EBUtility execute:model to:target];
+    }
+    
+    // exit expression
+    if ([self shouldExit:scope exitExpression:exitExpression]) {
+        return NO;
+    }
+    return YES;
+}
+
++ (BOOL)shouldExit:(NSDictionary *)scope exitExpression:(NSDictionary *)exitExpression {
+    
+    if (!exitExpression || exitExpression.count == 0) {
+        return NO;
+    }
+    
+    NSObject *result = [[[EBExpression alloc] initWithRoot:exitExpression] executeInScope:scope];
+    if (!result) {
+        return NO;
+    }
+    
+    if ([result isKindOfClass:[NSNumber class]]) {
+        return [(NSNumber *)result boolValue];
+    } else if ([result isKindOfClass:[NSString class]]) {
+        return [(NSString *)result boolValue];
+    }
+    
+    return NO;
+}
+
 
 + (void)change:(EBExpressionProperty **)model property:(NSString *)propertyName config:(NSDictionary*)config to:(NSObject *)result {
     WXEPViewProperty property = [[EBExpressionExecutor viewPropertyMap][propertyName] integerValue];

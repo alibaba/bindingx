@@ -30,7 +30,7 @@ export default class ScrollViewDemo extends Component {
         let self = this;
         if(Platform.OS=='ios'){
           const bindingXEmitter = new NativeEventEmitter(bindingx);
-          bindingXEmitter.addListener('BindingX', (result) => {
+          bindingXEmitter.addListener('bindingx:statechange', (result) => {
             console.log(result);
           });
         } else {
