@@ -177,7 +177,6 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
                     });
                 }
                 
-                
                 NSMutableDictionary *propertyDic = [[targetExpression objectForKey:targetComponent] mutableCopy];
                 if (!propertyDic) {
                     propertyDic = [NSMutableDictionary dictionary];
