@@ -16,17 +16,19 @@
 
 #import <Foundation/Foundation.h>
 #import "EBNativeFunction.h"
-@implementation EBNativeFunction : EBJSObject
--(id)initWithBody: (NSObject* (^)(NSArray*)) _body{
+
+@implementation EBNativeFunction
+
+-(id)initWithBody: (NSObject* (^)(NSArray*))body{
     if(self=[super init])
     {
-        self->body = _body;
+        _body = body;
     }
     return self;
 }
 
-- (NSObject*) call:(NSArray *)arguments {
-    return self->body(arguments);
+- (NSObject*)call:(NSArray *)arguments {
+    return _body(arguments);
 }
 
 @end

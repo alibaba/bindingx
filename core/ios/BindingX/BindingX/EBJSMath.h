@@ -16,7 +16,6 @@
 
 #include <math.h>
 #import "EBNativeFunction.h"
-#import "EBJSObject.h"
 
 @interface EBJSMath: NSObject
 

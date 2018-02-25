@@ -62,7 +62,7 @@
 
 - (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)targetExpression
          options:(NSDictionary *)options
-       exitExpression:(NSString *)exitExpression
+       exitExpression:(NSDictionary *)exitExpression
              callback:(EBKeepAliveCallback)callback {
     [super updateTargetExpression:targetExpression
             options:options

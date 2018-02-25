@@ -18,23 +18,22 @@
 #import <UIKit/UIKit.h>
 #import <math.h>
 #import "EBExpression.h"
-#import "EBJSFunction.h"
-#import "EBJSCallable.h"
+#import "EBNativeFunction.h"
 
 @implementation EBExpression
--(id)initWithRoot:(NSDictionary*) _root {
+-(id)initWithRoot:(NSDictionary*)root {
     if(self=[super init])
     {
-        root = _root;
+        _root = root;
     }
     return self;  
 }
 
-- (NSObject*) executeInScope:(NSDictionary *)scope {
-    return [self executeNodeInScope:scope node:root];
+- (NSObject*)executeInScope:(NSDictionary *)scope {
+    return [self executeNodeInScope:scope node:_root];
 }
 
-- (double) toNumber:(NSObject*) value {
+- (double)toNumber:(NSObject*)value {
     if([value isKindOfClass:[NSNumber class]]) {
         return [(NSNumber*)value doubleValue];
     }
@@ -44,7 +43,7 @@
     return NAN;
 }
 
-- (BOOL) toBool:(NSObject*) value {
+- (BOOL)toBool:(NSObject*)value {
     if([value isKindOfClass:[NSNumber class]]) {
         return [(NSNumber*)value boolValue] > 0;
     }
@@ -54,7 +53,7 @@
     return false;
 }
 
-- (NSNumber*) toBoolean:(NSObject*) value {
+- (NSNumber*)toBoolean:(NSObject*)value {
     if([value isKindOfClass:[NSNumber class]]) {
         return @([(NSNumber*)value boolValue]);
     }
@@ -64,7 +63,7 @@
     return nil;
 }
 
-- (NSObject*) executeNodeInScope:(NSDictionary *)scope node:(NSDictionary*) node {
+- (NSObject*)executeNodeInScope:(NSDictionary *)scope node:(NSDictionary*)node {
     NSString* type = [node objectForKey:@"type"];
     NSArray* children = [node objectForKey:@"children"];
     if([type isEqualToString:@"Identifier"]) {
@@ -80,7 +79,7 @@
         NSMutableArray* arguments = [[NSMutableArray alloc] init];
         for(int i = 0; i < [argumentNodes count]; i++)
             arguments[i] = [self executeNodeInScope:scope node:argumentNodes[i]];
-        return [(NSObject<EBJSCallable>*)[self executeNodeInScope:scope node:children[0]] call:arguments];
+        return [(EBNativeFunction *)[self executeNodeInScope:scope node:children[0]] call:arguments];
     } else if([type isEqualToString:@"?"]) {
         if([self toBool:[self executeNodeInScope:scope node:children[0]]]){
             return [self executeNodeInScope:scope node:children[1]];
@@ -134,6 +133,6 @@
         return @(num1 && num2);
     }
     
-    return NULL;
+    return nil;
 }
 @end

@@ -20,10 +20,13 @@
 typedef void (^EBKeepAliveCallback)(_Nonnull id source ,_Nonnull id result, BOOL keepAlive);
 typedef void (^EBGetPanGestureCallback)(BOOL isHorizontal, BOOL isVertical);
 
-extern void EBPerformBlockOnMainThread(void (^ _Nonnull block)(void));
-extern void EBPerformBlockOnBridgeThread(void (^ _Nonnull block)(void));
+typedef void (^EBPerformBlock)(void);
 
 @interface EBUtility: NSObject
+
++ (void)performBlockOnBridgeThread:(EBPerformBlock _Nullable )block;
+
++ (void)performBlockOnMainThread:(EBPerformBlock _Nonnull )block;
 
 + (BOOL)isBlankString:(NSString *_Nullable)string;
 

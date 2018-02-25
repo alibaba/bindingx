@@ -15,19 +15,14 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "EBJSCallable.h"
-#import "EBJSObject.h"
 
-#ifndef NativeFunction_h
-#define NativeFunction_h
+@interface EBNativeFunction: NSObject
 
+@property(nonatomic, strong) NSObject* (^body)(NSArray* arguments);
 
-@interface EBNativeFunction<JSCallable>: EBJSObject
-{
-    NSObject* (^body)(NSArray* arguments);
-}
--(id)initWithBody: (NSObject* (^)(NSArray*)) _body;
+- (id)initWithBody:(NSObject* (^)(NSArray*))body;
+
+- (NSObject*)call:(NSArray *)arguments;
+
 @end
-
-#endif /* NativeFunction_h */
 

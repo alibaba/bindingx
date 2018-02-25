@@ -63,9 +63,9 @@
 - (void)initGesture {
     if (self.exprType == WXExpressionTypePan && !self.gesture) {
         __weak typeof(self) welf = self;
-        EBPerformBlockOnMainThread(^{
+        [EBUtility performBlockOnMainThread:^{
             [welf addGuestureOnMainThread];
-        });
+        }];
     }
 }
 
@@ -247,10 +247,7 @@
     } else if (sender.state == UIGestureRecognizerStateChanged) {
         @try {
             NSDictionary *scope = [self setUpScopeForGesture:sender];
-            BOOL exit = ![self executeExpression:scope];
-            if (exit) {
-                [self fireExitEvent:sender];
-            }
+            [self executeExpression:scope];
         } @catch (NSException *exception) {
             NSLog(@"%@",exception);
         }

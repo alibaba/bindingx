@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = "7.0"
 
   s.source =  { :path => '.' }
-  s.source_files  = "core/ios/core/**/*.{h,m,mm}" , "weex/ios/Sources/*.{h,m,mm}"
+  s.source_files  = "core/ios/BindingX/BindingX/**/*.{h,m,mm}" , "weex/ios/Sources/*.{h,m,mm}"
   
   s.requires_arc = true
   s.dependency "WeexPluginLoader"

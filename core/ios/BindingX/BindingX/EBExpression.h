@@ -15,10 +15,11 @@
  */
 
 @interface EBExpression: NSObject
-    {
-        NSDictionary* root;
-    }
-    - (id)initWithRoot:(NSDictionary*) root;
-    - (NSObject*) executeInScope:(NSDictionary *)scope;
+
+@property(nonatomic, strong) NSDictionary *root;
+
+- (id)initWithRoot:(NSDictionary*) root;
+- (NSObject*)executeInScope:(NSDictionary *)scope;
+
 @end
 

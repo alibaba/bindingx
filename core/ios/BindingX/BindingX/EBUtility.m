@@ -16,17 +16,15 @@
 
 #import "EBUtility.h"
 
-void EBPerformBlockOnBridgeThread(void (^ _Nonnull block)(void))
-{
-    block();
-}
-
-void EBPerformBlockOnMainThread(void (^ _Nonnull block)(void))
-{
-    block();
-}
-
 @implementation EBUtility
+
++ (void)performBlockOnBridgeThread:(EBPerformBlock)block {
+    block();
+}
+
++ (void)performBlockOnMainThread:(EBPerformBlock)block {
+    block();
+}
 
 + (BOOL)isBlankString:(NSString *)string {
     
@@ -47,6 +45,31 @@ void EBPerformBlockOnMainThread(void (^ _Nonnull block)(void))
 + (CGFloat)factor
 {
     return 1;
+}
+
++ (void)execute:(EBExpressionProperty *)model to:(id)target
+{
+    
+}
+
++ (UIPanGestureRecognizer *_Nullable)getPanGestureForComponent:(id _Nullable )source callback:(EBGetPanGestureCallback _Nonnull )callback
+{
+    return nil;
+}
+
++ (void)addScrollDelegate:(id<UIScrollViewDelegate> _Nullable )delegate source:(id _Nullable )source
+{
+    
+}
+
++ (void)removeScrollDelegate:(id<UIScrollViewDelegate> _Nullable )delegate source:(id _Nullable )source
+{
+    
+}
+
++ (UIView *_Nullable)getViewByRef:(id _Nullable )ref
+{
+    return nil;
 }
 
 @end

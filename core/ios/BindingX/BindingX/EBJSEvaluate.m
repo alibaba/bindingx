@@ -18,9 +18,13 @@
 
 @implementation EBJSEvaluate
 
-+(EBNativeFunction *)evaluateColor
++ (EBNativeFunction *)evaluateColor
 {
     return [[EBNativeFunction alloc] initWithBody:^(NSArray *arguments){
+        
+        if (!arguments || arguments.count < 3) {
+            return @[];
+        }
         
         NSString* startColor = [arguments[0] substringWithRange:NSMakeRange(2, 6)];
         NSString* endColor = [arguments[1] substringWithRange:NSMakeRange(2, 6)];
@@ -33,19 +37,19 @@
         
         unsigned rgbValue = 0;
         [[NSScanner scannerWithString:[@"0x" stringByAppendingString:startColor]] scanHexInt:&rgbValue];
-        float sr = (float)((rgbValue & 0xFF0000) >> 16);
-        float sg = (float)((rgbValue & 0xFF00) >> 8);
-        float sb = (float)(rgbValue & 0xFF);
+        int sr = (rgbValue & 0xFF0000) >> 16;
+        int sg = (rgbValue & 0xFF00) >> 8;
+        int sb = rgbValue & 0xFF;
         
         
         [[NSScanner scannerWithString:[@"0x" stringByAppendingString:endColor]] scanHexInt:&rgbValue];
-        float er = (float)((rgbValue & 0xFF0000) >> 16);
-        float eg = (float)((rgbValue & 0xFF00) >> 8);
-        float eb = (float)(rgbValue & 0xFF);
+        int er = (rgbValue & 0xFF0000) >> 16;
+        int eg = (rgbValue & 0xFF00) >> 8;
+        int eb = rgbValue & 0xFF;
         
-        NSNumber* mr = [[NSNumber alloc] initWithDouble:((er - sr)*fraction + sr)];
-        NSNumber* mg = [[NSNumber alloc] initWithDouble:((eg - sg)*fraction + sg)];
-        NSNumber* mb = [[NSNumber alloc] initWithDouble:((eb - sb)*fraction + sb)];
+        NSNumber* mr = [NSNumber numberWithInt:((er - sr)*fraction + sr)];
+        NSNumber* mg = [NSNumber numberWithInt:((eg - sg)*fraction + sg)];
+        NSNumber* mb = [NSNumber numberWithInt:((eb - sb)*fraction + sb)];
         
         return @[mr,mg,mb];
         

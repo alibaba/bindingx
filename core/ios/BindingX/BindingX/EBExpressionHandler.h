@@ -39,9 +39,9 @@ typedef NS_ENUM(NSInteger, WXExpressionType) {
                                 source:(id)source;
 
 - (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)expressionMap
-         options:(NSDictionary *)options
-       exitExpression:(NSString *)exitExpression
-             callback:(EBKeepAliveCallback)callback;
+                       options:(NSDictionary *)options
+                exitExpression:(NSDictionary *)exitExpression
+                      callback:(EBKeepAliveCallback)callback;
 
 - (void)removeExpressionBinding;
 
@@ -55,3 +55,4 @@ typedef NS_ENUM(NSInteger, WXExpressionType) {
 - (NSMutableDictionary *)generalScope;
 
 @end
+

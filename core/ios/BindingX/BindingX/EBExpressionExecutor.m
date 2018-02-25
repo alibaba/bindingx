@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
 
 @implementation EBExpressionExecutor
 
-+ (BOOL)executeExpression:(NSMapTable *)expressionMap exitExpression:(id)exitExpression scope:(NSDictionary *)scope {
++ (BOOL)executeExpression:(NSMapTable *)expressionMap exitExpression:(NSDictionary *)exitExpression scope:(NSDictionary *)scope {
     
     for (id target in expressionMap) {
         NSDictionary *expressionDictionary = [expressionMap objectForKey:target];
@@ -62,17 +62,15 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
             id expression = expressionDic[@"expression"];
             NSDictionary *config = expressionDic[@"config"];
             
-            NSDictionary *expressionTree = [NSJSONSerialization JSONObjectWithData:[(NSString *)(NSDictionary *)expression[@"transformed"] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
-            NSString *originExpression = (NSString *)(NSDictionary *)expression[@"origin"];
             NSObject *result = nil;
-            if (expressionTree && expressionTree.count > 0) {
-                result = [[[EBExpression alloc] initWithRoot:expressionTree] executeInScope:scope];
-            } else if (originExpression) {
+            if ([expression isKindOfClass:NSDictionary.class]) {
+                result = [[[EBExpression alloc] initWithRoot:expression] executeInScope:scope];
+            } else if ([expression isKindOfClass:NSString.class]) {
                 JSContext* context = [JSContext new];
                 for (NSString *key in scope) {
                     [context setObject:scope[key] forKeyedSubscript:key];
                 }
-                result = [[context evaluateScript:originExpression] toObject];
+                result = [[context evaluateScript:expression] toObject];
             }
             if (result) {
                 [EBExpressionExecutor change:&model property:property config:config to:result];
@@ -90,28 +88,13 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
     return YES;
 }
 
-+ (BOOL)shouldExit:(NSDictionary *)scope exitExpression:(id)exitExpression {
-    NSString* exitExpressionTransformed = exitExpression;
-    if (!exitExpressionTransformed) {
++ (BOOL)shouldExit:(NSDictionary *)scope exitExpression:(NSDictionary *)exitExpression {
+    
+    if (!exitExpression || exitExpression.count == 0) {
         return NO;
     }
     
-    if ([exitExpressionTransformed isKindOfClass:NSString.class]) {
-        if( [EBUtility isBlankString:exitExpressionTransformed]) {
-            return NO;
-        }
-    } else if ([exitExpressionTransformed isKindOfClass:NSDictionary.class]) {
-        exitExpressionTransformed = (NSString *)((NSDictionary *)exitExpressionTransformed)[@"transformed"];
-    }
-    
-    NSDictionary *expressionTree  = [NSJSONSerialization JSONObjectWithData:[exitExpressionTransformed dataUsingEncoding:NSUTF8StringEncoding]
-                                                                    options:NSJSONReadingAllowFragments
-                                                                      error:nil];
-    if (!expressionTree || expressionTree.count == 0) {
-        return NO;
-    }
-    
-    NSObject *result = [[[EBExpression alloc] initWithRoot:expressionTree] executeInScope:scope];
+    NSObject *result = [[[EBExpression alloc] initWithRoot:exitExpression] executeInScope:scope];
     if (!result) {
         return NO;
     }
@@ -125,36 +108,6 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
     return NO;
 }
 
-+ (NSDictionary *)viewPropertyMap {
-    static NSDictionary *map = nil;
-    static dispatch_once_t onceToken;
-    
-    dispatch_once(&onceToken, ^{
-        map = @{@"transform.translate":@(WXEPViewPropertyTranslate),
-                @"transform.translateX":@(WXEPViewPropertyTranslateX),
-                @"transform.translateY":@(WXEPViewPropertyTranslateY),
-                @"transform.rotate":@(WXEPViewPropertyRotate),
-                @"transform.scale":@(WXEPViewPropertyScale),
-                @"transform.scaleX":@(WXEPViewPropertyScaleX),
-                @"transform.scaleY":@(WXEPViewPropertyScaleY),
-                @"transform.matrix":@(WXEPViewPropertyTransform),
-                @"opacity":@(WXEPViewPropertyAlpha),
-                @"background-color":@(WXEPViewPropertyBackgroundColor),
-                @"color":@(WXEPViewPropertyColor),
-                @"frame":@(WXEPViewPropertyFrame),
-                @"left":@(WXEPViewPropertyLeft),
-                @"top":@(WXEPViewPropertyTop),
-                @"width":@(WXEPViewPropertyWidth),
-                @"height":@(WXEPViewPropertyHeight),
-                @"scroll.contentOffset":@(WXEPViewPropertyContentOffset),
-                @"scroll.contentOffsetX":@(WXEPViewPropertyContentOffsetX),
-                @"scroll.contentOffsetY":@(WXEPViewPropertyContentOffsetY),
-                @"transform.rotateX":@(WXEPViewPropertyRotateX),
-                @"transform.rotateY":@(WXEPViewPropertyRotateY),
-                @"transform.rotateZ":@(WXEPViewPropertyRotate),};
-    });
-    return map;
-}
 
 + (void)change:(EBExpressionProperty **)model property:(NSString *)propertyName config:(NSDictionary*)config to:(NSObject *)result {
     WXEPViewProperty property = [[EBExpressionExecutor viewPropertyMap][propertyName] integerValue];
@@ -233,6 +186,37 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
     {
         [*model setTransformOrigin:config[@"transformOrigin"]];
     }
+}
+
++ (NSDictionary *)viewPropertyMap {
+    static NSDictionary *map = nil;
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        map = @{@"transform.translate":@(WXEPViewPropertyTranslate),
+                @"transform.translateX":@(WXEPViewPropertyTranslateX),
+                @"transform.translateY":@(WXEPViewPropertyTranslateY),
+                @"transform.rotate":@(WXEPViewPropertyRotate),
+                @"transform.scale":@(WXEPViewPropertyScale),
+                @"transform.scaleX":@(WXEPViewPropertyScaleX),
+                @"transform.scaleY":@(WXEPViewPropertyScaleY),
+                @"transform.matrix":@(WXEPViewPropertyTransform),
+                @"opacity":@(WXEPViewPropertyAlpha),
+                @"background-color":@(WXEPViewPropertyBackgroundColor),
+                @"color":@(WXEPViewPropertyColor),
+                @"frame":@(WXEPViewPropertyFrame),
+                @"left":@(WXEPViewPropertyLeft),
+                @"top":@(WXEPViewPropertyTop),
+                @"width":@(WXEPViewPropertyWidth),
+                @"height":@(WXEPViewPropertyHeight),
+                @"scroll.contentOffset":@(WXEPViewPropertyContentOffset),
+                @"scroll.contentOffsetX":@(WXEPViewPropertyContentOffsetX),
+                @"scroll.contentOffsetY":@(WXEPViewPropertyContentOffsetY),
+                @"transform.rotateX":@(WXEPViewPropertyRotateX),
+                @"transform.rotateY":@(WXEPViewPropertyRotateY),
+                @"transform.rotateZ":@(WXEPViewPropertyRotate),};
+    });
+    return map;
 }
 
 + (void)makeTranslate:(NSObject *)result model:(EBExpressionProperty **)model {

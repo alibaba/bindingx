@@ -42,7 +42,7 @@
 
 - (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)expressionMap
                        options:(NSDictionary *)options
-                exitExpression:(NSString *)exitExpression
+                exitExpression:(NSDictionary *)exitExpression
                       callback:(EBKeepAliveCallback)callback {
     self.expressionMap = expressionMap;
     self.exitExpression = exitExpression;
@@ -92,3 +92,4 @@
 }
 
 @end
+
