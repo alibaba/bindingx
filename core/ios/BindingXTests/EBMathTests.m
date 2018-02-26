@@ -7,36 +7,28 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "EBTestUtils.h"
+#import "EBTestCase.h"
 
-@interface MathTests : XCTestCase
-
-@property(nonatomic, strong) NSMutableDictionary *scope;
-
+@interface EBMathTests : EBTestCase
 @end
 
-@implementation MathTests
+@implementation EBMathTests
 
-- (void)setUp {
-    [super setUp];
-    
-    _scope = [EBExpressionScope generalScope];
-}
 
 - (void)testMax {
     //max(x,10)
     EBExpression *expression = [EBTestUtils expressionFromJSON:@"{\"type\":\"CallExpression\",\"children\":[{\"type\":\"Identifier\",\"value\":\"max\"},{\"type\":\"Arguments\",\"children\":[{\"type\":\"Identifier\",\"value\":\"x\"},{\"type\":\"NumericLiteral\",\"value\":10}]}]}"];
     
-    _scope[@"x"] = @(8);
-    NSObject *result = [expression executeInScope:_scope];
+    self.scope[@"x"] = @(8);
+    NSObject *result = [expression executeInScope:self.scope];
     XCTAssertEqualObjects(result, @(10));
     
-    _scope[@"x"] = @(11);
-    result = [expression executeInScope:_scope];
+    self.scope[@"x"] = @(11);
+    result = [expression executeInScope:self.scope];
     XCTAssertEqualObjects(result, @(11));
     
-    _scope[@"x"] = @(11);
-    result = [expression executeInScope:_scope];
+    self.scope[@"x"] = @(11);
+    result = [expression executeInScope:self.scope];
     XCTAssertEqualObjects(result, @(11));
 }
 

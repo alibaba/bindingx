@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#import "EBModule.h"
+#import "EBWXModule.h"
 #import <WeexSDK/WeexSDK.h>
 #import "EBExpressionHandler.h"
 #import <pthread/pthread.h>
@@ -22,13 +22,13 @@
 
 WX_PlUGIN_EXPORT_MODULE(bindingx, EBModule)
 
-@interface EBModule ()
+@interface EBWXModule ()
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, EBExpressionHandler *> *> *sourceMap;
 
 @end
 
-@implementation EBModule {
+@implementation EBWXModule {
     pthread_mutex_t mutex;
     pthread_mutexattr_t mutexAttr;
 }

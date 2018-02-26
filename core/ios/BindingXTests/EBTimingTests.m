@@ -7,13 +7,14 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "EBExpressionTiming.h"
+#import "EBTestCase.h"
+#import "EBExpressionHandler.h"
 
-@interface TimingTests : XCTestCase
+@interface EBTimingTests : EBTestCase
 
 @end
 
-@implementation TimingTests
+@implementation EBTimingTests
 
 - (void)testTimingExit {
     

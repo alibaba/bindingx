@@ -7,34 +7,23 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "EBTestUtils.h"
+#import "EBTestCase.h"
 
-@interface EvaluateTests : XCTestCase
-
-@property(nonatomic, strong) NSMutableDictionary *scope;
+@interface EBEvaluateTests : EBTestCase
 
 @end
 
-@implementation EvaluateTests
-
-
-- (void)setUp {
-    [super setUp];
-    
-    _scope = [EBExpressionScope generalScope];
-}
-
+@implementation EBEvaluateTests
 
 - (void)testExample {
     
     //evaluateColor('#ff0000','#0000ff',min(x,650)/650)
     EBExpression *expression = [EBTestUtils expressionFromJSON:@"{\"type\":\"CallExpression\",\"children\":[{\"type\":\"Identifier\",\"value\":\"evaluateColor\"},{\"type\":\"Arguments\",\"children\":[{\"type\":\"StringLiteral\",\"value\":\"'#ff0000'\"},{\"type\":\"StringLiteral\",\"value\":\"'#0000ff'\"},{\"type\":\"/\",\"children\":[{\"type\":\"CallExpression\",\"children\":[{\"type\":\"Identifier\",\"value\":\"min\"},{\"type\":\"Arguments\",\"children\":[{\"type\":\"Identifier\",\"value\":\"x\"},{\"type\":\"NumericLiteral\",\"value\":650}]}]},{\"type\":\"NumericLiteral\",\"value\":650}]}]}]}"];
     
-    _scope[@"x"] = @(650);
-    NSArray *result = (NSArray *)[expression executeInScope:_scope];
-    XCTAssertEqualObjects(result[0], @(0));
-    XCTAssertEqualObjects(result[1], @(0));
-    XCTAssertEqualObjects(result[2], @(255));
+    self.scope[@"x"] = @(650);
+    NSArray *result = (NSArray *)[expression executeInScope:self.scope];
+    NSArray *right = @[@(0),@(0),@(255)];
+    XCTAssertEqualObjects(result, right);
     
 }
 

@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
+#ifndef WXEBModule_h
+#define WXEBModule_h
 
-//! Project version number for RNBindingX.
-FOUNDATION_EXPORT double RNBindingXVersionNumber;
+#import <Foundation/Foundation.h>
+#import <WeexSDK/WXModuleProtocol.h>
 
-//! Project version string for RNBindingX.
-FOUNDATION_EXPORT const unsigned char RNBindingXVersionString[];
+@interface EBWXModule : NSObject <WXModuleProtocol>
 
-// In this header, you should import all the public headers of your framework using statements like #import <RNBindingX/PublicHeader.h>
-
-
+@end
+#endif /* WXEBModule_h */

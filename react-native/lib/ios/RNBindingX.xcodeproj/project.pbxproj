@@ -8,10 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		086D90C1F74671543A35EA7F /* libPods-RNBindingX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE05DC8499B09B9275CF5771 /* libPods-RNBindingX.a */; };
-		D955B1AA202FF82A000274AC /* RNBindingX.h in Headers */ = {isa = PBXBuildFile; fileRef = D955B1A8202FF82A000274AC /* RNBindingX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9C5589A1B97E7BEFB39E1375 /* libPods-RNBindingXTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB459CADE4FEECC5C9240CA5 /* libPods-RNBindingXTests.a */; };
 		D955B1B4202FF851000274AC /* EBUtility+RN.m in Sources */ = {isa = PBXBuildFile; fileRef = D955B1B0202FF850000274AC /* EBUtility+RN.m */; };
-		D955B1B5202FF851000274AC /* RNEBModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D955B1B1202FF851000274AC /* RNEBModule.m */; };
-		D955B1B6202FF851000274AC /* RNEBModule.h in Headers */ = {isa = PBXBuildFile; fileRef = D955B1B2202FF851000274AC /* RNEBModule.h */; };
 		D955B1B7202FF851000274AC /* EBUtility+RN.h in Headers */ = {isa = PBXBuildFile; fileRef = D955B1B3202FF851000274AC /* EBUtility+RN.h */; };
 		D9A6A8C12043A5D9001AEC67 /* EBGyroVector3.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8952043A5D4001AEC67 /* EBGyroVector3.m */; };
 		D9A6A8C22043A5D9001AEC67 /* EBJSEvaluate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8962043A5D4001AEC67 /* EBJSEvaluate.m */; };
@@ -57,18 +55,30 @@
 		D9A6A8EA2043A5D9001AEC67 /* EBExpressionScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8BE2043A5D8001AEC67 /* EBExpressionScroller.m */; };
 		D9A6A8EB2043A5D9001AEC67 /* EBGyroManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8BF2043A5D9001AEC67 /* EBGyroManager.m */; };
 		D9A6A8EC2043A5D9001AEC67 /* EBGyroQuaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8C02043A5D9001AEC67 /* EBGyroQuaternion.m */; };
+		D9A6AA422043DE6E001AEC67 /* EBRNModule.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6AA402043DE6E001AEC67 /* EBRNModule.h */; };
+		D9A6AA432043DE6E001AEC67 /* EBRNModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6AA412043DE6E001AEC67 /* EBRNModule.m */; };
+		D9A6AA4B2043E142001AEC67 /* RNBindingXTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6AA4A2043E142001AEC67 /* RNBindingXTests.m */; };
+		D9A6AA4D2043E142001AEC67 /* RNBindingX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955B1A5202FF82A000274AC /* RNBindingX.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D9A6AA4E2043E142001AEC67 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D955B19C202FF82A000274AC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D955B1A4202FF82A000274AC;
+			remoteInfo = RNBindingX;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		22E206646D407E09F01C771E /* Pods-RNBindingX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBindingX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RNBindingX/Pods-RNBindingX.debug.xcconfig"; sourceTree = "<group>"; };
 		BB15E6679FBB269F8447243B /* Pods-RNBindingX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBindingX.release.xcconfig"; path = "Pods/Target Support Files/Pods-RNBindingX/Pods-RNBindingX.release.xcconfig"; sourceTree = "<group>"; };
+		BC0F083B31F0772E06C3FFFE /* Pods-RNBindingXTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBindingXTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RNBindingXTests/Pods-RNBindingXTests.release.xcconfig"; sourceTree = "<group>"; };
 		BE05DC8499B09B9275CF5771 /* libPods-RNBindingX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNBindingX.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D955B1A5202FF82A000274AC /* RNBindingX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RNBindingX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D955B1A8202FF82A000274AC /* RNBindingX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNBindingX.h; sourceTree = "<group>"; };
 		D955B1A9202FF82A000274AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D955B1B0202FF850000274AC /* EBUtility+RN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EBUtility+RN.m"; sourceTree = "<group>"; };
-		D955B1B1202FF851000274AC /* RNEBModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNEBModule.m; sourceTree = "<group>"; };
-		D955B1B2202FF851000274AC /* RNEBModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNEBModule.h; sourceTree = "<group>"; };
 		D955B1B3202FF851000274AC /* EBUtility+RN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EBUtility+RN.h"; sourceTree = "<group>"; };
 		D9A6A8952043A5D4001AEC67 /* EBGyroVector3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBGyroVector3.m; path = ../BindingX/EBGyroVector3.m; sourceTree = "<group>"; };
 		D9A6A8962043A5D4001AEC67 /* EBJSEvaluate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBJSEvaluate.m; path = ../BindingX/EBJSEvaluate.m; sourceTree = "<group>"; };
@@ -114,6 +124,13 @@
 		D9A6A8BE2043A5D8001AEC67 /* EBExpressionScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionScroller.m; path = ../BindingX/EBExpressionScroller.m; sourceTree = "<group>"; };
 		D9A6A8BF2043A5D9001AEC67 /* EBGyroManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBGyroManager.m; path = ../BindingX/EBGyroManager.m; sourceTree = "<group>"; };
 		D9A6A8C02043A5D9001AEC67 /* EBGyroQuaternion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBGyroQuaternion.m; path = ../BindingX/EBGyroQuaternion.m; sourceTree = "<group>"; };
+		D9A6AA402043DE6E001AEC67 /* EBRNModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBRNModule.h; sourceTree = "<group>"; };
+		D9A6AA412043DE6E001AEC67 /* EBRNModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBRNModule.m; sourceTree = "<group>"; };
+		D9A6AA482043E142001AEC67 /* RNBindingXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RNBindingXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9A6AA4A2043E142001AEC67 /* RNBindingXTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNBindingXTests.m; sourceTree = "<group>"; };
+		D9A6AA4C2043E142001AEC67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB459CADE4FEECC5C9240CA5 /* libPods-RNBindingXTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNBindingXTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6D10BCEBB7C4B2F9A2632EC /* Pods-RNBindingXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBindingXTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RNBindingXTests/Pods-RNBindingXTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +142,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D9A6AA452043E142001AEC67 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9A6AA4D2043E142001AEC67 /* RNBindingX.framework in Frameworks */,
+				9C5589A1B97E7BEFB39E1375 /* libPods-RNBindingXTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -133,6 +159,8 @@
 			children = (
 				22E206646D407E09F01C771E /* Pods-RNBindingX.debug.xcconfig */,
 				BB15E6679FBB269F8447243B /* Pods-RNBindingX.release.xcconfig */,
+				E6D10BCEBB7C4B2F9A2632EC /* Pods-RNBindingXTests.debug.xcconfig */,
+				BC0F083B31F0772E06C3FFFE /* Pods-RNBindingXTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -141,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				BE05DC8499B09B9275CF5771 /* libPods-RNBindingX.a */,
+				DB459CADE4FEECC5C9240CA5 /* libPods-RNBindingXTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -149,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				D955B1A7202FF82A000274AC /* RNBindingX */,
+				D9A6AA492043E142001AEC67 /* RNBindingXTests */,
 				D955B1A6202FF82A000274AC /* Products */,
 				0FCA19E944CBB2BE0B6762D1 /* Pods */,
 				5671271A8550C4B4B4663A29 /* Frameworks */,
@@ -159,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				D955B1A5202FF82A000274AC /* RNBindingX.framework */,
+				D9A6AA482043E142001AEC67 /* RNBindingXTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,9 +200,8 @@
 				D955B21B2030102B000274AC /* core */,
 				D955B1B3202FF851000274AC /* EBUtility+RN.h */,
 				D955B1B0202FF850000274AC /* EBUtility+RN.m */,
-				D955B1B2202FF851000274AC /* RNEBModule.h */,
-				D955B1B1202FF851000274AC /* RNEBModule.m */,
-				D955B1A8202FF82A000274AC /* RNBindingX.h */,
+				D9A6AA402043DE6E001AEC67 /* EBRNModule.h */,
+				D9A6AA412043DE6E001AEC67 /* EBRNModule.m */,
 				D955B1A9202FF82A000274AC /* Info.plist */,
 			);
 			path = RNBindingX;
@@ -226,7 +256,16 @@
 				D9A6A8A12043A5D5001AEC67 /* NSObject+EBTuplePacker.m */,
 			);
 			name = core;
-			path = ../../../../core/ios/core;
+			path = ../../../../core/ios/BindingX;
+			sourceTree = "<group>";
+		};
+		D9A6AA492043E142001AEC67 /* RNBindingXTests */ = {
+			isa = PBXGroup;
+			children = (
+				D9A6AA4A2043E142001AEC67 /* RNBindingXTests.m */,
+				D9A6AA4C2043E142001AEC67 /* Info.plist */,
+			);
+			path = RNBindingXTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,7 +276,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9A6A8C72043A5D9001AEC67 /* EBGyroQuaternion.h in Headers */,
-				D955B1AA202FF82A000274AC /* RNBindingX.h in Headers */,
 				D9A6A8E82043A5D9001AEC67 /* EBExpressionExecutor.h in Headers */,
 				D9A6A8D22043A5D9001AEC67 /* NSObject+EBTuplePacker.h in Headers */,
 				D9A6A8E22043A5D9001AEC67 /* EBExpressionHandler.h in Headers */,
@@ -253,12 +291,12 @@
 				D9A6A8DE2043A5D9001AEC67 /* EBExpressionProperty.h in Headers */,
 				D9A6A8CA2043A5D9001AEC67 /* EBUtility.h in Headers */,
 				D9A6A8DF2043A5D9001AEC67 /* EBJSTransform.h in Headers */,
-				D955B1B6202FF851000274AC /* RNEBModule.h in Headers */,
 				D9A6A8C42043A5D9001AEC67 /* EBExpressionScope.h in Headers */,
 				D9A6A8CE2043A5D9001AEC67 /* EBExpressionScroller.h in Headers */,
 				D9A6A8E52043A5D9001AEC67 /* EBExpressionTiming.h in Headers */,
 				D9A6A8D02043A5D9001AEC67 /* EBGyroOrientationEvaluator.h in Headers */,
 				D9A6A8C82043A5D9001AEC67 /* EBGyroVector3.h in Headers */,
+				D9A6AA422043DE6E001AEC67 /* EBRNModule.h in Headers */,
 				D955B1B7202FF851000274AC /* EBUtility+RN.h in Headers */,
 				D9A6A8E92043A5D9001AEC67 /* EBJSEvaluate.h in Headers */,
 			);
@@ -287,6 +325,27 @@
 			productReference = D955B1A5202FF82A000274AC /* RNBindingX.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		D9A6AA472043E142001AEC67 /* RNBindingXTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9A6AA502043E142001AEC67 /* Build configuration list for PBXNativeTarget "RNBindingXTests" */;
+			buildPhases = (
+				ACC17D45B7FB07A641856F30 /* [CP] Check Pods Manifest.lock */,
+				D9A6AA442043E142001AEC67 /* Sources */,
+				D9A6AA452043E142001AEC67 /* Frameworks */,
+				D9A6AA462043E142001AEC67 /* Resources */,
+				9AF832D49638B21FBB7B9953 /* [CP] Embed Pods Frameworks */,
+				3EC549235F1502FEB3EF715F /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D9A6AA4F2043E142001AEC67 /* PBXTargetDependency */,
+			);
+			name = RNBindingXTests;
+			productName = RNBindingXTests;
+			productReference = D9A6AA482043E142001AEC67 /* RNBindingXTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -297,6 +356,10 @@
 				ORGANIZATIONNAME = Alibaba;
 				TargetAttributes = {
 					D955B1A4202FF82A000274AC = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					D9A6AA472043E142001AEC67 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 					};
@@ -315,12 +378,20 @@
 			projectRoot = "";
 			targets = (
 				D955B1A4202FF82A000274AC /* RNBindingX */,
+				D9A6AA472043E142001AEC67 /* RNBindingXTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D955B1A3202FF82A000274AC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9A6AA462043E142001AEC67 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -348,6 +419,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		3EC549235F1502FEB3EF715F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RNBindingXTests/Pods-RNBindingXTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		80B67943937D19C07AB21414 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -361,6 +447,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RNBindingX/Pods-RNBindingX-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9AF832D49638B21FBB7B9953 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RNBindingXTests/Pods-RNBindingXTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ACC17D45B7FB07A641856F30 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RNBindingXTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -379,8 +498,8 @@
 				D9A6A8D72043A5D9001AEC67 /* EBGyroOrientationEvaluator.m in Sources */,
 				D9A6A8C62043A5D9001AEC67 /* EBExpressionScope.m in Sources */,
 				D9A6A8C22043A5D9001AEC67 /* EBJSEvaluate.m in Sources */,
-				D955B1B5202FF851000274AC /* RNEBModule.m in Sources */,
 				D9A6A8DC2043A5D9001AEC67 /* EBJSEase.m in Sources */,
+				D9A6AA432043DE6E001AEC67 /* EBRNModule.m in Sources */,
 				D9A6A8EB2043A5D9001AEC67 /* EBGyroManager.m in Sources */,
 				D9A6A8CB2043A5D9001AEC67 /* EBExpressionProperty.m in Sources */,
 				D9A6A8E62043A5D9001AEC67 /* EBJSMath.m in Sources */,
@@ -397,7 +516,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D9A6AA442043E142001AEC67 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9A6AA4B2043E142001AEC67 /* RNBindingXTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D9A6AA4F2043E142001AEC67 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D955B1A4202FF82A000274AC /* RNBindingX */;
+			targetProxy = D9A6AA4E2043E142001AEC67 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		D955B1AB202FF82A000274AC /* Debug */ = {
@@ -552,6 +687,36 @@
 			};
 			name = Release;
 		};
+		D9A6AA512043E142001AEC67 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E6D10BCEBB7C4B2F9A2632EC /* Pods-RNBindingXTests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6L37LAR3GU;
+				INFOPLIST_FILE = RNBindingXTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.alibaba.RNBindingXTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D9A6AA522043E142001AEC67 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC0F083B31F0772E06C3FFFE /* Pods-RNBindingXTests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6L37LAR3GU;
+				INFOPLIST_FILE = RNBindingXTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.alibaba.RNBindingXTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -569,6 +734,15 @@
 			buildConfigurations = (
 				D955B1AE202FF82A000274AC /* Debug */,
 				D955B1AF202FF82A000274AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9A6AA502043E142001AEC67 /* Build configuration list for PBXNativeTarget "RNBindingXTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9A6AA512043E142001AEC67 /* Debug */,
+				D9A6AA522043E142001AEC67 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

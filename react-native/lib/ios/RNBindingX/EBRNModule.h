@@ -17,6 +17,18 @@
 #import <React/RCTEventEmitter.h>
 #import <React/RCTBridgeModule.h>
 
-@interface RNEBModule : RCTEventEmitter
+@interface EBRNModule : RCTEventEmitter
+
+- (void)prepare:(NSDictionary *)dictionary;
+
+- (NSDictionary *)bind:(NSDictionary *)dictionary;
+
+- (void)unbind:(NSDictionary *)options;
+
+- (void)unbindAll;
+
+- (NSArray *)supportFeatures;
+
+- (NSDictionary *)getComputedStyle:(NSString *)sourceRef;
 
 @end

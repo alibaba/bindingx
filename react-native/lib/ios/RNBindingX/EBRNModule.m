@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#import "RNEBModule.h"
+#import "EBRNModule.h"
 #import "EBExpressionHandler.h"
 #import <pthread/pthread.h>
 #import "EBUtility+RN.h"
@@ -25,13 +25,13 @@
 
 #define BINDING_EVENT_NAME @"bindingx:statechange"
 
-@interface RNEBModule ()
+@interface EBRNModule ()
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, EBExpressionHandler *> *> *sourceMap;
 
 @end
 
-@implementation RNEBModule {
+@implementation EBRNModule {
     pthread_mutex_t mutex;
     pthread_mutexattr_t mutexAttr;
 }
@@ -43,7 +43,8 @@ RCT_EXPORT_MODULE(bindingx)
     return RCTGetUIManagerQueue();
 }
 
-- (instancetype)init {
+- (instancetype)init
+{
     if (self = [super init]) {
         pthread_mutexattr_init(&mutexAttr);
         pthread_mutexattr_settype(&mutexAttr, PTHREAD_MUTEX_RECURSIVE);
@@ -52,7 +53,8 @@ RCT_EXPORT_MODULE(bindingx)
     return self;
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     [self unbindAll];
     pthread_mutex_destroy(&mutex);
     pthread_mutexattr_destroy(&mutexAttr);
@@ -132,6 +134,7 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *,bind:(NSDictionary *)dictiona
     if ([token isKindOfClass:NSNumber.class]) {
         token = [(NSNumber *)token stringValue];
     }
+    
     if ([EBUtility isBlankString:token]){
         if ((exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
             RCTLogWarn(@"bind params handler error");
@@ -209,27 +212,25 @@ RCT_EXPORT_METHOD(unbind:(NSDictionary *)options)
     NSString* eventType = options[@"eventType"];
     
     if ([EBUtility isBlankString:token] || [EBUtility isBlankString:eventType]) {
-        RCTLogWarn(@"disableBinding params error");
+        RCTLogWarn(@"unbind params error");
         return;
     }
     
     WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
     if (exprType == WXExpressionTypeUndefined) {
-        RCTLogWarn(@"disableBinding params handler error");
+        RCTLogWarn(@"unbind params handler error");
         return;
     }
     
     pthread_mutex_lock(&mutex);
     
     EBExpressionHandler *handler = [self handlerForToken:token expressionType:exprType];
-    if (!handler) {
-        RCTLogWarn(@"disableBinding can't find handler handler");
-        pthread_mutex_unlock(&mutex);
-        return;
+    if (handler) {
+        [handler removeExpressionBinding];
+        [self removeHandler:handler forToken:token expressionType:exprType];
+    } else {
+        RCTLogWarn(@"unbind can't find handler handler");
     }
-    
-    [handler removeExpressionBinding];
-    [self removeHandler:handler forToken:token expressionType:exprType];
     
     pthread_mutex_unlock(&mutex);
 }

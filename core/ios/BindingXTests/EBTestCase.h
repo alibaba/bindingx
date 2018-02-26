@@ -9,8 +9,10 @@
 #import <XCTest/XCTest.h>
 #import "EBTestUtils.h"
 
-@interface EBBaseTests : XCTestCase
+@interface EBTestCase : XCTestCase
 
 @property(nonatomic, strong) NSMutableDictionary *scope;
+
+- (void)AssertEqualObjects:(NSObject *)object withNewScope:(NSDictionary *)newScope expression:(EBExpression *)expression;
 
 @end

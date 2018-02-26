@@ -7,13 +7,13 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "EBExpression.h"
+#import "EBTestCase.h"
 
-@interface ExpressionTests : XCTestCase
+@interface EBExpressionTests : EBTestCase
 
 @end
 
-@implementation ExpressionTests
+@implementation EBExpressionTests
 
 - (void)testExpression {
     NSDictionary *exitExpression = @{
@@ -25,16 +25,16 @@
                                      };
     EBExpression *expression = [[EBExpression alloc] initWithRoot:exitExpression];
     
-    NSDictionary *scope = @{@"t":@(1000)};
-    NSObject *result = [expression executeInScope:scope];
+    self.scope[@"t"] = @(1000);
+    NSObject *result = [expression executeInScope:self.scope];
     XCTAssertEqualObjects(result, @(0));
     
-    scope = @{@"t":@(5000)};
-    result = [expression executeInScope:scope];
+    self.scope[@"t"] = @(5000);
+    result = [expression executeInScope:self.scope];
     XCTAssertEqualObjects(result, @(1));
     
-    scope = @{@"t":@(6000)};
-    result = [expression executeInScope:scope];
+    self.scope[@"t"] = @(6000);
+    result = [expression executeInScope:self.scope];
     XCTAssertEqualObjects(result, @(1));
 }
 
@@ -48,16 +48,16 @@
                                      };
     EBExpression *expression = [[EBExpression alloc] initWithRoot:exitExpression];
     
-    NSDictionary *scope = @{@"t":@(1000)};
-    NSObject *result = [expression executeInScope:scope];
+    self.scope[@"t"] = @(1000);
+    NSObject *result = [expression executeInScope:self.scope];
     XCTAssertEqualObjects(result, @(0));
     
-    scope = @{@"t":@(5000)};
-    result = [expression executeInScope:scope];
+    self.scope[@"t"] = @(5000);
+    result = [expression executeInScope:self.scope];
     XCTAssertEqualObjects(result, @(0));
     
-    scope = @{@"t":@(6000)};
-    result = [expression executeInScope:scope];
+    self.scope[@"t"] = @(6000);
+    result = [expression executeInScope:self.scope];
     XCTAssertEqualObjects(result, @(1));
 }
 
