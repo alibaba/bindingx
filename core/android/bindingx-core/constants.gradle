@@ -1,5 +1,5 @@
 /**
- * use [./gradlew clean install bintrayUpload] to publish(bintray)
+ * use [./gradlew clean assemble install bintrayUpload] to publish(bintray)
  * */
 
 ext {
