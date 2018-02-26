@@ -30,16 +30,16 @@
 
 
 <script>
-var version = '0.0.6';
+var version = '0.0.5';
 var isDebugMode = location.href.toString().indexOf('localhost') > 0 || location.href.toString().indexOf('30.') > 0;
 
 document.title='BindingX404 ' + version;
 
-if(!isDebugMode) {
+if(!isDebugMode || true) {
   loadCss(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.css`);
 
   loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/js/modernizr.custom.js`);
-  setTimeout(() -> {
+  setTimeout(function() {
     loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-internal/js/hovereffect.js`);
     loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/common.js`);
     loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.js`);
