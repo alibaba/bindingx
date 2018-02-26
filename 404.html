@@ -30,18 +30,21 @@
 
 
 <script>
-var version = '0.0.5';
+var version = '0.0.6';
 var isDebugMode = location.href.toString().indexOf('localhost') > 0 || location.href.toString().indexOf('30.') > 0;
 
-document.title='BindingX ' + version;
+document.title='BindingX404 ' + version;
 
 if(!isDebugMode) {
   loadCss(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.css`);
 
   loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/js/modernizr.custom.js`);
-  loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-internal/js/hovereffect.js`);
-  loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/common.js`);
-  loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.js`);
+  setTimeout(() -> {
+    loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-internal/js/hovereffect.js`);
+    loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/common.js`);
+    loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.js`);
+  }, 30);
+
 }else {
   loadCss('//localhost:8010/index.css');
   loadScript('//localhost:8010/common.js')
