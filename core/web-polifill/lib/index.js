@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -366,13 +366,29 @@ Object.defineProperty(exports, "__esModule", {
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 /**
+ Copyright 2018 Alibaba Group
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+/**
  * Transforms matrix into an object
  *
  * @param string matrix
  * @return object
  */
 
-// TODO matrix4 3D场景下待实现  目前仅仅实现matrix  2D
+// TODO matrix4 for 3D
 var matrixToTransformObj = function matrixToTransformObj(matrix) {
   // this happens when there was no rotation yet in CSS
   if (matrix === 'none') {
@@ -452,7 +468,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Copyright 2018 Alibaba Group
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Licensed under the Apache License, Version 2.0 (the "License");
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      you may not use this file except in compliance with the License.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      You may obtain a copy of the License at
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      http://www.apache.org/licenses/LICENSE-2.0
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Unless required by applicable law or agreed to in writing, software
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      distributed under the License is distributed on an "AS IS" BASIS,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      See the License for the specific language governing permissions and
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      limitations under the License.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 
 var _simpleLodash = __webpack_require__(1);
 
@@ -1046,117 +1076,29 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/**
+ Copyright 2018 Alibaba Group
 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-function toNumber(value) {
-  return Number(value);
-}
+ http://www.apache.org/licenses/LICENSE-2.0
 
-function toBoolean(value) {
-  return !!value;
-}
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
 
-function equal(v1, v2) {
-  return v1 == v2;
-}
-
-function strictlyEqual(v1, v2) {
-  return v1 === v2;
-}
-
-function execute(node, scope) {
-
-  var type = node.type;
-  var children = node.children;
-  switch (type) {
-    case 'StringLiteral':
-      return String(node.value);
-    case 'NumericLiteral':
-      return parseFloat(node.value);
-    case 'BooleanLiteral':
-      return !!node.value;
-    case 'Identifier':
-      return scope[node.value];
-    case 'CallExpression':
-      var fn = execute(children[0], scope);
-      // console.log('fn:',fn)
-      var args = [];
-      var jsonArguments = children[1].children;
-      for (var i = 0; i < jsonArguments.length; i++) {
-        args.push(execute(jsonArguments[i], scope));
-      }
-      return fn.apply(null, args);
-    case '?':
-      if (execute(children[0], scope)) {
-        return execute(children[1], scope);
-      }
-      return execute(children[2], scope);
-    case '+':
-      return toNumber(execute(children[0], scope)) + toNumber(execute(children[1], scope));
-    case '-':
-      return toNumber(execute(children[0], scope)) - toNumber(execute(children[1], scope));
-    case '*':
-      return toNumber(execute(children[0], scope)) * toNumber(execute(children[1], scope));
-    case '/':
-      return toNumber(execute(children[0], scope)) / toNumber(execute(children[1], scope));
-    case '%':
-      return toNumber(execute(children[0], scope)) % toNumber(execute(children[1], scope));
-    case '**':
-      return Math.pow(toNumber(execute(children[0], scope)), toNumber(execute(children[1], scope)));
-
-    case '>':
-      return toNumber(execute(children[0], scope)) > toNumber(execute(children[1], scope));
-    case '<':
-      return toNumber(execute(children[0], scope)) < toNumber(execute(children[1], scope));
-    case '>=':
-      return toNumber(execute(children[0], scope)) >= toNumber(execute(children[1], scope));
-    case '<=':
-      return toNumber(execute(children[0], scope)) <= toNumber(execute(children[1], scope));
-
-    case '==':
-      return equal(execute(children[0], scope), execute(children[1], scope));
-    case '===':
-      return strictlyEqual(execute(children[0], scope), execute(children[1], scope));
-    case '!=':
-      return !equal(execute(children[0], scope), execute(children[1], scope));
-    case '!==':
-      return !strictlyEqual(execute(children[0], scope), execute(children[1], scope));
-
-    case '&&':
-      var result = void 0;
-      result = execute(children[0], scope);
-      if (!toBoolean(result)) return result;
-      return execute(children[1], scope);
-    case '||':
-      result = execute(children[0], scope);
-      if (toBoolean(result)) return result;
-      return execute(children[1], scope);
-    case '!':
-      return !toBoolean(execute(children[0], scope));
-
-  }
-  return null;
-}
-
-exports.default = {
-  execute: execute
-};
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _quaternion = __webpack_require__(7);
+var _quaternion = __webpack_require__(6);
 
 var _quaternion2 = _interopRequireDefault(_quaternion);
 
@@ -1232,10 +1174,26 @@ Vector3.prototype = {
 exports.default = Vector3;
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/**
+ Copyright 2018 Alibaba Group
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -1618,7 +1576,7 @@ Quaternion.prototype = {
 exports.default = Quaternion;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1627,6 +1585,22 @@ exports.default = Quaternion;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+/**
+ Copyright 2018 Alibaba Group
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 var _Math = {
   DEG2RAD: Math.PI / 180,
   RAD2DEG: 180 / Math.PI,
@@ -1641,114 +1615,26 @@ var _Math = {
 exports.default = _Math;
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/**
+ Copyright 2018 Alibaba Group
 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+ http://www.apache.org/licenses/LICENSE-2.0
 
-var _simpleLodash = __webpack_require__(1);
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
 
-var _simpleLodash2 = _interopRequireDefault(_simpleLodash);
-
-var _animationUtil = __webpack_require__(4);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// 内置方法
-function colorToDecimal(hexColor) {
-  var hex = hexColor.replace(/'|"|#/g, '');
-  return parseInt(hex, 16);
-}
-
-function decToHex(dec) {
-  var hex = dec.toString(16);
-  var a = [];
-  for (var i = 0; i < 6 - hex.length; i++) {
-    a.push('0');
-  }
-  return a.join('') + hex;
-}
-
-function parseColor(hexColor) {
-  var hex = hexColor.replace(/'|"|#/g, '');
-  hex = hex.length === 3 ? [hex[0], hex[0], hex[1], hex[1], hex[2], hex[2]].join('') : hex;
-  var r = '' + hex[0] + hex[1];
-  var g = '' + hex[2] + hex[3];
-  var b = '' + hex[4] + hex[5];
-  return {
-    r: r,
-    g: g,
-    b: b,
-    dr: colorToDecimal(r),
-    dg: colorToDecimal(g),
-    db: colorToDecimal(b)
-  };
-}
-
-var Fn = {
-  max: Math.max,
-  min: Math.min,
-  sin: Math.sin,
-  cos: Math.cos,
-  tan: Math.tan,
-  sqrt: Math.sqrt,
-  cbrt: Math.cbrt,
-  log: Math.log,
-  abs: Math.abs,
-  atan: Math.atan,
-  floor: Math.floor,
-  ceil: Math.ceil,
-  pow: Math.pow,
-  exp: Math.exp,
-  PI: Math.PI,
-  E: Math.E,
-  acos: Math.acos,
-  asin: Math.asin,
-  sign: Math.sign,
-  atan2: Math.atan2,
-  round: Math.round,
-  rgb: function rgb(r, g, b) {
-    return 'rgb(' + parseInt(r) + ',' + parseInt(g) + ',' + parseInt(b) + ')';
-  },
-  rgba: function rgba(r, g, b, a) {
-    return 'rgb(' + parseInt(r) + ',' + parseInt(g) + ',' + parseInt(b) + ',' + a + ')';
-  },
-  // 用来获取参数
-  getArgs: function getArgs() {
-    return arguments;
-  },
-  // 颜色估值算法
-  evaluateColor: function evaluateColor(colorFrom, colorTo, percent) {
-    percent = percent > 1 ? 1 : percent;
-    var from = parseColor(colorFrom);
-    var to = parseColor(colorTo);
-    var dr = parseInt((to.dr - from.dr) * percent + from.dr);
-    var dg = parseInt((to.dg - from.dg) * percent + from.dg);
-    var db = parseInt((to.db - from.db) * percent + from.db);
-    var resDec = dr * 16 * 16 * 16 * 16 + dg * 16 * 16 + db;
-    return '#' + decToHex(resDec);
-  }
-};
-
-// 内置easing所有方法
-_simpleLodash2.default.map(_animationUtil.Easing, function (v, k) {
-  Fn[k] = function (t) {
-    return t;
-  };
-});
-
-exports.default = Fn;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1757,15 +1643,15 @@ var _simpleLodash = __webpack_require__(1);
 
 var _simpleLodash2 = _interopRequireDefault(_simpleLodash);
 
-var _expression = __webpack_require__(5);
+var _expression = __webpack_require__(9);
 
 var _expression2 = _interopRequireDefault(_expression);
 
-var _handlers = __webpack_require__(11);
+var _handlers = __webpack_require__(10);
 
 var _utils = __webpack_require__(2);
 
-var _fn = __webpack_require__(9);
+var _fn = __webpack_require__(18);
 
 var _fn2 = _interopRequireDefault(_fn);
 
@@ -2005,10 +1891,146 @@ module.exports = {
 };
 
 /***/ }),
-/* 11 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/**
+ Copyright 2018 Alibaba Group
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+function toNumber(value) {
+  return Number(value);
+}
+
+function toBoolean(value) {
+  return !!value;
+}
+
+function equal(v1, v2) {
+  return v1 == v2;
+}
+
+function strictlyEqual(v1, v2) {
+  return v1 === v2;
+}
+
+function execute(node, scope) {
+
+  var type = node.type;
+  var children = node.children;
+  switch (type) {
+    case 'StringLiteral':
+      return String(node.value);
+    case 'NumericLiteral':
+      return parseFloat(node.value);
+    case 'BooleanLiteral':
+      return !!node.value;
+    case 'Identifier':
+      return scope[node.value];
+    case 'CallExpression':
+      var fn = execute(children[0], scope);
+      // console.log('fn:',fn)
+      var args = [];
+      var jsonArguments = children[1].children;
+      for (var i = 0; i < jsonArguments.length; i++) {
+        args.push(execute(jsonArguments[i], scope));
+      }
+      return fn.apply(null, args);
+    case '?':
+      if (execute(children[0], scope)) {
+        return execute(children[1], scope);
+      }
+      return execute(children[2], scope);
+    case '+':
+      return toNumber(execute(children[0], scope)) + toNumber(execute(children[1], scope));
+    case '-':
+      return toNumber(execute(children[0], scope)) - toNumber(execute(children[1], scope));
+    case '*':
+      return toNumber(execute(children[0], scope)) * toNumber(execute(children[1], scope));
+    case '/':
+      return toNumber(execute(children[0], scope)) / toNumber(execute(children[1], scope));
+    case '%':
+      return toNumber(execute(children[0], scope)) % toNumber(execute(children[1], scope));
+    case '**':
+      return Math.pow(toNumber(execute(children[0], scope)), toNumber(execute(children[1], scope)));
+
+    case '>':
+      return toNumber(execute(children[0], scope)) > toNumber(execute(children[1], scope));
+    case '<':
+      return toNumber(execute(children[0], scope)) < toNumber(execute(children[1], scope));
+    case '>=':
+      return toNumber(execute(children[0], scope)) >= toNumber(execute(children[1], scope));
+    case '<=':
+      return toNumber(execute(children[0], scope)) <= toNumber(execute(children[1], scope));
+
+    case '==':
+      return equal(execute(children[0], scope), execute(children[1], scope));
+    case '===':
+      return strictlyEqual(execute(children[0], scope), execute(children[1], scope));
+    case '!=':
+      return !equal(execute(children[0], scope), execute(children[1], scope));
+    case '!==':
+      return !strictlyEqual(execute(children[0], scope), execute(children[1], scope));
+
+    case '&&':
+      var result = void 0;
+      result = execute(children[0], scope);
+      if (!toBoolean(result)) return result;
+      return execute(children[1], scope);
+    case '||':
+      result = execute(children[0], scope);
+      if (toBoolean(result)) return result;
+      return execute(children[1], scope);
+    case '!':
+      return !toBoolean(execute(children[0], scope));
+
+  }
+  return null;
+}
+
+exports.default = {
+  execute: execute
+};
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ Copyright 2018 Alibaba Group
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -2016,19 +2038,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ScrollHandler = exports.TimingHandler = exports.OrientationHandler = exports.PanHandler = undefined;
 
-var _pan = __webpack_require__(12);
+var _pan = __webpack_require__(11);
 
 var _pan2 = _interopRequireDefault(_pan);
 
-var _orientation = __webpack_require__(14);
+var _orientation = __webpack_require__(13);
 
 var _orientation2 = _interopRequireDefault(_orientation);
 
-var _timing = __webpack_require__(17);
+var _timing = __webpack_require__(16);
 
 var _timing2 = _interopRequireDefault(_timing);
 
-var _scroll = __webpack_require__(18);
+var _scroll = __webpack_require__(17);
 
 var _scroll2 = _interopRequireDefault(_scroll);
 
@@ -2040,10 +2062,26 @@ exports.TimingHandler = _timing2.default;
 exports.ScrollHandler = _scroll2.default;
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/**
+ Copyright 2018 Alibaba Group
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -2052,7 +2090,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _pan = __webpack_require__(13);
+var _pan = __webpack_require__(12);
 
 var _pan2 = _interopRequireDefault(_pan);
 
@@ -2128,10 +2166,26 @@ exports.default = PanHandler;
 ;
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/**
+ Copyright 2018 Alibaba Group
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -2161,7 +2215,7 @@ var DEFAULT_CONFIG = {
   thresholdX: 10,
   thresholdY: 10,
   touchAction: 'auto',
-  touchActionRatio: 1 / 2 // 默认1:2
+  touchActionRatio: 1 / 2
 };
 
 var PanGesture = function () {
@@ -2334,10 +2388,26 @@ var PanGesture = function () {
 exports.default = PanGesture;
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/**
+ Copyright 2018 Alibaba Group
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -2346,15 +2416,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _vector = __webpack_require__(6);
+var _vector = __webpack_require__(5);
 
 var _vector2 = _interopRequireDefault(_vector);
 
-var _orientation_controls = __webpack_require__(15);
+var _orientation_controls = __webpack_require__(14);
 
 var _orientation_controls2 = _interopRequireDefault(_orientation_controls);
 
-var _math = __webpack_require__(8);
+var _math = __webpack_require__(7);
 
 var _math2 = _interopRequireDefault(_math);
 
@@ -2375,8 +2445,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-// import {raf, cancelRAF} from '../raf';
-
 
 var OrientationHandler = function (_CommonHandler) {
   _inherits(OrientationHandler, _CommonHandler);
@@ -2493,29 +2561,45 @@ var OrientationHandler = function (_CommonHandler) {
 exports.default = OrientationHandler;
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/**
+ Copyright 2018 Alibaba Group
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _quaternion = __webpack_require__(7);
+var _quaternion = __webpack_require__(6);
 
 var _quaternion2 = _interopRequireDefault(_quaternion);
 
-var _vector = __webpack_require__(6);
+var _vector = __webpack_require__(5);
 
 var _vector2 = _interopRequireDefault(_vector);
 
-var _euler = __webpack_require__(16);
+var _euler = __webpack_require__(15);
 
 var _euler2 = _interopRequireDefault(_euler);
 
-var _math = __webpack_require__(8);
+var _math = __webpack_require__(7);
 
 var _math2 = _interopRequireDefault(_math);
 
@@ -2677,10 +2761,26 @@ function DeviceOrientationControls(object) {
 exports.default = DeviceOrientationControls;
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/**
+ Copyright 2018 Alibaba Group
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -2744,41 +2844,43 @@ Euler.DefaultOrder = 'XYZ';
 exports.default = Euler;
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/**
+ Copyright 2018 Alibaba Group
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _simpleLodash = __webpack_require__(1);
-
-var _simpleLodash2 = _interopRequireDefault(_simpleLodash);
-
-var _fn = __webpack_require__(9);
-
-var _fn2 = _interopRequireDefault(_fn);
 
 var _animationUtil = __webpack_require__(4);
 
 var _animationUtil2 = _interopRequireDefault(_animationUtil);
 
-var _expression = __webpack_require__(5);
-
-var _expression2 = _interopRequireDefault(_expression);
-
 var _common = __webpack_require__(3);
 
 var _common2 = _interopRequireDefault(_common);
-
-var _objectAssign = __webpack_require__(0);
-
-var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2787,44 +2889,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-// import Easing from 'animation-util/lib/easing';
-
-
-function getArgsFromExp(expression) {
-  var newExp = JSON.parse(JSON.stringify(expression));
-  if (newExp.type === 'CallExpression') {
-    var easing = newExp.children[0].value;
-    var isBezier = easing === 'cubicBezier';
-    newExp.children[0].value = 'getArgs';
-    var args = _expression2.default.execute(newExp, (0, _objectAssign2.default)(_fn2.default, {}));
-    if (isBezier) {
-      return {
-        duration: args[3],
-        begin: args[1],
-        offset: args[2],
-        end: args[1] + args[2],
-        easing: easing,
-        x1: args[4],
-        y1: args[5],
-        x2: args[6],
-        y2: args[7]
-      };
-    } else if (easing && _animationUtil.Easing[easing]) {
-      return {
-        duration: args[3],
-        begin: args[1],
-        offset: args[2] || 0,
-        end: args[1] + args[2],
-        easing: easing
-      };
-    }
-  }
-  return {
-    easing: 'linear',
-    duration: Infinity,
-    isNormal: true
-  };
-}
 
 var TimingHandler = function (_CommonHandler) {
   _inherits(TimingHandler, _CommonHandler);
@@ -2834,127 +2898,96 @@ var TimingHandler = function (_CommonHandler) {
 
     var _this = _possibleConstructorReturn(this, (TimingHandler.__proto__ || Object.getPrototypeOf(TimingHandler)).call(this, binding));
 
-    _initialiseProps.call(_this);
-
     var _this$binding$options = _this.binding.options,
         _this$binding$options2 = _this$binding$options.props,
         props = _this$binding$options2 === undefined ? [] : _this$binding$options2,
         exitExpression = _this$binding$options.exitExpression;
 
-    props.forEach(function (prop) {
-      var element = prop.element,
-          property = prop.property,
-          expression = prop.expression;
 
-      _this.animate({
-        element: element,
-        property: property,
-        expression: expression,
-        exitExpression: exitExpression
-      });
+    props.forEach(function (prop) {
+      var expression = prop.expression;
+
+      if (expression && expression.transformed && typeof expression.transformed === 'string') {
+        expression.transformed = JSON.parse(expression.transformed);
+      }
     });
+
+    var exitTransformed = void 0;
+    if (exitExpression && exitExpression.transformed) {
+      exitTransformed = JSON.parse(exitExpression.transformed);
+    }
+
+    var animation = _this.animation = new _animationUtil2.default({
+      duration: Infinity,
+      easing: 'linear',
+      onStart: function onStart() {
+        _this.binding.callback({ state: 'start', t: 0 });
+      },
+      onRun: function onRun(e) {
+        if (exitTransformed && _this.binding.getValue({ t: e.t }, exitTransformed)) {
+          _this.animation.stop();
+        }
+        props.forEach(function (prop) {
+          _this.animate(_extends({
+            exitTransformed: exitTransformed,
+            t: e.t
+          }, prop));
+        });
+      },
+      onStop: function onStop(e) {
+        _this.binding.callback({ state: 'exit', t: e.t - 1000 / 60 });
+      }
+    });
+    animation.run();
     return _this;
   }
 
   _createClass(TimingHandler, [{
     key: 'animate',
     value: function animate(args) {
-      var _this2 = this;
-
       var element = args.element,
           property = args.property,
           expression = args.expression,
-          exitExpression = args.exitExpression;
+          t = args.t;
 
-      var transformed = JSON.parse(expression.transformed);
-      var exitTransformed = void 0;
-      if (exitExpression && exitExpression.transformed) {
-        exitTransformed = JSON.parse(exitExpression.transformed);
-      }
-
-      var _getArgsFromExp = getArgsFromExp(transformed),
-          duration = _getArgsFromExp.duration,
-          begin = _getArgsFromExp.begin,
-          end = _getArgsFromExp.end,
-          easing = _getArgsFromExp.easing,
-          x1 = _getArgsFromExp.x1,
-          y1 = _getArgsFromExp.y1,
-          x2 = _getArgsFromExp.x2,
-          y2 = _getArgsFromExp.y2,
-          isNormal = _getArgsFromExp.isNormal;
-
-      if (duration !== undefined) {
-        var animation = new _animationUtil2.default({
-          duration: duration,
-          easing: easing,
-          bezierArgs: easing === 'cubicBezier' ? [x1, y1, x2, y2] : undefined,
-          onStart: function onStart() {
-            if (!_this2.isStart) {
-              _this2.binding.callback({ state: 'start', t: 0 });
-              _this2.isStart = true;
-            }
-          },
-          onRun: function onRun(e) {
-            if (exitTransformed && _this2.binding.getValue({ t: e.t }, exitTransformed)) {
-              animation.stop();
-            }
-            var realVal = void 0;
-            if (isNormal) {
-              realVal = _this2.binding.getValue({ t: e.t }, transformed);
-            } else {
-              var val = _this2.binding.getValue({ t: e.percent }, transformed);
-              realVal = (end - begin) * val + begin;
-            }
-            _this2.binding.setProperty(element, property, realVal);
-          },
-          onStop: function onStop(e) {
-            _this2.callback({ state: 'exit', t: e.t - 1000 / 60 });
-          }
-        });
-        animation.run();
-        this.animations.push(animation);
-      }
+      var value = this.binding.getValue({ t: t }, expression.transformed);
+      this.binding.setProperty(element, property, value);
     }
   }, {
     key: 'destroy',
     value: function destroy() {
-      _simpleLodash2.default.forEach(this.animations, function (animation) {
-        animation.stop();
-      });
+      if (this.animation) {
+        this.animation.stop();
+      }
     }
   }]);
 
   return TimingHandler;
 }(_common2.default);
 
-var _initialiseProps = function _initialiseProps() {
-  var _this3 = this;
-
-  this.animations = [];
-  this.isStart = false;
-  this.callbackCounts = 0;
-
-  this.callback = function () {
-    var args = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var _binding$options$prop = _this3.binding.options.props,
-        props = _binding$options$prop === undefined ? [] : _binding$options$prop;
-
-    if (props && props.length > 0) {
-      _this3.callbackCounts++;
-      if (_this3.callbackCounts === props.length) {
-        _this3.binding.callback(args);
-      }
-    }
-  };
-};
-
 exports.default = TimingHandler;
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/**
+ Copyright 2018 Alibaba Group
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -3074,6 +3107,133 @@ var ScrollHandler = function (_CommonHandler) {
 }(_common2.default);
 
 exports.default = ScrollHandler;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ Copyright 2018 Alibaba Group
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _simpleLodash = __webpack_require__(1);
+
+var _simpleLodash2 = _interopRequireDefault(_simpleLodash);
+
+var _animationUtil = __webpack_require__(4);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// inset function
+function colorToDecimal(hexColor) {
+  var hex = hexColor.replace(/'|"|#/g, '');
+  return parseInt(hex, 16);
+}
+
+function decToHex(dec) {
+  var hex = dec.toString(16);
+  var a = [];
+  for (var i = 0; i < 6 - hex.length; i++) {
+    a.push('0');
+  }
+  return a.join('') + hex;
+}
+
+function parseColor(hexColor) {
+  var hex = hexColor.replace(/'|"|#/g, '');
+  hex = hex.length === 3 ? [hex[0], hex[0], hex[1], hex[1], hex[2], hex[2]].join('') : hex;
+  var r = '' + hex[0] + hex[1];
+  var g = '' + hex[2] + hex[3];
+  var b = '' + hex[4] + hex[5];
+  return {
+    r: r,
+    g: g,
+    b: b,
+    dr: colorToDecimal(r),
+    dg: colorToDecimal(g),
+    db: colorToDecimal(b)
+  };
+}
+
+var Fn = {
+  max: Math.max,
+  min: Math.min,
+  sin: Math.sin,
+  cos: Math.cos,
+  tan: Math.tan,
+  sqrt: Math.sqrt,
+  cbrt: Math.cbrt,
+  log: Math.log,
+  abs: Math.abs,
+  atan: Math.atan,
+  floor: Math.floor,
+  ceil: Math.ceil,
+  pow: Math.pow,
+  exp: Math.exp,
+  PI: Math.PI,
+  E: Math.E,
+  acos: Math.acos,
+  asin: Math.asin,
+  sign: Math.sign,
+  atan2: Math.atan2,
+  round: Math.round,
+  rgb: function rgb(r, g, b) {
+    return 'rgb(' + parseInt(r) + ',' + parseInt(g) + ',' + parseInt(b) + ')';
+  },
+  rgba: function rgba(r, g, b, a) {
+    return 'rgb(' + parseInt(r) + ',' + parseInt(g) + ',' + parseInt(b) + ',' + a + ')';
+  },
+  getArgs: function getArgs() {
+    return arguments;
+  },
+  evaluateColor: function evaluateColor(colorFrom, colorTo, percent) {
+    percent = percent > 1 ? 1 : percent;
+    var from = parseColor(colorFrom);
+    var to = parseColor(colorTo);
+    var dr = parseInt((to.dr - from.dr) * percent + from.dr);
+    var dg = parseInt((to.dg - from.dg) * percent + from.dg);
+    var db = parseInt((to.db - from.db) * percent + from.db);
+    var resDec = dr * 16 * 16 * 16 * 16 + dg * 16 * 16 + db;
+    return '#' + decToHex(resDec);
+  }
+};
+
+// inset all easing functions
+_simpleLodash2.default.map(_animationUtil.Easing, function (v, k) {
+  if (k !== 'cubicBezier') {
+    Fn[k] = function (t, begin, offset, duration) {
+      t = Math.max(Math.min(t / duration, 1));
+      return v(t) * offset + begin;
+    };
+  }
+});
+
+Fn.cubicBezier = function (t, begin, offset, duration, x1, y1, x2, y2) {
+  t = Math.max(Math.min(t / duration, 1));
+  var epsilon = 1000 / 60 / duration / 4;
+  return (0, _animationUtil.Bezier)(x1, y1, x2, y2, epsilon)(t) * offset + begin;
+};
+
+exports.default = Fn;
 
 /***/ })
 /******/ ]);
