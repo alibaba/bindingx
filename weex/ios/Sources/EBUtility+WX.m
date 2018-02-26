@@ -17,20 +17,6 @@
 #import "EBUtility+WX.h"
 #import <WeexSDK/WeexSDK.h>
 
-void EBPerformBlockOnBridgeThread(void (^block)(void))
-{
-    WXPerformBlockOnBridgeThread(^{
-        block();
-    });
-}
-
-void EBPerformBlockOnMainThread(void (^block)(void))
-{
-    WXPerformBlockOnMainThread(^{
-        block();
-    });
-}
-
 @implementation EBUtility (WX)
 
 #pragma clang diagnostic push
@@ -106,22 +92,28 @@ void EBPerformBlockOnMainThread(void (^block)(void))
         WXComponent* component = nil;
         if ([target isKindOfClass:WXComponent.class]) {
             component = (WXComponent *)target;
-        }
-        
-        SEL componentSel = NSSelectorFromString(@"componentManager");
-        if (![component.weexInstance respondsToSelector:componentSel]) {
+        } else {
             return;
         }
         
+        WXSDKInstance *weexInstance = component.weexInstance;
+        if (!weexInstance) {
+            return;
+        }
+        SEL componentSel = NSSelectorFromString(@"componentManager");
         typedef WXComponentManager *(*send_type)(id, SEL);
         send_type methodInstance = (send_type)[WXSDKInstance instanceMethodForSelector:componentSel];
-        WXComponentManager *componentManager = methodInstance(component.weexInstance, componentSel);
-        
-        if (componentManager) {
-            if (styles.count > 0){
-                WXPerformBlockOnMainThread(^{
-                    [componentManager handleStyleOnMainThread:[styles copy] forComponent:target isUpdateStyles:YES];
-                });
+        if (methodInstance) {
+            WXComponentManager *componentManager = methodInstance(weexInstance, componentSel);
+            if (componentManager) {
+                if (styles.count > 0){
+                    WXPerformBlockOnMainThread(^{
+                        [componentManager handleStyleOnMainThread:[styles copy] forComponent:target isUpdateStyles:YES];
+                        if ([component isKindOfClass:NSClassFromString(@"WXTextComponent")] && model.color) {
+                            [component setNeedsDisplay];
+                        }
+                    });
+                }
             }
         }
     }
