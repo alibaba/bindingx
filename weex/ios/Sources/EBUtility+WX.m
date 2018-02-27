@@ -36,6 +36,20 @@ void EBPerformBlockOnMainThread(void (^block)(void))
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 
++ (void)performBlockOnBridgeThread:(EBPerformBlock)block
+{
+    WXPerformBlockOnBridgeThread(^{
+        block();
+    });
+}
+
++ (void)performBlockOnMainThread:(EBPerformBlock)block
+{
+    WXPerformBlockOnMainThread(^{
+        block();
+    });
+}
+
 + (void)execute:(EBExpressionProperty *)model to:(id)target
 {
     WXComponent *component = (WXComponent *)target;

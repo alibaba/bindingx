@@ -23,7 +23,7 @@
 #import <React/RCTText.h>
 #import <React/RCTShadowText.h>
 
-#define BINDING_EVENT_NAME @"BindingX"
+#define BINDING_EVENT_NAME @"bindingx:statechange"
 
 @interface RNEBModule ()
 
@@ -113,7 +113,7 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *,bind:(NSDictionary *)dictiona
     NSString *eventType =  dictionary[@"eventType"];
     NSArray *props = dictionary[@"props"];
     NSString *token = dictionary[@"anchor"];
-    NSString *exitExpression = dictionary[@"exitExpression"];
+    NSDictionary *exitExpression = dictionary[@"exitExpression"];
     NSDictionary *options = dictionary[@"options"];
     
     if ([EBUtility isBlankString:eventType] || !props || props.count == 0) {
@@ -149,7 +149,7 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *,bind:(NSDictionary *)dictiona
         for (NSDictionary *targetDic in props) {
             NSString *targetRef = targetDic[@"element"];
             NSString *property = targetDic[@"property"];
-            NSString *expression = targetDic[@"expression"];
+            NSDictionary *expression = targetDic[@"expression"];
             
             if (targetRef) {
                 
@@ -158,7 +158,7 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *,bind:(NSDictionary *)dictiona
                     propertyDic = [NSMutableDictionary dictionary];
                 }
                 NSMutableDictionary *expDict = [NSMutableDictionary dictionary];
-                expDict[@"expression"] = expression;
+                expDict[@"expression"] = [self parseExpression:expression];
                 if( targetDic[@"config"] )
                 {
                     expDict[@"config"] = targetDic[@"config"];
@@ -180,7 +180,7 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *,bind:(NSDictionary *)dictiona
         
         [handler updateTargetExpression:targetExpression
                                 options:options
-                         exitExpression:exitExpression
+                         exitExpression:[self parseExpression:exitExpression]
                                callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
                                    id body = nil;
                                    if ([result isKindOfClass:NSDictionary.class]) {
@@ -351,6 +351,23 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *, getComputedStyle:(NSString *
     if (handlerMap) {
         [handlerMap removeObjectForKey:[NSNumber numberWithInteger:exprType]];
     }
+}
+
+- (id)parseExpression:(NSDictionary *)expression
+{
+    if ([expression isKindOfClass:NSDictionary.class]) {
+        NSString* transformedExpressionStr = expression[@"transformed"];
+        if (transformedExpressionStr && [transformedExpressionStr isKindOfClass:NSString.class]) {
+            return [NSJSONSerialization JSONObjectWithData:[transformedExpressionStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
+        }
+        else {
+            return expression[@"origin"];
+        }
+    } else if ([expression isKindOfClass:NSString.class]) {
+        NSString* expressionStr = (NSString *)expression;
+        return [NSJSONSerialization JSONObjectWithData:[expressionStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
+    }
+    return nil;
 }
 
 @end

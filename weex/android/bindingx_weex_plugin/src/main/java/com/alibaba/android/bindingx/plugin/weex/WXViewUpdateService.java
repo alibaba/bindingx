@@ -15,6 +15,8 @@
  */
 package com.alibaba.android.bindingx.plugin.weex;
 
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,6 +36,7 @@ import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXScroller;
 import com.taobao.weex.ui.component.WXText;
 import com.taobao.weex.ui.view.WXTextView;
+import com.taobao.weex.ui.view.border.BorderDrawable;
 import com.taobao.weex.utils.WXUtils;
 
 import java.util.ArrayList;
@@ -234,10 +237,10 @@ final class WXViewUpdateService {
                 return;
             }
 
-            ArrayList<Object> l1 = (ArrayList<Object>) cmd;
-            if(l1.size() >= 2 && l1.get(0) instanceof Double && l1.get(1) instanceof Double) {
-                final double x1 = (double) l1.get(0);
-                final double y1 = (double) l1.get(1);
+            ArrayList<Object> list = (ArrayList<Object>) cmd;
+            if(list.size() >= 2 && list.get(0) instanceof Double && list.get(1) instanceof Double) {
+                final double x1 = (double) list.get(0);
+                final double y1 = (double) list.get(1);
                 postRunnable(targetView, new Runnable() {
                     @Override
                     public void run() {
@@ -260,11 +263,11 @@ final class WXViewUpdateService {
             if(!(cmd instanceof Double)) {
                 return;
             }
-            final double d1 = (double) cmd;
+            final double d = (double) cmd;
             postRunnable(targetView, new Runnable() {
                 @Override
                 public void run() {
-                    targetView.setTranslationX((float) getRealSize(d1,translator));
+                    targetView.setTranslationX((float) getRealSize(d,translator));
                 }
             });
         }
@@ -281,11 +284,11 @@ final class WXViewUpdateService {
             if(!(cmd instanceof Double)) {
                 return;
             }
-            final double d2 = (double) cmd;
+            final double d = (double) cmd;
             postRunnable(targetView, new Runnable() {
                 @Override
                 public void run() {
-                    targetView.setTranslationY((float) getRealSize(d2,translator));
+                    targetView.setTranslationY((float) getRealSize(d,translator));
                 }
             });
         }
@@ -321,12 +324,12 @@ final class WXViewUpdateService {
                         targetView.setScaleX((float) val);
                         targetView.setScaleY((float) val);
                     } else if(cmd instanceof ArrayList) {
-                        ArrayList<Object> l2 = (ArrayList<Object>) cmd;
-                        if(l2.size() >= 2 && l2.get(0) instanceof Double && l2.get(1) instanceof Double) {
-                            final double x2 = (double) l2.get(0);
-                            final double y2 = (double) l2.get(1);
-                            targetView.setScaleX((float) x2);
-                            targetView.setScaleY((float) y2);
+                        ArrayList<Object> list = (ArrayList<Object>) cmd;
+                        if(list.size() >= 2 && list.get(0) instanceof Double && list.get(1) instanceof Double) {
+                            final double x = (double) list.get(0);
+                            final double y = (double) list.get(1);
+                            targetView.setScaleX((float) x);
+                            targetView.setScaleY((float) y);
                         }
 
                     }
@@ -386,8 +389,8 @@ final class WXViewUpdateService {
                         targetView.setPivotY(pivot.second);
                     }
 
-                    final double d4 = (double) cmd;
-                    targetView.setScaleY((float) d4);
+                    final double d = (double) cmd;
+                    targetView.setScaleY((float) d);
                 }
             });
         }
@@ -423,8 +426,8 @@ final class WXViewUpdateService {
                         targetView.setPivotY(pivot.second);
                     }
 
-                    final double d5 = (double) cmd;
-                    targetView.setRotation((float) d5);
+                    final double d = (double) cmd;
+                    targetView.setRotation((float) d);
                 }
             });
         }
@@ -458,8 +461,8 @@ final class WXViewUpdateService {
                         targetView.setPivotY(pivot.second);
                     }
 
-                    final double d6 = (double) cmd;
-                    targetView.setRotationX((float) d6);
+                    final double d = (double) cmd;
+                    targetView.setRotationX((float) d);
                 }
             });
         }
@@ -494,8 +497,8 @@ final class WXViewUpdateService {
                         targetView.setPivotY(pivot.second);
                     }
 
-                    final double d7 = (double) cmd;
-                    targetView.setRotationY((float) d7);
+                    final double d = (double) cmd;
+                    targetView.setRotationY((float) d);
                 }
             });
         }
@@ -513,9 +516,9 @@ final class WXViewUpdateService {
             if(!(cmd instanceof Double)) {
                 return;
             }
-            double d8 = (double) cmd;
+            double d = (double) cmd;
             final ViewGroup.LayoutParams params1 = targetView.getLayoutParams();
-            params1.width = (int) getRealSize(d8,translator);
+            params1.width = (int) getRealSize(d,translator);
             postRunnable(targetView, new Runnable() {
                 @Override
                 public void run() {
@@ -536,9 +539,9 @@ final class WXViewUpdateService {
             if(!(cmd instanceof Double)) {
                 return;
             }
-            double d9 = (double) cmd;
+            double d = (double) cmd;
             final ViewGroup.LayoutParams params2 = targetView.getLayoutParams();
-            params2.height = (int) getRealSize(d9,translator);
+            params2.height = (int) getRealSize(d,translator);
             postRunnable(targetView, new Runnable() {
                 @Override
                 public void run() {
@@ -559,11 +562,20 @@ final class WXViewUpdateService {
             if(!(cmd instanceof Integer)) {
                 return;
             }
-            final int d10 = (int) cmd;
+            final int d = (int) cmd;
             postRunnable(targetView, new Runnable() {
                 @Override
                 public void run() {
-                    targetView.setBackgroundColor(d10);
+                    Drawable drawable = targetView.getBackground();
+                    if(drawable == null) {
+                        targetView.setBackgroundColor(d);
+                    } else if(drawable instanceof BorderDrawable) {
+                        BorderDrawable borderDrawable = (BorderDrawable) drawable;
+                        borderDrawable.setColor(d);
+                    } else if(drawable instanceof ColorDrawable) {
+                        ColorDrawable colorDrawable = (ColorDrawable) drawable;
+                        colorDrawable.setColor(d);
+                    }
                 }
             });
         }

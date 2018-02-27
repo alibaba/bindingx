@@ -143,7 +143,7 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
                                     ReactApplicationContext context = getReactApplicationContext();
                                     if(context != null) {
                                         context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                                                .emit("stateChanged",Arguments.makeNativeMap((Map<String,Object>)params));
+                                                .emit("bindingx:statechange",Arguments.makeNativeMap((Map<String,Object>)params));
                                     }
                                 }
                             });
