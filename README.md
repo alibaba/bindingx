@@ -1,1 +1,0 @@
-Bindingx will coming soon!
