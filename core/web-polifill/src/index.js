@@ -65,8 +65,8 @@ class Binding {
     props.forEach((prop) => {
       let {element} = prop;
       if (!_.find(elTransforms, (o) => {
-          return o.element === element;
-        })) {
+        return o.element === element;
+      })) {
         elTransforms.push({
           element,
           transform: {
@@ -191,7 +191,7 @@ module.exports = {
     ]
    }
    */
-  bind(options, callback = function () {
+  bind(options, callback = function() {
   }) {
     if (!options) {
       throw new Error('should pass options for binding');
@@ -247,7 +247,14 @@ module.exports = {
     style.width = pxTo750(computedStyle.width.replace('px', ''));
     style.height = pxTo750(computedStyle.height.replace('px', ''));
     style['background-color'] = computedStyle['background-color'];
+    style.backgroundColor = computedStyle.backgroundColor;
     style.color = computedStyle.color;
+    style.width = pxTo750(computedStyle.width.replace('px', ''));
+    style.height = pxTo750(computedStyle.height.replace('px', ''));
+    style.borderTopLeftRadius = pxTo750(computedStyle.borderTopLeftRadius.replace('px', ''));
+    style.borderTopRightRadius = pxTo750(computedStyle.borderTopRightRadius.replace('px', ''));
+    style.borderBottomLeftRadius = pxTo750(computedStyle.borderBottomLeftRadius.replace('px', ''));
+    style.borderBottomRightRadius = pxTo750(computedStyle.borderBottomRightRadius.replace('px', ''));
     return style;
   }
 

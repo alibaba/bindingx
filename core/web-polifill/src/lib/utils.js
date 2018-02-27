@@ -40,7 +40,7 @@ const matrixToTransformObj = function(matrix) {
 };
 
 function pxTo750(n) {
-  return Math.round(n / document.body.clientWidth * 750);
+  return n / document.body.clientWidth * 750;
 }
 
 function px(n) {

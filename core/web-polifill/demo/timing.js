@@ -56,14 +56,14 @@ function animate(timingFunc) {
       transformed:parse(exitExpression)
     },
     props: [
-      {
-        element: block,
-        property: 'borderRadius',
-        expression: {
-          origin: borderExpression,
-          transformed: parse(borderExpression)
-        }
-      },
+      // {
+      //   element: block,
+      //   property: 'borderRadius',
+      //   expression: {
+      //     origin: borderExpression,
+      //     transformed: parse(borderExpression)
+      //   }
+      // },
       {
         element: block,
         property: 'borderTopLeftRadius',
@@ -96,20 +96,24 @@ function animate(timingFunc) {
       //     transformed: parse(borderExpression)
       //   }
       // },
-      // {
-      //   element: block,
-      //   property: 'transform.translateX',
-      //   expression: {
-      //     origin: expression,
-      //     transformed: parse(expression)
-      //   }
-      // }
+      {
+        element: block,
+        property: 'transform.translateX',
+        expression: {
+          origin: expression,
+          transformed: parse(expression)
+        }
+      }
     ]
   }, (e) => {
     console.log(e)
   });
 
 }
+
+// setInterval(()=>{
+//   console.log(bindingx.getComputedStyle(block).borderTopLeftRadius,bindingx.getComputedStyle(block).borderTopRightRadius)
+// },100)
 
 
 

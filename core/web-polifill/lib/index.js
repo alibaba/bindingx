@@ -414,7 +414,7 @@ var matrixToTransformObj = function matrixToTransformObj(matrix) {
 };
 
 function pxTo750(n) {
-  return Math.round(n / document.body.clientWidth * 750);
+  return n / document.body.clientWidth * 750;
 }
 
 function px(n) {
@@ -1892,7 +1892,14 @@ module.exports = {
     style.width = (0, _utils.pxTo750)(computedStyle.width.replace('px', ''));
     style.height = (0, _utils.pxTo750)(computedStyle.height.replace('px', ''));
     style['background-color'] = computedStyle['background-color'];
+    style.backgroundColor = computedStyle.backgroundColor;
     style.color = computedStyle.color;
+    style.width = (0, _utils.pxTo750)(computedStyle.width.replace('px', ''));
+    style.height = (0, _utils.pxTo750)(computedStyle.height.replace('px', ''));
+    style.borderTopLeftRadius = (0, _utils.pxTo750)(computedStyle.borderTopLeftRadius.replace('px', ''));
+    style.borderTopRightRadius = (0, _utils.pxTo750)(computedStyle.borderTopRightRadius.replace('px', ''));
+    style.borderBottomLeftRadius = (0, _utils.pxTo750)(computedStyle.borderBottomLeftRadius.replace('px', ''));
+    style.borderBottomRightRadius = (0, _utils.pxTo750)(computedStyle.borderBottomRightRadius.replace('px', ''));
     return style;
   }
 };
