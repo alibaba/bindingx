@@ -20,21 +20,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.taobao.weex.utils.WXSoInstallMgrSdk;
 
-public class MainActivity extends AbstractWeexActivity {
+public class WXActivity extends AbstractWeexActivity{
 
     private String mUrl;
     private final Handler mHandler = new Handler(Looper.getMainLooper());
+    public static String WEEX_URL = "weexUrl";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setupToolbar(toolbar);
+        setActionBarTitle("bindingx weex playground");
+
         setContainer((ViewGroup) findViewById(R.id.container));
 
         if(!WXSoInstallMgrSdk.isCPUSupport()) {
@@ -44,7 +51,7 @@ public class MainActivity extends AbstractWeexActivity {
         }
 
         if(getIntent() != null) {
-            mUrl = getIntent().getStringExtra("url");
+            mUrl = getIntent().getStringExtra(WEEX_URL);
         }
     }
 
@@ -54,6 +61,7 @@ public class MainActivity extends AbstractWeexActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                //TODO
                 if(TextUtils.isEmpty(mUrl)) {
                     //http://dotwe.org/vue/2f88f2ef3f39790fa4108c8f957fc3e9
                     renderPageByURL("http://dotwe.org/raw/dist/2f88f2ef3f39790fa4108c8f957fc3e9.bundle.wx");
@@ -74,9 +82,9 @@ public class MainActivity extends AbstractWeexActivity {
         if(context == null || TextUtils.isEmpty(url)) {
             return;
         }
-        Intent intent = new Intent(context,MainActivity.class);
+        Intent intent = new Intent(context,WXActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("url", url);
+        intent.putExtra(WEEX_URL, url);
         context.startActivity(intent);
     }
 }

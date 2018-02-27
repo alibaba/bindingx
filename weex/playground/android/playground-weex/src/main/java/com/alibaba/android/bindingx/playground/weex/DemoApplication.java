@@ -26,12 +26,6 @@ import com.taobao.weex.common.WXException;
 
 import org.json.JSONObject;
 
-/**
- * Description:
- *
- * Created by rowandjj(chuyi)<br/>
- */
-
 public class DemoApplication extends Application {
 
     @Override
@@ -49,7 +43,7 @@ public class DemoApplication extends Application {
                     JSONObject object = new JSONObject(param);
                     String url = object.optString("url");
                     if(!TextUtils.isEmpty(url)) {
-                        MainActivity.start(DemoApplication.this, url);
+                        WXActivity.start(DemoApplication.this, url);
                         return true;
                     } else {
                         return false;

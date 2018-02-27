@@ -20,7 +20,6 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -33,7 +32,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public abstract class AbstractWeexActivity extends AppCompatActivity implements IWXRenderListener {
+public abstract class AbstractWeexActivity extends BaseNavigationActivity implements IWXRenderListener {
   private static final String TAG = "weex";
 
   private ViewGroup mContainer;

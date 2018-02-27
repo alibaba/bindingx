@@ -16,23 +16,27 @@
     limitations under the License.
 
 -->
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="60dp">
 
-    <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#ffffff"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <FrameLayout
-            android:id="@+id/container"
+    <TextView
+            android:id="@+id/item"
+            android:paddingLeft="5dp"
+            android:textColor="#000"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-</LinearLayout>
+            android:layout_height="59dp"/>
+
+    <View
+            android:layout_alignParentBottom="true"
+            android:background="#e0e0e0"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+</RelativeLayout>
