@@ -33,7 +33,7 @@
 
     <TextView
             android:layout_marginTop="100dp"
-            android:text="将二维码放入框内"
+            android:text="Put the QR Code in the box"
             android:textColor="#fff"
             android:textSize="16sp"
             android:gravity="center"
@@ -58,7 +58,7 @@
                 android:id="@+id/history_text"
                 android:textColor="#fff"
                 android:drawableLeft="@drawable/ic_history"
-                android:text="扫码历史"
+                android:text="History"
                 android:gravity="center_vertical"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"

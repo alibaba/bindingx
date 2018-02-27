@@ -17,9 +17,12 @@ package com.alibaba.android.bindingx.playground.weex;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.ViewGroup;
@@ -32,6 +35,8 @@ public class WXActivity extends AbstractWeexActivity{
     private String mUrl;
     private final Handler mHandler = new Handler(Looper.getMainLooper());
     public static String WEEX_URL = "weexUrl";
+
+    private static final String NAV_HIDDEN = "wx_navbar_hidden";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,23 @@ public class WXActivity extends AbstractWeexActivity{
 
         if(getIntent() != null) {
             mUrl = getIntent().getStringExtra(WEEX_URL);
+        }
+        hideAppBarIfNeeded(mUrl);
+    }
+
+    private void hideAppBarIfNeeded(@Nullable String url) {
+        if(TextUtils.isEmpty(url)) {
+            return;
+        }
+        try {
+            Uri uri = Uri.parse(url);
+            String result = uri.getQueryParameter(NAV_HIDDEN);
+            ActionBar actionbar = getSupportActionBar();
+            if (actionbar != null && TextUtils.equals(result, Boolean.toString(true))) {
+                actionbar.hide();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
