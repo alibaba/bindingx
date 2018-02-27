@@ -27,9 +27,9 @@
 
 
 <script>
-var version = '0.0.7';
-var isDebug = false;
-var isLocalHost = location.href.toString().indexOf('localhost') > 0;
+var version = '0.1.1';
+var isDebug = true;
+var isLocalhost = location.href.toString().indexOf('localhost') > 0;
 
 console.log('now portal version is ' + version);
 
@@ -39,20 +39,20 @@ if(!isDebug) {
   loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-internal/js/hovereffect.js`);
   loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-external/common.js`);
   loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-external/index.js`);
-}else if(!isLocalHost) {
-  loadCss(`//g-assets.daily.taobao.net/bindingx/site-assets//site-external/index.css`);
+}else if(!isLocalhost) {
+  loadCss(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.css`);
   loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/js/modernizr.custom.js`);
   loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-internal/js/hovereffect.js`);
   loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/common.js`);
   loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.js`);
 
-  console.log("isDebug is true. isLocalHost is false.");
+  console.log("isDebug is true. isLocalhost is false.");
 }else {
   loadCss('//localhost:8010/index.css');
   loadScript('//localhost:8010/common.js');
   loadScript('//localhost:8010/index.js');
 
-  console.log("isDebug is true. isLocalHost is true.");
+  console.log("isDebug is true. isLocalhost is true.");
 }
 
 function loadScript(file) {
