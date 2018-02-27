@@ -81,6 +81,13 @@ final class WXViewUpdateService {
         sExpressionInvokerMap.put("scroll.contentOffset", new ContentOffsetInvoker());
         sExpressionInvokerMap.put("scroll.contentOffsetX", new ContentOffsetXInvoker());
         sExpressionInvokerMap.put("scroll.contentOffsetY", new ContentOffsetYInvoker());
+
+        sExpressionInvokerMap.put("border-top-left-radius", new BorderRadiusTopLeftUpdater());
+        sExpressionInvokerMap.put("border-top-right-radius", new BorderRadiusTopRightUpdater());
+        sExpressionInvokerMap.put("border-bottom-left-radius", new BorderRadiusBottomLeftUpdater());
+        sExpressionInvokerMap.put("border-bottom-right-radius", new BorderRadiusBottomRightUpdater());
+
+        sExpressionInvokerMap.put("border-radius", new BorderRadiusUpdater());
     }
 
     @NonNull
@@ -619,6 +626,153 @@ final class WXViewUpdateService {
                                 }
                             }
                         }
+                    }
+                }
+            });
+        }
+    }
+
+    private static final class BorderRadiusTopLeftUpdater implements IWXViewUpdater {
+
+        @Override
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String, Object> config) {
+            if(!(cmd instanceof Double)) {
+                return;
+            }
+            final double d = (double) cmd;
+            postRunnable(targetView, new Runnable() {
+                @Override
+                public void run() {
+                    Drawable drawable = targetView.getBackground();
+                    if(drawable != null && drawable instanceof BorderDrawable) {
+                        BorderDrawable borderDrawable = (BorderDrawable) drawable;
+                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) d);
+                    }
+                }
+            });
+        }
+    }
+
+    private static final class BorderRadiusTopRightUpdater implements IWXViewUpdater {
+
+        @Override
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String, Object> config) {
+            if(!(cmd instanceof Double)) {
+                return;
+            }
+            final double d = (double) cmd;
+            postRunnable(targetView, new Runnable() {
+                @Override
+                public void run() {
+                    Drawable drawable = targetView.getBackground();
+                    if(drawable != null && drawable instanceof BorderDrawable) {
+                        BorderDrawable borderDrawable = (BorderDrawable) drawable;
+                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) d);
+                    }
+                }
+            });
+        }
+    }
+
+    private static final class BorderRadiusBottomLeftUpdater implements IWXViewUpdater {
+
+        @Override
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String, Object> config) {
+            if(!(cmd instanceof Double)) {
+                return;
+            }
+            final double d = (double) cmd;
+            postRunnable(targetView, new Runnable() {
+                @Override
+                public void run() {
+                    Drawable drawable = targetView.getBackground();
+                    if(drawable != null && drawable instanceof BorderDrawable) {
+                        BorderDrawable borderDrawable = (BorderDrawable) drawable;
+                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) d);
+                    }
+                }
+            });
+        }
+    }
+
+    private static final class BorderRadiusBottomRightUpdater implements IWXViewUpdater {
+
+        @Override
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String, Object> config) {
+            if(!(cmd instanceof Double)) {
+                return;
+            }
+            final double d = (double) cmd;
+            postRunnable(targetView, new Runnable() {
+                @Override
+                public void run() {
+                    Drawable drawable = targetView.getBackground();
+                    if(drawable != null && drawable instanceof BorderDrawable) {
+                        BorderDrawable borderDrawable = (BorderDrawable) drawable;
+                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) d);
+                    }
+                }
+            });
+        }
+    }
+
+    private static final class BorderRadiusUpdater implements IWXViewUpdater {
+
+        @Override
+        public void invoke(@NonNull WXComponent component,
+                           @NonNull final View targetView,
+                           @NonNull Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull Map<String, Object> config) {
+
+            if(!(cmd instanceof ArrayList)) {
+                return;
+            }
+            final ArrayList<Object> l = (ArrayList<Object>) cmd;
+            if(l.size() != 4) {
+                return;
+            }
+
+            postRunnable(targetView, new Runnable() {
+                @Override
+                public void run() {
+                    Drawable drawable = targetView.getBackground();
+                    if(drawable != null && drawable instanceof BorderDrawable) {
+                        double topLeft = 0,topRight = 0,bottomLeft = 0,bottomRight = 0;
+                        if(l.get(0) instanceof Double) {
+                            topLeft = (double) l.get(0);
+                        }
+                        if(l.get(1) instanceof Double) {
+                            topRight = (double) l.get(1);
+                        }
+                        if(l.get(2) instanceof Double) {
+                            bottomLeft = (double) l.get(2);
+                        }
+                        if(l.get(3) instanceof Double) {
+                            bottomRight = (double) l.get(3);
+                        }
+
+                        BorderDrawable borderDrawable = (BorderDrawable) drawable;
+                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) topLeft);
+                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) topRight);
+                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) bottomLeft);
+                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) bottomRight);
                     }
                 }
             });
