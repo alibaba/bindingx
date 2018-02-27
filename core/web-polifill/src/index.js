@@ -65,8 +65,8 @@ class Binding {
     props.forEach((prop) => {
       let {element} = prop;
       if (!_.find(elTransforms, (o) => {
-        return o.element === element;
-      })) {
+          return o.element === element;
+        })) {
         elTransforms.push({
           element,
           transform: {
@@ -142,6 +142,13 @@ class Binding {
       case 'color':
         el.style.color = val;
         break;
+      case 'borderTopLeftRadius':
+      case 'borderTopRightRadius':
+      case 'borderBottomLeftRadius':
+      case 'borderBottomRightRadius':
+      case 'borderRadius':
+        el.style[property] = `${px(val)}px`;
+        break;
     }
     el.style[vendorTransform] = [
       `translateX(${elTransform.transform.translateX}px)`,
@@ -184,7 +191,7 @@ module.exports = {
     ]
    }
    */
-  bind(options, callback = function() {
+  bind(options, callback = function () {
   }) {
     if (!options) {
       throw new Error('should pass options for binding');

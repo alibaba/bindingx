@@ -46,6 +46,9 @@ function animate(timingFunc) {
   const y2 = 1;
   // expression = `t>${delay}?cubicBezier(t-1000, ${begin}, ${offset}, ${duration}, ${x1}, ${y1}, ${x2}, ${y2}):0`
 
+
+  const borderExpression = `linear(t,0,187.5,2000)`;
+
   bindingx.bind({
     eventType: 'timing',
     exitExpression:{
@@ -55,12 +58,52 @@ function animate(timingFunc) {
     props: [
       {
         element: block,
-        property: 'transform.translateX',
+        property: 'borderRadius',
         expression: {
-          origin: expression,
-          transformed: parse(expression)
+          origin: borderExpression,
+          transformed: parse(borderExpression)
         }
-      }
+      },
+      {
+        element: block,
+        property: 'borderTopLeftRadius',
+        expression: {
+          origin: borderExpression,
+          transformed: parse(borderExpression)
+        }
+      },
+      {
+        element: block,
+        property: 'borderTopRightRadius',
+        expression: {
+          origin: borderExpression,
+          transformed: parse(borderExpression)
+        }
+      },
+      // {
+      //   element: block,
+      //   property: 'borderBottomRightRadius',
+      //   expression: {
+      //     origin: borderExpression,
+      //     transformed: parse(borderExpression)
+      //   }
+      // },
+      // {
+      //   element: block,
+      //   property: 'borderBottomLeftRadius',
+      //   expression: {
+      //     origin: borderExpression,
+      //     transformed: parse(borderExpression)
+      //   }
+      // },
+      // {
+      //   element: block,
+      //   property: 'transform.translateX',
+      //   expression: {
+      //     origin: expression,
+      //     transformed: parse(expression)
+      //   }
+      // }
     ]
   }, (e) => {
     console.log(e)

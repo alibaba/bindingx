@@ -1792,6 +1792,13 @@ var Binding = function () {
         case 'color':
           el.style.color = val;
           break;
+        case 'borderTopLeftRadius':
+        case 'borderTopRightRadius':
+        case 'borderBottomLeftRadius':
+        case 'borderBottomRightRadius':
+        case 'borderRadius':
+          el.style[property] = (0, _utils.px)(val) + 'px';
+          break;
       }
       el.style[vendorTransform] = ['translateX(' + elTransform.transform.translateX + 'px)', 'translateY(' + elTransform.transform.translateY + 'px)', 'translateZ(' + elTransform.transform.translateZ + 'px)', 'scaleX(' + elTransform.transform.scaleX + ')', 'scaleY(' + elTransform.transform.scaleY + ')', 'rotateX(' + elTransform.transform.rotateX + 'deg)', 'rotateY(' + elTransform.transform.rotateY + 'deg)', 'rotateZ(' + elTransform.transform.rotateZ + 'deg)'].join(' ');
     }
