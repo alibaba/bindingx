@@ -28,7 +28,7 @@
 
 <script>
 var version = '0.1.1';
-var isDebug = true;
+var isDebug = false;
 var isLocalhost = location.href.toString().indexOf('localhost') > 0;
 
 console.log('now portal version is ' + version);
@@ -36,13 +36,13 @@ console.log('now portal version is ' + version);
 if(!isDebug) {
   loadCss(`//g.alicdn.com/bindingx/site-assets/${version}/site-external/index.css`);
   loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-external/js/modernizr.custom.js`);
-  loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-internal/js/hovereffect.js`);
+  //loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-internal/js/hovereffect.js`);
   loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-external/common.js`);
   loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-external/index.js`);
 }else if(!isLocalhost) {
   loadCss(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.css`);
   loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/js/modernizr.custom.js`);
-  loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-internal/js/hovereffect.js`);
+  //loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-internal/js/hovereffect.js`);
   loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/common.js`);
   loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.js`);
 
