@@ -1,5 +1,5 @@
 /**
- * use [./gradlew clean install bintrayUpload] to publish(bintray)
+ * use [./gradlew clean assemble install bintrayUpload] to publish(bintray)
  * */
 
 ext {
@@ -13,5 +13,5 @@ ext {
     mavenArtifactId = 'bindingx_weex_plugin'
     mavenVersion = '1.0.1-SNAPSHOT'
 
-    orgName = 'alibaba'
+    orgName = 'rowandjj'
 }

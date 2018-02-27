@@ -21,22 +21,7 @@
 #import <React/RCTShadowText.h>
 #import <UIKit/UIKit.h>
 
-
 __weak static RCTUIManager* _uiManager = nil;
-
-void EBPerformBlockOnBridgeThread(void (^ _Nonnull block)(void))
-{
-    RCTExecuteOnUIManagerQueue(^{
-        block();
-    });
-}
-
-void EBPerformBlockOnMainThread(void (^ _Nonnull block)(void))
-{
-    RCTExecuteOnMainQueue(^{
-        block();
-    });
-}
 
 @implementation EBUtility (RN)
 
@@ -47,6 +32,18 @@ void EBPerformBlockOnMainThread(void (^ _Nonnull block)(void))
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
+
++ (void)performBlockOnBridgeThread:(EBPerformBlock)block {
+    RCTExecuteOnUIManagerQueue(^{
+        block();
+    });
+}
+
++ (void)performBlockOnMainThread:(EBPerformBlock)block {
+    RCTExecuteOnMainQueue(^{
+        block();
+    });
+}
 
 + (void)execute:(EBExpressionProperty *)model to:(id)target
 {
@@ -80,7 +77,7 @@ void EBPerformBlockOnMainThread(void (^ _Nonnull block)(void))
         styles[@"transformOrigin"] = model.transformOrigin;
     }
     if (model.isBackgroundColorChanged) {
-        styles[@"backgroundColor"] = [self makeColor:model.backgroundColor];
+        styles[@"backgroundColor"] = [self makeRGBA:model.backgroundColor];
     }
     if (model.isAlphaChanged) {
         styles[@"opacity"] = @(model.alpha);
@@ -161,7 +158,7 @@ void EBPerformBlockOnMainThread(void (^ _Nonnull block)(void))
     }
 }
 
-+ (UIColor *)makeColor:(NSObject *)result {
++ (NSArray *)makeRGBA:(NSObject *)result {
     CGFloat r = 0, g = 0, b = 0, a = 1;
     NSArray *colorArray = (NSArray *)result;
     if ([colorArray isKindOfClass:NSArray.class] && colorArray.count >= 3) {
@@ -172,8 +169,15 @@ void EBPerformBlockOnMainThread(void (^ _Nonnull block)(void))
             a = [colorArray[3] doubleValue];
         }
     }
-    
-    return [[UIColor alloc] initWithRed:r green:g blue:b alpha:a];
+    return @[@(r),@(g),@(b),@(a)];
+}
+
++ (UIColor *)makeColor:(NSObject *)result {
+    NSArray* rgba = [self makeRGBA:result];
+    return [[UIColor alloc] initWithRed:[rgba[0] doubleValue]
+                                  green:[rgba[1] doubleValue]
+                                   blue:[rgba[2] doubleValue]
+                                  alpha:[rgba[3] doubleValue]];
 }
 
 #pragma clang diagnostic pop

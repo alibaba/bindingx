@@ -3,6 +3,8 @@
           package="com.alibaba.android.bindingx.playground.weex">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
             android:name=".DemoApplication"
@@ -12,10 +14,12 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".MainActivity"
+                android:name=".WXActivity"
+                android:screenOrientation="portrait"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity android:name=".SplashActivity"
+                  android:screenOrientation="portrait"
                   android:theme="@style/Theme.AppCompat.Light.NoActionBar"
                 >
             <intent-filter>
@@ -23,6 +27,21 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".HistoryActivity"
+                  android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+                  android:screenOrientation="portrait"
+                >
+        </activity>
+        <activity android:name=".QRCodeCaptureActivity"
+                  android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+                  android:screenOrientation="portrait"
+                >
+        </activity>
+        <activity android:name=".PGMainActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+                >
         </activity>
     </application>
 
