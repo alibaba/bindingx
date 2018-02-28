@@ -15,13 +15,8 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <WeexSDK/WXModuleProtocol.h>
 
-typedef BOOL (^EBDeviceOrientationCallback)(double alpha, double beta, double gamma);
-
-@interface EBGyroManager : NSObject
-
-+ (void)watchOrientation:(EBDeviceOrientationCallback _Nonnull)callback withInterval:(NSTimeInterval)interval;
-
-+ (void)removeOrientation:(EBDeviceOrientationCallback _Nonnull)callback;
+@interface EBWXDeprecatedModule : NSObject <WXModuleProtocol>
 
 @end

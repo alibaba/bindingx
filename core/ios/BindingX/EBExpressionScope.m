@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Alibaba Group
+ * Copyright 2018 Alibaba Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 #import "EBJSTransform.h"
 #import "EBJSEase.h"
 #import "EBJSEvaluate.h"
+#import <math.h>
 
 @implementation EBExpressionScope
 
@@ -27,6 +28,10 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedScope = [[NSMutableDictionary alloc] init];
+        
+        [sharedScope setValue:@(M_PI) forKey:@"PI"];
+        [sharedScope setValue:@(M_E) forKey:@"E"];
+        
         [sharedScope setValue:EBJSMath.sin forKey:@"sin"];
         [sharedScope setValue:EBJSMath.cos forKey:@"cos"];
         [sharedScope setValue:EBJSMath.tan forKey:@"tan"];

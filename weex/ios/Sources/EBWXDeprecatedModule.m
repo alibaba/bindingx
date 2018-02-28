@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#import "EBWXModule.h"
+#import "EBWXDeprecatedModule.h"
 #import <WeexSDK/WeexSDK.h>
 #import "EBExpressionHandler.h"
 #import <pthread/pthread.h>
@@ -22,32 +22,27 @@
 #import "EBBindData.h"
 #import "EBUtility+WX.h"
 
-WX_PlUGIN_EXPORT_MODULE(bindingx, EBWXModule)
+WX_PlUGIN_EXPORT_MODULE(expressionBinding, EBWXDeprecatedModule)
 
-@interface EBWXModule ()
+@interface EBWXDeprecatedModule ()
 
 @property (nonatomic, strong) EBBindData *bindData;
 
 @end
 
-@implementation EBWXModule {
+@implementation EBWXDeprecatedModule {
     pthread_mutex_t mutex;
     pthread_mutexattr_t mutexAttr;
 }
 
 @synthesize weexInstance;
 
-WX_EXPORT_METHOD(@selector(prepare:))
-WX_EXPORT_METHOD_SYNC(@selector(bind:callback:))
-WX_EXPORT_METHOD(@selector(unbind:))
-WX_EXPORT_METHOD(@selector(unbindAll))
+WX_EXPORT_METHOD(@selector(enableBinding:eventType:))
+WX_EXPORT_METHOD(@selector(createBinding:eventType:exitExpression:targetExpression:callback:))
+WX_EXPORT_METHOD(@selector(disableBinding:eventType:))
+WX_EXPORT_METHOD(@selector(disableAll))
 WX_EXPORT_METHOD_SYNC(@selector(supportFeatures))
 WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
-
-+ (void)load
-{
-    [WXSDKEngine registerModule:@"binding" withClass:EBWXModule.class];
-}
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -60,179 +55,129 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
 }
 
 - (void)dealloc {
-    [self unbindAll];
+    [self disableAll];
     pthread_mutex_destroy(&mutex);
     pthread_mutexattr_destroy(&mutexAttr);
 }
 
-- (void)prepare:(NSDictionary *)dictionary {
-    if (!dictionary) {
-        WX_LOG(WXLogFlagWarning, @"prepare params error, need json input");
+- (void)enableBinding:(NSString *)sourceRef
+            eventType:(NSString *)eventType {
+    if ([WXUtility isBlankString:sourceRef] || [WXUtility isBlankString:eventType]) {
+        WX_LOG(WXLogFlagWarning, @"enableBinding params error");
         return;
     }
-    
-    NSString *anchor = dictionary[@"anchor"];
-    NSString *eventType = dictionary[@"eventType"];
-    
-    if ([WXUtility isBlankString:anchor] || [WXUtility isBlankString:eventType]) {
-        WX_LOG(WXLogFlagWarning, @"prepare binding params error");
-        return;
-    }
-    
+
     WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
     if (exprType == WXExpressionTypeUndefined) {
-        WX_LOG(WXLogFlagWarning, @"prepare binding eventType error");
+        WX_LOG(WXLogFlagWarning, @"enableBinding params error");
         return;
     }
-    
+
     __weak typeof(self) welf = self;
     WXPerformBlockOnComponentThread(^{
         // find sourceRef & targetRef
-        WXComponent *sourceComponent = [weexInstance componentForRef:anchor];
-        if (!sourceComponent && (exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
-            WX_LOG(WXLogFlagWarning, @"prepare binding can't find component");
+        WXComponent *sourceComponent = [weexInstance componentForRef:sourceRef];
+        if (!sourceComponent) {
+            WX_LOG(WXLogFlagWarning, @"enableBinding can't find component");
             return;
         }
-        
+
         pthread_mutex_lock(&mutex);
-        
-        EBExpressionHandler *handler = [welf.bindData handlerForToken:anchor expressionType:exprType];
+
+        EBExpressionHandler *handler = [welf.bindData handlerForToken:sourceRef expressionType:exprType];
         if (!handler) {
             // create handler for key
             handler = [EBExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
-            [welf.bindData putHandler:handler forToken:anchor expressionType:exprType];
+            [welf.bindData putHandler:handler forToken:sourceRef expressionType:exprType];
         }
-        
+
         pthread_mutex_unlock(&mutex);
     });
-    
 }
 
-- (NSDictionary *)bind:(NSDictionary *)dictionary
-              callback:(WXKeepAliveCallback)callback {
-    
-    if (!dictionary) {
-        WX_LOG(WXLogFlagWarning, @"bind params error, need json input");
-        return nil;
+- (void)createBinding:(NSString *)sourceRef
+            eventType:(NSString *)eventType
+       exitExpression:(NSString *)exitExpression
+     targetExpression:(NSArray *)targetExpression
+             callback:(WXKeepAliveCallback)callback {
+    if ([WXUtility isBlankString:sourceRef] || [WXUtility isBlankString:eventType] || !targetExpression || targetExpression.count == 0) {
+        WX_LOG(WXLogFlagWarning, @"createBinding params error");
+        callback(@{@"state":@"error",@"msg":@"createBinding params error"}, NO);
+        return;
     }
-    
-    NSString *eventType =  dictionary[@"eventType"];
-    NSArray *props = dictionary[@"props"];
-    NSString *token = dictionary[@"anchor"];
-    NSDictionary *exitExpression = dictionary[@"exitExpression"];
-    NSDictionary *options = dictionary[@"options"];
-    
-    if ([WXUtility isBlankString:eventType] || !props || props.count == 0) {
-        WX_LOG(WXLogFlagWarning, @"bind params error");
-        callback(@{@"state":@"error",@"msg":@"bind params error"}, NO);
-        return nil;
-    }
-    
+
     WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
     if (exprType == WXExpressionTypeUndefined) {
-        WX_LOG(WXLogFlagWarning, @"bind params handler error");
-        callback(@{@"state":@"error",@"msg":@"bind params handler error"}, NO);
-        return nil;
+        WX_LOG(WXLogFlagWarning, @"createBinding params handler error");
+        callback(@{@"state":@"error",@"msg":@"createBinding params handler error"}, NO);
+        return;
     }
-    
-    if ([WXUtility isBlankString:token]){
-        if ((exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
-            WX_LOG(WXLogFlagWarning, @"bind params handler error");
-            callback(@{@"state":@"error",@"msg":@"anchor cannot be blank when type is pan or scroll"}, NO);
-            return nil;
-        } else {
-            token = [[NSUUID UUID] UUIDString];
-        }
-    }
-    
+
     __weak typeof(self) welf = self;
     WXPerformBlockOnComponentThread(^{
-        
         // find sourceRef & targetRef
-        WXComponent *sourceComponent = nil;
-        NSString *instanceId = dictionary[@"instanceId"];
-        if (instanceId) {
-            WXSDKInstance *instance = [WXSDKManager instanceForID:instanceId];
-            sourceComponent = [instance componentForRef:token];
-        } else {
-            sourceComponent = [weexInstance componentForRef:token];
-        }
-        if (!sourceComponent && (exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
-            WX_LOG(WXLogFlagWarning, @"bind can't find source component");
-            callback(@{@"state":@"error",@"msg":@"bind can't find source component"}, NO);
+        WXComponent *sourceComponent = [weexInstance componentForRef:sourceRef];
+        if (!sourceComponent) {
+            WX_LOG(WXLogFlagWarning, @"createBinding can't find source component");
+            callback(@{@"state":@"error",@"msg":@"createBinding can't find source component"}, NO);
             return;
         }
-        
-        NSMapTable<id, NSDictionary *> *targetExpression = [NSMapTable new];
-        for (NSDictionary *targetDic in props) {
+
+        NSMapTable<id, NSDictionary *> *targetExpressionMap = [NSMapTable new];
+        for (NSDictionary *targetDic in targetExpression) {
             NSString *targetRef = targetDic[@"element"];
             NSString *property = targetDic[@"property"];
-            NSDictionary *expression = targetDic[@"expression"];
-            NSString *instanceId = targetDic[@"instanceId"];
-            
-            WXComponent *targetComponent = nil;
-            if (instanceId) {
-                WXSDKInstance *instance = [WXSDKManager instanceForID:instanceId];
-                targetComponent = [instance componentForRef:targetRef];
-            } else {
-                targetComponent = [weexInstance componentForRef:targetRef];
-            }
+            NSString *expression = targetDic[@"expression"];
+
+            WXComponent *targetComponent = [weexInstance componentForRef:targetRef];
             if (targetComponent) {
-                
+
                 if ([targetComponent isViewLoaded]) {
                     WXPerformBlockOnMainThread(^{
                         [targetComponent.view.layer removeAllAnimations];
                     });
                 }
-                
-                NSMutableDictionary *propertyDic = [[targetExpression objectForKey:targetComponent] mutableCopy];
+
+                NSMutableDictionary *propertyDic = [[targetExpressionMap objectForKey:targetComponent] mutableCopy];
                 if (!propertyDic) {
                     propertyDic = [NSMutableDictionary dictionary];
                 }
                 NSMutableDictionary *expDict = [NSMutableDictionary dictionary];
                 expDict[@"expression"] = [EBBindData parseExpression:expression];
-                
+
                 if( targetDic[@"config"] )
                 {
                     expDict[@"config"] = targetDic[@"config"];
                 }
                 propertyDic[property] = expDict;
-                [targetExpression setObject:propertyDic forKey:targetComponent];
+                [targetExpressionMap setObject:propertyDic forKey:targetComponent];
             }
         }
-        
+
         // find handler for key
         pthread_mutex_lock(&mutex);
-        
-        EBExpressionHandler *handler = [welf.bindData handlerForToken:token expressionType:exprType];
+
+        EBExpressionHandler *handler = [welf.bindData handlerForToken:sourceRef expressionType:exprType];
         if (!handler) {
             // create handler for key
             handler = [EBExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
-            [welf.bindData putHandler:handler forToken:token expressionType:exprType];
+            [welf.bindData putHandler:handler forToken:sourceRef expressionType:exprType];
         }
-        
-        [handler updateTargetExpression:targetExpression
-                                options:options
+
+        [handler updateTargetExpression:targetExpressionMap
+                                options:nil
                          exitExpression:[EBBindData parseExpression:exitExpression]
                                callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
                                    callback(result,keepAlive);
                                }];
-        
+
         pthread_mutex_unlock(&mutex);
     });
-    return @{@"token":token};
 }
 
-- (void)unbind:(NSDictionary *)dictionary {
-    
-    if (!dictionary) {
-        WX_LOG(WXLogFlagWarning, @"unbind params error, need json input");
-        return;
-    }
-    NSString* token = dictionary[@"token"];
-    NSString* eventType = dictionary[@"eventType"];
-    
-    if ([WXUtility isBlankString:token] || [WXUtility isBlankString:eventType]) {
+- (void)disableBinding:(NSString *)sourceRef
+             eventType:(NSString *)eventType {
+    if ([WXUtility isBlankString:sourceRef] || [WXUtility isBlankString:eventType]) {
         WX_LOG(WXLogFlagWarning, @"disableBinding params error");
         return;
     }
@@ -245,7 +190,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
     
     pthread_mutex_lock(&mutex);
     
-    EBExpressionHandler *handler = [self.bindData handlerForToken:token expressionType:exprType];
+    EBExpressionHandler *handler = [self.bindData handlerForToken:sourceRef expressionType:exprType];
     if (!handler) {
         WX_LOG(WXLogFlagWarning, @"disableBinding can't find handler handler");
         pthread_mutex_unlock(&mutex);
@@ -253,12 +198,12 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
     }
     
     [handler removeExpressionBinding];
-    [self.bindData removeHandler:handler forToken:token expressionType:exprType];
+    [self.bindData removeHandler:handler forToken:sourceRef expressionType:exprType];
     
     pthread_mutex_unlock(&mutex);
 }
 
-- (void)unbindAll {
+- (void)disableAll {
     pthread_mutex_lock(&mutex);
     
     [self.bindData unbindAll];
@@ -272,7 +217,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
 
 - (NSDictionary *)getComputedStyle:(NSString *)sourceRef {
     if ([WXUtility isBlankString:sourceRef]) {
-        WX_LOG(WXLogFlagWarning, @"getComputedStyle params error");
+        WX_LOG(WXLogFlagWarning, @"createBinding params error");
         return nil;
     }
     
@@ -283,8 +228,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         // find sourceRef & targetRef
         WXComponent *sourceComponent = [weexInstance componentForRef:sourceRef];
         if (!sourceComponent) {
-            WX_LOG(WXLogFlagWarning, @"getComputedStyle can't find source component");
-            dispatch_semaphore_signal(semaphore);
+            WX_LOG(WXLogFlagWarning, @"createBinding can't find source component");
             return;
         }
         WXPerformBlockSyncOnMainThread(^{
