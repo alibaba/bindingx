@@ -6,7 +6,7 @@
 ![image | left](https://img.shields.io/badge/PRs-welcome-brightgreen.svg "")
 ![image | left](https://img.shields.io/badge/license-Apache--2.0-brightgreen.svg "")
 
-[文档链接](https://lark.alipay.com/bindingx/doc_cn)
+[Read Documentation](https://alibaba.github.io/bindingx/guide/introduce)
 
 A new interaction way based on `weex` and `react native`.
 
@@ -16,7 +16,7 @@ It provides a way called `expression binding` for handling complex user interact
 
 The async nature of the js-native bridge in react native and weex incurs an inherent performance penalty. This traditionally prevents JavaScript code from running at high framerates.
 
-We exploreed and implemented a completely new approach to solve the problem. It's main idea is translate the user interaction into expression, and transfer those expressions into native environment. When events occurs (events such as user gesture), all computing task is running on the native side, NO redundant js-bridge calls any more.
+We exploreed and implemented a completely new approach to solve the problem. It's main idea is translate the user interaction into expression, and transfer those expressions into native environment. When events occurs (events such as user gesture), all computing task is running on the native side, NO redundant js-bridge calls any more. [Read More](https://alibaba.github.io/bindingx/guide/introduce)
 
 # Glance
 
@@ -51,8 +51,6 @@ supporting
 #### on Android with ReactNative
 supporting
 
-# Document And Guide
-coming soon
 
 # Who is using
 
