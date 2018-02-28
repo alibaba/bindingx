@@ -30,17 +30,72 @@ easing.addEventListener('change', (e) => {
 
 animate('easeInQuad');
 
-
+// animate('linear');
 function animate(timingFunc) {
 
   const begin = 0;
-  const end = 300;
-  const duration = 1000;
-  const expression = `${timingFunc}(t,${begin},${end},${duration})`;
+  const offset = 300;
+  const duration = 2000;
+  const delay = 1000;
+  let expression = `t>${delay}?${timingFunc}(t-1000,${begin},${offset},${duration}):0`;
+  // expression = `${timingFunc}(t,${begin},${offset},${duration})`;
+  const exitExpression = `t>${duration + delay}`;
+  const x1 = 0.1;
+  const y1 = 0.57;
+  const x2 = 0.1;
+  const y2 = 1;
+  // expression = `t>${delay}?cubicBezier(t-1000, ${begin}, ${offset}, ${duration}, ${x1}, ${y1}, ${x2}, ${y2}):0`
+
+
+  const borderExpression = `linear(t,0,187.5,2000)`;
 
   bindingx.bind({
     eventType: 'timing',
+    exitExpression:{
+      origin:exitExpression,
+      transformed:parse(exitExpression)
+    },
     props: [
+      // {
+      //   element: block,
+      //   property: 'borderRadius',
+      //   expression: {
+      //     origin: borderExpression,
+      //     transformed: parse(borderExpression)
+      //   }
+      // },
+      {
+        element: block,
+        property: 'borderTopLeftRadius',
+        expression: {
+          origin: borderExpression,
+          transformed: parse(borderExpression)
+        }
+      },
+      {
+        element: block,
+        property: 'borderTopRightRadius',
+        expression: {
+          origin: borderExpression,
+          transformed: parse(borderExpression)
+        }
+      },
+      // {
+      //   element: block,
+      //   property: 'borderBottomRightRadius',
+      //   expression: {
+      //     origin: borderExpression,
+      //     transformed: parse(borderExpression)
+      //   }
+      // },
+      // {
+      //   element: block,
+      //   property: 'borderBottomLeftRadius',
+      //   expression: {
+      //     origin: borderExpression,
+      //     transformed: parse(borderExpression)
+      //   }
+      // },
       {
         element: block,
         property: 'transform.translateX',
@@ -51,10 +106,14 @@ function animate(timingFunc) {
       }
     ]
   }, (e) => {
-
+    console.log(e)
   });
 
 }
+
+// setInterval(()=>{
+//   console.log(bindingx.getComputedStyle(block).borderTopLeftRadius,bindingx.getComputedStyle(block).borderTopRightRadius)
+// },100)
 
 
 

@@ -142,6 +142,13 @@ class Binding {
       case 'color':
         el.style.color = val;
         break;
+      case 'borderTopLeftRadius':
+      case 'borderTopRightRadius':
+      case 'borderBottomLeftRadius':
+      case 'borderBottomRightRadius':
+      case 'borderRadius':
+        el.style[property] = `${px(val)}px`;
+        break;
     }
     el.style[vendorTransform] = [
       `translateX(${elTransform.transform.translateX}px)`,
@@ -240,7 +247,14 @@ module.exports = {
     style.width = pxTo750(computedStyle.width.replace('px', ''));
     style.height = pxTo750(computedStyle.height.replace('px', ''));
     style['background-color'] = computedStyle['background-color'];
+    style.backgroundColor = computedStyle.backgroundColor;
     style.color = computedStyle.color;
+    style.width = pxTo750(computedStyle.width.replace('px', ''));
+    style.height = pxTo750(computedStyle.height.replace('px', ''));
+    style.borderTopLeftRadius = pxTo750(computedStyle.borderTopLeftRadius.replace('px', ''));
+    style.borderTopRightRadius = pxTo750(computedStyle.borderTopRightRadius.replace('px', ''));
+    style.borderBottomLeftRadius = pxTo750(computedStyle.borderBottomLeftRadius.replace('px', ''));
+    style.borderBottomRightRadius = pxTo750(computedStyle.borderBottomRightRadius.replace('px', ''));
     return style;
   }
 

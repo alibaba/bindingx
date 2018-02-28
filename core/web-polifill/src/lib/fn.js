@@ -17,9 +17,9 @@
 'use strict';
 
 import _ from 'simple-lodash';
-import {Easing} from 'animation-util';
+import {Easing, Bezier} from 'animation-util';
 
-// 内置方法
+// inset function
 function colorToDecimal(hexColor) {
   let hex = hexColor.replace(/'|"|#/g, '');
   return parseInt(hex, 16);
@@ -80,11 +80,9 @@ let Fn = {
   rgba: function(r, g, b, a) {
     return `rgb(${parseInt(r)},${parseInt(g)},${parseInt(b)},${a})`;
   },
-  // 用来获取参数
   getArgs: function() {
     return arguments;
   },
-  // 颜色估值算法
   evaluateColor: function(colorFrom, colorTo, percent) {
     percent = percent > 1 ? 1 : percent;
     let from = parseColor(colorFrom);
@@ -97,11 +95,21 @@ let Fn = {
   }
 };
 
-// 内置easing所有方法
+// inset all easing functions
 _.map(Easing, (v, k) => {
-  Fn[k] = function(t) {
-    return t;
-  };
+  if (k !== 'cubicBezier') {
+    Fn[k] = function(t, begin, offset, duration) {
+      t = Math.max(Math.min(t / duration, 1));
+      return v(t) * offset + begin;
+    };
+  }
 });
+
+
+Fn.cubicBezier = function(t, begin, offset, duration, x1, y1, x2, y2) {
+  t = Math.max(Math.min(t / duration, 1));
+  let epsilon = (1000 / 60 / duration) / 4;
+  return Bezier(x1, y1, x2, y2, epsilon)(t) * offset + begin;
+};
 
 export default Fn;
