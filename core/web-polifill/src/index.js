@@ -142,11 +142,11 @@ class Binding {
       case 'color':
         el.style.color = val;
         break;
-      case 'borderTopLeftRadius':
-      case 'borderTopRightRadius':
-      case 'borderBottomLeftRadius':
-      case 'borderBottomRightRadius':
-      case 'borderRadius':
+      case 'border-top-left-radius':
+      case 'border-top-right-radius':
+      case 'border-bottom-left-radius':
+      case 'border-bottom-right-radius':
+      case 'border-radius':
         el.style[property] = `${px(val)}px`;
         break;
     }
@@ -247,14 +247,13 @@ module.exports = {
     style.width = pxTo750(computedStyle.width.replace('px', ''));
     style.height = pxTo750(computedStyle.height.replace('px', ''));
     style['background-color'] = computedStyle['background-color'];
-    style.backgroundColor = computedStyle.backgroundColor;
     style.color = computedStyle.color;
     style.width = pxTo750(computedStyle.width.replace('px', ''));
     style.height = pxTo750(computedStyle.height.replace('px', ''));
-    style.borderTopLeftRadius = pxTo750(computedStyle.borderTopLeftRadius.replace('px', ''));
-    style.borderTopRightRadius = pxTo750(computedStyle.borderTopRightRadius.replace('px', ''));
-    style.borderBottomLeftRadius = pxTo750(computedStyle.borderBottomLeftRadius.replace('px', ''));
-    style.borderBottomRightRadius = pxTo750(computedStyle.borderBottomRightRadius.replace('px', ''));
+    style['border-top-left-radius'] = pxTo750(computedStyle['border-top-left-radius'].replace('px', ''));
+    style['border-top-right-radius'] = pxTo750(computedStyle['border-top-right-radius'].replace('px', ''));
+    style['border-bottom-left-radius'] = pxTo750(computedStyle['border-bottom-left-radius'].replace('px', ''));
+    style['border-bottom-right-radius'] = pxTo750(computedStyle['border-bottom-right-radius'].replace('px', ''));
     return style;
   }
 
