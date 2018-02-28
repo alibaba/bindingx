@@ -109,7 +109,7 @@
 
 ### 文档与教程
 
-TODO 超链接
+[https://alibaba.github.io/bindingx/guide/introduce](https://alibaba.github.io/bindingx/guide/introduce)
 
 ### 谁在使用
 
