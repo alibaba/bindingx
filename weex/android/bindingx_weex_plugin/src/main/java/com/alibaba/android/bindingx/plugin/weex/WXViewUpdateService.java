@@ -741,41 +741,55 @@ final class WXViewUpdateService {
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
                            @NonNull Map<String, Object> config) {
 
-            if(!(cmd instanceof ArrayList)) {
-                return;
-            }
-            final ArrayList<Object> l = (ArrayList<Object>) cmd;
-            if(l.size() != 4) {
-                return;
-            }
-
-            postRunnable(targetView, new Runnable() {
-                @Override
-                public void run() {
-                    Drawable drawable = targetView.getBackground();
-                    if(drawable != null && drawable instanceof BorderDrawable) {
-                        double topLeft = 0,topRight = 0,bottomLeft = 0,bottomRight = 0;
-                        if(l.get(0) instanceof Double) {
-                            topLeft = (double) l.get(0);
-                        }
-                        if(l.get(1) instanceof Double) {
-                            topRight = (double) l.get(1);
-                        }
-                        if(l.get(2) instanceof Double) {
-                            bottomLeft = (double) l.get(2);
-                        }
-                        if(l.get(3) instanceof Double) {
-                            bottomRight = (double) l.get(3);
-                        }
-
-                        BorderDrawable borderDrawable = (BorderDrawable) drawable;
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) topLeft);
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) topRight);
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) bottomLeft);
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) bottomRight);
-                    }
+            if(cmd instanceof ArrayList) {
+                final ArrayList<Object> l = (ArrayList<Object>) cmd;
+                if(l.size() != 4) {
+                    return;
                 }
-            });
+
+                postRunnable(targetView, new Runnable() {
+                    @Override
+                    public void run() {
+                        Drawable drawable = targetView.getBackground();
+                        if(drawable != null && drawable instanceof BorderDrawable) {
+                            double topLeft = 0,topRight = 0,bottomLeft = 0,bottomRight = 0;
+                            if(l.get(0) instanceof Double) {
+                                topLeft = (double) l.get(0);
+                            }
+                            if(l.get(1) instanceof Double) {
+                                topRight = (double) l.get(1);
+                            }
+                            if(l.get(2) instanceof Double) {
+                                bottomLeft = (double) l.get(2);
+                            }
+                            if(l.get(3) instanceof Double) {
+                                bottomRight = (double) l.get(3);
+                            }
+
+                            BorderDrawable borderDrawable = (BorderDrawable) drawable;
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) topLeft);
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) topRight);
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) bottomLeft);
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) bottomRight);
+                        }
+                    }
+                });
+            } else if(cmd instanceof Double) {
+                final double value = (double) cmd;
+                postRunnable(targetView, new Runnable() {
+                    @Override
+                    public void run() {
+                        Drawable drawable = targetView.getBackground();
+                        if(drawable != null && drawable instanceof BorderDrawable) {
+                            BorderDrawable borderDrawable = (BorderDrawable) drawable;
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) value);
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) value);
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) value);
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) value);
+                        }
+                    }
+                });
+            }
         }
     }
 
