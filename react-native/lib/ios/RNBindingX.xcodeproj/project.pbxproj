@@ -11,6 +11,8 @@
 		9C5589A1B97E7BEFB39E1375 /* libPods-RNBindingXTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB459CADE4FEECC5C9240CA5 /* libPods-RNBindingXTests.a */; };
 		D955B1B4202FF851000274AC /* EBUtility+RN.m in Sources */ = {isa = PBXBuildFile; fileRef = D955B1B0202FF850000274AC /* EBUtility+RN.m */; };
 		D955B1B7202FF851000274AC /* EBUtility+RN.h in Headers */ = {isa = PBXBuildFile; fileRef = D955B1B3202FF851000274AC /* EBUtility+RN.h */; };
+		D98553792046A948006F8F8A /* EBBindData.m in Sources */ = {isa = PBXBuildFile; fileRef = D98553772046A948006F8F8A /* EBBindData.m */; };
+		D985537A2046A948006F8F8A /* EBBindData.h in Headers */ = {isa = PBXBuildFile; fileRef = D98553782046A948006F8F8A /* EBBindData.h */; };
 		D9A6A8C12043A5D9001AEC67 /* EBGyroVector3.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8952043A5D4001AEC67 /* EBGyroVector3.m */; };
 		D9A6A8C22043A5D9001AEC67 /* EBJSEvaluate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8962043A5D4001AEC67 /* EBJSEvaluate.m */; };
 		D9A6A8C32043A5D9001AEC67 /* EBExpressionTiming.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8972043A5D4001AEC67 /* EBExpressionTiming.m */; };
@@ -57,7 +59,6 @@
 		D9A6A8EC2043A5D9001AEC67 /* EBGyroQuaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8C02043A5D9001AEC67 /* EBGyroQuaternion.m */; };
 		D9A6AA422043DE6E001AEC67 /* EBRNModule.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6AA402043DE6E001AEC67 /* EBRNModule.h */; };
 		D9A6AA432043DE6E001AEC67 /* EBRNModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6AA412043DE6E001AEC67 /* EBRNModule.m */; };
-		D9A6AA4B2043E142001AEC67 /* RNBindingXTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6AA4A2043E142001AEC67 /* RNBindingXTests.m */; };
 		D9A6AA4D2043E142001AEC67 /* RNBindingX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955B1A5202FF82A000274AC /* RNBindingX.framework */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +81,8 @@
 		D955B1A9202FF82A000274AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D955B1B0202FF850000274AC /* EBUtility+RN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EBUtility+RN.m"; sourceTree = "<group>"; };
 		D955B1B3202FF851000274AC /* EBUtility+RN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EBUtility+RN.h"; sourceTree = "<group>"; };
+		D98553772046A948006F8F8A /* EBBindData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBBindData.m; sourceTree = "<group>"; };
+		D98553782046A948006F8F8A /* EBBindData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBBindData.h; sourceTree = "<group>"; };
 		D9A6A8952043A5D4001AEC67 /* EBGyroVector3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBGyroVector3.m; path = ../BindingX/EBGyroVector3.m; sourceTree = "<group>"; };
 		D9A6A8962043A5D4001AEC67 /* EBJSEvaluate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBJSEvaluate.m; path = ../BindingX/EBJSEvaluate.m; sourceTree = "<group>"; };
 		D9A6A8972043A5D4001AEC67 /* EBExpressionTiming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionTiming.m; path = ../BindingX/EBExpressionTiming.m; sourceTree = "<group>"; };
@@ -127,7 +130,6 @@
 		D9A6AA402043DE6E001AEC67 /* EBRNModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBRNModule.h; sourceTree = "<group>"; };
 		D9A6AA412043DE6E001AEC67 /* EBRNModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBRNModule.m; sourceTree = "<group>"; };
 		D9A6AA482043E142001AEC67 /* RNBindingXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RNBindingXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D9A6AA4A2043E142001AEC67 /* RNBindingXTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNBindingXTests.m; sourceTree = "<group>"; };
 		D9A6AA4C2043E142001AEC67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB459CADE4FEECC5C9240CA5 /* libPods-RNBindingXTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNBindingXTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6D10BCEBB7C4B2F9A2632EC /* Pods-RNBindingXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBindingXTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RNBindingXTests/Pods-RNBindingXTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -210,6 +212,8 @@
 		D955B21B2030102B000274AC /* core */ = {
 			isa = PBXGroup;
 			children = (
+				D98553782046A948006F8F8A /* EBBindData.h */,
+				D98553772046A948006F8F8A /* EBBindData.m */,
 				D9A6A8992043A5D4001AEC67 /* EBExpression.h */,
 				D9A6A8A72043A5D5001AEC67 /* EBExpression.m */,
 				D9A6A8BC2043A5D8001AEC67 /* EBExpressionExecutor.h */,
@@ -262,7 +266,6 @@
 		D9A6AA492043E142001AEC67 /* RNBindingXTests */ = {
 			isa = PBXGroup;
 			children = (
-				D9A6AA4A2043E142001AEC67 /* RNBindingXTests.m */,
 				D9A6AA4C2043E142001AEC67 /* Info.plist */,
 			);
 			path = RNBindingXTests;
@@ -282,6 +285,7 @@
 				D9A6A8D12043A5D9001AEC67 /* EBNativeFunction.h in Headers */,
 				D9A6A8C92043A5D9001AEC67 /* EBJSEase.h in Headers */,
 				D9A6A8C52043A5D9001AEC67 /* EBExpression.h in Headers */,
+				D985537A2046A948006F8F8A /* EBBindData.h in Headers */,
 				D9A6A8DB2043A5D9001AEC67 /* EBGyroManager.h in Headers */,
 				D9A6A8D42043A5D9001AEC67 /* EBExpressionOrientation.h in Headers */,
 				D9A6A8CF2043A5D9001AEC67 /* EBTaffyTuple.h in Headers */,
@@ -506,6 +510,7 @@
 				D9A6A8E02043A5D9001AEC67 /* EBExpressionGesture.m in Sources */,
 				D9A6A8CD2043A5D9001AEC67 /* NSObject+EBTuplePacker.m in Sources */,
 				D9A6A8D32043A5D9001AEC67 /* EBExpression.m in Sources */,
+				D98553792046A948006F8F8A /* EBBindData.m in Sources */,
 				D9A6A8D52043A5D9001AEC67 /* EBNativeFunction.m in Sources */,
 				D9A6A8CC2043A5D9001AEC67 /* EBGyroEuler.m in Sources */,
 				D9A6A8EC2043A5D9001AEC67 /* EBGyroQuaternion.m in Sources */,
@@ -520,7 +525,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9A6AA4B2043E142001AEC67 /* RNBindingXTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

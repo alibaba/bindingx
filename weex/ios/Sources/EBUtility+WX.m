@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Alibaba Group
+ * Copyright 2018 Alibaba Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,6 +86,24 @@
     }
     if (model.isAlphaChanged) {
         styles[@"opacity"] = @(model.alpha);
+    }
+    if (model.isBRChanged) {
+        styles[@"borderTopLeftRadius"] = @(model.br);
+        styles[@"borderTopRightRadius"] = @(model.br);
+        styles[@"borderBottomRightRadius"] = @(model.br);
+        styles[@"borderBottomLeftRadius"] = @(model.br);
+    }
+    if (model.isBRTLChanged) {
+        styles[@"borderTopLeftRadius"] = @(model.brTL);
+    }
+    if (model.isBRTRChanged) {
+        styles[@"borderTopRightRadius"] = @(model.brTR);
+    }
+    if (model.isBRBRChanged) {
+        styles[@"borderBottomRightRadius"] = @(model.brBR);
+    }
+    if (model.isBRBLChanged) {
+        styles[@"borderBottomLeftRadius"] = @(model.brBL);
     }
     
     if (styles.count > 0) {
@@ -184,5 +202,21 @@
     }
     return [NSString stringWithFormat:@"rgba(%d,%d,%d,%lf)", [r intValue],[g intValue],[b intValue],[a doubleValue]];
 }
+
++ (NSNumber *)transformFactor:(NSString *)key layer:(CALayer* )layer {
+    CGFloat factor = [WXUtility defaultPixelScaleFactor];
+    id value = [layer valueForKeyPath:key];
+    if(value){
+        return [NSNumber numberWithDouble:([value doubleValue] / factor)];
+    }
+    return nil;
+}
+
++ (NSString *)colorAsString:(CGColorRef)cgColor
+{
+    const CGFloat *components = CGColorGetComponents(cgColor);
+    return [NSString stringWithFormat:@"rgba(%d,%d,%d,%f)", (int)(components[0]*255), (int)(components[1]*255), (int)(components[2]*255), components[3]];
+}
+
 #pragma clang diagnostic pop
 @end

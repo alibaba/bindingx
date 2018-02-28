@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Alibaba Group
+ * Copyright 2018 Alibaba Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@
 @property (nonatomic, assign) BOOL isBackgroundColorChanged;
 @property (nonatomic, strong) NSObject *backgroundColor;
 
-//仅支持TextComponent
+// color only for text
 @property (nonatomic, assign) BOOL isColorChanged;
 @property (nonatomic, strong) NSObject *color;
 
@@ -63,4 +63,17 @@
 @property (nonatomic, assign) CGFloat rotateY;
 @property (nonatomic, assign) CGFloat perspective;
 @property (nonatomic, strong) NSString *transformOrigin;
+
+// border radius
+@property (nonatomic, assign) CGFloat brTL;
+@property (nonatomic, assign) BOOL isBRTLChanged;
+@property (nonatomic, assign) CGFloat brTR;
+@property (nonatomic, assign) BOOL isBRTRChanged;
+@property (nonatomic, assign) CGFloat brBR;
+@property (nonatomic, assign) BOOL isBRBRChanged;
+@property (nonatomic, assign) CGFloat brBL;
+@property (nonatomic, assign) BOOL isBRBLChanged;
+@property (nonatomic, assign) CGFloat br;
+@property (nonatomic, assign) BOOL isBRChanged;
+
 @end

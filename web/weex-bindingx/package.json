@@ -1,8 +1,12 @@
 {
   "name": "weex-bindingx",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "description": "bindingx,expression,binding,weex",
   "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alibaba/bindingx.git"
+  },
   "scripts": {
     "start-rax": "node webpack.dev.rax.config.js",
     "start-vue": "node webpack.dev.vue.config.js",

@@ -15,13 +15,20 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "EBExpressionHandler.h"
 
-typedef BOOL (^EBDeviceOrientationCallback)(double alpha, double beta, double gamma);
+#define EBsupportFeatures  @[@"pan",@"scroll",@"orientation",@"timing"]
 
-@interface EBGyroManager : NSObject
+@interface EBBindData : NSObject
 
-+ (void)watchOrientation:(EBDeviceOrientationCallback _Nonnull)callback withInterval:(NSTimeInterval)interval;
+- (EBExpressionHandler *)handlerForToken:(NSString *)token expressionType:(WXExpressionType)exprType;
 
-+ (void)removeOrientation:(EBDeviceOrientationCallback _Nonnull)callback;
+- (void)putHandler:(EBExpressionHandler *)handler forToken:(NSString *)token expressionType:(WXExpressionType)exprType;
+
+- (void)removeHandler:(EBExpressionHandler *)handler forToken:(NSString *)token expressionType:(WXExpressionType)exprType;
+
+- (void)unbindAll;
+
++ (id)parseExpression:(NSObject *)expression;
 
 @end
