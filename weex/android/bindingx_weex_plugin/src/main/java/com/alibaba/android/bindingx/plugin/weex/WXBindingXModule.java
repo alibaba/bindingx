@@ -17,7 +17,9 @@ package com.alibaba.android.bindingx.plugin.weex;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
@@ -152,7 +154,6 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
         map.put("translateX", resolutionTranslator.nativeToWeb(sourceView.getTranslationX()));
         map.put("translateY", resolutionTranslator.nativeToWeb(sourceView.getTranslationY()));
 
-
         map.put("rotateX", Utils.normalizeRotation(sourceView.getRotationX()));
         map.put("rotateY", Utils.normalizeRotation(sourceView.getRotationY()));
         map.put("rotateZ", Utils.normalizeRotation(sourceView.getRotation()));
@@ -161,6 +162,23 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
         map.put("scaleY", sourceView.getScaleY());
 
         map.put("opacity", sourceView.getAlpha());
+
+        Drawable drawable = sourceView.getBackground();
+        double topLeft = 0,topRight = 0,bottomLeft = 0,bottomRight = 0;
+        if(drawable != null && drawable instanceof BorderDrawable) {
+            BorderDrawable borderDrawable = (BorderDrawable) drawable;
+            float[] result = borderDrawable.getBorderRadius(new RectF(0,0,sourceView.getWidth(),sourceView.getHeight()));
+            if(result.length == 8) {
+                topLeft = result[0];
+                topRight = result[2];
+                bottomLeft = result[6];
+                bottomRight = result[4];
+            }
+        }
+        map.put("border-top-left-radius", resolutionTranslator.nativeToWeb(topLeft));
+        map.put("border-top-right-radius", resolutionTranslator.nativeToWeb(topRight));
+        map.put("border-bottom-left-radius", resolutionTranslator.nativeToWeb(bottomLeft));
+        map.put("border-bottom-right-radius", resolutionTranslator.nativeToWeb(bottomRight));
 
         if (sourceView.getBackground() != null) {
             int backgroundColor = Color.BLACK;
