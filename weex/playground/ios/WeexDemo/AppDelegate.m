@@ -122,7 +122,7 @@
     
 #if DEBUG
     //If you are debugging in device , please change the host to current IP of your computer.
-    ((WXDemoViewController *)demo).url = [NSURL URLWithString:HOME_URL];
+    ((WXDemoViewController *)demo).url = [NSURL URLWithString:@"https://jsplayground.taobao.com/bundle/57f81e4e-8242-4124-bb90-996a57331343/raxbundle.js?wh_weex=true&wh_ttid=native&_wx_tpl=https://jsplayground.taobao.com/bundle/57f81e4e-8242-4124-bb90-996a57331343/raxbundle.js"];
 #else
     ((WXDemoViewController *)demo).url = [NSURL URLWithString:BUNDLE_URL];
 #endif
