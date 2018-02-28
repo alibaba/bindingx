@@ -4,7 +4,17 @@
   <meta charset="utf-8">
   <title>BindingX</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+    
   <!-- <link rel="icon" href="//img.alicdn.com/L1/461/1/40137b64ab73a123e78d8246cd81c8379358c999" type="image/x-icon">
   <link rel="shortcut icon" href="//img.alicdn.com/L1/461/1/40137b64ab73a123e78d8246cd81c8379358c999"> -->
   <style>
@@ -23,12 +33,13 @@
 
 <body class="loading">
 <div id="react-content" style="overflow: auto">
+<div id="app"></div>
 </div>
 
 
 <script>
 var version = '0.1.1';
-var isDebug = false;
+var isDebug = true;
 var isLocalhost = location.href.toString().indexOf('localhost') > 0;
 
 console.log('now portal version is ' + version);
@@ -38,19 +49,33 @@ if(!isDebug) {
   loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-external/js/modernizr.custom.js`);
   //loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-internal/js/hovereffect.js`);
   loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-external/common.js`);
-  loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-external/index.js`);
+
+  if(isMobile()) {
+    loadScript('//download.alicdn.com/sns/bindingx_mobile_home.js');
+  }else {
+    loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-external/index.js`);
+  }
 }else if(!isLocalhost) {
   loadCss(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.css`);
   loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/js/modernizr.custom.js`);
   //loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-internal/js/hovereffect.js`);
   loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/common.js`);
-  loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.js`);
+
+  if(isMobile()) {
+    loadScript('//download.alicdn.com/sns/bindingx_mobile_home.js');
+  }else {
+    loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.js`);
+  }
 
   console.log("isDebug is true. isLocalhost is false.");
 }else {
   loadCss('//localhost:8010/index.css');
   loadScript('//localhost:8010/common.js');
-  loadScript('//localhost:8010/index.js');
+  if(isMobile()) {
+    loadScript('//download.alicdn.com/sns/bindingx_mobile_home.js');
+  } else {
+    loadScript('//localhost:8010/index.js');
+  }
 
   console.log("isDebug is true. isLocalhost is true.");
 }
@@ -68,6 +93,19 @@ function loadCss(file) {
   scriptElement.href = file;
   document.getElementsByTagName('head')[0].appendChild(scriptElement);
 } 
+
+function isMobile() {
+  const ua = navigator.userAgent.toLowerCase();
+  const isIpad = ua.match(/ipad/);
+  const isIphone = !isIpad && ua.match(/iphone/);
+  const isAndroid = ua.match(/android/);
+
+  if (isIphone || isIpad || isAndroid) {
+    return true;
+  } else {
+    return false;
+  }
+}
 </script>
 
 </body>
