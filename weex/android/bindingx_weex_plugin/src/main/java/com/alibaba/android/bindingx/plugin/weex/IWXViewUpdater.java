@@ -33,7 +33,7 @@ import java.util.Map;
 
 public interface IWXViewUpdater {
 
-    void invoke(@NonNull WXComponent component,
+    void update(@NonNull WXComponent component,
                 @NonNull View targetView,
                 @NonNull Object cmd,
                 @NonNull PlatformManager.IDeviceResolutionTranslator translator,

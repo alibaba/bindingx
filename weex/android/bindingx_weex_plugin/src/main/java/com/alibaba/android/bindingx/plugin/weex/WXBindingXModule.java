@@ -269,7 +269,7 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
                             LogProxy.e("unexpected error. component not found [ref:"+ref+",instanceId:"+instanceId+"]");
                             return;
                         }
-                        WXViewUpdateService.findInvoker(propertyName).invoke(
+                        WXViewUpdateService.findUpdater(propertyName).update(
                                 targetComponent,
                                 targetView,
                                 propertyValue,

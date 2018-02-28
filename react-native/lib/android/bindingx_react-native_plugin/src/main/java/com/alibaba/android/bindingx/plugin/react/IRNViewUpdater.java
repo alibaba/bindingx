@@ -33,7 +33,7 @@ import java.util.Map;
 
 public interface IRNViewUpdater {
 
-    void invoke(int tag,
+    void update(int tag,
                 @NonNull View targetView,
                 @NonNull Object cmd,
                 @NonNull PlatformManager.IDeviceResolutionTranslator translator,
