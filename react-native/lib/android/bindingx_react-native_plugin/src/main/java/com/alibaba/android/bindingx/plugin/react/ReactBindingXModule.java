@@ -332,7 +332,7 @@ public final class ReactBindingXModule extends ReactContextBaseJavaModule implem
                                     UiThreadUtil.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            RNViewUpdateService.findInvoker(propertyName).invoke(
+                                            RNViewUpdateService.findUpdater(propertyName).update(
                                                     finalTag,
                                                     targetView,
                                                     propertyValue,

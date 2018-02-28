@@ -23,26 +23,26 @@ public class WXViewUpdateServiceTest {
 
     @Test
     public void findInvoker() throws Exception {
-        assertNotNull(WXViewUpdateService.findInvoker("opacity"));
-        assertNotNull(WXViewUpdateService.findInvoker("transform.translate"));
-        assertNotNull(WXViewUpdateService.findInvoker("transform.translateX"));
-        assertNotNull(WXViewUpdateService.findInvoker("transform.translateY"));
-        assertNotNull(WXViewUpdateService.findInvoker("transform.scale"));
-        assertNotNull(WXViewUpdateService.findInvoker("transform.scaleX"));
+        assertNotNull(WXViewUpdateService.findUpdater("opacity"));
+        assertNotNull(WXViewUpdateService.findUpdater("transform.translate"));
+        assertNotNull(WXViewUpdateService.findUpdater("transform.translateX"));
+        assertNotNull(WXViewUpdateService.findUpdater("transform.translateY"));
+        assertNotNull(WXViewUpdateService.findUpdater("transform.scale"));
+        assertNotNull(WXViewUpdateService.findUpdater("transform.scaleX"));
 
-        assertNotNull(WXViewUpdateService.findInvoker("transform.scaleY"));
-        assertNotNull(WXViewUpdateService.findInvoker("transform.rotate"));
-        assertNotNull(WXViewUpdateService.findInvoker("transform.rotateZ"));
-        assertNotNull(WXViewUpdateService.findInvoker("transform.rotateX"));
-        assertNotNull(WXViewUpdateService.findInvoker("transform.rotateY"));
-        assertNotNull(WXViewUpdateService.findInvoker("width"));
-        assertNotNull(WXViewUpdateService.findInvoker("height"));
+        assertNotNull(WXViewUpdateService.findUpdater("transform.scaleY"));
+        assertNotNull(WXViewUpdateService.findUpdater("transform.rotate"));
+        assertNotNull(WXViewUpdateService.findUpdater("transform.rotateZ"));
+        assertNotNull(WXViewUpdateService.findUpdater("transform.rotateX"));
+        assertNotNull(WXViewUpdateService.findUpdater("transform.rotateY"));
+        assertNotNull(WXViewUpdateService.findUpdater("width"));
+        assertNotNull(WXViewUpdateService.findUpdater("height"));
 
-        assertNotNull(WXViewUpdateService.findInvoker("background-color"));
-        assertNotNull(WXViewUpdateService.findInvoker("color"));
-        assertNotNull(WXViewUpdateService.findInvoker("scroll.contentOffset"));
-        assertNotNull(WXViewUpdateService.findInvoker("scroll.contentOffsetX"));
-        assertNotNull(WXViewUpdateService.findInvoker("scroll.contentOffsetY"));
+        assertNotNull(WXViewUpdateService.findUpdater("background-color"));
+        assertNotNull(WXViewUpdateService.findUpdater("color"));
+        assertNotNull(WXViewUpdateService.findUpdater("scroll.contentOffset"));
+        assertNotNull(WXViewUpdateService.findUpdater("scroll.contentOffsetX"));
+        assertNotNull(WXViewUpdateService.findUpdater("scroll.contentOffsetY"));
     }
 
 }

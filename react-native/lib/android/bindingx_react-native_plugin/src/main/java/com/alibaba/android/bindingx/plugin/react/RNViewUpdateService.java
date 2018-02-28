@@ -40,65 +40,65 @@ import java.util.Map;
  */
 
 final class RNViewUpdateService {
-    private static final Map<String,IRNViewUpdater> sExpressionInvokerMap;
-    private static final NOpInvoker EMPTY_INVOKER = new NOpInvoker();
+    private static final Map<String,IRNViewUpdater> sExpressionUpdaterMap;
+    private static final NopUpdater EMPTY_INVOKER = new NopUpdater();
 
     private static final String PERSPECTIVE = "perspective";
     private static final String TRANSFORM_ORIGIN = "transformOrigin";
 
     static {
-        sExpressionInvokerMap = new HashMap<>();
-        sExpressionInvokerMap.put("opacity",new OpacityInvoker());
-        sExpressionInvokerMap.put("transform.translate",new TranslateInvoker());
-        sExpressionInvokerMap.put("transform.translateX",new TranslateXInvoker());
-        sExpressionInvokerMap.put("transform.translateY",new TranslateYInvoker());
+        sExpressionUpdaterMap = new HashMap<>();
+        sExpressionUpdaterMap.put("opacity",new OpacityUpdater());
+        sExpressionUpdaterMap.put("transform.translate",new TranslateUpdater());
+        sExpressionUpdaterMap.put("transform.translateX",new TranslateXUpdater());
+        sExpressionUpdaterMap.put("transform.translateY",new TranslateYUpdater());
 
-        sExpressionInvokerMap.put("transform.scale",new ScaleInvoker());
-        sExpressionInvokerMap.put("transform.scaleX",new ScaleXInvoker());
-        sExpressionInvokerMap.put("transform.scaleY",new ScaleYInvoker());
+        sExpressionUpdaterMap.put("transform.scale",new ScaleUpdater());
+        sExpressionUpdaterMap.put("transform.scaleX",new ScaleXUpdater());
+        sExpressionUpdaterMap.put("transform.scaleY",new ScaleYUpdater());
 
-        sExpressionInvokerMap.put("transform.rotate",new RotateInvoker());
-        sExpressionInvokerMap.put("transform.rotateZ",new RotateInvoker());
-        sExpressionInvokerMap.put("transform.rotateX",new RotateXInvoker());
-        sExpressionInvokerMap.put("transform.rotateY",new RotateYInvoker());
+        sExpressionUpdaterMap.put("transform.rotate",new RotateUpdater());
+        sExpressionUpdaterMap.put("transform.rotateZ",new RotateUpdater());
+        sExpressionUpdaterMap.put("transform.rotateX",new RotateXUpdater());
+        sExpressionUpdaterMap.put("transform.rotateY",new RotateYUpdater());
 
-        sExpressionInvokerMap.put("background-color",new BackgroundInvoker());
-        sExpressionInvokerMap.put("color", new ColorInvoker());
+        sExpressionUpdaterMap.put("background-color",new BackgroundUpdater());
+        sExpressionUpdaterMap.put("color", new ColorUpdater());
 
-        sExpressionInvokerMap.put("scroll.contentOffset", new ContentOffsetInvoker());
-        sExpressionInvokerMap.put("scroll.contentOffsetX", new ContentOffsetXInvoker());
-        sExpressionInvokerMap.put("scroll.contentOffsetY", new ContentOffsetYInvoker());
+        sExpressionUpdaterMap.put("scroll.contentOffset", new ContentOffsetUpdater());
+        sExpressionUpdaterMap.put("scroll.contentOffsetX", new ContentOffsetXUpdater());
+        sExpressionUpdaterMap.put("scroll.contentOffsetY", new ContentOffsetYUpdater());
 
         // dangerous. Not Recommended.
-        sExpressionInvokerMap.put("width",new WidthInvoker());
-        sExpressionInvokerMap.put("height",new HeightInvoker());
+        sExpressionUpdaterMap.put("width",new WidthUpdater());
+        sExpressionUpdaterMap.put("height",new HeightUpdater());
     }
 
     @NonNull
-    static IRNViewUpdater findInvoker(@NonNull String prop) {
-        final IRNViewUpdater invoker = sExpressionInvokerMap.get(prop);
-        if(invoker == null) {
+    static IRNViewUpdater findUpdater(@NonNull String prop) {
+        final IRNViewUpdater updater = sExpressionUpdaterMap.get(prop);
+        if(updater == null) {
             LogProxy.e("unknown property [" + prop + "]");
             return EMPTY_INVOKER;
         }
         return new IRNViewUpdater() {
             @Override
-            public void invoke(int tag,
+            public void update(int tag,
                                @NonNull View targetView,
                                @NonNull Object cmd,
                                @NonNull PlatformManager.IDeviceResolutionTranslator translator,
                                @NonNull Map<String, Object> config,
                                @NonNull UIImplementation implementation) {
-                invoker.invoke(tag,targetView,cmd,translator,config,implementation);
+                updater.update(tag,targetView,cmd,translator,config,implementation);
                 implementation.synchronouslyUpdateViewOnUIThread(tag, new ReactStylesDiffMap(Arguments.createMap()));
             }
         };
     }
 
-    private static final class NOpInvoker implements IRNViewUpdater {
+    private static final class NopUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -108,10 +108,10 @@ final class RNViewUpdateService {
         }
     }
 
-    private static final class OpacityInvoker implements IRNViewUpdater {
+    private static final class OpacityUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -126,10 +126,10 @@ final class RNViewUpdateService {
         }
     }
 
-    private static final class TranslateInvoker implements IRNViewUpdater {
+    private static final class TranslateUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -150,10 +150,10 @@ final class RNViewUpdateService {
         }
     }
 
-    private static final class TranslateXInvoker implements IRNViewUpdater {
+    private static final class TranslateXUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -168,10 +168,10 @@ final class RNViewUpdateService {
         }
     }
 
-    private static final class TranslateYInvoker implements IRNViewUpdater {
+    private static final class TranslateYUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -185,10 +185,10 @@ final class RNViewUpdateService {
         }
     }
 
-    private static final class ScaleInvoker implements IRNViewUpdater {
+    private static final class ScaleUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -226,10 +226,10 @@ final class RNViewUpdateService {
         }
     }
 
-    private static final class ScaleXInvoker implements IRNViewUpdater {
+    private static final class ScaleXUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -251,10 +251,10 @@ final class RNViewUpdateService {
         }
     }
 
-    private static final class ScaleYInvoker implements IRNViewUpdater {
+    private static final class ScaleYUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -276,10 +276,10 @@ final class RNViewUpdateService {
         }
     }
 
-    private static final class RotateInvoker implements IRNViewUpdater {
+    private static final class RotateUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -309,10 +309,10 @@ final class RNViewUpdateService {
         }
     }
 
-    private static final class RotateXInvoker implements IRNViewUpdater {
+    private static final class RotateXUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -341,10 +341,10 @@ final class RNViewUpdateService {
     }
 
 
-    private static final class RotateYInvoker implements IRNViewUpdater {
+    private static final class RotateYUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -373,10 +373,10 @@ final class RNViewUpdateService {
     }
 
 
-    private static final class WidthInvoker implements IRNViewUpdater {
+    private static final class WidthUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -393,10 +393,10 @@ final class RNViewUpdateService {
         }
     }
 
-    private static final class HeightInvoker implements IRNViewUpdater {
+    private static final class HeightUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -413,10 +413,10 @@ final class RNViewUpdateService {
         }
     }
 
-    private static final class BackgroundInvoker implements IRNViewUpdater {
+    private static final class BackgroundUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -430,10 +430,10 @@ final class RNViewUpdateService {
         }
     }
 
-    private static final class ColorInvoker implements IRNViewUpdater {
+    private static final class ColorUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -450,10 +450,10 @@ final class RNViewUpdateService {
     }
 
 
-    private static final class ContentOffsetInvoker implements IRNViewUpdater {
+    private static final class ContentOffsetUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -482,10 +482,10 @@ final class RNViewUpdateService {
         }
     }
 
-    private static final class ContentOffsetXInvoker implements IRNViewUpdater {
+    private static final class ContentOffsetXUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -504,10 +504,10 @@ final class RNViewUpdateService {
         }
     }
 
-    private static final class ContentOffsetYInvoker implements IRNViewUpdater {
+    private static final class ContentOffsetYUpdater implements IRNViewUpdater {
 
         @Override
-        public void invoke(int tag,
+        public void update(int tag,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,

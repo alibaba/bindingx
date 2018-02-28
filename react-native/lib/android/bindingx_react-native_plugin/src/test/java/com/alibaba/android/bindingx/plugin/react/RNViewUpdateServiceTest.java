@@ -23,24 +23,24 @@ public class RNViewUpdateServiceTest {
 
     @Test
     public void findInvoker() throws Exception {
-        assertNotNull(RNViewUpdateService.findInvoker("opacity"));
-        assertNotNull(RNViewUpdateService.findInvoker("transform.translate"));
-        assertNotNull(RNViewUpdateService.findInvoker("transform.translateX"));
-        assertNotNull(RNViewUpdateService.findInvoker("transform.translateY"));
-        assertNotNull(RNViewUpdateService.findInvoker("transform.scale"));
-        assertNotNull(RNViewUpdateService.findInvoker("transform.scaleX"));
-        assertNotNull(RNViewUpdateService.findInvoker("transform.scaleY"));
-        assertNotNull(RNViewUpdateService.findInvoker("transform.rotate"));
+        assertNotNull(RNViewUpdateService.findUpdater("opacity"));
+        assertNotNull(RNViewUpdateService.findUpdater("transform.translate"));
+        assertNotNull(RNViewUpdateService.findUpdater("transform.translateX"));
+        assertNotNull(RNViewUpdateService.findUpdater("transform.translateY"));
+        assertNotNull(RNViewUpdateService.findUpdater("transform.scale"));
+        assertNotNull(RNViewUpdateService.findUpdater("transform.scaleX"));
+        assertNotNull(RNViewUpdateService.findUpdater("transform.scaleY"));
+        assertNotNull(RNViewUpdateService.findUpdater("transform.rotate"));
 
-        assertNotNull(RNViewUpdateService.findInvoker("transform.rotateZ"));
-        assertNotNull(RNViewUpdateService.findInvoker("transform.rotateX"));
-        assertNotNull(RNViewUpdateService.findInvoker("transform.rotateY"));
-        assertNotNull(RNViewUpdateService.findInvoker("background-color"));
+        assertNotNull(RNViewUpdateService.findUpdater("transform.rotateZ"));
+        assertNotNull(RNViewUpdateService.findUpdater("transform.rotateX"));
+        assertNotNull(RNViewUpdateService.findUpdater("transform.rotateY"));
+        assertNotNull(RNViewUpdateService.findUpdater("background-color"));
 
-        assertNotNull(RNViewUpdateService.findInvoker("color"));
-        assertNotNull(RNViewUpdateService.findInvoker("scroll.contentOffset"));
-        assertNotNull(RNViewUpdateService.findInvoker("scroll.contentOffsetX"));
-        assertNotNull(RNViewUpdateService.findInvoker("scroll.contentOffsetY"));
+        assertNotNull(RNViewUpdateService.findUpdater("color"));
+        assertNotNull(RNViewUpdateService.findUpdater("scroll.contentOffset"));
+        assertNotNull(RNViewUpdateService.findUpdater("scroll.contentOffsetX"));
+        assertNotNull(RNViewUpdateService.findUpdater("scroll.contentOffsetY"));
     }
 
 }

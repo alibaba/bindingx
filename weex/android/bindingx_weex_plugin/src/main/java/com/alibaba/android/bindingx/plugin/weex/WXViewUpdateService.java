@@ -50,59 +50,59 @@ import java.util.Map;
  */
 
 final class WXViewUpdateService {
-    private static final Map<String,IWXViewUpdater> sExpressionInvokerMap;
-    private static final NOpInvoker EMPTY_INVOKER = new NOpInvoker();
+    private static final Map<String,IWXViewUpdater> sExpressionUpdaterMap;
+    private static final NOpUpdater EMPTY_INVOKER = new NOpUpdater();
 
     private static final String PERSPECTIVE = "perspective";
     private static final String TRANSFORM_ORIGIN = "transformOrigin";
 
     static {
-        sExpressionInvokerMap = new HashMap<>();
-        sExpressionInvokerMap.put("opacity",new OpacityInvoker());
-        sExpressionInvokerMap.put("transform.translate",new TranslateInvoker());
-        sExpressionInvokerMap.put("transform.translateX",new TranslateXInvoker());
-        sExpressionInvokerMap.put("transform.translateY",new TranslateYInvoker());
+        sExpressionUpdaterMap = new HashMap<>();
+        sExpressionUpdaterMap.put("opacity",new OpacityUpdater());
+        sExpressionUpdaterMap.put("transform.translate",new TranslateUpdater());
+        sExpressionUpdaterMap.put("transform.translateX",new TranslateXUpdater());
+        sExpressionUpdaterMap.put("transform.translateY",new TranslateYUpdater());
 
-        sExpressionInvokerMap.put("transform.scale",new ScaleInvoker());
-        sExpressionInvokerMap.put("transform.scaleX",new ScaleXInvoker());
-        sExpressionInvokerMap.put("transform.scaleY",new ScaleYInvoker());
+        sExpressionUpdaterMap.put("transform.scale",new ScaleUpdater());
+        sExpressionUpdaterMap.put("transform.scaleX",new ScaleXUpdater());
+        sExpressionUpdaterMap.put("transform.scaleY",new ScaleYUpdater());
 
-        sExpressionInvokerMap.put("transform.rotate",new RotateInvoker());
-        sExpressionInvokerMap.put("transform.rotateZ",new RotateInvoker());
-        sExpressionInvokerMap.put("transform.rotateX",new RotateXInvoker());
-        sExpressionInvokerMap.put("transform.rotateY",new RotateYInvoker());
+        sExpressionUpdaterMap.put("transform.rotate",new RotateUpdater());
+        sExpressionUpdaterMap.put("transform.rotateZ",new RotateUpdater());
+        sExpressionUpdaterMap.put("transform.rotateX",new RotateXUpdater());
+        sExpressionUpdaterMap.put("transform.rotateY",new RotateYUpdater());
 
-        sExpressionInvokerMap.put("width",new WidthInvoker());
-        sExpressionInvokerMap.put("height",new HeightInvoker());
+        sExpressionUpdaterMap.put("width",new WidthUpdater());
+        sExpressionUpdaterMap.put("height",new HeightUpdater());
 
-        sExpressionInvokerMap.put("background-color",new BackgroundInvoker());
-        sExpressionInvokerMap.put("color", new ColorInvoker());
+        sExpressionUpdaterMap.put("background-color",new BackgroundUpdater());
+        sExpressionUpdaterMap.put("color", new ColorUpdater());
 
-        sExpressionInvokerMap.put("scroll.contentOffset", new ContentOffsetInvoker());
-        sExpressionInvokerMap.put("scroll.contentOffsetX", new ContentOffsetXInvoker());
-        sExpressionInvokerMap.put("scroll.contentOffsetY", new ContentOffsetYInvoker());
+        sExpressionUpdaterMap.put("scroll.contentOffset", new ContentOffsetUpdater());
+        sExpressionUpdaterMap.put("scroll.contentOffsetX", new ContentOffsetXUpdater());
+        sExpressionUpdaterMap.put("scroll.contentOffsetY", new ContentOffsetYUpdater());
 
-        sExpressionInvokerMap.put("border-top-left-radius", new BorderRadiusTopLeftUpdater());
-        sExpressionInvokerMap.put("border-top-right-radius", new BorderRadiusTopRightUpdater());
-        sExpressionInvokerMap.put("border-bottom-left-radius", new BorderRadiusBottomLeftUpdater());
-        sExpressionInvokerMap.put("border-bottom-right-radius", new BorderRadiusBottomRightUpdater());
+        sExpressionUpdaterMap.put("border-top-left-radius", new BorderRadiusTopLeftUpdater());
+        sExpressionUpdaterMap.put("border-top-right-radius", new BorderRadiusTopRightUpdater());
+        sExpressionUpdaterMap.put("border-bottom-left-radius", new BorderRadiusBottomLeftUpdater());
+        sExpressionUpdaterMap.put("border-bottom-right-radius", new BorderRadiusBottomRightUpdater());
 
-        sExpressionInvokerMap.put("border-radius", new BorderRadiusUpdater());
+        sExpressionUpdaterMap.put("border-radius", new BorderRadiusUpdater());
     }
 
     @NonNull
-    static IWXViewUpdater findInvoker(@NonNull String prop) {
-        IWXViewUpdater invoker = sExpressionInvokerMap.get(prop);
-        if(invoker == null) {
+    static IWXViewUpdater findUpdater(@NonNull String prop) {
+        IWXViewUpdater updater = sExpressionUpdaterMap.get(prop);
+        if(updater == null) {
             LogProxy.e("unknown property [" + prop + "]");
             return EMPTY_INVOKER;
         }
-        return invoker;
+        return updater;
     }
 
-    private static final class NOpInvoker implements IWXViewUpdater {
+    private static final class NOpUpdater implements IWXViewUpdater {
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -120,10 +120,10 @@ final class WXViewUpdateService {
     }
 
     //内容滚动
-    private static final class ContentOffsetInvoker implements IWXViewUpdater {
+    private static final class ContentOffsetUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
@@ -159,10 +159,10 @@ final class WXViewUpdateService {
         }
     }
 
-    private static final class ContentOffsetXInvoker implements IWXViewUpdater {
+    private static final class ContentOffsetXUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
@@ -184,10 +184,10 @@ final class WXViewUpdateService {
         }
     }
 
-    private static final class ContentOffsetYInvoker implements IWXViewUpdater {
+    private static final class ContentOffsetYUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
@@ -209,10 +209,10 @@ final class WXViewUpdateService {
         }
     }
 
-    private static final class OpacityInvoker implements IWXViewUpdater {
+    private static final class OpacityUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -231,10 +231,10 @@ final class WXViewUpdateService {
         }
     }
 
-    private static final class TranslateInvoker implements IWXViewUpdater {
+    private static final class TranslateUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
@@ -259,10 +259,10 @@ final class WXViewUpdateService {
         }
     }
 
-    private static final class TranslateXInvoker implements IWXViewUpdater {
+    private static final class TranslateXUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
@@ -280,10 +280,10 @@ final class WXViewUpdateService {
         }
     }
 
-    private static final class TranslateYInvoker implements IWXViewUpdater {
+    private static final class TranslateYUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
@@ -301,10 +301,10 @@ final class WXViewUpdateService {
         }
     }
 
-    private static final class ScaleInvoker implements IWXViewUpdater {
+    private static final class ScaleUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull final Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -345,10 +345,10 @@ final class WXViewUpdateService {
         }
     }
 
-    private static final class ScaleXInvoker implements IWXViewUpdater {
+    private static final class ScaleXUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull final Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -374,10 +374,10 @@ final class WXViewUpdateService {
         }
     }
 
-    private static final class ScaleYInvoker implements IWXViewUpdater {
+    private static final class ScaleYUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull final Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -403,10 +403,10 @@ final class WXViewUpdateService {
         }
     }
 
-    private static final class RotateInvoker implements IWXViewUpdater {
+    private static final class RotateUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull final Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -440,10 +440,10 @@ final class WXViewUpdateService {
         }
     }
 
-    private static final class RotateXInvoker implements IWXViewUpdater {
+    private static final class RotateXUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull final Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -476,10 +476,10 @@ final class WXViewUpdateService {
     }
 
 
-    private static final class RotateYInvoker implements IWXViewUpdater {
+    private static final class RotateYUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull final Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -512,10 +512,10 @@ final class WXViewUpdateService {
     }
 
 
-    private static final class WidthInvoker implements IWXViewUpdater {
+    private static final class WidthUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -535,10 +535,10 @@ final class WXViewUpdateService {
         }
     }
 
-    private static final class HeightInvoker implements IWXViewUpdater {
+    private static final class HeightUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -558,10 +558,10 @@ final class WXViewUpdateService {
         }
     }
 
-    private static final class BackgroundInvoker implements IWXViewUpdater {
+    private static final class BackgroundUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -588,10 +588,10 @@ final class WXViewUpdateService {
         }
     }
 
-    private static final class ColorInvoker implements IWXViewUpdater {
+    private static final class ColorUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull final WXComponent component,
+        public void update(@NonNull final WXComponent component,
                            @NonNull final View targetView,
                            @NonNull final Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -635,7 +635,7 @@ final class WXViewUpdateService {
     private static final class BorderRadiusTopLeftUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -660,7 +660,7 @@ final class WXViewUpdateService {
     private static final class BorderRadiusTopRightUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -685,7 +685,7 @@ final class WXViewUpdateService {
     private static final class BorderRadiusBottomLeftUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -710,7 +710,7 @@ final class WXViewUpdateService {
     private static final class BorderRadiusBottomRightUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
@@ -735,47 +735,61 @@ final class WXViewUpdateService {
     private static final class BorderRadiusUpdater implements IWXViewUpdater {
 
         @Override
-        public void invoke(@NonNull WXComponent component,
+        public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
                            @NonNull Map<String, Object> config) {
 
-            if(!(cmd instanceof ArrayList)) {
-                return;
-            }
-            final ArrayList<Object> l = (ArrayList<Object>) cmd;
-            if(l.size() != 4) {
-                return;
-            }
-
-            postRunnable(targetView, new Runnable() {
-                @Override
-                public void run() {
-                    Drawable drawable = targetView.getBackground();
-                    if(drawable != null && drawable instanceof BorderDrawable) {
-                        double topLeft = 0,topRight = 0,bottomLeft = 0,bottomRight = 0;
-                        if(l.get(0) instanceof Double) {
-                            topLeft = (double) l.get(0);
-                        }
-                        if(l.get(1) instanceof Double) {
-                            topRight = (double) l.get(1);
-                        }
-                        if(l.get(2) instanceof Double) {
-                            bottomLeft = (double) l.get(2);
-                        }
-                        if(l.get(3) instanceof Double) {
-                            bottomRight = (double) l.get(3);
-                        }
-
-                        BorderDrawable borderDrawable = (BorderDrawable) drawable;
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) topLeft);
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) topRight);
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) bottomLeft);
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) bottomRight);
-                    }
+            if(cmd instanceof ArrayList) {
+                final ArrayList<Object> l = (ArrayList<Object>) cmd;
+                if(l.size() != 4) {
+                    return;
                 }
-            });
+
+                postRunnable(targetView, new Runnable() {
+                    @Override
+                    public void run() {
+                        Drawable drawable = targetView.getBackground();
+                        if(drawable != null && drawable instanceof BorderDrawable) {
+                            double topLeft = 0,topRight = 0,bottomLeft = 0,bottomRight = 0;
+                            if(l.get(0) instanceof Double) {
+                                topLeft = (double) l.get(0);
+                            }
+                            if(l.get(1) instanceof Double) {
+                                topRight = (double) l.get(1);
+                            }
+                            if(l.get(2) instanceof Double) {
+                                bottomLeft = (double) l.get(2);
+                            }
+                            if(l.get(3) instanceof Double) {
+                                bottomRight = (double) l.get(3);
+                            }
+
+                            BorderDrawable borderDrawable = (BorderDrawable) drawable;
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) topLeft);
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) topRight);
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) bottomLeft);
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) bottomRight);
+                        }
+                    }
+                });
+            } else if(cmd instanceof Double) {
+                final double value = (double) cmd;
+                postRunnable(targetView, new Runnable() {
+                    @Override
+                    public void run() {
+                        Drawable drawable = targetView.getBackground();
+                        if(drawable != null && drawable instanceof BorderDrawable) {
+                            BorderDrawable borderDrawable = (BorderDrawable) drawable;
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) value);
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) value);
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) value);
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) value);
+                        }
+                    }
+                });
+            }
         }
     }
 
