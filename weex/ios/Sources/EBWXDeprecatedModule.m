@@ -18,11 +18,8 @@
 #import <WeexSDK/WeexSDK.h>
 #import "EBExpressionHandler.h"
 #import <pthread/pthread.h>
-#import <WeexPluginLoader/WeexPluginLoader.h>
 #import "EBBindData.h"
 #import "EBUtility+WX.h"
-
-WX_PlUGIN_EXPORT_MODULE(expressionBinding, EBWXDeprecatedModule)
 
 @interface EBWXDeprecatedModule ()
 
@@ -43,6 +40,11 @@ WX_EXPORT_METHOD(@selector(disableBinding:eventType:))
 WX_EXPORT_METHOD(@selector(disableAll))
 WX_EXPORT_METHOD_SYNC(@selector(supportFeatures))
 WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
+
++ (void)load
+{
+    [WXSDKEngine registerModule:@"expressionBinding" withClass:EBWXDeprecatedModule.class];
+}
 
 - (instancetype)init {
     if (self = [super init]) {
