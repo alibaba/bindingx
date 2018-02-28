@@ -83,10 +83,9 @@ public class WXActivity extends AbstractWeexActivity{
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                //TODO
                 if(TextUtils.isEmpty(mUrl)) {
-                    //http://dotwe.org/vue/2f88f2ef3f39790fa4108c8f957fc3e9
-                    renderPageByURL("http://dotwe.org/raw/dist/2f88f2ef3f39790fa4108c8f957fc3e9.bundle.wx");
+                    //https://jsplayground.taobao.com/raxplayground/57f81e4e-8242-4124-bb90-996a57331343
+                    renderPageByURL("https://jsplayground.taobao.com/bundle/57f81e4e-8242-4124-bb90-996a57331343/raxbundle.js?wh_weex=true&wh_ttid=native&_wx_tpl=https://jsplayground.taobao.com/bundle/57f81e4e-8242-4124-bb90-996a57331343/raxbundle.js");
                 } else {
                     renderPageByURL(mUrl);
                 }

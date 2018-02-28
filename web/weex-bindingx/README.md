@@ -1,15 +1,15 @@
-# BindingX
+# weex-bindingx
 
 ## Install
 
 ```bash
-$ npm install bindingx --save
+$ npm install weex-bindingx --save
 ```
 
 ## Usage
 
 ```jsx
-import Binding from 'bindingx';
+import bindingx from 'weex-bindingx';
 ```
 
 
@@ -31,8 +31,8 @@ import Binding from 'bindingx';
 ##### anchor {ElementReference|HTMLElement}
 
 - element to trigger the animation ，
-	- pass the element in web,such as ``` findDOMNode(this.refs.block) ```
-	- pass the element ref in weex, `findDOMNode(this.refs.block).ref`
+  - pass the element in web,such as ``` findDOMNode(this.refs.block) ```
+  - pass the element ref in weex, `findDOMNode(this.refs.block).ref`
 
 ##### eventType {String}
 
@@ -45,20 +45,20 @@ import Binding from 'bindingx';
 ##### options {Object}
 
 - option configs for binding
-	- touchAction (web support only) ,you can pass `auto` or `pan-x` or `pan-y`,default value is `auto`
-	- thresholdX (web support only)  default value is `10`,it means the `panstart` event won't be triggerred until the distance of touchmove `>10`
-	- thresholdY (web support only)  default value is`10`
-	- touchActionRatio (web support only) default value is `0.5`, it means the ratio of width/height
+  - touchAction (web support only) ,you can pass `auto` or `pan-x` or `pan-y`,default value is `auto`
+  - thresholdX (web support only)  default value is `10`,it means the `panstart` event won't be triggerred until the distance of touchmove `>10`
+  - thresholdY (web support only)  default value is`10`
+  - touchActionRatio (web support only) default value is `0.5`, it means the ratio of width/height
 
 ##### props {Array}
 
 - elements for animation
    - element {ElementReference|HTMLElement}
-	- expression {Object|String}
-		- origin {String} binding expression
-		- transformed {String}
-	- property {String} property for animation
-	- instanceId
+  - expression {String|Object}
+    - origin {String} bindingx expression
+    - transformed {String}
+  - property {String} property for animation
+  - instanceId
 
 
 ## Example
@@ -67,7 +67,7 @@ import Binding from 'bindingx';
 
 ```jsx
 import {createElement, Component, render} from 'rax';
-import bindingx from 'bindingx';
+import bindingx from 'weex-bindingx';
 import View from 'rax-view';
 import {isWeex} from 'universal-env';
 
@@ -81,7 +81,7 @@ class App extends Component {
   y = 0;
 
   componentDidMount(){
-  	this.bindEl();
+    this.bindEl();
   }
 
   onTouchStart(){
@@ -116,13 +116,13 @@ class App extends Component {
   }
 
   render(){
-		 return (<View onTouchStart={(e) => this.onTouchStart(e)} ref="block" style={{
-		        position: 'absolute',
-		        left: 0,
-		        top: 0,
-		        width: 300,
-		        height: 300,
-		        backgroundColor: 'red'
+     return (<View onTouchStart={(e) => this.onTouchStart(e)} ref="block" style={{
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            width: 300,
+            height: 300,
+            backgroundColor: 'red'
       }}>block</View>)
   }
 }
@@ -159,7 +159,7 @@ render(<App />);
 
 <script>
   import {isWeex} from 'universal-env';
-  import bindingx from '../../src/index';
+  import bindingx from 'weex-bindingx';
 
   function getEl(el) {
     if (typeof el === 'string' || typeof el === 'number') return el;
