@@ -17,7 +17,7 @@
 #import "WXImgLoaderDefaultImpl.h"
 
 
-@interface WXDemoViewController () <UIScrollViewDelegate, UIWebViewDelegate>
+@interface WXDemoViewController () <UIScrollViewDelegate, UIWebViewDelegate, UINavigationControllerDelegate>
 @property (nonatomic, strong) WXSDKInstance *instance;
 @property (nonatomic, strong) UIView *weexView;
 
@@ -28,6 +28,9 @@
 
 @property (nonatomic, assign) CGFloat weexHeight;
 @property (nonatomic, weak) id<UIScrollViewDelegate> originalDelegate;
+
+
+@property (nonatomic, assign) BOOL hideNavBar;
 
 @end
 
@@ -50,9 +53,20 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view setClipsToBounds:YES];
     
-    _weexHeight = self.view.frame.size.height - 64;
+    if([_url.absoluteString containsString:@"wx_navbar_hidden=true"]) {
+        _hideNavBar = true;
+    }
+    if (_hideNavBar) {
+        _weexHeight = [UIScreen mainScreen].bounds.size.height;
+    }else{
+        _weexHeight = self.view.frame.size.height - (UIScreen.mainScreen.bounds.size.height == 812 ? 84 : 64);
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRefreshInstance:) name:@"RefreshInstance" object:nil];
+    
+    if (self.navigationController.viewControllers.count == 1) {
+        self.navigationController.delegate = self;
+    }
     
     [self render];
 }
@@ -250,6 +264,14 @@
 #pragma mark - notification
 - (void)notificationRefreshInstance:(NSNotification *)notification {
     [self refreshWeex];
+}
+
+#pragma mark - UINavigationControllerDelegate
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    WXDemoViewController *wxViewController = (WXDemoViewController *)viewController;
+    if ([wxViewController isKindOfClass:[self class]]) {
+        [wxViewController.navigationController setNavigationBarHidden:wxViewController.hideNavBar animated:YES];
+    }
 }
 
 @end
