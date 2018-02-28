@@ -86,19 +86,13 @@
 
 1. CocoaPods
 
+在您项目中的`Podfile`中添加依赖：
 
     ```
     pod 'BindingX', '~> 1.0.0'
     ```
 
-2. Carthage
-
-
-    ```plain
-    github "BindingX" ~> 1.0.0
-    ```
-
-默认采用weex plugin loader注入，无需手动注册。
+自动注册module，无需手动注册。
 
 ### React Native接入
 #### 前置条件
