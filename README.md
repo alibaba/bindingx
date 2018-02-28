@@ -1,5 +1,5 @@
 
-![BindingX_250.png | center | 259x249](https://gw.alipayobjects.com/zos/skylark/d52fede9-451f-4b9f-930e-0db65be6d012/2018/png/b062da91-8d5d-4184-b6b3-6c31ee399b98.png "")
+![BindingX_250.png](https://img.alicdn.com/tfs/TB1ZG58bb1YBuNjSszeXXablFXa-400-400.png "")
 
 # BindingX
 
@@ -7,10 +7,11 @@
 ![image | left](https://img.shields.io/badge/license-Apache--2.0-brightgreen.svg "")
 
 [Read Documentation](https://alibaba.github.io/bindingx/guide/introduce)
+[中文](https://github.com/alibaba/bindingx/blob/master/README_cn.md)
 
-A new interaction way based on `weex` and `react native`.
+A new interaction way based on `weex` & `react native` & `html5` .
 
-It provides a way called `expression binding` for handling complex user interaction with views at 60 FPS in React Native and weex.
+It provides a way called `expression binding` for handling complex user interaction with views at 60 FPS in React Native and weex :tada: :tada: :tada: .
 
 # Description
 
@@ -20,7 +21,10 @@ We exploreed and implemented a completely new approach to solve the problem. It'
 
 # Glance
 
-gif example
+![demo1](https://gw.alicdn.com/tfs/TB1fES5bhGYBuNjy0FnXXX5lpXa-320-563.gif)
+![demo2](https://gw.alicdn.com/tfs/TB1hOaKbbGYBuNjy0FoXXciBFXa-320-563.gif)
+![demo3](https://gw.alicdn.com/tfs/TB1LCmUbkyWBuNjy0FpXXassXXa-320-563.gif)
+![demo4](https://gw.alicdn.com/tfs/TB1FRGZbeuSBuNjy1XcXXcYjFXa-320-563.gif)
 
 # Feature
 
@@ -31,26 +35,51 @@ gif example
 
 # Installation
 
-#### on Android with Weex.
+### Weex
 
-First，add dependency in `build.gradle`
-```markup
-compile 'com.alibaba.android:bindingx:{latest_version}'
-```
-Second, init it, for example at the Application.onCreate()
-```markup
-Binding.register()
-```
+*Prerequisites*: integrate [weex sdk](https://github.com/apache/incubator-weex) to your application.
 
-#### on iOS with Weex.
+##### Android
+
+We provide two ways to integrate bindingx plugin.
+
+ 1. manual integration
+
+   * add dependencies in your application's build.gradle
+
+    ```
+    implementation 'com.alibaba.android:bindingx-core:1.0.1'
+    implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.1'
+    ```
+
+   * register bindingx plugin in code. (`Application#onCreate`, for example)
+
+    ```
+    BindingX.register()
+    ```
+
+ 2. use weex plugin loader
+
+    * add dependencies in your application's build.gradle
+
+    ```
+    implementation 'com.alibaba.android:bindingx-core:1.0.1'
+    implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.1'
+    implementation 'org.weex.plugin:plugin-loader:1.0.0'
+    ```
+
+    * register bindingx plugin use plugin loader.
+
+    ```
+    WeexPluginContainer.loadAll(getApplicationContext());
+    ```
+
+#### iOS
 carry on
 
-#### on Android with ReactNative
-supporting
+### React Native
 
-#### on Android with ReactNative
-supporting
-
+we will upload React Native bindingx plugin to npm as soon as possible, then you can use `react-native add` command to install. But for now, you should compile our plugin using source code.
 
 # Who is using
 
