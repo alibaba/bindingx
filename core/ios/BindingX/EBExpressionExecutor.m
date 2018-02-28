@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Alibaba Group
+ * Copyright 2018 Alibaba Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,12 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
     WXEPViewPropertyContentOffsetY,
     WXEPViewPropertyPerspective,
     WXEPViewPropertyRotateX,
-    WXEPViewPropertyRotateY
+    WXEPViewPropertyRotateY,
+    WXEPViewPropertyBorderRadius,
+    WXEPViewPropertyBorderTopLeftRadius,
+    WXEPViewPropertyBorderTopRightRadius,
+    WXEPViewPropertyBorderBottomRightRadius,
+    WXEPViewPropertyBorderBottomLeftRadius,
 };
 
 @implementation EBExpressionExecutor
@@ -173,18 +178,35 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
         case WXEPViewPropertyRotateY:
             [*model setRotateY:[EBExpressionExecutor unpackSingleRet:result]];
             break;
+        case WXEPViewPropertyBorderRadius:
+            [*model setBr:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyBorderTopLeftRadius:
+            [*model setBrTL:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyBorderTopRightRadius:
+            [*model setBrTR:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyBorderBottomRightRadius:
+            [*model setBrBR:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyBorderBottomLeftRadius:
+            [*model setBrBL:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
         default:
             break;
     }
     
-    if( config && config[@"perspective"] )
+    if(config)
     {
-        [*model setPerspective:[config[@"perspective"] floatValue]];
-    }
-    
-    if( config && config[@"transformOrigin"] )
-    {
-        [*model setTransformOrigin:config[@"transformOrigin"]];
+        if (config[@"perspective"]) {
+            [*model setPerspective:[config[@"perspective"] doubleValue]];
+        }
+        
+        if(config[@"transformOrigin"])
+        {
+            [*model setTransformOrigin:config[@"transformOrigin"]];
+        }
     }
 }
 
@@ -201,6 +223,9 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
                 @"transform.scaleX":@(WXEPViewPropertyScaleX),
                 @"transform.scaleY":@(WXEPViewPropertyScaleY),
                 @"transform.matrix":@(WXEPViewPropertyTransform),
+                @"transform.rotateX":@(WXEPViewPropertyRotateX),
+                @"transform.rotateY":@(WXEPViewPropertyRotateY),
+                @"transform.rotateZ":@(WXEPViewPropertyRotate),
                 @"opacity":@(WXEPViewPropertyAlpha),
                 @"background-color":@(WXEPViewPropertyBackgroundColor),
                 @"color":@(WXEPViewPropertyColor),
@@ -212,9 +237,12 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
                 @"scroll.contentOffset":@(WXEPViewPropertyContentOffset),
                 @"scroll.contentOffsetX":@(WXEPViewPropertyContentOffsetX),
                 @"scroll.contentOffsetY":@(WXEPViewPropertyContentOffsetY),
-                @"transform.rotateX":@(WXEPViewPropertyRotateX),
-                @"transform.rotateY":@(WXEPViewPropertyRotateY),
-                @"transform.rotateZ":@(WXEPViewPropertyRotate),};
+                @"border-radius":@(WXEPViewPropertyBorderRadius),
+                @"border-top-left-radius":@(WXEPViewPropertyBorderTopLeftRadius),
+                @"border-top-right-radius":@(WXEPViewPropertyBorderTopRightRadius),
+                @"border-bottom-right-radius":@(WXEPViewPropertyBorderBottomRightRadius),
+                @"border-bottom-left-radius":@(WXEPViewPropertyBorderBottomLeftRadius),
+                };
     });
     return map;
 }

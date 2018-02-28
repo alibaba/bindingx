@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Alibaba Group
+ * Copyright 2018 Alibaba Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,12 +22,13 @@
 #import <React/RCTUIManagerUtils.h>
 #import <React/RCTText.h>
 #import <React/RCTShadowText.h>
+#import "EBBindData.h"
 
 #define BINDING_EVENT_NAME @"bindingx:statechange"
 
 @interface EBRNModule ()
 
-@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, EBExpressionHandler *> *> *sourceMap;
+@property (nonatomic, strong) EBBindData *bindData;
 
 @end
 
@@ -49,6 +50,7 @@ RCT_EXPORT_MODULE(bindingx)
         pthread_mutexattr_init(&mutexAttr);
         pthread_mutexattr_settype(&mutexAttr, PTHREAD_MUTEX_RECURSIVE);
         pthread_mutex_init(&mutex, &mutexAttr);
+        _bindData = [EBBindData new];
     }
     return self;
 }
@@ -92,11 +94,11 @@ RCT_EXPORT_METHOD(prepare:(NSDictionary *)dictionary)
         
         pthread_mutex_lock(&mutex);
         
-        EBExpressionHandler *handler = [welf handlerForToken:anchor expressionType:exprType];
+        EBExpressionHandler *handler = [welf.bindData handlerForToken:anchor expressionType:exprType];
         if (!handler) {
             // create handler for key
             handler = [EBExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
-            [welf putHandler:handler forToken:anchor expressionType:exprType];
+            [welf.bindData putHandler:handler forToken:anchor expressionType:exprType];
         }
         
         pthread_mutex_unlock(&mutex);
@@ -161,7 +163,7 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *,bind:(NSDictionary *)dictiona
                     propertyDic = [NSMutableDictionary dictionary];
                 }
                 NSMutableDictionary *expDict = [NSMutableDictionary dictionary];
-                expDict[@"expression"] = [self parseExpression:expression];
+                expDict[@"expression"] = [EBBindData parseExpression:expression];
                 if( targetDic[@"config"] )
                 {
                     expDict[@"config"] = targetDic[@"config"];
@@ -174,16 +176,16 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *,bind:(NSDictionary *)dictiona
         // find handler for key
         pthread_mutex_lock(&mutex);
         
-        EBExpressionHandler *handler = [welf handlerForToken:token expressionType:exprType];
+        EBExpressionHandler *handler = [welf.bindData handlerForToken:token expressionType:exprType];
         if (!handler) {
             // create handler for key
             handler = [EBExpressionHandler handlerWithExpressionType:exprType source:token];
-            [welf putHandler:handler forToken:token expressionType:exprType];
+            [welf.bindData putHandler:handler forToken:token expressionType:exprType];
         }
         
         [handler updateTargetExpression:targetExpression
                                 options:options
-                         exitExpression:[self parseExpression:exitExpression]
+                         exitExpression:[EBBindData parseExpression:exitExpression]
                                callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
                                    id body = nil;
                                    if ([result isKindOfClass:NSDictionary.class]) {
@@ -224,10 +226,10 @@ RCT_EXPORT_METHOD(unbind:(NSDictionary *)options)
     
     pthread_mutex_lock(&mutex);
     
-    EBExpressionHandler *handler = [self handlerForToken:token expressionType:exprType];
+    EBExpressionHandler *handler = [self.bindData handlerForToken:token expressionType:exprType];
     if (handler) {
         [handler removeExpressionBinding];
-        [self removeHandler:handler forToken:token expressionType:exprType];
+        [self.bindData removeHandler:handler forToken:token expressionType:exprType];
     } else {
         RCTLogWarn(@"unbind can't find handler handler");
     }
@@ -239,15 +241,7 @@ RCT_EXPORT_METHOD(unbindAll)
 {
     pthread_mutex_lock(&mutex);
     
-    for (NSString *sourceRef in self.sourceMap) {
-        NSMutableDictionary *handlerMap = self.sourceMap[sourceRef];
-        for (NSNumber *expressionType in handlerMap) {
-            EBExpressionHandler *handler = handlerMap[expressionType];
-            [handler removeExpressionBinding];
-        }
-        [handlerMap removeAllObjects];
-    }
-    [self.sourceMap removeAllObjects];
+    [self.bindData unbindAll];
     
     pthread_mutex_unlock(&mutex);
 }
@@ -274,13 +268,13 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *, getComputedStyle:(NSString *
             RCTLogWarn(@"source Ref not exist");
         } else {
             CALayer *layer = view.layer;
-            styles[@"translateX"] = [self transformFactor:@"transform.translation.x" layer:layer];
-            styles[@"translateY"] = [self transformFactor:@"transform.translation.y" layer:layer];
-            styles[@"scaleX"] = [self transformFactor:@"transform.scale.x" layer:layer];
-            styles[@"scaleY"] = [self transformFactor:@"transform.scale.y" layer:layer];
-            styles[@"rotateX"] = [self transformFactor:@"transform.rotation.x" layer:layer];
-            styles[@"rotateY"] = [self transformFactor:@"transform.rotation.y" layer:layer];
-            styles[@"rotateZ"] = [self transformFactor:@"transform.rotation.z" layer:layer];
+            styles[@"translateX"] = [layer valueForKeyPath:@"transform.translation.x"];
+            styles[@"translateY"] = [layer valueForKeyPath:@"transform.translation.y"];
+            styles[@"scaleX"] = [layer valueForKeyPath:@"transform.scale.x"];
+            styles[@"scaleY"] = [layer valueForKeyPath:@"transform.scale.y"];
+            styles[@"rotateX"] = [layer valueForKeyPath:@"transform.rotation.x"];
+            styles[@"rotateY"] = [layer valueForKeyPath:@"transform.rotation.y"];
+            styles[@"rotateZ"] = [layer valueForKeyPath:@"transform.rotation.z"];
             styles[@"opacity"] = [layer valueForKeyPath:@"opacity"];
             
             styles[@"background-color"] = [self colorAsString:view.backgroundColor.CGColor];
@@ -304,69 +298,11 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *, getComputedStyle:(NSString *
     return styles;
 }
 
-- (NSNumber *)transformFactor:(NSString *)key layer:(CALayer* )layer {
-    CGFloat factor = [EBUtility factor];
-    id value = [layer valueForKeyPath:key];
-    if(value){
-        return [NSNumber numberWithDouble:([value doubleValue] / factor)];
-    }
-    return nil;
-}
-
 - (NSString *)colorAsString:(CGColorRef)cgColor
 {
     const CGFloat *components = CGColorGetComponents(cgColor);
     if (components) {
         return [NSString stringWithFormat:@"rgba(%d,%d,%d,%f)", (int)(components[0]*255), (int)(components[1]*255), (int)(components[2]*255), components[3]];
-    }
-    return nil;
-}
-
-#pragma mark - Handler Map
-- (NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, EBExpressionHandler *> *> *)sourceMap {
-    if (!_sourceMap) {
-        _sourceMap = [NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, EBExpressionHandler *> *> dictionary];
-    }
-    return _sourceMap;
-}
-
-- (NSMutableDictionary<NSNumber *, EBExpressionHandler *> *)handlerMapForToken:(NSString *)token {
-    return [self.sourceMap objectForKey:token];
-}
-
-- (EBExpressionHandler *)handlerForToken:(NSString *)token expressionType:(WXExpressionType)exprType {
-    return [[self handlerMapForToken:token] objectForKey:[NSNumber numberWithInteger:exprType]];
-}
-
-- (void)putHandler:(EBExpressionHandler *)handler forToken:(NSString *)token expressionType:(WXExpressionType)exprType {
-    NSMutableDictionary<NSNumber *, EBExpressionHandler *> *handlerMap = [self handlerMapForToken:token];
-    if (!handlerMap) {
-        handlerMap = [NSMutableDictionary<NSNumber *, EBExpressionHandler *> dictionary];
-        self.sourceMap[token] = handlerMap;
-    }
-    handlerMap[[NSNumber numberWithInteger:exprType]] = handler;
-}
-
-- (void)removeHandler:(EBExpressionHandler *)handler forToken:(NSString *)token expressionType:(WXExpressionType)exprType {
-    NSMutableDictionary<NSNumber *, EBExpressionHandler *> *handlerMap = [self handlerMapForToken:token];
-    if (handlerMap) {
-        [handlerMap removeObjectForKey:[NSNumber numberWithInteger:exprType]];
-    }
-}
-
-- (id)parseExpression:(NSDictionary *)expression
-{
-    if ([expression isKindOfClass:NSDictionary.class]) {
-        NSString* transformedExpressionStr = expression[@"transformed"];
-        if (transformedExpressionStr && [transformedExpressionStr isKindOfClass:NSString.class]) {
-            return [NSJSONSerialization JSONObjectWithData:[transformedExpressionStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
-        }
-        else {
-            return expression[@"origin"];
-        }
-    } else if ([expression isKindOfClass:NSString.class]) {
-        NSString* expressionStr = (NSString *)expression;
-        return [NSJSONSerialization JSONObjectWithData:[expressionStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
     }
     return nil;
 }

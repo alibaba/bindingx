@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Alibaba Group
+ * Copyright 2018 Alibaba Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
 #import "EBExpression.h"
 #import "EBExpressionExecutor.h"
 #import "EBExpressionProperty.h"
-#import <objc/runtime.h>
 #import "EBUtility.h"
 
 @interface EBExpressionGesture () <UIGestureRecognizerDelegate>
@@ -45,6 +44,18 @@
 - (void)dealloc {
     [_gesture removeTarget:self action:nil];
     _gesture.delegate = _tmpDelegate;
+}
+
+- (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)expressionMap
+                       options:(NSDictionary *)options
+                exitExpression:(NSDictionary *)exitExpression
+                      callback:(EBKeepAliveCallback)callback {
+    [super updateTargetExpression:expressionMap
+                          options:options
+                   exitExpression:exitExpression
+                         callback:callback];
+    
+    [self initGesture];
 }
 
 #pragma mark - public methods
@@ -73,7 +84,7 @@
     self.gesture = [EBUtility getPanGestureForComponent:self.source callback:^(BOOL isHorizontal, BOOL isVertical) {
         _isHorizontal = isHorizontal;
         _isVertical = isVertical;
-        
+
         if (_isHorizontal || _isVertical) {
             _isMutex = YES;
         } else {
@@ -247,7 +258,11 @@
     } else if (sender.state == UIGestureRecognizerStateChanged) {
         @try {
             NSDictionary *scope = [self setUpScopeForGesture:sender];
-            [self executeExpression:scope];
+            BOOL exit = ![self executeExpression:scope];
+            if (exit) {
+                [self fireExitEvent:sender];
+                [self removeExpressionBinding];
+            }
         } @catch (NSException *exception) {
             NSLog(@"%@",exception);
         }

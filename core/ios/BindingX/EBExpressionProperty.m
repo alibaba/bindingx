@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Alibaba Group
+ * Copyright 2018 Alibaba Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -123,6 +123,31 @@
 - (void)setTransformOrigin:(NSString *)transformOrigin{
     _transformOrigin = transformOrigin;
     _isTransformOriginChanged = YES;
+}
+
+- (void)setBrTL:(CGFloat)brTL {
+    _brTL = brTL;
+    _isBRTLChanged = YES;
+}
+
+- (void)setBrTR:(CGFloat)brTR {
+    _brTR = brTR;
+    _isBRTRChanged = YES;
+}
+
+- (void)setBrBR:(CGFloat)brBR {
+    _brBR = brBR;
+    _isBRBRChanged = YES;
+}
+
+- (void)setBrBL:(CGFloat)brBL {
+    _brBL = brBL;
+    _isBRBLChanged = YES;
+}
+
+- (void)setBr:(CGFloat)br {
+    _br = br;
+    _isBRChanged = YES;
 }
 
 @end

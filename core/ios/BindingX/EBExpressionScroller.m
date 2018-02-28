@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Alibaba Group
+ * Copyright 2018 Alibaba Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,6 +40,18 @@
     return self;
 }
 
+- (void)updateTargetExpression:(NSMapTable<id,NSDictionary *> *)expressionMap
+                       options:(NSDictionary *)options
+                exitExpression:(NSDictionary *)exitExpression
+                      callback:(EBKeepAliveCallback)callback {
+    [super updateTargetExpression:expressionMap
+                          options:options
+                   exitExpression:exitExpression
+                         callback:callback];
+    
+    [self initScroller];
+}
+
 - (void)initScroller {
     [EBUtility addScrollDelegate:self source:self.source];
 }
@@ -66,7 +78,7 @@
             }
             BOOL exit = ![welf executeExpression:scope];
             if (exit) {
-                [welf fireStateChangedEvent:@"end"];
+                [welf fireStateChangedEvent:@"exit"];
                 return;
             }
         }];
