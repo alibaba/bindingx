@@ -638,7 +638,7 @@ final class WXViewUpdateService {
         public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
-                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
                            @NonNull Map<String, Object> config) {
             if(!(cmd instanceof Double)) {
                 return;
@@ -650,7 +650,7 @@ final class WXViewUpdateService {
                     Drawable drawable = targetView.getBackground();
                     if(drawable != null && drawable instanceof BorderDrawable) {
                         BorderDrawable borderDrawable = (BorderDrawable) drawable;
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) d);
+                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) getRealSize(d,translator));
                     }
                 }
             });
@@ -663,7 +663,7 @@ final class WXViewUpdateService {
         public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
-                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
                            @NonNull Map<String, Object> config) {
             if(!(cmd instanceof Double)) {
                 return;
@@ -675,7 +675,7 @@ final class WXViewUpdateService {
                     Drawable drawable = targetView.getBackground();
                     if(drawable != null && drawable instanceof BorderDrawable) {
                         BorderDrawable borderDrawable = (BorderDrawable) drawable;
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) d);
+                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) getRealSize(d,translator));
                     }
                 }
             });
@@ -688,7 +688,7 @@ final class WXViewUpdateService {
         public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
-                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
                            @NonNull Map<String, Object> config) {
             if(!(cmd instanceof Double)) {
                 return;
@@ -700,7 +700,7 @@ final class WXViewUpdateService {
                     Drawable drawable = targetView.getBackground();
                     if(drawable != null && drawable instanceof BorderDrawable) {
                         BorderDrawable borderDrawable = (BorderDrawable) drawable;
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) d);
+                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) getRealSize(d,translator));
                     }
                 }
             });
@@ -713,7 +713,7 @@ final class WXViewUpdateService {
         public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
-                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
                            @NonNull Map<String, Object> config) {
             if(!(cmd instanceof Double)) {
                 return;
@@ -725,7 +725,7 @@ final class WXViewUpdateService {
                     Drawable drawable = targetView.getBackground();
                     if(drawable != null && drawable instanceof BorderDrawable) {
                         BorderDrawable borderDrawable = (BorderDrawable) drawable;
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) d);
+                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) getRealSize(d,translator));
                     }
                 }
             });
@@ -738,7 +738,7 @@ final class WXViewUpdateService {
         public void update(@NonNull WXComponent component,
                            @NonNull final View targetView,
                            @NonNull Object cmd,
-                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
                            @NonNull Map<String, Object> config) {
 
             if(cmd instanceof ArrayList) {
@@ -767,10 +767,10 @@ final class WXViewUpdateService {
                             }
 
                             BorderDrawable borderDrawable = (BorderDrawable) drawable;
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) topLeft);
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) topRight);
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) bottomLeft);
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) bottomRight);
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) getRealSize(topLeft,translator));
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) getRealSize(topRight,translator));
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) getRealSize(bottomLeft,translator));
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) getRealSize(bottomRight,translator));
                         }
                     }
                 });
@@ -782,10 +782,10 @@ final class WXViewUpdateService {
                         Drawable drawable = targetView.getBackground();
                         if(drawable != null && drawable instanceof BorderDrawable) {
                             BorderDrawable borderDrawable = (BorderDrawable) drawable;
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) value);
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) value);
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) value);
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) value);
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) getRealSize(value,translator));
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) getRealSize(value,translator));
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) getRealSize(value,translator));
+                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) getRealSize(value,translator));
                         }
                     }
                 });
