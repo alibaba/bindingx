@@ -1,0 +1,78 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+    }
+}
+
+plugins {
+    id "com.jfrog.bintray" version "1.7.3"
+    id "com.github.dcendents.android-maven" version "2.0"
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.library'
+apply from: 'bintray.gradle'
+apply from: 'maven.gradle'
+
+android {
+    compileSdkVersion 26
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 26
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation 'org.weex.plugin:annotation:1.0.0'
+
+    // provided
+    compileOnly 'com.taobao.android:weex_sdk:0.17.0'
+    compileOnly 'com.android.support:recyclerview-v7:26.1.0'
+    compileOnly 'com.android.support:appcompat-v7:26.1.0'
+    compileOnly 'com.android.support:design:26.1.0'
+    compileOnly 'com.android.support:support-annotations:26.1.0'
+//    compileOnly project(path: ':bindingx-core')
+    compileOnly 'com.alibaba.android:bindingx-core:1.0.0'
+
+    annotationProcessor 'org.weex.plugin:processor:1.0.2'
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:1.10.19'
+    testImplementation "org.robolectric:robolectric:3.7"
+
+    testImplementation "org.powermock:powermock-module-junit4:1.6.6"
+    testImplementation "org.powermock:powermock-module-junit4-rule:1.6.6"
+    testImplementation "org.powermock:powermock-api-mockito:1.6.6"
+    testImplementation "org.powermock:powermock-classloading-xstream:1.6.6"
+
+    testImplementation 'com.taobao.android:weex_sdk:0.17.0'
+    testImplementation 'com.alibaba.android:bindingx-core:1.0.0'
+}
+
+if(file('../../../LICENSE.md').exists() && plugins.hasPlugin("com.github.hierynomus.license")){
+    license {
+        header = file('../../../LICENSE.md')
+    }
+    preBuild.dependsOn licenseFormat
+}

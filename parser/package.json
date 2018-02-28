@@ -1,0 +1,19 @@
+{
+  "name": "bindingx-parser",
+  "version": "0.0.2",
+  "description": "Expression parser for bindingx",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha test/parse-test.js"
+  },
+  "keywords": [
+    "bindingx",
+    "parser",
+    "expression"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "chai": "^4.1.2"
+  }
+}
