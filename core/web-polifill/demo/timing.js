@@ -58,7 +58,7 @@ function animate(timingFunc) {
     props: [
       // {
       //   element: block,
-      //   property: 'borderRadius',
+      //   property: 'border-radius',
       //   expression: {
       //     origin: borderExpression,
       //     transformed: parse(borderExpression)
@@ -66,7 +66,7 @@ function animate(timingFunc) {
       // },
       {
         element: block,
-        property: 'borderTopLeftRadius',
+        property: 'border-top-left-radius',
         expression: {
           origin: borderExpression,
           transformed: parse(borderExpression)
@@ -74,7 +74,7 @@ function animate(timingFunc) {
       },
       {
         element: block,
-        property: 'borderTopRightRadius',
+        property: 'border-top-right-radius',
         expression: {
           origin: borderExpression,
           transformed: parse(borderExpression)
@@ -82,7 +82,7 @@ function animate(timingFunc) {
       },
       // {
       //   element: block,
-      //   property: 'borderBottomRightRadius',
+      //   property: 'border-bottom-right-radius',
       //   expression: {
       //     origin: borderExpression,
       //     transformed: parse(borderExpression)
@@ -90,7 +90,7 @@ function animate(timingFunc) {
       // },
       // {
       //   element: block,
-      //   property: 'borderBottomLeftRadius',
+      //   property: 'border-bottom-left-radius',
       //   expression: {
       //     origin: borderExpression,
       //     transformed: parse(borderExpression)
@@ -111,9 +111,9 @@ function animate(timingFunc) {
 
 }
 
-// setInterval(()=>{
-//   console.log(bindingx.getComputedStyle(block).borderTopLeftRadius,bindingx.getComputedStyle(block).borderTopRightRadius)
-// },100)
+setInterval(()=>{
+  console.log(bindingx.getComputedStyle(block)['border-top-left-radius'],bindingx.getComputedStyle(block)['border-top-right-radius'])
+},100)
 
 
 

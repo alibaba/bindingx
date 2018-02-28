@@ -109,7 +109,7 @@ _.map(Easing, (v, k) => {
 Fn.cubicBezier = function(t, begin, offset, duration, x1, y1, x2, y2) {
   t = Math.max(Math.min(t / duration, 1));
   let epsilon = (1000 / 60 / duration) / 4;
-  return Bezier(x1, y1, x2, y2, epsilon)(t) * offset + begin;
+  return Bezier(x1, y1, x2, y2, epsilon)(t) * offset + begin; // eslint-disable-line
 };
 
 export default Fn;

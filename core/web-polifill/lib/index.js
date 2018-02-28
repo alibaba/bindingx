@@ -1792,11 +1792,11 @@ var Binding = function () {
         case 'color':
           el.style.color = val;
           break;
-        case 'borderTopLeftRadius':
-        case 'borderTopRightRadius':
-        case 'borderBottomLeftRadius':
-        case 'borderBottomRightRadius':
-        case 'borderRadius':
+        case 'border-top-left-radius':
+        case 'border-top-right-radius':
+        case 'border-bottom-left-radius':
+        case 'border-bottom-right-radius':
+        case 'border-radius':
           el.style[property] = (0, _utils.px)(val) + 'px';
           break;
       }
@@ -1892,14 +1892,13 @@ module.exports = {
     style.width = (0, _utils.pxTo750)(computedStyle.width.replace('px', ''));
     style.height = (0, _utils.pxTo750)(computedStyle.height.replace('px', ''));
     style['background-color'] = computedStyle['background-color'];
-    style.backgroundColor = computedStyle.backgroundColor;
     style.color = computedStyle.color;
     style.width = (0, _utils.pxTo750)(computedStyle.width.replace('px', ''));
     style.height = (0, _utils.pxTo750)(computedStyle.height.replace('px', ''));
-    style.borderTopLeftRadius = (0, _utils.pxTo750)(computedStyle.borderTopLeftRadius.replace('px', ''));
-    style.borderTopRightRadius = (0, _utils.pxTo750)(computedStyle.borderTopRightRadius.replace('px', ''));
-    style.borderBottomLeftRadius = (0, _utils.pxTo750)(computedStyle.borderBottomLeftRadius.replace('px', ''));
-    style.borderBottomRightRadius = (0, _utils.pxTo750)(computedStyle.borderBottomRightRadius.replace('px', ''));
+    style['border-top-left-radius'] = (0, _utils.pxTo750)(computedStyle['border-top-left-radius'].replace('px', ''));
+    style['border-top-right-radius'] = (0, _utils.pxTo750)(computedStyle['border-top-right-radius'].replace('px', ''));
+    style['border-bottom-left-radius'] = (0, _utils.pxTo750)(computedStyle['border-bottom-left-radius'].replace('px', ''));
+    style['border-bottom-right-radius'] = (0, _utils.pxTo750)(computedStyle['border-bottom-right-radius'].replace('px', ''));
     return style;
   }
 };
@@ -3244,7 +3243,7 @@ _simpleLodash2.default.map(_animationUtil.Easing, function (v, k) {
 Fn.cubicBezier = function (t, begin, offset, duration, x1, y1, x2, y2) {
   t = Math.max(Math.min(t / duration, 1));
   var epsilon = 1000 / 60 / duration / 4;
-  return (0, _animationUtil.Bezier)(x1, y1, x2, y2, epsilon)(t) * offset + begin;
+  return (0, _animationUtil.Bezier)(x1, y1, x2, y2, epsilon)(t) * offset + begin; // eslint-disable-line
 };
 
 exports.default = Fn;
