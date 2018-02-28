@@ -6,8 +6,8 @@
 ![image | left](https://img.shields.io/badge/PRs-welcome-brightgreen.svg "")
 ![image | left](https://img.shields.io/badge/license-Apache--2.0-brightgreen.svg "")
 
-[Read Documentation](https://alibaba.github.io/bindingx/guide/introduce)
-[中文](https://github.com/alibaba/bindingx/blob/master/README_cn.md)
+* [Read Documentation](https://alibaba.github.io/bindingx/guide/introduce)
+* [中文](https://github.com/alibaba/bindingx/blob/master/README_cn.md)
 
 A new interaction way based on `weex` & `react native` & `html5` .
 
@@ -45,34 +45,34 @@ We provide two ways to integrate bindingx plugin.
 
  1. manual integration
 
-   * add dependencies in your application's build.gradle
+    * add dependencies in your application's build.gradle
 
-    ```
-    implementation 'com.alibaba.android:bindingx-core:1.0.1'
-    implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.1'
-    ```
+        ```
+        implementation 'com.alibaba.android:bindingx-core:1.0.1'
+        implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.1'
+        ```
 
-   * register bindingx plugin in code. (`Application#onCreate`, for example)
+    * register bindingx plugin in code. (`Application#onCreate`, for example)
 
-    ```
-    BindingX.register()
-    ```
+        ```
+        BindingX.register()
+        ```
 
  2. use weex plugin loader
 
     * add dependencies in your application's build.gradle
 
-    ```
-    implementation 'com.alibaba.android:bindingx-core:1.0.1'
-    implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.1'
-    implementation 'org.weex.plugin:plugin-loader:1.0.0'
-    ```
+      ```
+      implementation 'com.alibaba.android:bindingx-core:1.0.1'
+      implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.1'
+      implementation 'org.weex.plugin:plugin-loader:1.0.0'
+      ```
 
     * register bindingx plugin use plugin loader.
 
-    ```
-    WeexPluginContainer.loadAll(getApplicationContext());
-    ```
+      ```
+      WeexPluginContainer.loadAll(getApplicationContext());
+      ```
 
 #### iOS
 carry on

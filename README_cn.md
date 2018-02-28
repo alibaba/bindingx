@@ -6,7 +6,9 @@
 
 ![PRs welcome | left](https://img.shields.io/badge/PRs-welcome-brightgreen.svg "")
 ![license | left](https://img.shields.io/badge/license-Apache--2.0-brightgreen.svg "")
-基于 `weex / React Native` 的富交互解决方案。官网: [https://alibaba.github.io/bindingx/](https://alibaba.github.io/bindingx/)
+
+基于 `weex / React Native` 的富交互解决方案。
+官网: [https://alibaba.github.io/bindingx/](https://alibaba.github.io/bindingx/)
 
 它提供了一种称之为 `表达式绑定(Expression Binding)` 的机制可以在 weex 上让手势等复杂交互操作以60fps的帧率流畅执行，而不会导致卡顿，因而带来了更优秀的用户体验 :tada: :tada: :tada:。
 
@@ -38,25 +40,62 @@
 
 #### Android:
 
-手动集成。
+有两种集成方式可供选择。
 
-* 在你项目中的`build.gradle`中添加依赖:
-
-
-```
-compile 'com.alibaba.android:bindingx:{latest_version}'
-```
-
-* 在工程的合适位置(如Application#onCreate)注入`BindingX`模块。
+1. 手动集成。(推荐)
 
 
-```java
-BindingX.register()
-```
+  * 在您项目中的`build.gradle`中添加依赖:
+
+
+  ```
+  implementation 'com.alibaba.android:bindingx-core:1.0.0'
+  implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.0'
+  ```
+
+  * 在工程的合适位置(如Application#onCreate)注入`BindingX`模块。
+
+
+  ```java
+  BindingX.register()
+  ```
+
+2. 使用weex plugin loader自动注入bindingx。
+
+
+  * 在您项目中的`build.gradle`中添加依赖:
+
+
+  ```plain
+  implementation 'com.alibaba.android:bindingx-core:1.0.0'
+  implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.0'
+  implementation 'org.weex.plugin:plugin-loader:1.0.0'
+  ```
+
+  * 在工程的合适位置(如Application#onCreate)加载插件。
+
+
+  ```plain
+  WeexPluginContainer.loadAll(getApplicationContext());
+  ```
 
 #### iOS:
 
-TODO // 待补充
+1. CocoaPods
+
+
+  ```
+  pod 'BindingX', '~> 1.0.0'
+  ```
+
+2. Carthage
+
+
+  ```plain
+  github "BindingX" ~> 1.0.0
+  ```
+
+默认采用weex plugin loader注入，无需手动注册。
 
 ### React Native接入
 #### 前置条件
