@@ -48,10 +48,10 @@
   * 在您项目中的`build.gradle`中添加依赖:
 
 
-  ```
-  implementation 'com.alibaba.android:bindingx-core:1.0.0'
-  implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.0'
-  ```
+      ```
+      implementation 'com.alibaba.android:bindingx-core:1.0.1'
+      implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.1'
+      ```
 
   * 在工程的合适位置(如Application#onCreate)注入`BindingX`模块。
 
@@ -66,34 +66,34 @@
   * 在您项目中的`build.gradle`中添加依赖:
 
 
-  ```plain
-  implementation 'com.alibaba.android:bindingx-core:1.0.0'
-  implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.0'
-  implementation 'org.weex.plugin:plugin-loader:1.0.0'
-  ```
+      ```plain
+      implementation 'com.alibaba.android:bindingx-core:1.0.1'
+      implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.1'
+      implementation 'org.weex.plugin:plugin-loader:1.0.0'
+      ```
 
   * 在工程的合适位置(如Application#onCreate)加载插件。
 
 
-  ```plain
-  WeexPluginContainer.loadAll(getApplicationContext());
-  ```
+      ```plain
+      WeexPluginContainer.loadAll(getApplicationContext());
+      ```
 
 #### iOS:
 
 1. CocoaPods
 
 
-  ```
-  pod 'BindingX', '~> 1.0.0'
-  ```
+    ```
+    pod 'BindingX', '~> 1.0.0'
+    ```
 
 2. Carthage
 
 
-  ```plain
-  github "BindingX" ~> 1.0.0
-  ```
+    ```plain
+    github "BindingX" ~> 1.0.0
+    ```
 
 默认采用weex plugin loader注入，无需手动注册。
 
@@ -104,11 +104,8 @@
 
 #### android
 
-TODO
-
-#### iOS
-
-TODO
+目前我们还没有把插件代码上传到npm，所以您现在需要通过源码依赖我们的RN插件。
+我们近期会将插件上传到npm，届时您可以通过`react native add`命令安装插件。
 
 ### 文档与教程
 
