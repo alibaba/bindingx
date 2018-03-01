@@ -39,6 +39,7 @@
 
 <script>
 var version = '0.1.2';
+var now = Date.now();
 var isDebug = false;
 var isLocalhost = location.href.toString().indexOf('localhost') > 0;
 
@@ -51,20 +52,20 @@ if(!isDebug) {
   loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-external/common.js`);
 
   if(isMobile()) {
-    loadScript('//download.alicdn.com/sns/bindingx_mobile_home.js');
+    loadScript(`//download.alicdn.com/sns/bindingx_mobile_home.js?t=${now}`);
   }else {
-    loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-external/index.js`);
+    loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-external/index.js?t=${now}`);
   }
 }else if(!isLocalhost) {
   loadCss(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.css`);
   loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/js/modernizr.custom.js`);
   //loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-internal/js/hovereffect.js`);
-  loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/common.js`);
+  loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/common.js?t=${now}`);
 
   if(isMobile()) {
-    loadScript('//download.alicdn.com/sns/bindingx_mobile_home.js');
+    loadScript(`//download.alicdn.com/sns/bindingx_mobile_home.js?t=${now}`);
   }else {
-    loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.js`);
+    loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.js?t=${now}`);
   }
 
   console.log("isDebug is true. isLocalhost is false.");
@@ -72,9 +73,9 @@ if(!isDebug) {
   loadCss('//localhost:8010/index.css');
   loadScript('//localhost:8010/common.js');
   if(isMobile()) {
-    loadScript('//download.alicdn.com/sns/bindingx_mobile_home.js');
+    loadScript(`//download.alicdn.com/sns/bindingx_mobile_home.js?t=${now}`);
   } else {
-    loadScript('//localhost:8010/index.js');
+    loadScript('//localhost:8010/index.js?t=${now}');
   }
 
   console.log("isDebug is true. isLocalhost is true.");
