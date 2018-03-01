@@ -114,7 +114,7 @@ __weak static RCTUIManager* _uiManager = nil;
     }
 }
 
-+ (UIPanGestureRecognizer *_Nullable)getPanGestureForComponent:(id _Nullable )source callback:(EBGetPanGestureCallback)callback
++ (UIPanGestureRecognizer *_Nullable)getPanGestureForSource:(id _Nullable )source callback:(EBGetPanGestureCallback)callback
 {
     UIView* view = [EBUtility getViewByRef:source];
     for (UIGestureRecognizer *obj in view.gestureRecognizers) {

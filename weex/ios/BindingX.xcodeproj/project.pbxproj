@@ -13,55 +13,55 @@
 		D955B11D202FDCD4000274AC /* EBWXModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D955B119202FDCD4000274AC /* EBWXModule.m */; };
 		D955B11E202FDCD4000274AC /* EBUtility+WX.h in Headers */ = {isa = PBXBuildFile; fileRef = D955B11A202FDCD4000274AC /* EBUtility+WX.h */; };
 		D955B11F202FDCD4000274AC /* EBWXModule.h in Headers */ = {isa = PBXBuildFile; fileRef = D955B11B202FDCD4000274AC /* EBWXModule.h */; };
-		D98553752046A86B006F8F8A /* EBBindData.m in Sources */ = {isa = PBXBuildFile; fileRef = D98553732046A86A006F8F8A /* EBBindData.m */; };
-		D98553762046A86B006F8F8A /* EBBindData.h in Headers */ = {isa = PBXBuildFile; fileRef = D98553742046A86B006F8F8A /* EBBindData.h */; };
-		D9A6A9D12043A730001AEC67 /* EBGyroVector3.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9A32043A729001AEC67 /* EBGyroVector3.m */; };
-		D9A6A9D22043A730001AEC67 /* EBJSEvaluate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9A42043A729001AEC67 /* EBJSEvaluate.m */; };
-		D9A6A9D32043A730001AEC67 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9A6A9A52043A729001AEC67 /* Info.plist */; };
-		D9A6A9D42043A730001AEC67 /* EBExpressionTiming.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9A62043A72A001AEC67 /* EBExpressionTiming.m */; };
-		D9A6A9D52043A730001AEC67 /* EBExpressionScope.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9A72043A72A001AEC67 /* EBExpressionScope.h */; };
-		D9A6A9D62043A730001AEC67 /* EBExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9A82043A72A001AEC67 /* EBExpression.h */; };
-		D9A6A9D72043A730001AEC67 /* EBExpressionScope.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9A92043A72A001AEC67 /* EBExpressionScope.m */; };
-		D9A6A9D82043A730001AEC67 /* EBGyroQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9AA2043A72A001AEC67 /* EBGyroQuaternion.h */; };
-		D9A6A9D92043A730001AEC67 /* EBGyroVector3.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9AB2043A72A001AEC67 /* EBGyroVector3.h */; };
-		D9A6A9DA2043A730001AEC67 /* EBJSEase.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9AC2043A72A001AEC67 /* EBJSEase.h */; };
-		D9A6A9DB2043A730001AEC67 /* EBUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9AD2043A72A001AEC67 /* EBUtility.h */; };
-		D9A6A9DC2043A730001AEC67 /* EBExpressionProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9AE2043A72A001AEC67 /* EBExpressionProperty.m */; };
-		D9A6A9DD2043A730001AEC67 /* EBGyroEuler.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9AF2043A72A001AEC67 /* EBGyroEuler.m */; };
-		D9A6A9DE2043A730001AEC67 /* NSObject+EBTuplePacker.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9B02043A72B001AEC67 /* NSObject+EBTuplePacker.m */; };
-		D9A6A9DF2043A730001AEC67 /* EBExpressionScroller.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9B12043A72B001AEC67 /* EBExpressionScroller.h */; };
-		D9A6A9E02043A730001AEC67 /* EBTaffyTuple.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9B22043A72B001AEC67 /* EBTaffyTuple.h */; };
-		D9A6A9E22043A730001AEC67 /* EBGyroOrientationEvaluator.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9B42043A72B001AEC67 /* EBGyroOrientationEvaluator.h */; };
-		D9A6A9E32043A730001AEC67 /* EBNativeFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9B52043A72B001AEC67 /* EBNativeFunction.h */; };
-		D9A6A9E42043A730001AEC67 /* EBExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9B62043A72B001AEC67 /* EBExpression.m */; };
-		D9A6A9E52043A730001AEC67 /* EBExpressionOrientation.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9B72043A72B001AEC67 /* EBExpressionOrientation.h */; };
-		D9A6A9E62043A730001AEC67 /* EBNativeFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9B82043A72B001AEC67 /* EBNativeFunction.m */; };
-		D9A6A9E72043A730001AEC67 /* EBUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9B92043A72C001AEC67 /* EBUtility.m */; };
-		D9A6A9E82043A730001AEC67 /* EBGyroOrientationEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9BA2043A72C001AEC67 /* EBGyroOrientationEvaluator.m */; };
-		D9A6A9E92043A730001AEC67 /* NSObject+EBTuplePacker.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9BB2043A72C001AEC67 /* NSObject+EBTuplePacker.h */; };
-		D9A6A9EA2043A730001AEC67 /* EBJSTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9BC2043A72C001AEC67 /* EBJSTransform.m */; };
-		D9A6A9EB2043A730001AEC67 /* EBGyroEuler.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9BD2043A72C001AEC67 /* EBGyroEuler.h */; };
-		D9A6A9EC2043A730001AEC67 /* EBExpressionExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9BE2043A72C001AEC67 /* EBExpressionExecutor.m */; };
-		D9A6A9ED2043A730001AEC67 /* EBGyroManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9BF2043A72D001AEC67 /* EBGyroManager.h */; };
-		D9A6A9EE2043A730001AEC67 /* EBJSEase.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9C02043A72D001AEC67 /* EBJSEase.m */; };
-		D9A6A9EF2043A730001AEC67 /* EBExpressionGesture.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9C12043A72D001AEC67 /* EBExpressionGesture.h */; };
-		D9A6A9F02043A730001AEC67 /* EBExpressionProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9C22043A72D001AEC67 /* EBExpressionProperty.h */; };
-		D9A6A9F12043A730001AEC67 /* EBJSTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9C32043A72D001AEC67 /* EBJSTransform.h */; };
-		D9A6A9F22043A730001AEC67 /* EBExpressionGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9C42043A72D001AEC67 /* EBExpressionGesture.m */; };
-		D9A6A9F32043A730001AEC67 /* EBExpressionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9C52043A72E001AEC67 /* EBExpressionHandler.m */; };
-		D9A6A9F42043A730001AEC67 /* EBExpressionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9C62043A72E001AEC67 /* EBExpressionHandler.h */; };
-		D9A6A9F52043A730001AEC67 /* EBJSMath.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9C72043A72E001AEC67 /* EBJSMath.h */; };
-		D9A6A9F62043A730001AEC67 /* EBExpressionOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9C82043A72E001AEC67 /* EBExpressionOrientation.m */; };
-		D9A6A9F72043A730001AEC67 /* EBExpressionTiming.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9C92043A72E001AEC67 /* EBExpressionTiming.h */; };
-		D9A6A9F82043A730001AEC67 /* EBJSMath.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9CA2043A72E001AEC67 /* EBJSMath.m */; };
-		D9A6A9F92043A730001AEC67 /* EBTaffyTuple.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9CB2043A72F001AEC67 /* EBTaffyTuple.m */; };
-		D9A6A9FA2043A730001AEC67 /* EBExpressionExecutor.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9CC2043A72F001AEC67 /* EBExpressionExecutor.h */; };
-		D9A6A9FB2043A730001AEC67 /* EBJSEvaluate.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A9CD2043A72F001AEC67 /* EBJSEvaluate.h */; };
-		D9A6A9FC2043A730001AEC67 /* EBExpressionScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9CE2043A72F001AEC67 /* EBExpressionScroller.m */; };
-		D9A6A9FD2043A730001AEC67 /* EBGyroManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9CF2043A72F001AEC67 /* EBGyroManager.m */; };
-		D9A6A9FE2043A730001AEC67 /* EBGyroQuaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A9D02043A72F001AEC67 /* EBGyroQuaternion.m */; };
-		D9A6AA8A20453671001AEC67 /* EBWXDeprecatedModule.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6AA8820453671001AEC67 /* EBWXDeprecatedModule.h */; };
-		D9A6AA8B20453671001AEC67 /* EBWXDeprecatedModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6AA8920453671001AEC67 /* EBWXDeprecatedModule.m */; };
+		D9A27D982047E229003AC20E /* EBGyroVector3.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D692047E226003AC20E /* EBGyroVector3.m */; };
+		D9A27D992047E229003AC20E /* EBJSEvaluate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D6A2047E226003AC20E /* EBJSEvaluate.m */; };
+		D9A27D9A2047E229003AC20E /* EBBindData.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D6B2047E226003AC20E /* EBBindData.m */; };
+		D9A27D9B2047E229003AC20E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9A27D6C2047E226003AC20E /* Info.plist */; };
+		D9A27D9C2047E229003AC20E /* EBExpressionTiming.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D6D2047E226003AC20E /* EBExpressionTiming.m */; };
+		D9A27D9D2047E229003AC20E /* EBExpressionScope.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D6E2047E226003AC20E /* EBExpressionScope.h */; };
+		D9A27D9E2047E229003AC20E /* EBExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D6F2047E226003AC20E /* EBExpression.h */; };
+		D9A27D9F2047E229003AC20E /* EBExpressionScope.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D702047E226003AC20E /* EBExpressionScope.m */; };
+		D9A27DA02047E229003AC20E /* EBGyroQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D712047E226003AC20E /* EBGyroQuaternion.h */; };
+		D9A27DA12047E229003AC20E /* EBGyroVector3.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D722047E226003AC20E /* EBGyroVector3.h */; };
+		D9A27DA22047E229003AC20E /* EBJSEase.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D732047E227003AC20E /* EBJSEase.h */; };
+		D9A27DA32047E229003AC20E /* EBUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D742047E227003AC20E /* EBUtility.h */; };
+		D9A27DA42047E229003AC20E /* EBExpressionProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D752047E227003AC20E /* EBExpressionProperty.m */; };
+		D9A27DA52047E229003AC20E /* EBGyroEuler.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D762047E227003AC20E /* EBGyroEuler.m */; };
+		D9A27DA62047E229003AC20E /* NSObject+EBTuplePacker.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D772047E227003AC20E /* NSObject+EBTuplePacker.m */; };
+		D9A27DA72047E229003AC20E /* EBExpressionScroller.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D782047E227003AC20E /* EBExpressionScroller.h */; };
+		D9A27DA82047E229003AC20E /* EBTaffyTuple.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D792047E227003AC20E /* EBTaffyTuple.h */; };
+		D9A27DA92047E229003AC20E /* EBGyroOrientationEvaluator.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D7A2047E227003AC20E /* EBGyroOrientationEvaluator.h */; };
+		D9A27DAA2047E229003AC20E /* EBNativeFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D7B2047E227003AC20E /* EBNativeFunction.h */; };
+		D9A27DAB2047E229003AC20E /* NSObject+EBTuplePacker.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D7C2047E227003AC20E /* NSObject+EBTuplePacker.h */; };
+		D9A27DAC2047E229003AC20E /* EBExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D7D2047E227003AC20E /* EBExpression.m */; };
+		D9A27DAD2047E229003AC20E /* EBExpressionOrientation.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D7E2047E227003AC20E /* EBExpressionOrientation.h */; };
+		D9A27DAE2047E229003AC20E /* EBNativeFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D7F2047E227003AC20E /* EBNativeFunction.m */; };
+		D9A27DAF2047E229003AC20E /* EBUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D802047E227003AC20E /* EBUtility.m */; };
+		D9A27DB02047E229003AC20E /* EBGyroOrientationEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D812047E227003AC20E /* EBGyroOrientationEvaluator.m */; };
+		D9A27DB12047E229003AC20E /* EBJSTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D822047E227003AC20E /* EBJSTransform.m */; };
+		D9A27DB22047E229003AC20E /* EBGyroEuler.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D832047E227003AC20E /* EBGyroEuler.h */; };
+		D9A27DB32047E229003AC20E /* EBExpressionExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D842047E228003AC20E /* EBExpressionExecutor.m */; };
+		D9A27DB42047E229003AC20E /* EBGyroManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D852047E228003AC20E /* EBGyroManager.h */; };
+		D9A27DB52047E229003AC20E /* EBJSEase.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D862047E228003AC20E /* EBJSEase.m */; };
+		D9A27DB62047E229003AC20E /* EBExpressionGesture.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D872047E228003AC20E /* EBExpressionGesture.h */; };
+		D9A27DB72047E229003AC20E /* EBExpressionProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D882047E228003AC20E /* EBExpressionProperty.h */; };
+		D9A27DB82047E229003AC20E /* EBBindData.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D892047E228003AC20E /* EBBindData.h */; };
+		D9A27DB92047E229003AC20E /* EBExpressionGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D8A2047E228003AC20E /* EBExpressionGesture.m */; };
+		D9A27DBA2047E229003AC20E /* EBJSTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D8B2047E228003AC20E /* EBJSTransform.h */; };
+		D9A27DBB2047E229003AC20E /* EBExpressionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D8C2047E228003AC20E /* EBExpressionHandler.m */; };
+		D9A27DBC2047E229003AC20E /* EBExpressionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D8D2047E228003AC20E /* EBExpressionHandler.h */; };
+		D9A27DBD2047E229003AC20E /* EBJSMath.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D8E2047E228003AC20E /* EBJSMath.h */; };
+		D9A27DBE2047E229003AC20E /* EBExpressionOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D8F2047E229003AC20E /* EBExpressionOrientation.m */; };
+		D9A27DBF2047E229003AC20E /* EBExpressionTiming.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D902047E229003AC20E /* EBExpressionTiming.h */; };
+		D9A27DC02047E229003AC20E /* EBJSMath.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D912047E229003AC20E /* EBJSMath.m */; };
+		D9A27DC12047E229003AC20E /* EBTaffyTuple.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D922047E229003AC20E /* EBTaffyTuple.m */; };
+		D9A27DC22047E229003AC20E /* EBExpressionExecutor.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D932047E229003AC20E /* EBExpressionExecutor.h */; };
+		D9A27DC32047E229003AC20E /* EBJSEvaluate.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D942047E229003AC20E /* EBJSEvaluate.h */; };
+		D9A27DC42047E229003AC20E /* EBExpressionScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D952047E229003AC20E /* EBExpressionScroller.m */; };
+		D9A27DC52047E229003AC20E /* EBGyroManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D962047E229003AC20E /* EBGyroManager.m */; };
+		D9A27DC62047E229003AC20E /* EBGyroQuaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D972047E229003AC20E /* EBGyroQuaternion.m */; };
+		D9A27DC92047E237003AC20E /* EBWXOldModule.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27DC72047E237003AC20E /* EBWXOldModule.h */; };
+		D9A27DCA2047E237003AC20E /* EBWXOldModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27DC82047E237003AC20E /* EBWXOldModule.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,55 +74,55 @@
 		D955B119202FDCD4000274AC /* EBWXModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBWXModule.m; sourceTree = "<group>"; };
 		D955B11A202FDCD4000274AC /* EBUtility+WX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EBUtility+WX.h"; sourceTree = "<group>"; };
 		D955B11B202FDCD4000274AC /* EBWXModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBWXModule.h; sourceTree = "<group>"; };
-		D98553732046A86A006F8F8A /* EBBindData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBBindData.m; path = ../../../../core/ios/BindingX/EBBindData.m; sourceTree = "<group>"; };
-		D98553742046A86B006F8F8A /* EBBindData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBBindData.h; path = ../../../../core/ios/BindingX/EBBindData.h; sourceTree = "<group>"; };
-		D9A6A9A32043A729001AEC67 /* EBGyroVector3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBGyroVector3.m; path = ../../../../core/ios/BindingX/EBGyroVector3.m; sourceTree = "<group>"; };
-		D9A6A9A42043A729001AEC67 /* EBJSEvaluate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBJSEvaluate.m; path = ../../../../core/ios/BindingX/EBJSEvaluate.m; sourceTree = "<group>"; };
-		D9A6A9A52043A729001AEC67 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../../../core/ios/BindingX/Info.plist; sourceTree = "<group>"; };
-		D9A6A9A62043A72A001AEC67 /* EBExpressionTiming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionTiming.m; path = ../../../../core/ios/BindingX/EBExpressionTiming.m; sourceTree = "<group>"; };
-		D9A6A9A72043A72A001AEC67 /* EBExpressionScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionScope.h; path = ../../../../core/ios/BindingX/EBExpressionScope.h; sourceTree = "<group>"; };
-		D9A6A9A82043A72A001AEC67 /* EBExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpression.h; path = ../../../../core/ios/BindingX/EBExpression.h; sourceTree = "<group>"; };
-		D9A6A9A92043A72A001AEC67 /* EBExpressionScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionScope.m; path = ../../../../core/ios/BindingX/EBExpressionScope.m; sourceTree = "<group>"; };
-		D9A6A9AA2043A72A001AEC67 /* EBGyroQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBGyroQuaternion.h; path = ../../../../core/ios/BindingX/EBGyroQuaternion.h; sourceTree = "<group>"; };
-		D9A6A9AB2043A72A001AEC67 /* EBGyroVector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBGyroVector3.h; path = ../../../../core/ios/BindingX/EBGyroVector3.h; sourceTree = "<group>"; };
-		D9A6A9AC2043A72A001AEC67 /* EBJSEase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBJSEase.h; path = ../../../../core/ios/BindingX/EBJSEase.h; sourceTree = "<group>"; };
-		D9A6A9AD2043A72A001AEC67 /* EBUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBUtility.h; path = ../../../../core/ios/BindingX/EBUtility.h; sourceTree = "<group>"; };
-		D9A6A9AE2043A72A001AEC67 /* EBExpressionProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionProperty.m; path = ../../../../core/ios/BindingX/EBExpressionProperty.m; sourceTree = "<group>"; };
-		D9A6A9AF2043A72A001AEC67 /* EBGyroEuler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBGyroEuler.m; path = ../../../../core/ios/BindingX/EBGyroEuler.m; sourceTree = "<group>"; };
-		D9A6A9B02043A72B001AEC67 /* NSObject+EBTuplePacker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+EBTuplePacker.m"; path = "../../../../core/ios/BindingX/NSObject+EBTuplePacker.m"; sourceTree = "<group>"; };
-		D9A6A9B12043A72B001AEC67 /* EBExpressionScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionScroller.h; path = ../../../../core/ios/BindingX/EBExpressionScroller.h; sourceTree = "<group>"; };
-		D9A6A9B22043A72B001AEC67 /* EBTaffyTuple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBTaffyTuple.h; path = ../../../../core/ios/BindingX/EBTaffyTuple.h; sourceTree = "<group>"; };
-		D9A6A9B42043A72B001AEC67 /* EBGyroOrientationEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBGyroOrientationEvaluator.h; path = ../../../../core/ios/BindingX/EBGyroOrientationEvaluator.h; sourceTree = "<group>"; };
-		D9A6A9B52043A72B001AEC67 /* EBNativeFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBNativeFunction.h; path = ../../../../core/ios/BindingX/EBNativeFunction.h; sourceTree = "<group>"; };
-		D9A6A9B62043A72B001AEC67 /* EBExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpression.m; path = ../../../../core/ios/BindingX/EBExpression.m; sourceTree = "<group>"; };
-		D9A6A9B72043A72B001AEC67 /* EBExpressionOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionOrientation.h; path = ../../../../core/ios/BindingX/EBExpressionOrientation.h; sourceTree = "<group>"; };
-		D9A6A9B82043A72B001AEC67 /* EBNativeFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBNativeFunction.m; path = ../../../../core/ios/BindingX/EBNativeFunction.m; sourceTree = "<group>"; };
-		D9A6A9B92043A72C001AEC67 /* EBUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBUtility.m; path = ../../../../core/ios/BindingX/EBUtility.m; sourceTree = "<group>"; };
-		D9A6A9BA2043A72C001AEC67 /* EBGyroOrientationEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBGyroOrientationEvaluator.m; path = ../../../../core/ios/BindingX/EBGyroOrientationEvaluator.m; sourceTree = "<group>"; };
-		D9A6A9BB2043A72C001AEC67 /* NSObject+EBTuplePacker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+EBTuplePacker.h"; path = "../../../../core/ios/BindingX/NSObject+EBTuplePacker.h"; sourceTree = "<group>"; };
-		D9A6A9BC2043A72C001AEC67 /* EBJSTransform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBJSTransform.m; path = ../../../../core/ios/BindingX/EBJSTransform.m; sourceTree = "<group>"; };
-		D9A6A9BD2043A72C001AEC67 /* EBGyroEuler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBGyroEuler.h; path = ../../../../core/ios/BindingX/EBGyroEuler.h; sourceTree = "<group>"; };
-		D9A6A9BE2043A72C001AEC67 /* EBExpressionExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionExecutor.m; path = ../../../../core/ios/BindingX/EBExpressionExecutor.m; sourceTree = "<group>"; };
-		D9A6A9BF2043A72D001AEC67 /* EBGyroManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBGyroManager.h; path = ../../../../core/ios/BindingX/EBGyroManager.h; sourceTree = "<group>"; };
-		D9A6A9C02043A72D001AEC67 /* EBJSEase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBJSEase.m; path = ../../../../core/ios/BindingX/EBJSEase.m; sourceTree = "<group>"; };
-		D9A6A9C12043A72D001AEC67 /* EBExpressionGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionGesture.h; path = ../../../../core/ios/BindingX/EBExpressionGesture.h; sourceTree = "<group>"; };
-		D9A6A9C22043A72D001AEC67 /* EBExpressionProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionProperty.h; path = ../../../../core/ios/BindingX/EBExpressionProperty.h; sourceTree = "<group>"; };
-		D9A6A9C32043A72D001AEC67 /* EBJSTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBJSTransform.h; path = ../../../../core/ios/BindingX/EBJSTransform.h; sourceTree = "<group>"; };
-		D9A6A9C42043A72D001AEC67 /* EBExpressionGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionGesture.m; path = ../../../../core/ios/BindingX/EBExpressionGesture.m; sourceTree = "<group>"; };
-		D9A6A9C52043A72E001AEC67 /* EBExpressionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionHandler.m; path = ../../../../core/ios/BindingX/EBExpressionHandler.m; sourceTree = "<group>"; };
-		D9A6A9C62043A72E001AEC67 /* EBExpressionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionHandler.h; path = ../../../../core/ios/BindingX/EBExpressionHandler.h; sourceTree = "<group>"; };
-		D9A6A9C72043A72E001AEC67 /* EBJSMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBJSMath.h; path = ../../../../core/ios/BindingX/EBJSMath.h; sourceTree = "<group>"; };
-		D9A6A9C82043A72E001AEC67 /* EBExpressionOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionOrientation.m; path = ../../../../core/ios/BindingX/EBExpressionOrientation.m; sourceTree = "<group>"; };
-		D9A6A9C92043A72E001AEC67 /* EBExpressionTiming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionTiming.h; path = ../../../../core/ios/BindingX/EBExpressionTiming.h; sourceTree = "<group>"; };
-		D9A6A9CA2043A72E001AEC67 /* EBJSMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBJSMath.m; path = ../../../../core/ios/BindingX/EBJSMath.m; sourceTree = "<group>"; };
-		D9A6A9CB2043A72F001AEC67 /* EBTaffyTuple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBTaffyTuple.m; path = ../../../../core/ios/BindingX/EBTaffyTuple.m; sourceTree = "<group>"; };
-		D9A6A9CC2043A72F001AEC67 /* EBExpressionExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionExecutor.h; path = ../../../../core/ios/BindingX/EBExpressionExecutor.h; sourceTree = "<group>"; };
-		D9A6A9CD2043A72F001AEC67 /* EBJSEvaluate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBJSEvaluate.h; path = ../../../../core/ios/BindingX/EBJSEvaluate.h; sourceTree = "<group>"; };
-		D9A6A9CE2043A72F001AEC67 /* EBExpressionScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionScroller.m; path = ../../../../core/ios/BindingX/EBExpressionScroller.m; sourceTree = "<group>"; };
-		D9A6A9CF2043A72F001AEC67 /* EBGyroManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBGyroManager.m; path = ../../../../core/ios/BindingX/EBGyroManager.m; sourceTree = "<group>"; };
-		D9A6A9D02043A72F001AEC67 /* EBGyroQuaternion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBGyroQuaternion.m; path = ../../../../core/ios/BindingX/EBGyroQuaternion.m; sourceTree = "<group>"; };
-		D9A6AA8820453671001AEC67 /* EBWXDeprecatedModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EBWXDeprecatedModule.h; sourceTree = "<group>"; };
-		D9A6AA8920453671001AEC67 /* EBWXDeprecatedModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EBWXDeprecatedModule.m; sourceTree = "<group>"; };
+		D9A27D692047E226003AC20E /* EBGyroVector3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBGyroVector3.m; sourceTree = "<group>"; };
+		D9A27D6A2047E226003AC20E /* EBJSEvaluate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBJSEvaluate.m; sourceTree = "<group>"; };
+		D9A27D6B2047E226003AC20E /* EBBindData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBBindData.m; sourceTree = "<group>"; };
+		D9A27D6C2047E226003AC20E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D9A27D6D2047E226003AC20E /* EBExpressionTiming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionTiming.m; sourceTree = "<group>"; };
+		D9A27D6E2047E226003AC20E /* EBExpressionScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionScope.h; sourceTree = "<group>"; };
+		D9A27D6F2047E226003AC20E /* EBExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpression.h; sourceTree = "<group>"; };
+		D9A27D702047E226003AC20E /* EBExpressionScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionScope.m; sourceTree = "<group>"; };
+		D9A27D712047E226003AC20E /* EBGyroQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBGyroQuaternion.h; sourceTree = "<group>"; };
+		D9A27D722047E226003AC20E /* EBGyroVector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBGyroVector3.h; sourceTree = "<group>"; };
+		D9A27D732047E227003AC20E /* EBJSEase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBJSEase.h; sourceTree = "<group>"; };
+		D9A27D742047E227003AC20E /* EBUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBUtility.h; sourceTree = "<group>"; };
+		D9A27D752047E227003AC20E /* EBExpressionProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionProperty.m; sourceTree = "<group>"; };
+		D9A27D762047E227003AC20E /* EBGyroEuler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBGyroEuler.m; sourceTree = "<group>"; };
+		D9A27D772047E227003AC20E /* NSObject+EBTuplePacker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+EBTuplePacker.m"; sourceTree = "<group>"; };
+		D9A27D782047E227003AC20E /* EBExpressionScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionScroller.h; sourceTree = "<group>"; };
+		D9A27D792047E227003AC20E /* EBTaffyTuple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBTaffyTuple.h; sourceTree = "<group>"; };
+		D9A27D7A2047E227003AC20E /* EBGyroOrientationEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBGyroOrientationEvaluator.h; sourceTree = "<group>"; };
+		D9A27D7B2047E227003AC20E /* EBNativeFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBNativeFunction.h; sourceTree = "<group>"; };
+		D9A27D7C2047E227003AC20E /* NSObject+EBTuplePacker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+EBTuplePacker.h"; sourceTree = "<group>"; };
+		D9A27D7D2047E227003AC20E /* EBExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpression.m; sourceTree = "<group>"; };
+		D9A27D7E2047E227003AC20E /* EBExpressionOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionOrientation.h; sourceTree = "<group>"; };
+		D9A27D7F2047E227003AC20E /* EBNativeFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBNativeFunction.m; sourceTree = "<group>"; };
+		D9A27D802047E227003AC20E /* EBUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBUtility.m; sourceTree = "<group>"; };
+		D9A27D812047E227003AC20E /* EBGyroOrientationEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBGyroOrientationEvaluator.m; sourceTree = "<group>"; };
+		D9A27D822047E227003AC20E /* EBJSTransform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBJSTransform.m; sourceTree = "<group>"; };
+		D9A27D832047E227003AC20E /* EBGyroEuler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBGyroEuler.h; sourceTree = "<group>"; };
+		D9A27D842047E228003AC20E /* EBExpressionExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionExecutor.m; sourceTree = "<group>"; };
+		D9A27D852047E228003AC20E /* EBGyroManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBGyroManager.h; sourceTree = "<group>"; };
+		D9A27D862047E228003AC20E /* EBJSEase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBJSEase.m; sourceTree = "<group>"; };
+		D9A27D872047E228003AC20E /* EBExpressionGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionGesture.h; sourceTree = "<group>"; };
+		D9A27D882047E228003AC20E /* EBExpressionProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionProperty.h; sourceTree = "<group>"; };
+		D9A27D892047E228003AC20E /* EBBindData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBBindData.h; sourceTree = "<group>"; };
+		D9A27D8A2047E228003AC20E /* EBExpressionGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionGesture.m; sourceTree = "<group>"; };
+		D9A27D8B2047E228003AC20E /* EBJSTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBJSTransform.h; sourceTree = "<group>"; };
+		D9A27D8C2047E228003AC20E /* EBExpressionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionHandler.m; sourceTree = "<group>"; };
+		D9A27D8D2047E228003AC20E /* EBExpressionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionHandler.h; sourceTree = "<group>"; };
+		D9A27D8E2047E228003AC20E /* EBJSMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBJSMath.h; sourceTree = "<group>"; };
+		D9A27D8F2047E229003AC20E /* EBExpressionOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionOrientation.m; sourceTree = "<group>"; };
+		D9A27D902047E229003AC20E /* EBExpressionTiming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionTiming.h; sourceTree = "<group>"; };
+		D9A27D912047E229003AC20E /* EBJSMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBJSMath.m; sourceTree = "<group>"; };
+		D9A27D922047E229003AC20E /* EBTaffyTuple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBTaffyTuple.m; sourceTree = "<group>"; };
+		D9A27D932047E229003AC20E /* EBExpressionExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionExecutor.h; sourceTree = "<group>"; };
+		D9A27D942047E229003AC20E /* EBJSEvaluate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBJSEvaluate.h; sourceTree = "<group>"; };
+		D9A27D952047E229003AC20E /* EBExpressionScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionScroller.m; sourceTree = "<group>"; };
+		D9A27D962047E229003AC20E /* EBGyroManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBGyroManager.m; sourceTree = "<group>"; };
+		D9A27D972047E229003AC20E /* EBGyroQuaternion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBGyroQuaternion.m; sourceTree = "<group>"; };
+		D9A27DC72047E237003AC20E /* EBWXOldModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBWXOldModule.h; sourceTree = "<group>"; };
+		D9A27DC82047E237003AC20E /* EBWXOldModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBWXOldModule.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,10 +170,10 @@
 				D9A6A94A2043A699001AEC67 /* core */,
 				D955B11A202FDCD4000274AC /* EBUtility+WX.h */,
 				D955B118202FDCD4000274AC /* EBUtility+WX.m */,
+				D9A27DC72047E237003AC20E /* EBWXOldModule.h */,
+				D9A27DC82047E237003AC20E /* EBWXOldModule.m */,
 				D955B11B202FDCD4000274AC /* EBWXModule.h */,
 				D955B119202FDCD4000274AC /* EBWXModule.m */,
-				D9A6AA8820453671001AEC67 /* EBWXDeprecatedModule.h */,
-				D9A6AA8920453671001AEC67 /* EBWXDeprecatedModule.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -181,55 +181,56 @@
 		D9A6A94A2043A699001AEC67 /* core */ = {
 			isa = PBXGroup;
 			children = (
-				D98553742046A86B006F8F8A /* EBBindData.h */,
-				D98553732046A86A006F8F8A /* EBBindData.m */,
-				D9A6A9A82043A72A001AEC67 /* EBExpression.h */,
-				D9A6A9B62043A72B001AEC67 /* EBExpression.m */,
-				D9A6A9CC2043A72F001AEC67 /* EBExpressionExecutor.h */,
-				D9A6A9BE2043A72C001AEC67 /* EBExpressionExecutor.m */,
-				D9A6A9C12043A72D001AEC67 /* EBExpressionGesture.h */,
-				D9A6A9C42043A72D001AEC67 /* EBExpressionGesture.m */,
-				D9A6A9C62043A72E001AEC67 /* EBExpressionHandler.h */,
-				D9A6A9C52043A72E001AEC67 /* EBExpressionHandler.m */,
-				D9A6A9B72043A72B001AEC67 /* EBExpressionOrientation.h */,
-				D9A6A9C82043A72E001AEC67 /* EBExpressionOrientation.m */,
-				D9A6A9C22043A72D001AEC67 /* EBExpressionProperty.h */,
-				D9A6A9AE2043A72A001AEC67 /* EBExpressionProperty.m */,
-				D9A6A9A72043A72A001AEC67 /* EBExpressionScope.h */,
-				D9A6A9A92043A72A001AEC67 /* EBExpressionScope.m */,
-				D9A6A9B12043A72B001AEC67 /* EBExpressionScroller.h */,
-				D9A6A9CE2043A72F001AEC67 /* EBExpressionScroller.m */,
-				D9A6A9C92043A72E001AEC67 /* EBExpressionTiming.h */,
-				D9A6A9A62043A72A001AEC67 /* EBExpressionTiming.m */,
-				D9A6A9BD2043A72C001AEC67 /* EBGyroEuler.h */,
-				D9A6A9AF2043A72A001AEC67 /* EBGyroEuler.m */,
-				D9A6A9BF2043A72D001AEC67 /* EBGyroManager.h */,
-				D9A6A9CF2043A72F001AEC67 /* EBGyroManager.m */,
-				D9A6A9B42043A72B001AEC67 /* EBGyroOrientationEvaluator.h */,
-				D9A6A9BA2043A72C001AEC67 /* EBGyroOrientationEvaluator.m */,
-				D9A6A9AA2043A72A001AEC67 /* EBGyroQuaternion.h */,
-				D9A6A9D02043A72F001AEC67 /* EBGyroQuaternion.m */,
-				D9A6A9AB2043A72A001AEC67 /* EBGyroVector3.h */,
-				D9A6A9A32043A729001AEC67 /* EBGyroVector3.m */,
-				D9A6A9AC2043A72A001AEC67 /* EBJSEase.h */,
-				D9A6A9C02043A72D001AEC67 /* EBJSEase.m */,
-				D9A6A9CD2043A72F001AEC67 /* EBJSEvaluate.h */,
-				D9A6A9A42043A729001AEC67 /* EBJSEvaluate.m */,
-				D9A6A9C72043A72E001AEC67 /* EBJSMath.h */,
-				D9A6A9CA2043A72E001AEC67 /* EBJSMath.m */,
-				D9A6A9C32043A72D001AEC67 /* EBJSTransform.h */,
-				D9A6A9BC2043A72C001AEC67 /* EBJSTransform.m */,
-				D9A6A9B52043A72B001AEC67 /* EBNativeFunction.h */,
-				D9A6A9B82043A72B001AEC67 /* EBNativeFunction.m */,
-				D9A6A9B22043A72B001AEC67 /* EBTaffyTuple.h */,
-				D9A6A9CB2043A72F001AEC67 /* EBTaffyTuple.m */,
-				D9A6A9AD2043A72A001AEC67 /* EBUtility.h */,
-				D9A6A9B92043A72C001AEC67 /* EBUtility.m */,
-				D9A6A9A52043A729001AEC67 /* Info.plist */,
-				D9A6A9BB2043A72C001AEC67 /* NSObject+EBTuplePacker.h */,
-				D9A6A9B02043A72B001AEC67 /* NSObject+EBTuplePacker.m */,
+				D9A27D892047E228003AC20E /* EBBindData.h */,
+				D9A27D6B2047E226003AC20E /* EBBindData.m */,
+				D9A27D6F2047E226003AC20E /* EBExpression.h */,
+				D9A27D7D2047E227003AC20E /* EBExpression.m */,
+				D9A27D932047E229003AC20E /* EBExpressionExecutor.h */,
+				D9A27D842047E228003AC20E /* EBExpressionExecutor.m */,
+				D9A27D872047E228003AC20E /* EBExpressionGesture.h */,
+				D9A27D8A2047E228003AC20E /* EBExpressionGesture.m */,
+				D9A27D8D2047E228003AC20E /* EBExpressionHandler.h */,
+				D9A27D8C2047E228003AC20E /* EBExpressionHandler.m */,
+				D9A27D7E2047E227003AC20E /* EBExpressionOrientation.h */,
+				D9A27D8F2047E229003AC20E /* EBExpressionOrientation.m */,
+				D9A27D882047E228003AC20E /* EBExpressionProperty.h */,
+				D9A27D752047E227003AC20E /* EBExpressionProperty.m */,
+				D9A27D6E2047E226003AC20E /* EBExpressionScope.h */,
+				D9A27D702047E226003AC20E /* EBExpressionScope.m */,
+				D9A27D782047E227003AC20E /* EBExpressionScroller.h */,
+				D9A27D952047E229003AC20E /* EBExpressionScroller.m */,
+				D9A27D902047E229003AC20E /* EBExpressionTiming.h */,
+				D9A27D6D2047E226003AC20E /* EBExpressionTiming.m */,
+				D9A27D832047E227003AC20E /* EBGyroEuler.h */,
+				D9A27D762047E227003AC20E /* EBGyroEuler.m */,
+				D9A27D852047E228003AC20E /* EBGyroManager.h */,
+				D9A27D962047E229003AC20E /* EBGyroManager.m */,
+				D9A27D7A2047E227003AC20E /* EBGyroOrientationEvaluator.h */,
+				D9A27D812047E227003AC20E /* EBGyroOrientationEvaluator.m */,
+				D9A27D712047E226003AC20E /* EBGyroQuaternion.h */,
+				D9A27D972047E229003AC20E /* EBGyroQuaternion.m */,
+				D9A27D722047E226003AC20E /* EBGyroVector3.h */,
+				D9A27D692047E226003AC20E /* EBGyroVector3.m */,
+				D9A27D732047E227003AC20E /* EBJSEase.h */,
+				D9A27D862047E228003AC20E /* EBJSEase.m */,
+				D9A27D942047E229003AC20E /* EBJSEvaluate.h */,
+				D9A27D6A2047E226003AC20E /* EBJSEvaluate.m */,
+				D9A27D8E2047E228003AC20E /* EBJSMath.h */,
+				D9A27D912047E229003AC20E /* EBJSMath.m */,
+				D9A27D8B2047E228003AC20E /* EBJSTransform.h */,
+				D9A27D822047E227003AC20E /* EBJSTransform.m */,
+				D9A27D7B2047E227003AC20E /* EBNativeFunction.h */,
+				D9A27D7F2047E227003AC20E /* EBNativeFunction.m */,
+				D9A27D792047E227003AC20E /* EBTaffyTuple.h */,
+				D9A27D922047E229003AC20E /* EBTaffyTuple.m */,
+				D9A27D742047E227003AC20E /* EBUtility.h */,
+				D9A27D802047E227003AC20E /* EBUtility.m */,
+				D9A27D6C2047E226003AC20E /* Info.plist */,
+				D9A27D7C2047E227003AC20E /* NSObject+EBTuplePacker.h */,
+				D9A27D772047E227003AC20E /* NSObject+EBTuplePacker.m */,
 			);
-			path = core;
+			name = core;
+			path = ../../../core/ios/BindingX;
 			sourceTree = "<group>";
 		};
 		DCA0321F3AC057FF2A8C84CB /* Pods */ = {
@@ -248,32 +249,32 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9A6A9E52043A730001AEC67 /* EBExpressionOrientation.h in Headers */,
-				D9A6A9E92043A730001AEC67 /* NSObject+EBTuplePacker.h in Headers */,
-				D9A6A9FA2043A730001AEC67 /* EBExpressionExecutor.h in Headers */,
-				D9A6A9DF2043A730001AEC67 /* EBExpressionScroller.h in Headers */,
-				D9A6A9F42043A730001AEC67 /* EBExpressionHandler.h in Headers */,
-				D9A6A9D82043A730001AEC67 /* EBGyroQuaternion.h in Headers */,
-				D9A6A9E32043A730001AEC67 /* EBNativeFunction.h in Headers */,
-				D9A6A9D92043A730001AEC67 /* EBGyroVector3.h in Headers */,
-				D9A6A9ED2043A730001AEC67 /* EBGyroManager.h in Headers */,
-				D9A6A9E02043A730001AEC67 /* EBTaffyTuple.h in Headers */,
+				D9A27DAD2047E229003AC20E /* EBExpressionOrientation.h in Headers */,
+				D9A27DAA2047E229003AC20E /* EBNativeFunction.h in Headers */,
+				D9A27DC22047E229003AC20E /* EBExpressionExecutor.h in Headers */,
+				D9A27DA72047E229003AC20E /* EBExpressionScroller.h in Headers */,
+				D9A27DBC2047E229003AC20E /* EBExpressionHandler.h in Headers */,
+				D9A27DA02047E229003AC20E /* EBGyroQuaternion.h in Headers */,
+				D9A27DC92047E237003AC20E /* EBWXOldModule.h in Headers */,
+				D9A27DA12047E229003AC20E /* EBGyroVector3.h in Headers */,
+				D9A27DA92047E229003AC20E /* EBGyroOrientationEvaluator.h in Headers */,
+				D9A27DA82047E229003AC20E /* EBTaffyTuple.h in Headers */,
 				D955B11F202FDCD4000274AC /* EBWXModule.h in Headers */,
-				D9A6A9EF2043A730001AEC67 /* EBExpressionGesture.h in Headers */,
-				D9A6A9EB2043A730001AEC67 /* EBGyroEuler.h in Headers */,
-				D9A6A9F52043A730001AEC67 /* EBJSMath.h in Headers */,
-				D9A6AA8A20453671001AEC67 /* EBWXDeprecatedModule.h in Headers */,
-				D9A6A9F02043A730001AEC67 /* EBExpressionProperty.h in Headers */,
-				D9A6A9D52043A730001AEC67 /* EBExpressionScope.h in Headers */,
-				D9A6A9F12043A730001AEC67 /* EBJSTransform.h in Headers */,
-				D9A6A9DB2043A730001AEC67 /* EBUtility.h in Headers */,
+				D9A27DB42047E229003AC20E /* EBGyroManager.h in Headers */,
+				D9A27D9D2047E229003AC20E /* EBExpressionScope.h in Headers */,
+				D9A27DA32047E229003AC20E /* EBUtility.h in Headers */,
+				D9A27DBD2047E229003AC20E /* EBJSMath.h in Headers */,
+				D9A27DAB2047E229003AC20E /* NSObject+EBTuplePacker.h in Headers */,
+				D9A27DB72047E229003AC20E /* EBExpressionProperty.h in Headers */,
+				D9A27DBA2047E229003AC20E /* EBJSTransform.h in Headers */,
 				D955B11E202FDCD4000274AC /* EBUtility+WX.h in Headers */,
-				D98553762046A86B006F8F8A /* EBBindData.h in Headers */,
-				D9A6A9F72043A730001AEC67 /* EBExpressionTiming.h in Headers */,
-				D9A6A9E22043A730001AEC67 /* EBGyroOrientationEvaluator.h in Headers */,
-				D9A6A9DA2043A730001AEC67 /* EBJSEase.h in Headers */,
-				D9A6A9D62043A730001AEC67 /* EBExpression.h in Headers */,
-				D9A6A9FB2043A730001AEC67 /* EBJSEvaluate.h in Headers */,
+				D9A27DB22047E229003AC20E /* EBGyroEuler.h in Headers */,
+				D9A27DB62047E229003AC20E /* EBExpressionGesture.h in Headers */,
+				D9A27DBF2047E229003AC20E /* EBExpressionTiming.h in Headers */,
+				D9A27DA22047E229003AC20E /* EBJSEase.h in Headers */,
+				D9A27D9E2047E229003AC20E /* EBExpression.h in Headers */,
+				D9A27DB82047E229003AC20E /* EBBindData.h in Headers */,
+				D9A27DC32047E229003AC20E /* EBJSEvaluate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,7 +338,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9A6A9D32043A730001AEC67 /* Info.plist in Resources */,
+				D9A27D9B2047E229003AC20E /* Info.plist in Resources */,
 				C45843F01E84EF7B00D88C0B /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,31 +390,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9A6A9F92043A730001AEC67 /* EBTaffyTuple.m in Sources */,
-				D9A6A9F62043A730001AEC67 /* EBExpressionOrientation.m in Sources */,
-				D9A6A9D42043A730001AEC67 /* EBExpressionTiming.m in Sources */,
-				D9A6A9E72043A730001AEC67 /* EBUtility.m in Sources */,
-				D9A6A9EA2043A730001AEC67 /* EBJSTransform.m in Sources */,
-				D9A6A9F32043A730001AEC67 /* EBExpressionHandler.m in Sources */,
-				D9A6A9E82043A730001AEC67 /* EBGyroOrientationEvaluator.m in Sources */,
-				D9A6A9D72043A730001AEC67 /* EBExpressionScope.m in Sources */,
-				D9A6A9D22043A730001AEC67 /* EBJSEvaluate.m in Sources */,
+				D9A27DB92047E229003AC20E /* EBExpressionGesture.m in Sources */,
+				D9A27D9F2047E229003AC20E /* EBExpressionScope.m in Sources */,
+				D9A27DBB2047E229003AC20E /* EBExpressionHandler.m in Sources */,
+				D9A27DAE2047E229003AC20E /* EBNativeFunction.m in Sources */,
+				D9A27DAC2047E229003AC20E /* EBExpression.m in Sources */,
+				D9A27DC52047E229003AC20E /* EBGyroManager.m in Sources */,
+				D9A27DAF2047E229003AC20E /* EBUtility.m in Sources */,
+				D9A27DC02047E229003AC20E /* EBJSMath.m in Sources */,
+				D9A27DA62047E229003AC20E /* NSObject+EBTuplePacker.m in Sources */,
+				D9A27D992047E229003AC20E /* EBJSEvaluate.m in Sources */,
 				D955B11C202FDCD4000274AC /* EBUtility+WX.m in Sources */,
-				D9A6A9EE2043A730001AEC67 /* EBJSEase.m in Sources */,
-				D9A6A9FD2043A730001AEC67 /* EBGyroManager.m in Sources */,
-				D9A6A9DC2043A730001AEC67 /* EBExpressionProperty.m in Sources */,
-				D9A6A9F82043A730001AEC67 /* EBJSMath.m in Sources */,
-				D9A6AA8B20453671001AEC67 /* EBWXDeprecatedModule.m in Sources */,
-				D9A6A9F22043A730001AEC67 /* EBExpressionGesture.m in Sources */,
-				D9A6A9DE2043A730001AEC67 /* NSObject+EBTuplePacker.m in Sources */,
-				D98553752046A86B006F8F8A /* EBBindData.m in Sources */,
-				D9A6A9E42043A730001AEC67 /* EBExpression.m in Sources */,
-				D9A6A9E62043A730001AEC67 /* EBNativeFunction.m in Sources */,
-				D9A6A9DD2043A730001AEC67 /* EBGyroEuler.m in Sources */,
-				D9A6A9FE2043A730001AEC67 /* EBGyroQuaternion.m in Sources */,
-				D9A6A9FC2043A730001AEC67 /* EBExpressionScroller.m in Sources */,
-				D9A6A9EC2043A730001AEC67 /* EBExpressionExecutor.m in Sources */,
-				D9A6A9D12043A730001AEC67 /* EBGyroVector3.m in Sources */,
+				D9A27DB32047E229003AC20E /* EBExpressionExecutor.m in Sources */,
+				D9A27D9A2047E229003AC20E /* EBBindData.m in Sources */,
+				D9A27DC12047E229003AC20E /* EBTaffyTuple.m in Sources */,
+				D9A27DBE2047E229003AC20E /* EBExpressionOrientation.m in Sources */,
+				D9A27DCA2047E237003AC20E /* EBWXOldModule.m in Sources */,
+				D9A27DC62047E229003AC20E /* EBGyroQuaternion.m in Sources */,
+				D9A27DB12047E229003AC20E /* EBJSTransform.m in Sources */,
+				D9A27DB52047E229003AC20E /* EBJSEase.m in Sources */,
+				D9A27D982047E229003AC20E /* EBGyroVector3.m in Sources */,
+				D9A27DA42047E229003AC20E /* EBExpressionProperty.m in Sources */,
+				D9A27DB02047E229003AC20E /* EBGyroOrientationEvaluator.m in Sources */,
+				D9A27DC42047E229003AC20E /* EBExpressionScroller.m in Sources */,
+				D9A27DA52047E229003AC20E /* EBGyroEuler.m in Sources */,
+				D9A27D9C2047E229003AC20E /* EBExpressionTiming.m in Sources */,
 				D955B11D202FDCD4000274AC /* EBWXModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
