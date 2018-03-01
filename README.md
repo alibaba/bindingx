@@ -5,6 +5,7 @@
 
 ![image | left](https://img.shields.io/badge/PRs-welcome-brightgreen.svg "")
 ![image | left](https://img.shields.io/badge/license-Apache--2.0-brightgreen.svg "")
+[![CircleCI](https://circleci.com/gh/alibaba/bindingx/tree/master.svg?style=svg)](https://circleci.com/gh/alibaba/bindingx/tree/master)
 
 * [Read Documentation](https://alibaba.github.io/bindingx/guide/introduce)
 * [中文](https://github.com/alibaba/bindingx/blob/master/README_cn.md)

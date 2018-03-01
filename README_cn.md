@@ -6,6 +6,7 @@
 
 ![PRs welcome | left](https://img.shields.io/badge/PRs-welcome-brightgreen.svg "")
 ![license | left](https://img.shields.io/badge/license-Apache--2.0-brightgreen.svg "")
+[![CircleCI](https://circleci.com/gh/alibaba/bindingx/tree/master.svg?style=svg)](https://circleci.com/gh/alibaba/bindingx/tree/master)
 
 基于 `weex / React Native` 的富交互解决方案。
 
