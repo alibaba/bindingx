@@ -38,7 +38,7 @@
 
 
 <script>
-var version = '0.1.2';
+var version = '0.1.3';
 var now = Date.now();
 var isDebug = false;
 var isLocalhost = location.href.toString().indexOf('localhost') > 0;
@@ -52,7 +52,7 @@ if(!isDebug) {
   loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-external/common.js`);
 
   if(isMobile()) {
-    loadScript(`//download.alicdn.com/sns/bindingx_mobile_home.js?t=${now}`);
+    loadScript(`//download.alicdn.com/sns/bindingx_mobile_home_0.2.js?t=${now}`);
   }else {
     loadScript(`//g.alicdn.com/bindingx/site-assets/${version}/site-external/index.js?t=${now}`);
   }
@@ -63,7 +63,7 @@ if(!isDebug) {
   loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/common.js?t=${now}`);
 
   if(isMobile()) {
-    loadScript(`//download.alicdn.com/sns/bindingx_mobile_home.js?t=${now}`);
+    loadScript(`//download.alicdn.com/sns/bindingx_mobile_home_0.2.js?t=${now}`);
   }else {
     loadScript(`//g-assets.daily.taobao.net/bindingx/site-assets/${version}/site-external/index.js?t=${now}`);
   }
@@ -73,7 +73,7 @@ if(!isDebug) {
   loadCss('//localhost:8010/index.css');
   loadScript('//localhost:8010/common.js');
   if(isMobile()) {
-    loadScript(`//download.alicdn.com/sns/bindingx_mobile_home.js?t=${now}`);
+    loadScript(`//download.alicdn.com/sns/bindingx_mobile_home_0.2.js?t=${now}`);
   } else {
     loadScript('//localhost:8010/index.js?t=${now}');
   }
