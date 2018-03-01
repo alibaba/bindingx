@@ -25,10 +25,12 @@ jobs:
           name: Run bindingx_core unit tests
           command: core/android/bindingx-core/gradlew clean assemble test
       - store_test_results:
-        path: core/android/bindingx-core/build/test-results
+          path: core/android/bindingx-core/build/test-results
 
   # Set up iOS environment and run unit tests
   test_ios:
+    macos:
+      xcode: "9.0"
     steps:
       - checkout
       - run: echo "prepare ios environment:"
