@@ -9,7 +9,7 @@
 
 基于 `weex / React Native` 的富交互解决方案。
 
-* 官网: [https://alibaba.github.io/bindingx/](https://alibaba.github.io/bindingx/)
+官网: [https://alibaba.github.io/bindingx/](https://alibaba.github.io/bindingx/)
 
 它提供了一种称之为 `表达式绑定(Expression Binding)` 的机制可以在 weex 上让手势等复杂交互操作以60fps的帧率流畅执行，而不会导致卡顿，因而带来了更优秀的用户体验 :tada: :tada: :tada:。
 
@@ -90,9 +90,9 @@
 
 在您项目中的`Podfile`中添加依赖：
 
-      ```
-      pod 'BindingX', '~> 1.0.0'
-      ```
+  ```
+  pod 'BindingX', '~> 1.0.0'
+  ```
 
 自动注册module，无需手动注册。
 
