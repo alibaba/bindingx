@@ -24,17 +24,32 @@ jobs:
       - store_test_results:
           path: core/android/bindingx-core/build/test-results
 
-  # Set up iOS environment and run unit tests
-  test_ios:
-    macos:
-      xcode: "9.0"
+  test_android_bindingx_plugin:
+    working_directory: ~/bindingx
+    docker:
+      - image: circleci/android:api-26-alpha
+    environment:
+      JVM_OPTS: -Xmx3200m
     steps:
       - checkout
-      - run: echo "prepare ios environment:"
+      - run: echo "test android bindingx_weex_plugin"
+      - run: pwd
+      - run: ls -al
+      - restore_cache:
+          key: jars-{{ checksum "weex/android/bindingx_weex_plugin/build.gradle" }}
+      - run:
+          name: Run bindingx_weex_plugin unit tests
+          command: cd weex/android/bindingx_weex_plugin && ./gradlew clean assemble test
+      - save_cache:
+          paths:
+            - ~/weex/android/bindingx_weex_plugin/.gradle
+          key: jars-{{ checksum "weex/android/bindingx_weex_plugin/build.gradle" }}
+      - store_test_results:
+          path: weex/android/bindingx_weex_plugin/build/test-results
 
 workflows:
   version: 2
   run_unit_test:
     jobs:
       - test_android_bindingx_core
-      - test_ios
+      - test_android_bindingx_plugin
