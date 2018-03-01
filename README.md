@@ -91,7 +91,7 @@ module will be registed automatically.
 
 ### React Native
 
-we will upload React Native bindingx plugin to npm as soon as possible, then you can use `react-native add` command to install. But for now, you should compile our plugin using source code.
+we will upload React Native bindingx plugin to npm as soon as possible, then you can use `npm install` command to install. But for now, you should compile our plugin using source code.
 
 # Who is using
 
