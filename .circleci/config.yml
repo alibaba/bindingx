@@ -16,7 +16,7 @@ jobs:
           key: jars-{{ checksum "core/android/bindingx-core/build.gradle" }}
       - run:
           name: download dependencies
-          command: ./gradlew androidDependencies
+          command: core/android/bindingx-core/gradlew androidDependencies
       - save_cache:
           paths:
             - ~/core/android/bindingx-core/.gradle
