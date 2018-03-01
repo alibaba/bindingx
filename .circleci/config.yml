@@ -15,15 +15,12 @@ jobs:
       - restore_cache:
           key: jars-{{ checksum "core/android/bindingx-core/build.gradle" }}
       - run:
-          name: download dependencies
-          command: core/android/bindingx-core/gradlew androidDependencies
+          name: Run bindingx_core unit tests
+          command: core/android/bindingx-core/gradlew clean assemble test
       - save_cache:
           paths:
             - ~/core/android/bindingx-core/.gradle
           key: jars-{{ checksum "core/android/bindingx-core/build.gradle" }}
-      - run:
-          name: Run bindingx_core unit tests
-          command: core/android/bindingx-core/gradlew clean assemble test
       - store_test_results:
           path: core/android/bindingx-core/build/test-results
 
