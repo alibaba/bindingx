@@ -1,0 +1,41 @@
+version: 2
+jobs:
+  # Set up android environment and run unit tests
+  test_android_bindingx_core:
+    working_directory: ~/bindingx
+    docker:
+      - image: circleci/android:api-26-alpha
+    environment:
+      JVM_OPTS: -Xmx3200m
+    steps:
+      - checkout
+      - run: echo "test android bindingx_core"
+      - run: pwd
+      - run: ls -al
+      - restore_cache:
+          key: jars-{{ checksum "core/android/bindingx-core/build.gradle" }}
+      - run:
+          name: download dependencies
+          command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/core/android/bindingx-core/.gradle
+          key: jars-{{ checksum "core/android/bindingx-core/build.gradle" }}
+      - run:
+          name: Run bindingx_core unit tests
+          command: core/android/bindingx-core/gradlew clean assemble test
+      - store_test_results:
+        path: core/android/bindingx-core/build/test-results
+
+  # Set up iOS environment and run unit tests
+  test_ios:
+    steps:
+      - checkout
+      - run: echo "prepare ios environment:"
+
+workflows:
+  version: 2
+  run_unit_test:
+    jobs:
+      - test_android_bindingx_core
+      - test_ios
