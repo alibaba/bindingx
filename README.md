@@ -21,10 +21,12 @@ We exploreed and implemented a completely new approach to solve the problem. It'
 
 # Glance
 
+Below are some examples which is using bindingx. You can get more examples by running our playground app. Or you can write your own example use our [online playground](https://alibaba.github.io/bindingx/playground), have fun:)
+
 <div align="center">
-    <img src="https://gw.alicdn.com/tfs/TB1fES5bhGYBuNjy0FnXXX5lpXa-320-563.gif" width = "200" height = "350"/>
-    <img src="https://gw.alicdn.com/tfs/TB1hOaKbbGYBuNjy0FoXXciBFXa-320-563.gif" width = "200" height = "350"/>
-    <img src="https://gw.alicdn.com/tfs/TB1LCmUbkyWBuNjy0FpXXassXXa-320-563.gif" width = "200" height = "350"/>
+    <img style="margin-right:10px" src="https://gw.alicdn.com/tfs/TB1fES5bhGYBuNjy0FnXXX5lpXa-320-563.gif" width = "200" height = "350"/>
+    <img style="margin-right:10px" src="https://gw.alicdn.com/tfs/TB1hOaKbbGYBuNjy0FoXXciBFXa-320-563.gif" width = "200" height = "350"/>
+    <img style="margin-right:10px" src="https://gw.alicdn.com/tfs/TB1LCmUbkyWBuNjy0FpXXassXXa-320-563.gif" width = "200" height = "350"/>
     <img src="https://gw.alicdn.com/tfs/TB1FRGZbeuSBuNjy1XcXXcYjFXa-320-563.gif" width = "200" height = "350"/>
 </div>
 
@@ -81,7 +83,7 @@ We provide two ways to integrate bindingx plugin.
 add dependencies in your application's `Podfile`
 
 ```
-pod 'BindingX', '~> 1.0.0'
+  pod 'BindingX', '~> 1.0.0'
 ```
 
 module will be registed automatically.
