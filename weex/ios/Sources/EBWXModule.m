@@ -44,11 +44,6 @@ WX_EXPORT_METHOD(@selector(unbindAll))
 WX_EXPORT_METHOD_SYNC(@selector(supportFeatures))
 WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
 
-+ (void)load
-{
-    [WXSDKEngine registerModule:@"binding" withClass:EBWXModule.class];
-}
-
 - (instancetype)init {
     if (self = [super init]) {
         pthread_mutexattr_init(&mutexAttr);
@@ -314,5 +309,11 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     return styles;
 }
+
+@end
+
+WX_PlUGIN_EXPORT_MODULE(binding, EBWXBindingModule)
+
+@interface EBWXBindingModule : EBWXModule
 
 @end
