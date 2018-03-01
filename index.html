@@ -38,10 +38,10 @@
 
 
 <script>
-var version = '0.1.3';
-var now = Date.now();
-var isDebug = false;
-var isLocalhost = location.href.toString().indexOf('localhost') > 0;
+var version = '0.1.3';  // pc site verison. same as gitlab branch name daily/0.x.x
+var now = Date.now(); // for ignore js client local cache
+var isDebug = false;  // use online or daily or localhost JS 
+var isLocalhost = location.href.toString().indexOf('localhost') > 0; // when debug = true, visit by url ip:port means load daily js, visit by localhost:port means load local js
 
 console.log('now portal version is ' + version);
 
@@ -73,7 +73,7 @@ if(!isDebug) {
   loadCss('//localhost:8010/index.css');
   loadScript('//localhost:8010/common.js');
   if(isMobile()) {
-    loadScript(`//download.alicdn.com/sns/bindingx_mobile_home_0.2.js?t=${now}`);
+    loadScript(`//localhost:9112/home_bundle.js?t=${now}`);
   } else {
     loadScript('//localhost:8010/index.js?t=${now}');
   }
