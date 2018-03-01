@@ -8,7 +8,8 @@
 ![license | left](https://img.shields.io/badge/license-Apache--2.0-brightgreen.svg "")
 
 基于 `weex / React Native` 的富交互解决方案。
-官网: [https://alibaba.github.io/bindingx/](https://alibaba.github.io/bindingx/)
+
+* 官网: [https://alibaba.github.io/bindingx/](https://alibaba.github.io/bindingx/)
 
 它提供了一种称之为 `表达式绑定(Expression Binding)` 的机制可以在 weex 上让手势等复杂交互操作以60fps的帧率流畅执行，而不会导致卡顿，因而带来了更优秀的用户体验 :tada: :tada: :tada:。
 
@@ -20,11 +21,12 @@
 
 ### 示例展示
 
+下面展示了一部分使用`bindingx`的示例。您可以下载或者编译我们的playground app来获取更多的示例。同时，您也可以在我们的[在线playground](https://alibaba.github.io/bindingx/playground)上编写您自己的demo。
 
 <div align="center">
-    <img src="https://gw.alicdn.com/tfs/TB1fES5bhGYBuNjy0FnXXX5lpXa-320-563.gif" width = "200" height = "350"/>
-    <img src="https://gw.alicdn.com/tfs/TB1hOaKbbGYBuNjy0FoXXciBFXa-320-563.gif" width = "200" height = "350"/>
-    <img src="https://gw.alicdn.com/tfs/TB1LCmUbkyWBuNjy0FpXXassXXa-320-563.gif" width = "200" height = "350"/>
+    <img style="margin-right:10px" src="https://gw.alicdn.com/tfs/TB1fES5bhGYBuNjy0FnXXX5lpXa-320-563.gif" width = "200" height = "350"/>
+    <img style="margin-right:10px" src="https://gw.alicdn.com/tfs/TB1hOaKbbGYBuNjy0FoXXciBFXa-320-563.gif" width = "200" height = "350"/>
+    <img style="margin-right:10px" src="https://gw.alicdn.com/tfs/TB1LCmUbkyWBuNjy0FpXXassXXa-320-563.gif" width = "200" height = "350"/>
     <img src="https://gw.alicdn.com/tfs/TB1FRGZbeuSBuNjy1XcXXcYjFXa-320-563.gif" width = "200" height = "350"/>
 </div>
 
@@ -88,9 +90,9 @@
 
 在您项目中的`Podfile`中添加依赖：
 
-    ```
-    pod 'BindingX', '~> 1.0.0'
-    ```
+      ```
+      pod 'BindingX', '~> 1.0.0'
+      ```
 
 自动注册module，无需手动注册。
 
@@ -99,9 +101,7 @@
 
 确保你已经集成了react native。
 
-#### android
-
-目前我们还没有把插件代码上传到npm，所以您现在需要通过源码依赖我们的RN插件。
+注: 目前我们还没有把插件代码上传到npm，所以您现在需要通过源码依赖我们的RN插件。
 我们近期会将插件上传到npm，届时您可以通过`react native add`命令安装插件。
 
 ### 文档与教程
@@ -157,5 +157,3 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
-
-
