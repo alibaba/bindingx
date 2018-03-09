@@ -317,3 +317,7 @@ WX_PlUGIN_EXPORT_MODULE(binding, EBWXBindingModule)
 @interface EBWXBindingModule : EBWXModule
 
 @end
+
+@implementation EBWXBindingModule
+
+@end
