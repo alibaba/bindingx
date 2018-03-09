@@ -6,6 +6,7 @@
 
 ![PRs welcome | left](https://img.shields.io/badge/PRs-welcome-brightgreen.svg "")
 ![license | left](https://img.shields.io/badge/license-Apache--2.0-brightgreen.svg "")
+[![CircleCI](https://circleci.com/gh/alibaba/bindingx/tree/master.svg?style=svg)](https://circleci.com/gh/alibaba/bindingx/tree/master)
 
 基于 `weex / React Native` 的富交互解决方案。
 
@@ -102,7 +103,7 @@
 确保你已经集成了react native。
 
 注: 目前我们还没有把插件代码上传到npm，所以您现在需要通过源码依赖我们的RN插件。
-我们近期会将插件上传到npm，届时您可以通过`react native add`命令安装插件。
+我们近期会将插件上传到npm，届时您可以通过npm安装插件。
 
 ### 文档与教程
 

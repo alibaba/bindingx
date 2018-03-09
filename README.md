@@ -3,8 +3,11 @@
 
 # BindingX
 
+[![Join the chat at https://gitter.im/alibaba/bindingx](https://badges.gitter.im/alibaba/bindingx.svg)](https://gitter.im/alibaba/bindingx?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ![image | left](https://img.shields.io/badge/PRs-welcome-brightgreen.svg "")
 ![image | left](https://img.shields.io/badge/license-Apache--2.0-brightgreen.svg "")
+[![CircleCI](https://circleci.com/gh/alibaba/bindingx/tree/master.svg?style=svg)](https://circleci.com/gh/alibaba/bindingx/tree/master)
 
 * [Read Documentation](https://alibaba.github.io/bindingx/guide/introduce)
 * [中文](https://github.com/alibaba/bindingx/blob/master/README_cn.md)
@@ -90,7 +93,7 @@ module will be registed automatically.
 
 ### React Native
 
-we will upload React Native bindingx plugin to npm as soon as possible, then you can use `react-native add` command to install. But for now, you should compile our plugin using source code.
+we will upload React Native bindingx plugin to npm as soon as possible, then you can use `npm install` command to install. But for now, you should compile our plugin using source code.
 
 # Who is using
 

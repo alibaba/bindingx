@@ -35,7 +35,6 @@ import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
 import com.alibaba.android.bindingx.core.internal.BindingXConstants;
 import com.alibaba.android.bindingx.core.internal.Utils;
-import com.alibaba.weex.plugin.annotation.WeexModule;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.annotation.JSMethod;
@@ -61,7 +60,7 @@ import java.util.Map;
  *
  * Created by rowandjj(chuyi)<br/>
  */
-@WeexModule(name = "bindingx")
+//@WeexModule(name = "bindingx")
 public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
 
     private BindingXCore mBindingXCore;
