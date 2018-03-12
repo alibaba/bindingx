@@ -214,7 +214,10 @@
 
 + (NSString *)colorAsString:(CGColorRef)cgColor {
     const CGFloat *components = CGColorGetComponents(cgColor);
-    return [NSString stringWithFormat:@"rgba(%d,%d,%d,%f)", (int)(components[0]*255), (int)(components[1]*255), (int)(components[2]*255), components[3]];
+    if (components) {
+        return [NSString stringWithFormat:@"rgba(%d,%d,%d,%f)", (int)(components[0]*255), (int)(components[1]*255), (int)(components[2]*255), components[3]];
+    }
+    return nil;
 }
 
 + (UIView *)getViewByRef:(id)ref {
