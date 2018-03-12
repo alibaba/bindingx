@@ -20,6 +20,7 @@ import bindingx from 'weex-bindingx';
 
 |name|args|returns|description|
 |:---------------|:--------|:----|:----------|
+|prepare|{object} options|{object}|prepare bindingx|
 |bind|{object} options|{object}|bind an expression|
 |unbind|{object} options| void |unbind an expression|
 |unbindAll|| void |unbind for all|

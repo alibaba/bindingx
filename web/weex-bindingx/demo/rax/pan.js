@@ -14,9 +14,20 @@ class App extends Component {
 
   y = 0;
 
+  componentDidMount() {
+    setTimeout(() => {
+      let block = getEl(this.refs.block);
+      bindingx.prepare({
+        anchor: block,
+        eventType: 'pan'
+      });
+    }, 50);
+
+  }
+
   render() {
-    return <View ref="block" onTouchStart={this.bindExp}
-                 style={{width: 200, height: 200, backgroundColor: 'red'}}>hello</View>;
+    return (<View ref="block" onTouchStart={this.bindExp}
+      style={{width: 200, height: 200, backgroundColor: 'red'}}>hello</View>);
   }
 
   bindExp = () => {
@@ -46,6 +57,6 @@ class App extends Component {
 }
 
 
-render(<App/>)
+render(<App />);
 
 

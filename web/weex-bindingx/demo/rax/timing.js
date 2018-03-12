@@ -6,7 +6,7 @@ import Picker from 'rax-picker';
 import {isWeex} from 'universal-env';
 import bindingx from '../../src/';
 
-function getEl(el){
+function getEl(el) {
   return isWeex ? findDOMNode(el).ref : findDOMNode(el);
 }
 
@@ -86,7 +86,7 @@ class App extends Component {
     return (
       <View style={{position: 'absolute', width: 750, bottom: 0, top: 0}}>
         <View ref="block"
-              style={{position: 'absolute', top: 0, width: 250, height: 250, backgroundColor: 'red'}}>block</View>
+          style={{position: 'absolute', top: 0, width: 250, height: 250, backgroundColor: 'red'}}>block</View>
         <View style={{width: 750, position: 'absolute', bottom: 0, height: 400, backgroundColor: '#f7f7f7'}}>
           <Text>选择缓动曲线</Text>
           {this.state.easings ?

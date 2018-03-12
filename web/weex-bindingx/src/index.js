@@ -191,6 +191,17 @@ export default {
       return WebBinding.unbindAll();
     }
   },
+  prepare(options) {
+    if (isWeex) {
+      if (WeexBinding && isSupportBinding) {
+        if (isSupportNewBinding) {
+          return WeexBinding.prepare(options);
+        } else {
+          return WeexBinding.enableBinding(options.anchor, options.eventType);
+        }
+      }
+    }
+  },
   getComputedStyle(el) {
     if (isWeex) {
       if (isSupportNewBinding) {

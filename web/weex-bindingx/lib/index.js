@@ -277,6 +277,17 @@ exports.default = {
       return WebBinding.unbindAll();
     }
   },
+  prepare: function prepare(options) {
+    if (_universalEnv.isWeex) {
+      if (WeexBinding && isSupportBinding) {
+        if (isSupportNewBinding) {
+          return WeexBinding.prepare(options);
+        } else {
+          return WeexBinding.enableBinding(options.anchor, options.eventType);
+        }
+      }
+    }
+  },
   getComputedStyle: function getComputedStyle(el) {
     if (_universalEnv.isWeex) {
       if (isSupportNewBinding) {

@@ -6,7 +6,7 @@ import ListView from 'rax-listview';
 import {isWeex} from 'universal-env';
 import bindingx from '../../src/';
 
-function getEl(el){
+function getEl(el) {
   return isWeex ? findDOMNode(el).ref : findDOMNode(el);
 }
 
@@ -36,10 +36,10 @@ const styles = {
     borderStyle: 'solid',
     borderColor: '#dddddd',
     borderWidth: 1,
-    position:'absolute',
-    top:0,
-    bottom:0,
-    width:750
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    width: 750
   },
   title: {
     margin: 50
@@ -217,11 +217,11 @@ class App extends Component {
           <Text style={{color: '#fff', textAlign: 'center', lineHeight: 100}}>bottom bar</Text>
         </View>
         <View ref="top"
-              style={{width: 750, height: 100, backgroundColor: 'red', position: 'absolute', top: 0, zIndex: 1000}} >
+          style={{width: 750, height: 100, backgroundColor: 'red', position: 'absolute', top: 0, zIndex: 1000}} >
           <Text style={{color: '#fff', textAlign: 'center', lineHeight: 100}}>top bar</Text>
         </View>
         <View ref="top2"
-              style={{width: 750, height: 100, backgroundColor: 'green', position: 'absolute', top: 100, zIndex: 1000}} >
+          style={{width: 750, height: 100, backgroundColor: 'green', position: 'absolute', top: 100, zIndex: 1000}} >
           <Text style={{color: '#fff', textAlign: 'center', lineHeight: 100}}>tab bar</Text>
         </View>
       </View>
