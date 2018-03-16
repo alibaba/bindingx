@@ -58,23 +58,23 @@
 					},
 					{
 						title:'Expandable Menu',
-						url:'https://jsplayground.taobao.com/bundle/073b10f5-a4fd-41dc-9265-6865458d1043/raxbundle.js?wh_weex=true&wh_ttid=native&_wx_tpl=https://jsplayground.taobao.com/bundle/073b10f5-a4fd-41dc-9265-6865458d1043/raxbundle.js'
+						url:'expandable_menu.js'
 					},
 					{
 						title:'Slide Layout',
-						url:'https://jsplayground.taobao.com/bundle/a62b34cb-9174-4667-83d8-3f452d6a1829/raxbundle.js?wh_weex=true&wh_ttid=native&_wx_tpl=https://jsplayground.taobao.com/bundle/a62b34cb-9174-4667-83d8-3f452d6a1829/raxbundle.js'
+						url:'slide_layout.js'
 					},
 					{
 						title:'Circle Menu',
-						url:'https://jsplayground.taobao.com/bundle/e04fd2ca-f3f6-4a4c-8500-0d784168bd77/raxbundle.js?wh_weex=true&wh_ttid=native&_wx_tpl=https://jsplayground.taobao.com/bundle/e04fd2ca-f3f6-4a4c-8500-0d784168bd77/raxbundle.js'
+						url:'circle_menu.js'
 					},
 					{
 						title:'Navigation with Tab',
-						url:'https://jsplayground.taobao.com/bundle/af2aba4c-d805-4545-a2d1-9f9db0bf2b50/raxbundle.js?wh_weex=true&wh_ttid=native&_wx_tpl=https://jsplayground.taobao.com/bundle/af2aba4c-d805-4545-a2d1-9f9db0bf2b50/raxbundle.js&wx_navbar_hidden=true'
+						url:'navigation.js'
 					},
 					{
 						title:'Ripple Effect',
-						url:'https://jsplayground.taobao.com/bundle/c295cf39-ec9e-4128-a968-fb051fb48022/raxbundle.js?wh_weex=true&wh_ttid=native&_wx_tpl=https://jsplayground.taobao.com/bundle/c295cf39-ec9e-4128-a968-fb051fb48022/raxbundle.js'
+						url:'ripple.js'
 					}
 			  ]
 		},
