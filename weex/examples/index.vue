@@ -80,8 +80,12 @@
 		},
 		methods: {
 			clickItem: function(e) {
+				let url = root.replace('index.js',e);
+				if(e === 'navigation.js') {
+						url += "?wx_navbar_hidden=true";
+				}
 				 navigator.push({
-				 		url:root.replace('index.js',e),
+				 		url: url,
 						animated:'true'
 				 }, function(){})
 			}
