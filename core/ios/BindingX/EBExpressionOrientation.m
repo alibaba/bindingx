@@ -21,7 +21,8 @@
 #define SUPPORT_SCENE_TYPES (@[@"2d",@"3d"])
 #define SCENE_TYPE_2D @"2d"
 
-@interface EBExpressionOrientation ()
+@interface EBExpressionOrientation () <EBGyroWatcherProtocol>
+
 @end
 
 @implementation EBExpressionOrientation
@@ -40,7 +41,6 @@
     EBGyroOrientationEvaluator *_evaluatorY;
     EBGyroOrientationEvaluator *_evaluator3D;
     NSMutableArray<NSNumber *> *_alphaRecords;
-    CMMotionManager* _motionManager;
     
 }
 
@@ -55,7 +55,6 @@
         _lastBeta = 0;
         _lastGamma = 0;
         _alphaRecords = [NSMutableArray new];
-        _motionManager = [CMMotionManager new];
     }
     return self;
 }
@@ -82,10 +81,7 @@
         _evaluator3D = [[EBGyroOrientationEvaluator alloc] initWithConstraintAlpha:nil constraintBeta:nil constraintGamma:nil];
     }
     
-    __weak typeof(self) welf = self;
-    [EBGyroManager watchOrientation:^BOOL(double alpha, double beta, double gamma) {
-        return [welf handleUpdates:alpha beta:beta gamma:gamma];
-    } withInterval:1/60];
+    [EBGyroManager watchOrientation:self];
     
     [self fireStateChangedEvent:@"start" alpha:0 beta:0 gamma:0];
 }
@@ -100,13 +96,10 @@
 }
     
 - (void)stopWatchOrientation {
-    [EBGyroManager removeOrientation:^BOOL(double alpha, double beta, double gamma) {
-        return NO;
-    }];
+    [EBGyroManager removeOrientation:self];
 }
 
-#pragma mark - privateMethods
-- (BOOL)handleUpdates:(double)alpha beta:(double)beta gamma:(double)gamma {
+- (BOOL)orientaionChanged:(double)alpha beta:(double)beta gamma:(double)gamma {
     
     if(!_isStarted){
         _isStarted = true;

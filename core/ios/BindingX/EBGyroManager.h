@@ -16,12 +16,16 @@
 
 #import <Foundation/Foundation.h>
 
-typedef BOOL (^EBDeviceOrientationCallback)(double alpha, double beta, double gamma);
+@protocol EBGyroWatcherProtocol
+
+- (BOOL)orientaionChanged:(double)alpha beta:(double)beta gamma:(double)gamma;
+
+@end
 
 @interface EBGyroManager : NSObject
 
-+ (void)watchOrientation:(EBDeviceOrientationCallback _Nonnull)callback withInterval:(NSTimeInterval)interval;
++ (void)watchOrientation:(id<EBGyroWatcherProtocol>)watcher ;
 
-+ (void)removeOrientation:(EBDeviceOrientationCallback _Nonnull)callback;
++ (void)removeOrientation:(id<EBGyroWatcherProtocol>)watcher;
 
 @end
