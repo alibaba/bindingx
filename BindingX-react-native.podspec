@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
                      "hjhcn" =>"380050803@qq.com"
                    }
   s.platform     = :ios
-  s.ios.deployment_target = "7.0"
+  s.ios.deployment_target = "8.0"
 
   s.source =  { :path => '.' }
   s.source_files  = "core/ios/BindingX/**/*.{h,m,mm}" , "react-native/lib/ios/RNBindingX/*.{h,m,mm}"

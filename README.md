@@ -1,26 +1,37 @@
 
-![BindingX_250.png | center | 259x249](https://gw.alipayobjects.com/zos/skylark/d52fede9-451f-4b9f-930e-0db65be6d012/2018/png/b062da91-8d5d-4184-b6b3-6c31ee399b98.png "")
+![BindingX_250.png](https://img.alicdn.com/tfs/TB1ZG58bb1YBuNjSszeXXablFXa-400-400.png "")
 
 # BindingX
 
+[![Join the chat at https://gitter.im/alibaba/bindingx](https://badges.gitter.im/alibaba/bindingx.svg)](https://gitter.im/alibaba/bindingx?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ![image | left](https://img.shields.io/badge/PRs-welcome-brightgreen.svg "")
 ![image | left](https://img.shields.io/badge/license-Apache--2.0-brightgreen.svg "")
+[![CircleCI](https://circleci.com/gh/alibaba/bindingx/tree/master.svg?style=svg)](https://circleci.com/gh/alibaba/bindingx/tree/master)
 
-[文档链接](https://lark.alipay.com/bindingx/doc_cn)
+* [Read Documentation](https://alibaba.github.io/bindingx/guide/introduce)
+* [中文](https://github.com/alibaba/bindingx/blob/master/README_cn.md)
 
-A new interaction way based on `weex` and `react native`.
+A new interaction way based on `weex` & `react native` & `html5` .
 
-It provides a way called `expression binding` for handling complex user interaction with views at 60 FPS in React Native and weex.
+It provides a way called `expression binding` for handling complex user interaction with views at 60 FPS in React Native and weex :tada: :tada: :tada: .
 
 # Description
 
 The async nature of the js-native bridge in react native and weex incurs an inherent performance penalty. This traditionally prevents JavaScript code from running at high framerates.
 
-We exploreed and implemented a completely new approach to solve the problem. It's main idea is translate the user interaction into expression, and transfer those expressions into native environment. When events occurs (events such as user gesture), all computing task is running on the native side, NO redundant js-bridge calls any more.
+We exploreed and implemented a completely new approach to solve the problem. It's main idea is translate the user interaction into expression, and transfer those expressions into native environment. When events occurs (events such as user gesture), all computing task is running on the native side, NO redundant js-bridge calls any more. [Read More](https://alibaba.github.io/bindingx/guide/introduce)
 
 # Glance
 
-gif example
+Below are some examples which is using bindingx. You can get more examples by running our playground app. Or you can write your own example use our [online playground](https://alibaba.github.io/bindingx/playground), have fun:)
+
+<div align="center">
+    <img style="margin-right:10px" src="https://gw.alicdn.com/tfs/TB1fES5bhGYBuNjy0FnXXX5lpXa-320-563.gif" width = "200" height = "350"/>
+    <img style="margin-right:10px" src="https://gw.alicdn.com/tfs/TB1hOaKbbGYBuNjy0FoXXciBFXa-320-563.gif" width = "200" height = "350"/>
+    <img style="margin-right:10px" src="https://gw.alicdn.com/tfs/TB1LCmUbkyWBuNjy0FpXXassXXa-320-563.gif" width = "200" height = "350"/>
+    <img src="https://gw.alicdn.com/tfs/TB1FRGZbeuSBuNjy1XcXXcYjFXa-320-563.gif" width = "200" height = "350"/>
+</div>
 
 # Feature
 
@@ -31,28 +42,58 @@ gif example
 
 # Installation
 
-#### on Android with Weex.
+### Weex
 
-First，add dependency in `build.gradle`
-```markup
-compile 'com.alibaba.android:bindingx:{latest_version}'
+*Prerequisites*: integrate [weex sdk](https://github.com/apache/incubator-weex) to your application.
+
+##### Android
+
+We provide two ways to integrate bindingx plugin.
+
+ 1. manual integration
+
+    * add dependencies in your application's build.gradle
+
+        ```
+        implementation 'com.alibaba.android:bindingx-core:1.0.1'
+        implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.1'
+        ```
+
+    * register bindingx plugin in code. (`Application#onCreate`, for example)
+
+        ```
+        BindingX.register()
+        ```
+
+ 2. use weex plugin loader
+
+    * add dependencies in your application's build.gradle
+
+      ```
+      implementation 'com.alibaba.android:bindingx-core:1.0.1'
+      implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.1'
+      implementation 'org.weex.plugin:plugin-loader:1.0.0'
+      ```
+
+    * register bindingx plugin use plugin loader.
+
+      ```
+      WeexPluginContainer.loadAll(getApplicationContext());
+      ```
+
+#### iOS
+
+add dependencies in your application's `Podfile`
+
 ```
-Second, init it, for example at the Application.onCreate()
-```markup
-Binding.register()
+  pod 'BindingX', '~> 1.0.0'
 ```
 
-#### on iOS with Weex.
-carry on
+module will be registed automatically.
 
-#### on Android with ReactNative
-supporting
+### React Native
 
-#### on Android with ReactNative
-supporting
-
-# Document And Guide
-coming soon
+we will upload React Native bindingx plugin to npm as soon as possible, then you can use `npm install` command to install. But for now, you should compile our plugin using source code.
 
 # Who is using
 
