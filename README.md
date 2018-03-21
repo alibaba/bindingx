@@ -100,7 +100,7 @@ We provide two ways to integrate bindingx plugin.
 add dependencies in your application's `Podfile`
 
 ```
-  pod 'BindingX', '~> 1.0.0'
+  pod 'BindingX', '~> 1.0.1'
 ```
 
 module will be registed automatically.
