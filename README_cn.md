@@ -1,12 +1,16 @@
 
 
-![BindingX_250.png | center | 259x249](https://gw.alipayobjects.com/zos/skylark/5a72d0d4-c8b1-43c3-b968-d6b7d9245821/2018/png/e6c6f604-771b-4518-9d06-d6c1b48da4f9.png "")
+![BindingX_250.png | center | 259x249](https://img.alicdn.com/tfs/TB1ZG58bb1YBuNjSszeXXablFXa-400-400.png "")
 
 ### BindingX
 
 ![PRs welcome | left](https://img.shields.io/badge/PRs-welcome-brightgreen.svg "")
 ![license | left](https://img.shields.io/badge/license-Apache--2.0-brightgreen.svg "")
-基于 `weex / React Native` 的富交互解决方案。官网: TODO
+[![CircleCI](https://circleci.com/gh/alibaba/bindingx/tree/master.svg?style=svg)](https://circleci.com/gh/alibaba/bindingx/tree/master)
+
+基于 `weex / React Native` 的富交互解决方案。
+
+官网: [https://alibaba.github.io/bindingx/](https://alibaba.github.io/bindingx/)
 
 它提供了一种称之为 `表达式绑定(Expression Binding)` 的机制可以在 weex 上让手势等复杂交互操作以60fps的帧率流畅执行，而不会导致卡顿，因而带来了更优秀的用户体验 :tada: :tada: :tada:。
 
@@ -16,11 +20,16 @@
 
 而我们通过探索，提出了一种全新的方式用来解决这个问题，方案称之为 `Expression Binding` 。它的核心思想是**将"交互行为"以表达式的方式描述，并提前预置到Native从而避免Native与JS频繁通信。**
 
-进一步阅读: TODO (超链接到 教程-简介 )
-
 ### 示例展示
 
-TODO 准备几组gif截图。
+下面展示了一部分使用`bindingx`的示例。您可以下载或者编译我们的playground app来获取更多的示例。同时，您也可以在我们的[在线playground](https://alibaba.github.io/bindingx/playground)上编写您自己的demo。
+
+<div align="center">
+    <img style="margin-right:10px" src="https://gw.alicdn.com/tfs/TB1fES5bhGYBuNjy0FnXXX5lpXa-320-563.gif" width = "200" height = "350"/>
+    <img style="margin-right:10px" src="https://gw.alicdn.com/tfs/TB1hOaKbbGYBuNjy0FoXXciBFXa-320-563.gif" width = "200" height = "350"/>
+    <img style="margin-right:10px" src="https://gw.alicdn.com/tfs/TB1LCmUbkyWBuNjy0FpXXassXXa-320-563.gif" width = "200" height = "350"/>
+    <img src="https://gw.alicdn.com/tfs/TB1FRGZbeuSBuNjy1XcXXcYjFXa-320-563.gif" width = "200" height = "350"/>
+</div>
 
 ### 特性
 
@@ -33,46 +42,72 @@ TODO 准备几组gif截图。
 
 #### 前置条件
 
-确保你已经集成了[weex\_sdk](https://github.com/apache/incubator-weex)。
+确保你已经集成了[weex_sdk](https://github.com/apache/incubator-weex)。
 
 #### Android:
 
-手动集成。
+有两种集成方式可供选择。
 
-* 在你项目中的`build.gradle`中添加依赖:
-
-
-```
-compile 'com.alibaba.android:bindingx:{latest_version}'
-```
-
-* 在工程的合适位置(如Application#onCreate)注入`BindingX`模块。
+1. 手动集成。(推荐)
 
 
-```java
-BindingX.register()
-```
+  * 在您项目中的`build.gradle`中添加依赖:
+
+
+      ```
+      implementation 'com.alibaba.android:bindingx-core:1.0.1'
+      implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.1'
+      ```
+
+  * 在工程的合适位置(如Application#onCreate)注入`BindingX`模块。
+
+
+      ```java
+      BindingX.register()
+      ```
+
+2. 使用weex plugin loader自动注入bindingx。
+
+
+  * 在您项目中的`build.gradle`中添加依赖:
+
+
+      ```plain
+      implementation 'com.alibaba.android:bindingx-core:1.0.1'
+      implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.1'
+      implementation 'org.weex.plugin:plugin-loader:1.0.0'
+      ```
+
+  * 在工程的合适位置(如Application#onCreate)加载插件。
+
+
+      ```plain
+      WeexPluginContainer.loadAll(getApplicationContext());
+      ```
 
 #### iOS:
 
-TODO // 待补充
+1. CocoaPods
+
+在您项目中的`Podfile`中添加依赖：
+
+  ```
+  pod 'BindingX', '~> 1.0.1'
+  ```
+
+自动注册module，无需手动注册。
 
 ### React Native接入
 #### 前置条件
 
 确保你已经集成了react native。
 
-#### android
-
-TODO
-
-#### iOS
-
-TODO
+注: 目前我们还没有把插件代码上传到npm，所以您现在需要通过源码依赖我们的RN插件。
+我们近期会将插件上传到npm，届时您可以通过npm安装插件。
 
 ### 文档与教程
 
-TODO 超链接
+[https://alibaba.github.io/bindingx/guide/introduce](https://alibaba.github.io/bindingx/guide/introduce)
 
 ### 谁在使用
 

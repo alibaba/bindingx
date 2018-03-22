@@ -30,5 +30,5 @@ project.xcworkspace
 examples/build/
 node_modules/
 npm-debug.log
-
+js/build/main.js
 .idea

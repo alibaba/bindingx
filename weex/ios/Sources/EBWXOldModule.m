@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#import "EBWXDeprecatedModule.h"
+#import "EBWXOldModule.h"
 #import <WeexSDK/WeexSDK.h>
 #import "EBExpressionHandler.h"
 #import <pthread/pthread.h>
@@ -22,15 +22,15 @@
 #import "EBBindData.h"
 #import "EBUtility+WX.h"
 
-WX_PlUGIN_EXPORT_MODULE(expressionBinding, EBWXDeprecatedModule)
+WX_PlUGIN_EXPORT_MODULE(expressionBinding, EBWXOldModule)
 
-@interface EBWXDeprecatedModule ()
+@interface EBWXOldModule ()
 
 @property (nonatomic, strong) EBBindData *bindData;
 
 @end
 
-@implementation EBWXDeprecatedModule {
+@implementation EBWXOldModule {
     pthread_mutex_t mutex;
     pthread_mutexattr_t mutexAttr;
 }
