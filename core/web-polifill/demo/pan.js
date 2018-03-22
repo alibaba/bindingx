@@ -28,6 +28,14 @@ block.addEventListener('touchstart', () => {
           origin: `y+${y}`,
           transformed: parse(`y+${y}`)
         }
+      },
+      {
+        element: block,
+        property: 'margin-top',
+        expression: {
+          origin: 'y+0',
+          transformed: parse('y+0')
+        }
       }
     ]
   }, (e) => {
@@ -35,6 +43,7 @@ block.addEventListener('touchstart', () => {
     if (e.state === 'end') {
       x += e.deltaX;
       y += e.deltaY;
+      console.log(bindingx.getComputedStyle(block));
     }
   });
 });

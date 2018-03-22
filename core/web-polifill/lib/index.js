@@ -1797,6 +1797,10 @@ var Binding = function () {
         case 'border-bottom-left-radius':
         case 'border-bottom-right-radius':
         case 'border-radius':
+        case 'margin-top':
+        case 'margin-bottom':
+        case 'margin-left':
+        case 'margin-right':
           el.style[property] = (0, _utils.px)(val) + 'px';
           break;
       }
@@ -1889,8 +1893,6 @@ module.exports = {
     var computedStyle = window.getComputedStyle(elRef);
     var style = (0, _utils.matrixToTransformObj)(computedStyle[vendorTransform]);
     style.opacity = Number(computedStyle.opacity);
-    style.width = (0, _utils.pxTo750)(computedStyle.width.replace('px', ''));
-    style.height = (0, _utils.pxTo750)(computedStyle.height.replace('px', ''));
     style['background-color'] = computedStyle['background-color'];
     style.color = computedStyle.color;
     style.width = (0, _utils.pxTo750)(computedStyle.width.replace('px', ''));
@@ -1899,6 +1901,10 @@ module.exports = {
     style['border-top-right-radius'] = (0, _utils.pxTo750)(computedStyle['border-top-right-radius'].replace('px', ''));
     style['border-bottom-left-radius'] = (0, _utils.pxTo750)(computedStyle['border-bottom-left-radius'].replace('px', ''));
     style['border-bottom-right-radius'] = (0, _utils.pxTo750)(computedStyle['border-bottom-right-radius'].replace('px', ''));
+    style['margin-top'] = (0, _utils.pxTo750)(computedStyle['margin-top'].replace('px', ''));
+    style['margin-bottom'] = (0, _utils.pxTo750)(computedStyle['margin-bottom'].replace('px', ''));
+    style['margin-left'] = (0, _utils.pxTo750)(computedStyle['margin-left'].replace('px', ''));
+    style['margin-right'] = (0, _utils.pxTo750)(computedStyle['margin-right'].replace('px', ''));
     return style;
   }
 };

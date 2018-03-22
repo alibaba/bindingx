@@ -147,6 +147,10 @@ class Binding {
       case 'border-bottom-left-radius':
       case 'border-bottom-right-radius':
       case 'border-radius':
+      case 'margin-top':
+      case 'margin-bottom':
+      case 'margin-left':
+      case 'margin-right':
         el.style[property] = `${px(val)}px`;
         break;
     }
@@ -244,8 +248,6 @@ module.exports = {
     let computedStyle = window.getComputedStyle(elRef);
     let style = matrixToTransformObj(computedStyle[vendorTransform]);
     style.opacity = Number(computedStyle.opacity);
-    style.width = pxTo750(computedStyle.width.replace('px', ''));
-    style.height = pxTo750(computedStyle.height.replace('px', ''));
     style['background-color'] = computedStyle['background-color'];
     style.color = computedStyle.color;
     style.width = pxTo750(computedStyle.width.replace('px', ''));
@@ -254,6 +256,10 @@ module.exports = {
     style['border-top-right-radius'] = pxTo750(computedStyle['border-top-right-radius'].replace('px', ''));
     style['border-bottom-left-radius'] = pxTo750(computedStyle['border-bottom-left-radius'].replace('px', ''));
     style['border-bottom-right-radius'] = pxTo750(computedStyle['border-bottom-right-radius'].replace('px', ''));
+    style['margin-top'] = pxTo750(computedStyle['margin-top'].replace('px', ''));
+    style['margin-bottom'] = pxTo750(computedStyle['margin-bottom'].replace('px', ''));
+    style['margin-left'] = pxTo750(computedStyle['margin-left'].replace('px', ''));
+    style['margin-right'] = pxTo750(computedStyle['margin-right'].replace('px', ''));
     return style;
   }
 

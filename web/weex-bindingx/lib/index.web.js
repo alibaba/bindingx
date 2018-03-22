@@ -115,9 +115,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _universalEnv = __webpack_require__(1);
+var _bindingxParser = __webpack_require__(1);
 
-var _bindingxParser = __webpack_require__(3);
+var isWeb = true;
+var isWeex = false;
 
 function requireModule(moduleName) {
   try {
@@ -127,40 +128,15 @@ function requireModule(moduleName) {
     }
   } catch (err) {}
   return window.require('@weex-module/' + moduleName);
-};
+}
 
 var isSupportNewBinding = true;
 var isSupportBinding = true;
 var WeexBinding = void 0;
 var WebBinding = {};
-if (_universalEnv.isWeb) {
-  WebBinding = __webpack_require__(5);
-} else {
-  try {
-    WeexBinding = requireModule('bindingx');
-    isSupportNewBinding = true;
-  } catch (e) {
-    isSupportNewBinding = false;
-  }
-  if (!WeexBinding || !WeexBinding.bind) {
-    try {
-      WeexBinding = requireModule('binding');
-      isSupportNewBinding = true;
-    } catch (e) {
-      isSupportNewBinding = false;
-    }
-  }
-  isSupportNewBinding = !!(WeexBinding && WeexBinding.bind && WeexBinding.unbind);
-  if (!isSupportNewBinding) {
-    try {
-      WeexBinding = requireModule('expressionBinding');
-      isSupportBinding = true;
-    } catch (err) {
-      isSupportBinding = false;
-    }
-  }
-  isSupportBinding = !!(WeexBinding && (WeexBinding.bind || WeexBinding.createBinding));
-}
+
+WebBinding = __webpack_require__(3);
+
 
 function formatExpression(expression) {
   if (expression === undefined) return;
@@ -233,26 +209,7 @@ exports.default = {
       });
     }
 
-    if (_universalEnv.isWeex) {
-      if (WeexBinding && isSupportBinding) {
-        if (isSupportNewBinding) {
-          return WeexBinding.bind(options, options && options.eventType === 'timing' ? fixCallback(callback) : callback);
-        } else {
-          WeexBinding.enableBinding(options.anchor, options.eventType);
-          // 处理expression的参数格式
-          var expressionArgs = options.props.map(function (prop) {
-            return {
-              element: prop.element,
-              property: prop.property,
-              expression: prop.expression.transformed
-            };
-          });
-          WeexBinding.createBinding(options.anchor, options.eventType, '', expressionArgs, callback);
-        }
-      }
-    } else {
-      return WebBinding.bind(options, callback);
-    }
+    return WebBinding.bind(options, callback);
   },
 
   /**
@@ -265,52 +222,15 @@ exports.default = {
     if (!options) {
       throw new Error('should pass options for binding');
     }
-    if (_universalEnv.isWeex) {
-      if (WeexBinding && isSupportBinding) {
-        if (isSupportNewBinding) {
-          return WeexBinding.unbind(options);
-        } else {
-          return WeexBinding.disableBinding(options.anchor, options.eventType);
-        }
-      }
-    } else {
-      return WebBinding.unbind(options);
-    }
+
+    return WebBinding.unbind(options);
   },
   unbindAll: function unbindAll() {
-    if (_universalEnv.isWeex) {
-      if (WeexBinding && isSupportBinding) {
-        if (isSupportNewBinding) {
-          return WeexBinding.unbindAll();
-        } else {
-          return WeexBinding.disableAll();
-        }
-      }
-    } else {
-      return WebBinding.unbindAll();
-    }
+    return WebBinding.unbindAll();
   },
-  prepare: function prepare(options) {
-    if (_universalEnv.isWeex) {
-      if (WeexBinding && isSupportBinding) {
-        if (isSupportNewBinding) {
-          return WeexBinding.prepare(options);
-        } else {
-          return WeexBinding.enableBinding(options.anchor, options.eventType);
-        }
-      }
-    }
-  },
+  prepare: function prepare() {},
   getComputedStyle: function getComputedStyle(el) {
-    if (_universalEnv.isWeex) {
-      if (isSupportNewBinding) {
-        return WeexBinding.getComputedStyle(el);
-      } else {
-        return {};
-      }
-    } else {
-      return WebBinding.getComputedStyle(el);
-    }
+    return WebBinding.getComputedStyle(el);
   }
 };
 module.exports = exports['default'];
@@ -320,224 +240,12 @@ module.exports = exports['default'];
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-// https://www.w3.org/TR/html5/webappapis.html#dom-navigator-appcodename
-var isWeb = exports.isWeb = (typeof navigator === 'undefined' ? 'undefined' : _typeof(navigator)) === 'object' && (navigator.appCodeName === 'Mozilla' || navigator.product === 'Gecko');
-var isNode = exports.isNode = typeof process !== 'undefined' && !!(process.versions && process.versions.node);
-var isWeex = exports.isWeex = typeof callNative === 'function';
-var isReactNative = exports.isReactNative = typeof __fbBatchedBridgeConfig !== 'undefined';
-exports['default'] = module.exports;
-exports.default = module.exports;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+module.exports = __webpack_require__(2);
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(4);
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1018,7 +726,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 5 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
