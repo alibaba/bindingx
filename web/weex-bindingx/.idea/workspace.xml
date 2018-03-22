@@ -15,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="pan.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/demo/rax/pan.js">
+      <file leaf-file-name=".npmignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.npmignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="23" column="19" lean-forward="false" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+            <state relative-caret-position="15">
+              <caret line="1" column="4" lean-forward="false" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -72,6 +72,7 @@
         <option value="$PROJECT_DIR$/demo/rax/orientation.html" />
         <option value="$PROJECT_DIR$/demo/rax/scroll.html" />
         <option value="$PROJECT_DIR$/demo/rax/timing.html" />
+        <option value="$PROJECT_DIR$/.npmignore" />
       </list>
     </option>
   </component>
@@ -118,17 +119,6 @@
             <path>
               <item name="weex-bindingx" type="b2602c69:ProjectViewProjectNode" />
               <item name="weex-bindingx" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weex-bindingx" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weex-bindingx" type="462c0819:PsiDirectoryNode" />
-              <item name="demo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weex-bindingx" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weex-bindingx" type="462c0819:PsiDirectoryNode" />
-              <item name="demo" type="462c0819:PsiDirectoryNode" />
-              <item name="rax" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="weex-bindingx" type="b2602c69:ProjectViewProjectNode" />
@@ -183,12 +173,12 @@
       <workItem from="1521082216201" duration="4000" />
       <workItem from="1521435934543" duration="7608000" />
       <workItem from="1521597869764" duration="3000" />
-      <workItem from="1521597882412" duration="8008000" />
+      <workItem from="1521597882412" duration="8223000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23767000" />
+    <option name="totallyTimeSpent" value="23982000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="8" y="23" width="1420" height="803" extended-state="0" />
@@ -245,14 +235,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/a.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="3" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="8" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/b.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -479,14 +461,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/index.weex.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="12" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/webpack.dev.rax.config.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="277">
@@ -531,14 +505,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
           <caret line="220" column="0" lean-forward="true" selection-start-line="220" selection-start-column="0" selection-end-line="220" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/index.web.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="59">
-          <caret line="2529" column="29" lean-forward="true" selection-start-line="2529" selection-start-column="29" selection-end-line="2529" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -599,10 +565,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/index.weex.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="786" column="14" lean-forward="true" selection-start-line="786" selection-start-column="14" selection-end-line="786" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/index.web.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="2636" column="73" lean-forward="false" selection-start-line="2636" selection-start-column="62" selection-end-line="2636" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/demo/rax/pan.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
+        <state relative-caret-position="300">
           <caret line="23" column="19" lean-forward="false" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.npmignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="4" lean-forward="false" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
           <folding />
         </state>
       </provider>
