@@ -1,6 +1,6 @@
 {
   "name": "weex-bindingx",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "bindingx,expression,binding,weex",
   "main": "lib/index.js",
   "repository": {
@@ -10,7 +10,7 @@
   "scripts": {
     "start-rax": "node webpack.dev.rax.config.js",
     "start-vue": "node webpack.dev.vue.config.js",
-    "build": "webpack",
+    "build": "node webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -20,8 +20,8 @@
     "weex"
   ],
   "dependencies": {
-    "bindingx-parser": "0.0.x",
-    "bindingx-web-polyfill": "0.0.x",
+    "bindingx-parser": "0.x.x",
+    "bindingx-web-polyfill": "0.x.x",
     "object-assign": "^4.1.1",
     "simple-lodash": "^0.0.2",
     "universal-env": "0.x.x"
