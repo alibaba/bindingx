@@ -57,11 +57,12 @@ let weexConfig = {
     })
   ],
   entry: {
-    index: './src/index.js'
+    'index.weex': './src/index.js',
+    'index.native': './src/index.js'
   },
   output: {
     path: __dirname + '/lib/',
-    filename: '[name].weex.js'
+    filename: '[name].js'
   },
   module: {
     rules: [

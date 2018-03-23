@@ -3,7 +3,7 @@
     if (typeof exports === "object" && typeof module !== "undefined") {
       module.exports = fn();
     } else if (typeof define === "function") {
-      define("index", function(require, exports, module){
+      define("index.weex", function(require, exports, module){
         module.exports = fn();
       });
     } else {
@@ -18,7 +18,7 @@
         // NOTICE: In JavaScript strict mode, this is null
         root = this;
       }
-      root["index"] = fn();
+      root["index.weex"] = fn();
     }
   })(function(){
     return /******/ (function(modules) { // webpackBootstrap
