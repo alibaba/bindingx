@@ -51,6 +51,10 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
     WXEPViewPropertyBorderTopRightRadius,
     WXEPViewPropertyBorderBottomRightRadius,
     WXEPViewPropertyBorderBottomLeftRadius,
+    WXEPViewPropertyMarginTop,
+    WXEPViewPropertyMarginRight,
+    WXEPViewPropertyMarginBottom,
+    WXEPViewPropertyMarginLeft,
 };
 
 @implementation EBExpressionExecutor
@@ -193,6 +197,18 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
         case WXEPViewPropertyBorderBottomLeftRadius:
             [*model setBrBL:[EBExpressionExecutor unpackSingleRet:result]];
             break;
+        case WXEPViewPropertyMarginTop:
+            [*model setMarginTop:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyMarginRight:
+            [*model setMarginRight:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyMarginBottom:
+            [*model setMarginBottom:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyMarginLeft:
+            [*model setMarginLeft:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
         default:
             break;
     }
@@ -242,6 +258,10 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
                 @"border-top-right-radius":@(WXEPViewPropertyBorderTopRightRadius),
                 @"border-bottom-right-radius":@(WXEPViewPropertyBorderBottomRightRadius),
                 @"border-bottom-left-radius":@(WXEPViewPropertyBorderBottomLeftRadius),
+                @"margin-top":@(WXEPViewPropertyMarginTop),
+                @"margin-right":@(WXEPViewPropertyMarginRight),
+                @"margin-bottom":@(WXEPViewPropertyMarginBottom),
+                @"margin-left":@(WXEPViewPropertyMarginLeft),
                 };
     });
     return map;

@@ -76,4 +76,13 @@
 @property (nonatomic, assign) CGFloat br;
 @property (nonatomic, assign) BOOL isBRChanged;
 
+@property (nonatomic, assign) CGFloat marginTop;
+@property (nonatomic, assign) BOOL isMarginTopChanged;
+@property (nonatomic, assign) CGFloat marginRight;
+@property (nonatomic, assign) BOOL isMarginRightChanged;
+@property (nonatomic, assign) CGFloat marginBottom;
+@property (nonatomic, assign) BOOL isMarginBottomChanged;
+@property (nonatomic, assign) CGFloat marginLeft;
+@property (nonatomic, assign) BOOL isMarginLeftChanged;
+
 @end

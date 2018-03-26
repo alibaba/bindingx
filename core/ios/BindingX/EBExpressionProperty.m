@@ -150,4 +150,24 @@
     _isBRChanged = YES;
 }
 
+- (void)setMarginTop:(CGFloat)marginTop {
+    _marginTop = marginTop;
+    _isMarginTopChanged = YES;
+}
+
+- (void)setMarginRight:(CGFloat)marginRight {
+    _marginRight = marginRight;
+    _isMarginRightChanged = YES;
+}
+
+- (void)setMarginBottom:(CGFloat)marginBottom {
+    _marginBottom = marginBottom;
+    _isMarginBottomChanged = YES;
+}
+
+- (void)setMarginLeft:(CGFloat)marginLeft {
+    _marginLeft = marginLeft;
+    _isMarginLeftChanged = YES;
+}
+
 @end

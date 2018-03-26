@@ -105,6 +105,18 @@
     if (model.isBRBLChanged) {
         styles[@"borderBottomLeftRadius"] = @(model.brBL);
     }
+    if (model.isMarginTopChanged) {
+        styles[@"marginTop"] = @(model.marginTop);
+    }
+    if (model.isMarginRightChanged) {
+        styles[@"marginRight"] = @(model.marginRight);
+    }
+    if (model.isMarginBottomChanged) {
+        styles[@"marginBottom"] = @(model.marginBottom);
+    }
+    if (model.isMarginLeftChanged) {
+        styles[@"marginLeft"] = @(model.marginLeft);
+    }
     
     if (styles.count > 0) {
         WXComponent* component = nil;
