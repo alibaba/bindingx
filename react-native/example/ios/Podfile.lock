@@ -1,0 +1,92 @@
+PODS:
+  - BindingX (1.0.0):
+    - React
+    - yoga
+  - boost (1.59.0):
+    - boost/graph-includes (= 1.59.0)
+    - boost/math-includes (= 1.59.0)
+    - boost/numeric-includes (= 1.59.0)
+    - boost/pointer_cast-includes (= 1.59.0)
+    - boost/preprocessor-includes (= 1.59.0)
+    - boost/shared_ptr-includes (= 1.59.0)
+    - boost/string_algorithms-includes (= 1.59.0)
+  - boost/graph-includes (1.59.0)
+  - boost/math-includes (1.59.0)
+  - boost/numeric-includes (1.59.0)
+  - boost/pointer_cast-includes (1.59.0)
+  - boost/preprocessor-includes (1.59.0)
+  - boost/shared_ptr-includes (1.59.0)
+  - boost/string_algorithms-includes (1.59.0)
+  - DoubleConversion (1.1.5)
+  - Folly (2016.09.26.00):
+    - boost
+    - DoubleConversion
+    - GLog
+  - GLog (0.3.4)
+  - React (0.51.0):
+    - React/Core (= 0.51.0)
+  - React/Core (0.51.0):
+    - yoga (= 0.51.0.React)
+  - React/CxxBridge (0.51.0):
+    - Folly (= 2016.09.26.00)
+    - React/Core
+    - React/cxxreact
+  - React/cxxreact (0.51.0):
+    - boost
+    - Folly (= 2016.09.26.00)
+    - React/jschelpers
+  - React/fishhook (0.51.0)
+  - React/jschelpers (0.51.0):
+    - Folly (= 2016.09.26.00)
+    - React/PrivateDatabase
+  - React/PrivateDatabase (0.51.0)
+  - React/RCTBlob (0.51.0):
+    - React/Core
+  - React/RCTNetwork (0.51.0):
+    - React/Core
+  - React/RCTText (0.51.0):
+    - React/Core
+  - React/RCTWebSocket (0.51.0):
+    - React/Core
+    - React/fishhook
+    - React/RCTBlob
+  - yoga (0.51.0.React)
+
+DEPENDENCIES:
+  - BindingX (from `../../../BindingX-react-native.podspec`)
+  - DoubleConversion (from `../../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - Folly (from `../../node_modules/react-native/third-party-podspecs/Folly.podspec`)
+  - GLog (from `../../node_modules/react-native/third-party-podspecs/GLog.podspec`)
+  - React/Core (from `../../node_modules/react-native/React.podspec`)
+  - React/CxxBridge (from `../../node_modules/react-native/React.podspec`)
+  - React/RCTNetwork (from `../../node_modules/react-native/React.podspec`)
+  - React/RCTText (from `../../node_modules/react-native/React.podspec`)
+  - React/RCTWebSocket (from `../../node_modules/react-native/React.podspec`)
+  - yoga (from `../../node_modules/react-native/ReactCommon/yoga`)
+
+EXTERNAL SOURCES:
+  BindingX:
+    :path: ../../../BindingX-react-native.podspec
+  DoubleConversion:
+    :podspec: ../../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec
+  Folly:
+    :podspec: ../../node_modules/react-native/third-party-podspecs/Folly.podspec
+  GLog:
+    :podspec: ../../node_modules/react-native/third-party-podspecs/GLog.podspec
+  React:
+    :path: ../../node_modules/react-native/React.podspec
+  yoga:
+    :path: ../../node_modules/react-native/ReactCommon/yoga
+
+SPEC CHECKSUMS:
+  BindingX: 78a2d26edca12a7f19ab8f0bdba9e60f49ae6147
+  boost: 30a15ffb6d9aa4646dd3caffc960753f4cb4ca4e
+  DoubleConversion: ebb6747c5b66026ad4f97b789c3ceac6f18e57a6
+  Folly: b7255b29f1d693c375d642d0f04f0592181156d9
+  GLog: 3e4e4ae9746ce6bf6e9420c7fc1e08ad59c8ba1a
+  React: 541ba768b9855e10cdc76f55427a5cd0653ca806
+  yoga: 17521bbb0dd54a47c0b3ac43253e78cdac7488e0
+
+PODFILE CHECKSUM: 6c1dceb0a00211b61881ea08702b743308c89dcf
+
+COCOAPODS: 1.4.0

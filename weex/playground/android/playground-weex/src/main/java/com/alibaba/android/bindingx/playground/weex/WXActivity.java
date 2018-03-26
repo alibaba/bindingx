@@ -84,8 +84,8 @@ public class WXActivity extends AbstractWeexActivity{
             @Override
             public void run() {
                 if(TextUtils.isEmpty(mUrl)) {
-                    //https://jsplayground.taobao.com/raxplayground/57f81e4e-8242-4124-bb90-996a57331343
-                    renderPageByURL("https://jsplayground.taobao.com/bundle/57f81e4e-8242-4124-bb90-996a57331343/raxbundle.js?wh_weex=true&wh_ttid=native&_wx_tpl=https://jsplayground.taobao.com/bundle/57f81e4e-8242-4124-bb90-996a57331343/raxbundle.js");
+                    // https://jsplayground.taobao.org/raxplayground/69c73b5e-cc82-4c69-8098-c668f9fe1310
+                    renderPageByURL("https://jsplayground.taobao.org/bundle/69c73b5e-cc82-4c69-8098-c668f9fe1310/raxbundle.js?wh_weex=true&wh_ttid=native&_wx_tpl=https://jsplayground.taobao.org/bundle/69c73b5e-cc82-4c69-8098-c668f9fe1310/raxbundle.js");
                 } else {
                     renderPageByURL(mUrl);
                 }

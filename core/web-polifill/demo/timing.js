@@ -19,7 +19,7 @@ const easing = document.getElementById('easing');
 
 let options = '';
 easings.forEach((v) => {
-  options += `<option>${v}</option>`
+  options += `<option>${v}</option>`;
 });
 
 easing.innerHTML = options;
@@ -47,13 +47,13 @@ function animate(timingFunc) {
   // expression = `t>${delay}?cubicBezier(t-1000, ${begin}, ${offset}, ${duration}, ${x1}, ${y1}, ${x2}, ${y2}):0`
 
 
-  const borderExpression = `linear(t,0,187.5,2000)`;
+  const borderExpression = 'linear(t,0,187.5,2000)';
 
   bindingx.bind({
     eventType: 'timing',
-    exitExpression:{
-      origin:exitExpression,
-      transformed:parse(exitExpression)
+    exitExpression: {
+      origin: exitExpression,
+      transformed: parse(exitExpression)
     },
     props: [
       // {
@@ -106,14 +106,14 @@ function animate(timingFunc) {
       }
     ]
   }, (e) => {
-    console.log(e)
+    console.log(e);
   });
 
 }
 
-setInterval(()=>{
-  console.log(bindingx.getComputedStyle(block)['border-top-left-radius'],bindingx.getComputedStyle(block)['border-top-right-radius'])
-},100)
+setInterval(() => {
+  console.log(bindingx.getComputedStyle(block)['border-top-left-radius'], bindingx.getComputedStyle(block)['border-top-right-radius']);
+}, 100);
 
 
 

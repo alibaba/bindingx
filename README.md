@@ -33,6 +33,20 @@ Below are some examples which is using bindingx. You can get more examples by ru
     <img src="https://gw.alicdn.com/tfs/TB1FRGZbeuSBuNjy1XcXXcYjFXa-320-563.gif" width = "200" height = "350"/>
 </div>
 
+# RealLife examples
+
+  1. Draggable ball: https://jsplayground.taobao.org/raxplayground/3ec5c8ef-42ff-47fb-9791-4bd7c257b4a7
+  2. Swipeable card: https://jsplayground.taobao.org/raxplayground/7ac0f12b-72e7-4aa5-b398-693ba7b34cd6
+  3. Expandable menu: https://jsplayground.taobao.org/raxplayground/3f93ffd1-3028-4a9e-9e94-0188973bc44b
+  4. Slide layout: https://jsplayground.taobao.org/raxplayground/34e0eae9-ca2d-481f-94b5-239732651eeb
+  5. Circle menu: https://jsplayground.taobao.org/raxplayground/0b2fa94c-b107-422f-8c2c-60481af89d31
+  6. Navigation with Tab: https://jsplayground.taobao.org/raxplayground/b8583160-f63f-4ab6-9f98-af7a3da283f8
+  7. Ripple effect: https://jsplayground.taobao.org/raxplayground/c4a295f5-bec2-485e-8e05-de80c7274191
+
+Those examples are written in Rax, The vue version are below [weex/examples/vue](https://github.com/alibaba/bindingx/blob/master/weex/examples/vue/index.vue) directory.
+
+> You can also contribute your examples to us by open an `pull request`. And we will display your example here if it's cool enough.
+
 # Feature
 
 * Complex but fluid user interaction
@@ -86,7 +100,7 @@ We provide two ways to integrate bindingx plugin.
 add dependencies in your application's `Podfile`
 
 ```
-  pod 'BindingX', '~> 1.0.0'
+  pod 'BindingX', '~> 1.0.1'
 ```
 
 module will be registed automatically.
