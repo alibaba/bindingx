@@ -145,14 +145,13 @@
              // Rotation around the Y axis (side to side).
              double gamma = rad2deg(yRot);
              
-             for (id<EBGyroWatcherProtocol> watcher in _watchers) {
-                 [EBUtility performBlockOnMainThread:^{
-                     BOOL keepAlive = [watcher orientaionChanged:alpha beta:beta gamma:gamma];
-                     if (!keepAlive) {
-                         [_watchers removeObject:watcher];
-                     }
-                 }];
-             }
+             __weak typeof(self) welf = self;
+             [EBUtility performBlockOnMainThread:^{
+                 NSArray *watchers = [welf.watchers copy];
+                 for (id<EBGyroWatcherProtocol> watcher in watchers) {
+                     [watcher orientaionChanged:alpha beta:beta gamma:gamma];
+                 }
+             }];
          }];
     }
 }
