@@ -3,6 +3,9 @@
 buildscript {
 
     repositories {
+        maven {
+            url "http://mvnrepo.alibaba-inc.com/mvn/repository"
+        }
         google()
         jcenter()
     }
@@ -21,6 +24,9 @@ plugins {
 
 allprojects {
     repositories {
+        maven {
+            url "http://mvnrepo.alibaba-inc.com/mvn/repository"
+        }
         google()
         jcenter()
     }

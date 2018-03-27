@@ -23,15 +23,17 @@ import android.support.annotation.Nullable;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Pair;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
 import com.alibaba.android.bindingx.core.internal.Utils;
+import com.taobao.weex.common.Constants;
+import com.taobao.weex.dom.transition.WXTransition;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXScroller;
 import com.taobao.weex.ui.component.WXText;
@@ -40,7 +42,9 @@ import com.taobao.weex.ui.view.border.BorderDrawable;
 import com.taobao.weex.utils.WXUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,54 +54,77 @@ import java.util.Map;
  */
 
 final class WXViewUpdateService {
-    private static final Map<String,IWXViewUpdater> sExpressionUpdaterMap;
+    private static final Map<String,IWXViewUpdater> sTransformPropertyUpdaterMap;
+    private static final LayoutUpdater sLayoutUpdater = new LayoutUpdater();
     private static final NOpUpdater EMPTY_INVOKER = new NOpUpdater();
 
     private static final String PERSPECTIVE = "perspective";
     private static final String TRANSFORM_ORIGIN = "transformOrigin";
 
+    private static final String LAYOUT_PROPERTY_WIDTH = "width";
+    private static final String LAYOUT_PROPERTY_HEIGHT = "height";
+
+    private static final String LAYOUT_PROPERTY_MARGIN_LEFT = "margin-left";
+    private static final String LAYOUT_PROPERTY_MARGIN_RIGHT = "margin-right";
+    private static final String LAYOUT_PROPERTY_MARGIN_TOP = "margin-top";
+    private static final String LAYOUT_PROPERTY_MARGIN_BOTTOM = "margin-bottom";
+
+    private static final String LAYOUT_PROPERTY_PADDING_LEFT = "padding-left";
+    private static final String LAYOUT_PROPERTY_PADDING_RIGHT = "padding-right";
+    private static final String LAYOUT_PROPERTY_PADDING_TOP = "padding-top";
+    private static final String LAYOUT_PROPERTY_PADDING_BOTTOM = "padding-bottom";
+
+    private static final List<String> LAYOUT_PROPERTIES = Arrays.asList(
+             LAYOUT_PROPERTY_WIDTH, LAYOUT_PROPERTY_HEIGHT,
+             LAYOUT_PROPERTY_MARGIN_LEFT, LAYOUT_PROPERTY_MARGIN_RIGHT, LAYOUT_PROPERTY_MARGIN_TOP,LAYOUT_PROPERTY_MARGIN_BOTTOM,
+             LAYOUT_PROPERTY_PADDING_LEFT, LAYOUT_PROPERTY_PADDING_RIGHT, LAYOUT_PROPERTY_PADDING_TOP, LAYOUT_PROPERTY_PADDING_BOTTOM
+    );
+
     static {
-        sExpressionUpdaterMap = new HashMap<>();
-        sExpressionUpdaterMap.put("opacity",new OpacityUpdater());
-        sExpressionUpdaterMap.put("transform.translate",new TranslateUpdater());
-        sExpressionUpdaterMap.put("transform.translateX",new TranslateXUpdater());
-        sExpressionUpdaterMap.put("transform.translateY",new TranslateYUpdater());
+        sTransformPropertyUpdaterMap = new HashMap<>();
+        sTransformPropertyUpdaterMap.put("opacity",new OpacityUpdater());
+        sTransformPropertyUpdaterMap.put("transform.translate",new TranslateUpdater());
+        sTransformPropertyUpdaterMap.put("transform.translateX",new TranslateXUpdater());
+        sTransformPropertyUpdaterMap.put("transform.translateY",new TranslateYUpdater());
 
-        sExpressionUpdaterMap.put("transform.scale",new ScaleUpdater());
-        sExpressionUpdaterMap.put("transform.scaleX",new ScaleXUpdater());
-        sExpressionUpdaterMap.put("transform.scaleY",new ScaleYUpdater());
+        sTransformPropertyUpdaterMap.put("transform.scale",new ScaleUpdater());
+        sTransformPropertyUpdaterMap.put("transform.scaleX",new ScaleXUpdater());
+        sTransformPropertyUpdaterMap.put("transform.scaleY",new ScaleYUpdater());
 
-        sExpressionUpdaterMap.put("transform.rotate",new RotateUpdater());
-        sExpressionUpdaterMap.put("transform.rotateZ",new RotateUpdater());
-        sExpressionUpdaterMap.put("transform.rotateX",new RotateXUpdater());
-        sExpressionUpdaterMap.put("transform.rotateY",new RotateYUpdater());
+        sTransformPropertyUpdaterMap.put("transform.rotate",new RotateUpdater());
+        sTransformPropertyUpdaterMap.put("transform.rotateZ",new RotateUpdater());
+        sTransformPropertyUpdaterMap.put("transform.rotateX",new RotateXUpdater());
+        sTransformPropertyUpdaterMap.put("transform.rotateY",new RotateYUpdater());
 
-        sExpressionUpdaterMap.put("width",new WidthUpdater());
-        sExpressionUpdaterMap.put("height",new HeightUpdater());
+        sTransformPropertyUpdaterMap.put("background-color",new BackgroundUpdater());
+        sTransformPropertyUpdaterMap.put("color", new ColorUpdater());
 
-        sExpressionUpdaterMap.put("background-color",new BackgroundUpdater());
-        sExpressionUpdaterMap.put("color", new ColorUpdater());
+        sTransformPropertyUpdaterMap.put("scroll.contentOffset", new ContentOffsetUpdater());
+        sTransformPropertyUpdaterMap.put("scroll.contentOffsetX", new ContentOffsetXUpdater());
+        sTransformPropertyUpdaterMap.put("scroll.contentOffsetY", new ContentOffsetYUpdater());
 
-        sExpressionUpdaterMap.put("scroll.contentOffset", new ContentOffsetUpdater());
-        sExpressionUpdaterMap.put("scroll.contentOffsetX", new ContentOffsetXUpdater());
-        sExpressionUpdaterMap.put("scroll.contentOffsetY", new ContentOffsetYUpdater());
+        sTransformPropertyUpdaterMap.put("border-top-left-radius", new BorderRadiusTopLeftUpdater());
+        sTransformPropertyUpdaterMap.put("border-top-right-radius", new BorderRadiusTopRightUpdater());
+        sTransformPropertyUpdaterMap.put("border-bottom-left-radius", new BorderRadiusBottomLeftUpdater());
+        sTransformPropertyUpdaterMap.put("border-bottom-right-radius", new BorderRadiusBottomRightUpdater());
 
-        sExpressionUpdaterMap.put("border-top-left-radius", new BorderRadiusTopLeftUpdater());
-        sExpressionUpdaterMap.put("border-top-right-radius", new BorderRadiusTopRightUpdater());
-        sExpressionUpdaterMap.put("border-bottom-left-radius", new BorderRadiusBottomLeftUpdater());
-        sExpressionUpdaterMap.put("border-bottom-right-radius", new BorderRadiusBottomRightUpdater());
-
-        sExpressionUpdaterMap.put("border-radius", new BorderRadiusUpdater());
+        sTransformPropertyUpdaterMap.put("border-radius", new BorderRadiusUpdater());
     }
 
     @NonNull
     static IWXViewUpdater findUpdater(@NonNull String prop) {
-        IWXViewUpdater updater = sExpressionUpdaterMap.get(prop);
-        if(updater == null) {
-            LogProxy.e("unknown property [" + prop + "]");
-            return EMPTY_INVOKER;
+        IWXViewUpdater updater = sTransformPropertyUpdaterMap.get(prop);
+        if(updater != null) {
+            return updater;
+        } else {
+           if(LAYOUT_PROPERTIES.contains(prop)) {
+               sLayoutUpdater.setPropertyName(prop);
+               return sLayoutUpdater;
+           } else {
+               LogProxy.e("unknown property [" + prop + "]");
+                return EMPTY_INVOKER;
+           }
         }
-        return updater;
     }
 
     private static final class NOpUpdater implements IWXViewUpdater {
@@ -511,52 +538,67 @@ final class WXViewUpdateService {
         }
     }
 
+    static final class LayoutUpdater implements IWXViewUpdater {
 
-    private static final class WidthUpdater implements IWXViewUpdater {
+        private String propertyName;
+
+        void setPropertyName(String propertyName) {
+            this.propertyName = propertyName;
+        }
 
         @Override
         public void update(@NonNull WXComponent component,
-                           @NonNull final View targetView,
+                           @NonNull View targetView,
                            @NonNull Object cmd,
                            @NonNull PlatformManager.IDeviceResolutionTranslator translator,
-                           @NonNull Map<String,Object> config) {
-            if(!(cmd instanceof Double)) {
+                           @NonNull Map<String, Object> config) {
+            if(!(cmd instanceof Double) || TextUtils.isEmpty(propertyName)) {
                 return;
             }
             double d = (double) cmd;
-            final ViewGroup.LayoutParams params1 = targetView.getLayoutParams();
-            params1.width = (int) getRealSize(d,translator);
-            postRunnable(targetView, new Runnable() {
-                @Override
-                public void run() {
-                    targetView.setLayoutParams(params1);
-                }
-            });
-        }
-    }
-
-    private static final class HeightUpdater implements IWXViewUpdater {
-
-        @Override
-        public void update(@NonNull WXComponent component,
-                           @NonNull final View targetView,
-                           @NonNull Object cmd,
-                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
-                           @NonNull Map<String,Object> config) {
-            if(!(cmd instanceof Double)) {
+            String property = null;
+            switch (propertyName) {
+                case LAYOUT_PROPERTY_WIDTH:
+                    property = Constants.Name.WIDTH;
+                    break;
+                case LAYOUT_PROPERTY_HEIGHT:
+                    property = Constants.Name.HEIGHT;
+                    break;
+                case LAYOUT_PROPERTY_MARGIN_LEFT:
+                    property = Constants.Name.MARGIN_LEFT;
+                    break;
+                case LAYOUT_PROPERTY_MARGIN_RIGHT:
+                    property = Constants.Name.MARGIN_RIGHT;
+                    break;
+                case LAYOUT_PROPERTY_MARGIN_TOP:
+                    property = Constants.Name.MARGIN_TOP;
+                    break;
+                case LAYOUT_PROPERTY_MARGIN_BOTTOM:
+                    property = Constants.Name.MARGIN_BOTTOM;
+                    break;
+                case LAYOUT_PROPERTY_PADDING_LEFT:
+                    property = Constants.Name.PADDING_LEFT;
+                    break;
+                case LAYOUT_PROPERTY_PADDING_RIGHT:
+                    property = Constants.Name.PADDING_RIGHT;
+                    break;
+                case LAYOUT_PROPERTY_PADDING_TOP:
+                    property = Constants.Name.PADDING_TOP;
+                    break;
+                case LAYOUT_PROPERTY_PADDING_BOTTOM:
+                    property = Constants.Name.PADDING_BOTTOM;
+                    break;
+                default:
+                    break;
+            }
+            if(TextUtils.isEmpty(property)) {
                 return;
             }
-            double d = (double) cmd;
-            final ViewGroup.LayoutParams params2 = targetView.getLayoutParams();
-            params2.height = (int) getRealSize(d,translator);
-            postRunnable(targetView, new Runnable() {
-                @Override
-                public void run() {
-                    targetView.setLayoutParams(params2);
-                }
-            });
+            WXTransition.asynchronouslyUpdateLayout(component, property, (float) getRealSize(d,translator));
+            propertyName = null;
         }
     }
+
 
     private static final class BackgroundUpdater implements IWXViewUpdater {
 
