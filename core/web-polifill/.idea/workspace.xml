@@ -19,7 +19,7 @@
         <entry file="file://$PROJECT_DIR$/demo/pan.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="371">
-              <caret line="54" column="7" lean-forward="true" selection-start-line="54" selection-start-column="7" selection-end-line="54" selection-end-column="7" />
+              <caret line="54" column="7" lean-forward="false" selection-start-line="54" selection-start-column="7" selection-end-line="54" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -61,7 +61,7 @@
         <entry file="file://$PROJECT_DIR$/lib/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-21646">
-              <caret line="1800" column="30" lean-forward="true" selection-start-line="1800" selection-start-column="30" selection-end-line="1800" selection-end-column="30" />
+              <caret line="1800" column="30" lean-forward="false" selection-start-line="1800" selection-start-column="30" selection-end-line="1800" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -147,21 +147,6 @@
               <item name="web-polifill" type="b2602c69:ProjectViewProjectNode" />
               <item name="web-polifill" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="web-polifill" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web-polifill" type="462c0819:PsiDirectoryNode" />
-              <item name="demo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web-polifill" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web-polifill" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web-polifill" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web-polifill" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -205,12 +190,12 @@
       <workItem from="1519610913936" duration="5719000" />
       <workItem from="1519740124451" duration="3516000" />
       <workItem from="1521435262777" duration="657000" />
-      <workItem from="1522143143611" duration="398000" />
+      <workItem from="1522143143611" duration="1140000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10290000" />
+    <option name="totallyTimeSpent" value="11032000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="8" y="23" width="1420" height="803" extended-state="0" />
@@ -224,7 +209,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32909605" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32909605" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -319,7 +304,7 @@
         <state relative-caret-position="240">
           <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
           <folding>
-            <element signature="e#584#633#0" expanded="true" />
+            <element signature="e#584#633#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -336,7 +321,7 @@
         <state relative-caret-position="270">
           <caret line="18" column="38" lean-forward="false" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
           <folding>
-            <element signature="e#584#633#0" expanded="true" />
+            <element signature="e#584#633#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -441,7 +426,7 @@
         <state relative-caret-position="15">
           <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
           <folding>
-            <element signature="e#584#633#0" expanded="true" />
+            <element signature="e#584#633#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -487,7 +472,7 @@
     <entry file="file://$PROJECT_DIR$/demo/pan.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="371">
-          <caret line="54" column="7" lean-forward="true" selection-start-line="54" selection-start-column="7" selection-end-line="54" selection-end-column="7" />
+          <caret line="54" column="7" lean-forward="false" selection-start-line="54" selection-start-column="7" selection-end-line="54" selection-end-column="7" />
           <folding />
         </state>
       </provider>
@@ -505,7 +490,7 @@
     <entry file="file://$PROJECT_DIR$/lib/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-21646">
-          <caret line="1800" column="30" lean-forward="true" selection-start-line="1800" selection-start-column="30" selection-end-line="1800" selection-end-column="30" />
+          <caret line="1800" column="30" lean-forward="false" selection-start-line="1800" selection-start-column="30" selection-end-line="1800" selection-end-column="30" />
           <folding />
         </state>
       </provider>
