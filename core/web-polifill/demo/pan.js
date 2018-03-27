@@ -36,6 +36,22 @@ block.addEventListener('touchstart', () => {
           origin: 'y+0',
           transformed: parse('y+0')
         }
+      },
+      {
+        element: block,
+        property: 'padding-top',
+        expression: {
+          origin: 'y+0',
+          transformed: parse('y+0')
+        }
+      },
+      {
+        element: block,
+        property: 'width',
+        expression: {
+          origin: 'y+0',
+          transformed: parse('y+0')
+        }
       }
     ]
   }, (e) => {

@@ -1777,12 +1777,6 @@ var Binding = function () {
           elTransform.transform.scaleX = val;
           elTransform.transform.scaleY = val;
           break;
-        case 'width':
-          el.style.width = (0, _utils.px)(val) + 'px';
-          break;
-        case 'height':
-          el.style.height = (0, _utils.px)(val) + 'px';
-          break;
         case 'opacity':
           el.style.opacity = val;
           break;
@@ -1792,6 +1786,8 @@ var Binding = function () {
         case 'color':
           el.style.color = val;
           break;
+        case 'width':
+        case 'height':
         case 'border-top-left-radius':
         case 'border-top-right-radius':
         case 'border-bottom-left-radius':
@@ -1801,6 +1797,10 @@ var Binding = function () {
         case 'margin-bottom':
         case 'margin-left':
         case 'margin-right':
+        case 'padding-top':
+        case 'padding-bottom':
+        case 'padding-left':
+        case 'padding-right':
           el.style[property] = (0, _utils.px)(val) + 'px';
           break;
       }
@@ -1905,6 +1905,10 @@ module.exports = {
     style['margin-bottom'] = (0, _utils.pxTo750)(computedStyle['margin-bottom'].replace('px', ''));
     style['margin-left'] = (0, _utils.pxTo750)(computedStyle['margin-left'].replace('px', ''));
     style['margin-right'] = (0, _utils.pxTo750)(computedStyle['margin-right'].replace('px', ''));
+    style['padding-top'] = (0, _utils.pxTo750)(computedStyle['padding-top'].replace('px', ''));
+    style['padding-bottom'] = (0, _utils.pxTo750)(computedStyle['padding-bottom'].replace('px', ''));
+    style['padding-left'] = (0, _utils.pxTo750)(computedStyle['padding-left'].replace('px', ''));
+    style['padding-right'] = (0, _utils.pxTo750)(computedStyle['padding-right'].replace('px', ''));
     return style;
   }
 };

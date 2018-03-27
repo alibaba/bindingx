@@ -22,6 +22,7 @@ import {PanHandler, OrientationHandler, TimingHandler, ScrollHandler} from './li
 import {matrixToTransformObj, px, pxTo750, prefixStyle} from './lib/utils';
 import Fn from './lib/fn';
 import assign from 'object-assign';
+
 // transform
 const vendorTransform = prefixStyle('transform');
 
@@ -127,12 +128,6 @@ class Binding {
         elTransform.transform.scaleX = val;
         elTransform.transform.scaleY = val;
         break;
-      case 'width':
-        el.style.width = `${px(val)}px`;
-        break;
-      case 'height':
-        el.style.height = `${px(val)}px`;
-        break;
       case 'opacity':
         el.style.opacity = val;
         break;
@@ -142,6 +137,8 @@ class Binding {
       case 'color':
         el.style.color = val;
         break;
+      case 'width':
+      case 'height':
       case 'border-top-left-radius':
       case 'border-top-right-radius':
       case 'border-bottom-left-radius':
@@ -151,6 +148,10 @@ class Binding {
       case 'margin-bottom':
       case 'margin-left':
       case 'margin-right':
+      case 'padding-top':
+      case 'padding-bottom':
+      case 'padding-left':
+      case 'padding-right':
         el.style[property] = `${px(val)}px`;
         break;
     }
@@ -260,6 +261,10 @@ module.exports = {
     style['margin-bottom'] = pxTo750(computedStyle['margin-bottom'].replace('px', ''));
     style['margin-left'] = pxTo750(computedStyle['margin-left'].replace('px', ''));
     style['margin-right'] = pxTo750(computedStyle['margin-right'].replace('px', ''));
+    style['padding-top'] = pxTo750(computedStyle['padding-top'].replace('px', ''));
+    style['padding-bottom'] = pxTo750(computedStyle['padding-bottom'].replace('px', ''));
+    style['padding-left'] = pxTo750(computedStyle['padding-left'].replace('px', ''));
+    style['padding-right'] = pxTo750(computedStyle['padding-right'].replace('px', ''));
     return style;
   }
 
