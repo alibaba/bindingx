@@ -170,4 +170,24 @@
     _isMarginLeftChanged = YES;
 }
 
+- (void)setPaddingTop:(CGFloat)paddingTop {
+    _paddingTop = paddingTop;
+    _isPaddingTopChanged = YES;
+}
+
+- (void)setPaddingRight:(CGFloat)paddingRight {
+    _paddingRight = paddingRight;
+    _isPaddingRightChanged = YES;
+}
+
+- (void)setPaddingBottom:(CGFloat)paddingBottom {
+    _paddingBottom = paddingBottom;
+    _isPaddingBottomChanged = YES;
+}
+
+- (void)setPaddingLeft:(CGFloat)paddingLeft {
+    _paddingLeft = paddingLeft;
+    _isPaddingLeftChanged = YES;
+}
+
 @end

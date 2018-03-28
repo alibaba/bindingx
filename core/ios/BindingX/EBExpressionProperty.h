@@ -85,4 +85,13 @@
 @property (nonatomic, assign) CGFloat marginLeft;
 @property (nonatomic, assign) BOOL isMarginLeftChanged;
 
+@property (nonatomic, assign) CGFloat paddingTop;
+@property (nonatomic, assign) BOOL isPaddingTopChanged;
+@property (nonatomic, assign) CGFloat paddingRight;
+@property (nonatomic, assign) BOOL isPaddingRightChanged;
+@property (nonatomic, assign) CGFloat paddingBottom;
+@property (nonatomic, assign) BOOL isPaddingBottomChanged;
+@property (nonatomic, assign) CGFloat paddingLeft;
+@property (nonatomic, assign) BOOL isPaddingLeftChanged;
+
 @end

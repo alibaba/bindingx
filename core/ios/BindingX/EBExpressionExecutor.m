@@ -55,6 +55,10 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
     WXEPViewPropertyMarginRight,
     WXEPViewPropertyMarginBottom,
     WXEPViewPropertyMarginLeft,
+    WXEPViewPropertyPaddingTop,
+    WXEPViewPropertyPaddingRight,
+    WXEPViewPropertyPaddingBottom,
+    WXEPViewPropertyPaddingLeft,
 };
 
 @implementation EBExpressionExecutor
@@ -209,6 +213,18 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
         case WXEPViewPropertyMarginLeft:
             [*model setMarginLeft:[EBExpressionExecutor unpackSingleRet:result]];
             break;
+        case WXEPViewPropertyPaddingTop:
+            [*model setPaddingTop:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyPaddingRight:
+            [*model setPaddingRight:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyPaddingBottom:
+            [*model setPaddingBottom:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyPaddingLeft:
+            [*model setPaddingLeft:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
         default:
             break;
     }
@@ -262,6 +278,10 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
                 @"margin-right":@(WXEPViewPropertyMarginRight),
                 @"margin-bottom":@(WXEPViewPropertyMarginBottom),
                 @"margin-left":@(WXEPViewPropertyMarginLeft),
+                @"padding-top":@(WXEPViewPropertyPaddingTop),
+                @"padding-right":@(WXEPViewPropertyPaddingRight),
+                @"padding-bottom":@(WXEPViewPropertyPaddingBottom),
+                @"padding-left":@(WXEPViewPropertyPaddingLeft),
                 };
     });
     return map;

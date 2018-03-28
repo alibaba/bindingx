@@ -117,6 +117,18 @@
     if (model.isMarginLeftChanged) {
         styles[@"marginLeft"] = @(model.marginLeft);
     }
+    if (model.isPaddingTopChanged) {
+        styles[@"paddingTop"] = @(model.paddingTop);
+    }
+    if (model.isPaddingRightChanged) {
+        styles[@"paddingRight"] = @(model.paddingRight);
+    }
+    if (model.isPaddingBottomChanged) {
+        styles[@"paddingBottom"] = @(model.paddingBottom);
+    }
+    if (model.isPaddingLeftChanged) {
+        styles[@"paddingLeft"] = @(model.paddingLeft);
+    }
     
     if (styles.count > 0) {
         WXComponent* component = nil;
