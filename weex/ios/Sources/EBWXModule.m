@@ -21,6 +21,7 @@
 #import <WeexPluginLoader/WeexPluginLoader.h>
 #import "EBBindData.h"
 #import "EBUtility+WX.h"
+#import "EBWXUtils.h"
 
 WX_PlUGIN_EXPORT_MODULE(bindingx, EBWXModule)
 
@@ -37,10 +38,10 @@ WX_PlUGIN_EXPORT_MODULE(bindingx, EBWXModule)
 
 @synthesize weexInstance;
 
-WX_EXPORT_METHOD(@selector(prepare:))
+WX_EXPORT_METHOD_SYNC(@selector(prepare:))
 WX_EXPORT_METHOD_SYNC(@selector(bind:callback:))
-WX_EXPORT_METHOD(@selector(unbind:))
-WX_EXPORT_METHOD(@selector(unbindAll))
+WX_EXPORT_METHOD_SYNC(@selector(unbind:))
+WX_EXPORT_METHOD_SYNC(@selector(unbindAll))
 WX_EXPORT_METHOD_SYNC(@selector(supportFeatures))
 WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
 
@@ -281,6 +282,16 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
             WX_LOG(WXLogFlagWarning, @"getComputedStyle can't find source component");
             dispatch_semaphore_signal(semaphore);
             return;
+        }
+        NSDictionary* mapping = [EBWXUtils cssPropertyMapping];
+        for (NSString* key in [EBWXUtils cssPropertyMapping]) {
+            [styles setValue:sourceComponent.styles[mapping[key]] forKey:key];
+        }
+        if (sourceComponent.styles[@"borderRadius"]) {
+            [styles setValue:sourceComponent.styles[@"borderRadius"] forKey:@"border-top-left-radius"];
+            [styles setValue:sourceComponent.styles[@"borderRadius"] forKey:@"border-top-right-radius"];
+            [styles setValue:sourceComponent.styles[@"borderRadius"] forKey:@"border-bottom-left-radius"];
+            [styles setValue:sourceComponent.styles[@"borderRadius"] forKey:@"border-bottom-right-radius"];
         }
         WXPerformBlockSyncOnMainThread(^{
             CALayer *layer = sourceComponent.view.layer;
