@@ -13,22 +13,95 @@
 </head>
 
 <body>
-<div id="app"></div>
+
+<div class="atCenter">
+<a href="javascript:;" class="down-btn" onclick="downloadIOS()">
+<img class="icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAaCAYAAACzdqxAAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo5YmFlMWNjNi1mNzQzLTMwNGQtOTJmOS0yMDIwZTBjYzEwMzQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NzFFMTk3MDgyQUZFMTFFNzgxRkFEMjlGRUJCOTc0RTQiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NzFFMTk3MDcyQUZFMTFFNzgxRkFEMjlGRUJCOTc0RTQiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MmVkZmRmNTktZGMyZi00MDRiLWFiMWMtY2NjMTU4MWM2YTNjIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6ZTZhOGU1MGQtMWQ5MC0xMWU3LWE4MGMtZGFmMTlmYmFlOTc4Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/xob1wAAAWFJREFUeNqslj1LQzEUhuMHiotuRSpSBF0UBXEQu+mPqGM3cRYEJ3cXNwV/gG6CiA5OIgiKg0gFh4Lg5GD9QKWUVmx8bj2Ba2qq3OSFh7a56XMP6WlyldZaJWAKdqDompNEugx1/Z3LUOJZ/TNrocS7Mek7DIYSP4k0ep1rNbdT/T89cAOHsAUv0A010E2zrTt1QB5O4BVK8n4JUnI9qnQTbuVHrMAeZF1L0ScSVz5lXV2pS8c0ife1fz5gLC7OBpBWpB0bznZZ6pzyzwocmw9tjbKVOodpD+kbpKBqBkzFQ57VXsSlcXGvp7hsDxhx1VM84hI/eopHYfI3cTFAV2xAly0+CyCegQNIx9ttHAoqTO5hwFR8DVeBxNv27jYf4G9dg7S9CUXLcuopXnedIBNy1yS5k63XeTQttPhy2TFekkeCP8+8nDwzPMARLEK/XMvAKhTgWQ7YYdth2i14vgQYAMHpSIfBHv0BAAAAAElFTkSuQmCC">
+iPhone
+</a>
+
+
+
+<a href="javascript:;" class="down-btn" style="margin-top: 40px" onclick="downloadAndroid()">
+<img class="icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAaCAYAAACzdqxAAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo5YmFlMWNjNi1mNzQzLTMwNGQtOTJmOS0yMDIwZTBjYzEwMzQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NzFFMTk3MEMyQUZFMTFFNzgxRkFEMjlGRUJCOTc0RTQiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NzFFMTk3MEIyQUZFMTFFNzgxRkFEMjlGRUJCOTc0RTQiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MmVkZmRmNTktZGMyZi00MDRiLWFiMWMtY2NjMTU4MWM2YTNjIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6ZTZhOGU1MGQtMWQ5MC0xMWU3LWE4MGMtZGFmMTlmYmFlOTc4Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+NfnyBQAAAVFJREFUeNpi+v//PwMOXALEynjklaFqsMozgggcgAOIJwBxAxA7ALEcVPwREB+AihcA8Q9smlkYcANJINYC4uc45A9D1dzHKovDK9ZA/AGIXwDxvf+Y4DkQP4KqscZmBjZDJYD4LdSADCD2wGJwAhD7QdlvoXoIGjwJyYAvQPwOi8Gfoa6FgUnERN4DIJZnIA08BGIFQpEXwEAFAHJxBpDOB+LVQFwHjW1eMswyAOImIA4F4omg8PiBFFZyaGFHCpBDYv9gAprOjmSrEAW+R9bLzsRAIzBqMH0Mfgtl/4EWieSCR1AzQOAtKOcFAXESEG8A4ncUGPwOmjlAOXcetrLiAxDzk5OLByzy5gPxeyD+jlwfAPFHKP6HJP4D6sN5xNYgDNDCHAYeIIlfQBIvwKV/eGWQzySyiQ5jHiA+BcTfgTgOSTwQWhdeBmJhXPoBAgwAipY/PCn3xSAAAAAASUVORK5CYII=">
+Android
+</a>
+
+
 </div>
 
+<style>
+
+a,
+a:hover,
+a:focus {
+  text-decoration: none;
+}
+
+a,
+a:focus,
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn.focus:active,
+.btn.active.focus {
+  outline: none;
+}
+
+.atCenter {
+    text-align: center; /*让div内部文字居中*/
+    background-color: #fff;
+    border-radius: 20px;
+    width: 300px;
+    height: 350px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.icon{
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+.down-btn {
+  display: block;
+  width: 178px;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+  border: 1px #AAAAAA solid;
+  border-radius: 4px;
+  color: #fff;
+  background: #00aaff;
+  font-size: 20px;
+}
+.down-btn:hover {
+  background: #0050ff;
+}
+</style>
 
 <script>
 //document.body.append(navigator.userAgent.toLowerCase());
+var androidDownloadUrl = 'http://download.alicdn.com/sns/bindingx-weex-playground.apk';
+var iOSDownloadUrl = 'https://itunes.apple.com/cn/app/%E6%B7%98%E5%AE%9D-%E7%A7%BB%E5%8A%A8%E8%B4%AD%E7%89%A9-%E7%94%9F%E6%B4%BB%E7%A4%BE%E5%8C%BA/id387682726?mt=8';
+
 var isMobile = isMobile();
 
 if(isMobile && isMobile.isAndroid) {
   document.body.append("Will download BindingX playground apk file.")
-  location.href = "http://download.alicdn.com/sns/bindingx-weex-playground.apk";
+  // location.href = androidDownloadUrl;
+  downloadAndroid();
 } else if(isMobile && (isMobile.isIphone || isMobile.isIpad)) {
   document.body.append("Will jump to Apple Store to download BindingX playground app.")
-  location.href = "https://itunes.apple.com/cn/app/%E6%B7%98%E5%AE%9D-%E7%A7%BB%E5%8A%A8%E8%B4%AD%E7%89%A9-%E7%94%9F%E6%B4%BB%E7%A4%BE%E5%8C%BA/id387682726?mt=8";
+  // location.href = iOSDownloadUrl;
+  downloadIOS();
 } else {
-  document.body.append("Use mobile device to scan this QR code.")
+  document.body.append("Select one to download, Or use mobile device to scan this QR code.")
 }
 
 function isMobile() {
@@ -48,6 +121,17 @@ function isMobile() {
   }
 }
 
+
+function downloadIOS(){
+  if(iOSDownloadUrl){
+    window.open(iOSDownloadUrl);
+  }
+}
+function downloadAndroid(){
+  if(androidDownloadUrl){
+    window.open(androidDownloadUrl);
+  }
+}
 
 
 </script>
