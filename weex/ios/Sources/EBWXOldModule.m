@@ -233,8 +233,8 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
             return;
         }
         NSDictionary* mapping = [EBWXUtils cssPropertyMapping];
-        for (NSString* key in [EBWXUtils cssPropertyMapping]) {
-            [styles setValue:sourceComponent.styles[mapping[key]] forKey:key];
+        for (NSString* key in mapping) {
+            [styles setValue:sourceComponent.styles[key] forKey:mapping[key]];
         }
         if (sourceComponent.styles[@"borderRadius"]) {
             [styles setValue:sourceComponent.styles[@"borderRadius"] forKey:@"border-top-left-radius"];
