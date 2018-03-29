@@ -232,29 +232,35 @@ public abstract class AbstractEventHandler implements IEventHandler {
                     LogProxy.e("failed to execute expression,expression result is NaN");
                     continue;
                 }
-                //apply transform to target view.
+                //apply transformation/layout change ... to target view.
 
-                BindingXPropertyInterceptor.IPropertyUpdateInterceptor interceptor =
-                        BindingXPropertyInterceptor.getInstance().getInterceptor();
+                List<BindingXPropertyInterceptor.IPropertyUpdateInterceptor> interceptorList =
+                        BindingXPropertyInterceptor.getInstance().getInterceptors();
 
-                if(interceptor == null || !interceptor.updateView(
-                        targetView,
-                        holder.prop,
-                        obj,
-                        mPlatformManager.getResolutionTranslator(),
-                        holder.config,
-                        holder.targetRef,
-                        instanceId)) {
-                    mPlatformManager.getViewUpdater().synchronouslyUpdateViewOnUIThread(
+                for(BindingXPropertyInterceptor.IPropertyUpdateInterceptor interceptor : interceptorList) {
+                    // if intercepted then return
+                    if(interceptor.updateView(
                             targetView,
                             holder.prop,
                             obj,
                             mPlatformManager.getResolutionTranslator(),
                             holder.config,
-                            holder.targetRef,/*additional params for weex*/
-                            instanceId       /*additional params for weex*/
-                    );
+                            holder.targetRef,
+                            instanceId)) {
+                        return;
+                    }
                 }
+
+                // default behavior
+                mPlatformManager.getViewUpdater().synchronouslyUpdateViewOnUIThread(
+                        targetView,
+                        holder.prop,
+                        obj,
+                        mPlatformManager.getResolutionTranslator(),
+                        holder.config,
+                        holder.targetRef,/*additional params for weex*/
+                        instanceId       /*additional params for weex*/
+                );
             }
         }
 

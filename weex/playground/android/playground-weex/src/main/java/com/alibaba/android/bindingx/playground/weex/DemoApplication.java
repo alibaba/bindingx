@@ -107,7 +107,7 @@ public class DemoApplication extends Application {
         }
 
         BindingXPropertyInterceptor.getInstance()
-                .setInterceptor(new BindingXPropertyInterceptor.IPropertyUpdateInterceptor() {
+                .addInterceptor(new BindingXPropertyInterceptor.IPropertyUpdateInterceptor() {
             @Override
             public boolean updateView(@NonNull View targetView,
                                       @NonNull String propertyName,

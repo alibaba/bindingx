@@ -19,6 +19,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,7 +34,7 @@ import java.util.Map;
  */
 public class BindingXPropertyInterceptor {
 
-    private IPropertyUpdateInterceptor mExternalPropertyInterceptor = null;
+    private final LinkedList<IPropertyUpdateInterceptor> mPropertyInterceptors = new LinkedList<>();
 
     private static BindingXPropertyInterceptor sInstance = new BindingXPropertyInterceptor();
     private BindingXPropertyInterceptor() {}
@@ -41,14 +44,28 @@ public class BindingXPropertyInterceptor {
         return sInstance;
     }
 
-    public void setInterceptor(@Nullable IPropertyUpdateInterceptor interceptor) {
-        this.mExternalPropertyInterceptor = interceptor;
+    public void addInterceptor(@Nullable IPropertyUpdateInterceptor interceptor) {
+        if(interceptor != null) {
+            this.mPropertyInterceptors.add(interceptor);
+        }
     }
 
-    @Nullable
-    public IPropertyUpdateInterceptor getInterceptor() {
-        return mExternalPropertyInterceptor;
+    public boolean removeInterceptor(@Nullable IPropertyUpdateInterceptor interceptor) {
+        if(interceptor != null) {
+            return mPropertyInterceptors.remove(interceptor);
+        }
+        return false;
     }
+
+    public void clear() {
+        mPropertyInterceptors.clear();
+    }
+
+    @NonNull
+    public List<IPropertyUpdateInterceptor> getInterceptors() {
+        return Collections.unmodifiableList(mPropertyInterceptors);
+    }
+
 
     public interface IPropertyUpdateInterceptor {
         /**
