@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>BindingX - Download</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
+    
+  <link rel="icon" href="//gw.alicdn.com/tfs/TB1_V1wbbSYBuNjSspiXXXNzpXa-349-288.png_64x64.jpg" type="image/x-icon">
+  <link rel="shortcut icon" href="//gw.alicdn.com/tfs/TB1_V1wbbSYBuNjSspiXXXNzpXa-349-288.png_64x64.jpg">
+
+</head>
+
+<body>
+<div id="app"></div>
+</div>
+
+
+<script>
+//document.body.append(navigator.userAgent.toLowerCase());
+var isMobile = isMobile();
+
+if(isMobile && isMobile.isAndroid) {
+  document.body.append("Will download BindingX playground apk file.")
+  location.href = "http://download.alicdn.com/sns/bindingx-weex-playground.apk";
+} else if(isMobile && (isMobile.isIphone || isMobile.isIpad)) {
+  document.body.append("Will jump to Apple Store to download BindingX playground app.")
+  location.href = "https://itunes.apple.com/cn/app/%E6%B7%98%E5%AE%9D-%E7%A7%BB%E5%8A%A8%E8%B4%AD%E7%89%A9-%E7%94%9F%E6%B4%BB%E7%A4%BE%E5%8C%BA/id387682726?mt=8";
+} else {
+  document.body.append("Use mobile device to scan this QR code.")
+}
+
+function isMobile() {
+  const ua = navigator.userAgent.toLowerCase();
+  const isIpad = ua.match(/ipad/);
+  const isIphone = !isIpad && ua.match(/iphone/);
+  const isAndroid = ua.match(/android/);
+
+  if (isIphone || isIpad || isAndroid) {
+    return {
+      isIpad : isIpad,
+      isIphone: isIphone,
+      isAndroid : isAndroid
+    };
+  } else {
+    return null;
+  }
+}
+
+
+
+</script>
+</body>
+
+</html>
