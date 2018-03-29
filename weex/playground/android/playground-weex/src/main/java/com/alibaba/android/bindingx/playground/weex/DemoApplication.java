@@ -16,8 +16,12 @@
 package com.alibaba.android.bindingx.playground.weex;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.View;
 
+import com.alibaba.android.bindingx.core.BindingXPropertyInterceptor;
+import com.alibaba.android.bindingx.core.PlatformManager;
 import com.alibaba.android.bindingx.plugin.weex.BindingX;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
@@ -25,6 +29,8 @@ import com.taobao.weex.appfram.navigator.IActivityNavBarSetter;
 import com.taobao.weex.common.WXException;
 
 import org.json.JSONObject;
+
+import java.util.Map;
 
 public class DemoApplication extends Application {
 
@@ -99,6 +105,20 @@ public class DemoApplication extends Application {
             BindingX.register();
         } catch (WXException e) {
         }
+
+        BindingXPropertyInterceptor.getInstance()
+                .setInterceptor(new BindingXPropertyInterceptor.IPropertyUpdateInterceptor() {
+            @Override
+            public boolean updateView(@NonNull View targetView,
+                                      @NonNull String propertyName,
+                                      @NonNull Object propertyValue,
+                                      @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                                      @NonNull Map<String, Object> config,
+                                      Object... extension) {
+                //  TODO you can intercept or override default behavior
+                return false;
+            }
+        });
 
         // register bindingx module automatically by annotation processor
 //        WeexPluginContainer.loadAll(getApplicationContext());

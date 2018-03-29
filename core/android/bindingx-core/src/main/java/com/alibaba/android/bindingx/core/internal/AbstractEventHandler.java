@@ -23,6 +23,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.bindingx.core.BindingXCore;
+import com.alibaba.android.bindingx.core.BindingXPropertyInterceptor;
 import com.alibaba.android.bindingx.core.IEventHandler;
 import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
@@ -232,15 +233,28 @@ public abstract class AbstractEventHandler implements IEventHandler {
                     continue;
                 }
                 //apply transform to target view.
-                mPlatformManager.getViewUpdater().synchronouslyUpdateViewOnUIThread(
+
+                BindingXPropertyInterceptor.IPropertyUpdateInterceptor interceptor =
+                        BindingXPropertyInterceptor.getInstance().getInterceptor();
+
+                if(interceptor == null || !interceptor.updateView(
                         targetView,
                         holder.prop,
                         obj,
                         mPlatformManager.getResolutionTranslator(),
                         holder.config,
-                        holder.targetRef,/*additional params for weex*/
-                        instanceId       /*additional params for weex*/
-                );
+                        holder.targetRef,
+                        instanceId)) {
+                    mPlatformManager.getViewUpdater().synchronouslyUpdateViewOnUIThread(
+                            targetView,
+                            holder.prop,
+                            obj,
+                            mPlatformManager.getResolutionTranslator(),
+                            holder.config,
+                            holder.targetRef,/*additional params for weex*/
+                            instanceId       /*additional params for weex*/
+                    );
+                }
             }
         }
 
