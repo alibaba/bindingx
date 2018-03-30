@@ -16,6 +16,9 @@
     dispatch_once(&onceToken, ^{
         map = @{@"width":@"width",
                 @"height":@"height",
+                @"color":@"color",
+                @"opacity":@"opacity",
+                @"backgroundColor":@"background-color",
                 @"marginTop":@"margin-top",
                 @"marginRight":@"margin-right",
                 @"marginBottom":@"margin-bottom",

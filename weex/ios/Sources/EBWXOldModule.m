@@ -217,7 +217,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
 }
 
 - (NSDictionary *)getComputedStyle:(NSString *)sourceRef {
-    if ([WXUtility isBlankString:sourceRef]) {
+    if (![sourceRef isKindOfClass:NSString.class] || [WXUtility isBlankString:sourceRef]) {
         WX_LOG(WXLogFlagWarning, @"createBinding params error");
         return nil;
     }
@@ -234,7 +234,20 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         }
         NSDictionary* mapping = [EBWXUtils cssPropertyMapping];
         for (NSString* key in mapping) {
-            [styles setValue:sourceComponent.styles[key] forKey:mapping[key]];
+            id value = sourceComponent.styles[key];
+            if (value) {
+                if ([value isKindOfClass:NSString.class]) {
+                    NSString *string = (NSString *)value;
+                    if ([string hasSuffix:@"px"]) {
+                        NSString *number = [string substringToIndex:(string.length-2)];
+                        [styles setValue:@([number floatValue]) forKey:mapping[key]];
+                    } else {
+                        [styles setValue:string forKey:mapping[key]];
+                    }
+                } else if([value isKindOfClass:NSNumber.class]) {
+                    [styles setValue:value forKey:mapping[key]];
+                }
+            }
         }
         if (sourceComponent.styles[@"borderRadius"]) {
             [styles setValue:sourceComponent.styles[@"borderRadius"] forKey:@"border-top-left-radius"];
@@ -252,15 +265,6 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
             styles[@"rotateY"] = [layer valueForKeyPath:@"transform.rotation.y"];
             styles[@"rotateZ"] = [layer valueForKeyPath:@"transform.rotation.z"];
             styles[@"opacity"] = [layer valueForKeyPath:@"opacity"];
-            
-            styles[@"background-color"] = [EBUtility colorAsString:layer.backgroundColor];;
-            if ([sourceComponent isKindOfClass:NSClassFromString(@"WXTextComponent")]) {
-                Ivar ivar = class_getInstanceVariable(NSClassFromString(@"WXTextComponent"), "_color");
-                UIColor *color = (UIColor *)object_getIvar(sourceComponent, ivar);
-                if (color) {
-                    styles[@"color"] = [EBUtility colorAsString:color.CGColor];
-                }
-            }
             
             dispatch_semaphore_signal(semaphore);
         });
