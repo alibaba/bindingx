@@ -1,1 +1,1 @@
-../../../../../../../core/ios/core/EBExpressionGesture.h
+../../../../../../../core/ios/BindingX/EBExpressionGesture.h

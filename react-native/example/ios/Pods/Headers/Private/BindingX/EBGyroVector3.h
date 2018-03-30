@@ -1,1 +1,1 @@
-../../../../../../../core/ios/core/EBGyroVector3.h
+../../../../../../../core/ios/BindingX/EBGyroVector3.h

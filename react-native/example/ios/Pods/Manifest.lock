@@ -79,7 +79,7 @@ EXTERNAL SOURCES:
     :path: ../../node_modules/react-native/ReactCommon/yoga
 
 SPEC CHECKSUMS:
-  BindingX: 78a2d26edca12a7f19ab8f0bdba9e60f49ae6147
+  BindingX: ea96df664aa2b1ade73b5a4528ff848161f14eed
   boost: 30a15ffb6d9aa4646dd3caffc960753f4cb4ca4e
   DoubleConversion: ebb6747c5b66026ad4f97b789c3ceac6f18e57a6
   Folly: b7255b29f1d693c375d642d0f04f0592181156d9

@@ -1,1 +1,1 @@
-../../../../../../../core/ios/core/EBGyroEuler.h
+../../../../../../../core/ios/BindingX/EBGyroEuler.h

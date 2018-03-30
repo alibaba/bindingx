@@ -1,1 +1,1 @@
-../../../../../../../core/ios/core/EBUtility.h
+../../../../../../../core/ios/BindingX/EBUtility.h

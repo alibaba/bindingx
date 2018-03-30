@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "476F6C0D48DAD817C2D4F07BA491F0B8"
+               BlueprintIdentifier = "89DAD1954F66CDF7C302C83A931A1C83"
                BlueprintName = "BindingX"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "libBindingX.a">

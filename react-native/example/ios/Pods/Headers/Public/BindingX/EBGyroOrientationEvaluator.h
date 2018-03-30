@@ -1,1 +1,1 @@
-../../../../../../../core/ios/core/EBGyroOrientationEvaluator.h
+../../../../../../../core/ios/BindingX/EBGyroOrientationEvaluator.h

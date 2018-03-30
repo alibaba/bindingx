@@ -12,13 +12,13 @@
     "hjhcn": "380050803@qq.com"
   },
   "platforms": {
-    "ios": "7.0"
+    "ios": "8.0"
   },
   "source": {
     "path": "."
   },
   "source_files": [
-    "core/ios/core/**/*.{h,m,mm}",
+    "core/ios/BindingX/**/*.{h,m,mm}",
     "react-native/lib/ios/RNBindingX/*.{h,m,mm}"
   ],
   "requires_arc": true,

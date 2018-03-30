@@ -13,12 +13,13 @@ import {
   AppRegistry
 } from 'react-native';
 
+
 import AnimatedBall from './AnimatedBall';
-import TimingDemo from './TimingDemo';
-import OrientationDemo from './OrientationDemo';
+// import TimingDemo from './TimingDemo';
+// import OrientationDemo from './OrientationDemo';
 import ScrollViewDemo from './ScrollViewDemo';
 
-export default class App extends Component<{}> {
+export default class App extends Component {
 
   constructor(props) {
     super(props);
@@ -52,19 +53,19 @@ export default class App extends Component<{}> {
           <Text style={styles.text}>Pan Demo</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight
-            onPress={this.onExamplePress.bind(this,TimingDemo)}
-            style={[styles.wrapper,styles.margin]}
-        >
-          <Text style={styles.text}>Timing Demo</Text>
-        </TouchableHighlight>
+        {/*<TouchableHighlight*/}
+            {/*onPress={this.onExamplePress.bind(this,TimingDemo)}*/}
+            {/*style={[styles.wrapper,styles.margin]}*/}
+        {/*>*/}
+          {/*<Text style={styles.text}>Timing Demo</Text>*/}
+        {/*</TouchableHighlight>*/}
 
-        <TouchableHighlight
-            onPress={this.onExamplePress.bind(this,OrientationDemo)}
-            style={[styles.wrapper,styles.margin]}
-        >
-          <Text style={styles.text}>Orientation Demo</Text>
-        </TouchableHighlight>
+        {/*<TouchableHighlight*/}
+            {/*onPress={this.onExamplePress.bind(this,OrientationDemo)}*/}
+            {/*style={[styles.wrapper,styles.margin]}*/}
+        {/*>*/}
+          {/*<Text style={styles.text}>Orientation Demo</Text>*/}
+        {/*</TouchableHighlight>*/}
 
         <TouchableHighlight
             onPress={this.onExamplePress.bind(this,ScrollViewDemo)}

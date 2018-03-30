@@ -1,1 +1,1 @@
-../../../../../../../core/ios/core/EBGyroQuaternion.h
+../../../../../../../core/ios/BindingX/EBGyroQuaternion.h

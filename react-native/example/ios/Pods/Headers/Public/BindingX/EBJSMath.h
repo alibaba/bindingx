@@ -1,1 +1,1 @@
-../../../../../../../core/ios/core/EBJSMath.h
+../../../../../../../core/ios/BindingX/EBJSMath.h

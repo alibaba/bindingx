@@ -1,1 +1,1 @@
-../../../../../../../core/ios/core/EBGyroManager.h
+../../../../../../../core/ios/BindingX/EBGyroManager.h

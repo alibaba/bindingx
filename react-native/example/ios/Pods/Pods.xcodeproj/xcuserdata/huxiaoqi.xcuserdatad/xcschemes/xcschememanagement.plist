@@ -8,60 +8,46 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>0</integer>
 		</dict>
 		<key>DoubleConversion.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>1</integer>
 		</dict>
 		<key>Folly.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>2</integer>
 		</dict>
 		<key>GLog.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>3</integer>
 		</dict>
 		<key>Pods-BindingDemoRN.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>4</integer>
 		</dict>
 		<key>React.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>5</integer>
 		</dict>
 		<key>yoga.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>6</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>37B5EC7E1CAF3F01A3913697E36C0E5F</key>
+		<key>35D0AF42DEF04F03EC68E550FB21144D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>476F6C0D48DAD817C2D4F07BA491F0B8</key>
+		<key>5254360ED45832047BF210CEFF464A1D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -71,22 +57,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>718F5EBCFEEBFFC57F550285A992E57B</key>
+		<key>75CF454054F8922944C9F01BD84D9C42</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>74210849381DBAFED7020E5E9AAFE9FA</key>
+		<key>86A19315E7111813C8BA3EEF69ECDE5E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>776E20F2A92268BBA8CF7D34BE6C0ACC</key>
+		<key>89DAD1954F66CDF7C302C83A931A1C83</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DAE63769FFCC36895E8590428BC1D806</key>
+		<key>AE5E74DCDDF28D08D081113ACEC1B829</key>
 		<dict>
 			<key>primary</key>
 			<true/>

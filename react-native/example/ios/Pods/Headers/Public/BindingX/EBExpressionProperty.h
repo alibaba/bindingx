@@ -1,1 +1,1 @@
-../../../../../../../core/ios/core/EBExpressionProperty.h
+../../../../../../../core/ios/BindingX/EBExpressionProperty.h

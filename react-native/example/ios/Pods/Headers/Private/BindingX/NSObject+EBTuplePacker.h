@@ -1,1 +1,1 @@
-../../../../../../../core/ios/core/NSObject+EBTuplePacker.h
+../../../../../../../core/ios/BindingX/NSObject+EBTuplePacker.h

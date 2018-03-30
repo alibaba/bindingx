@@ -1,1 +1,1 @@
-../../../../../../../core/ios/core/EBJSEase.h
+../../../../../../../core/ios/BindingX/EBJSEase.h

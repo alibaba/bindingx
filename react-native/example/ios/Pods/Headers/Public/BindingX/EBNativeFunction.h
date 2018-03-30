@@ -1,1 +1,1 @@
-../../../../../../../core/ios/core/EBNativeFunction.h
+../../../../../../../core/ios/BindingX/EBNativeFunction.h
