@@ -23,6 +23,7 @@ export default class TimingDemo extends Component {
   _token = null;
 
   componentWillMount() {
+    ToastAndroid.show('componentWillMount', ToastAndroid.SHORT);
     // DeviceEventEmitter.addListener('stateChanged', function(e: Event) {
     //     ToastAndroid.show('event:'+JSON.stringify(e), ToastAndroid.SHORT);
     // });
@@ -68,7 +69,7 @@ export default class TimingDemo extends Component {
   }
 
   onStateChange = (e)=>{
-    console.log('onStateChange:',e);
+    ToastAndroid.show('event:'+JSON.stringify(e), ToastAndroid.SHORT);
   }
 
   onUnBind() {

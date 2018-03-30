@@ -16,57 +16,61 @@
 
 'use strict';
 
-import { parse } from 'bindingx-parser';
-import { NativeModules, NativeEventEmitter, DeviceEventEmitter, Platform } from 'react-native';
+import {parse} from 'bindingx-parser';
+import {NativeModules, NativeEventEmitter, DeviceEventEmitter, Platform} from 'react-native';
 
 
 const nativeBindingX = NativeModules.bindingx;
-const bindingx = {
-  __instances__: {
-
-  },
-    /**
-     * bind
-     * @param options 
-     * @example
+let bindingx = {
+  __instances__: {},
+  /**
+   * bind
+   * @param options
+   * @example
+   {
+     anchor:blockRef,
+     eventType:'pan',
+     props: [
      {
-       anchor:blockRef,
-       eventType:'pan',
-       props: [
-       {
-         element:blockRef,
-         property:'transform.translateX',
-         expression:"x+1"
-       }
-      ]
+       element:blockRef,
+       property:'transform.translateX',
+       expression:"x+1"
      }
-     */
-  bind(options, callback = function() {}) {
+    ]
+   }
+   */
+  bind(options, callback = function () {
+  }) {
     if (!options) {
       throw new Error('should pass options for binding');
     }
     options.exitExpression = formatExpression(options.exitExpression);
+    console.log('options:',options)
     if (options.props) {
       options.props.forEach((prop) => {
         prop.expression = formatExpression(prop.expression);
       });
     }
+    let res;
 
     if (nativeBindingX) {
-      let res = nativeBindingX.bind(options);
+
+
+
+      res = nativeBindingX.bind(options);
       let token = res && res.token;
       this.__instances__[token] = {
         callback
       };
-
     }
+    return res;
   },
-    /**
-     *  @param {object} options
-     *  @example
-     *  {eventType:'pan',
+  /**
+   *  @param {object} options
+   *  @example
+   *  {eventType:'pan',
      *   token:self.gesToken}
-     */
+   */
   unbind(options) {
     if (!options) {
       throw new Error('should pass options for binding');
@@ -82,25 +86,24 @@ const bindingx = {
   getComputedStyle(el) {
     return nativeBindingX.getComputedStyle(el);
   },
-    // { y: 0, state: 'start', x: 0, token: '592' }
-  __triggerCallback(event) {
+  // { y: 0, state: 'start', x: 0, token: '592' }
+  __triggerCallback: (event) => {
+    let instances = bindingx.__instances__;
     if (event && event.token &&
-            this.__instances__[event.token] &&
-            typeof this.__instances__[event.token].callback == 'function') {
-        	// trigger global event for callback function
-      this.__instances__[event.token].callback(event);
+      instances[event.token] &&
+      typeof instances[event.token].callback == 'function') {
+      // trigger global event for callback function
+      instances[event.token].callback(event);
     }
   }
 };
 
 
-
-
 if (Platform.OS == 'ios') {
-  const bindingXEmitter = new NativeEventEmitter(bindingx);
+  const bindingXEmitter = new NativeEventEmitter(nativeBindingX);
   bindingXEmitter.addListener('bindingx:statechange', bindingx.__triggerCallback);
 } else {
-  DeviceEventEmitter.addListener('stateChanged', bindingx.__triggerCallback);
+  DeviceEventEmitter.addListener('bindingx:statechange', bindingx.__triggerCallback);
 }
 
 
@@ -122,9 +125,6 @@ function formatExpression(expression) {
   resultExpression.transformed = resultExpression.transformed || parse(resultExpression.origin);
   return resultExpression;
 }
-
-
-
 
 
 export default bindingx;

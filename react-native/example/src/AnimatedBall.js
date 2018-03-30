@@ -10,7 +10,6 @@ import {
   PanResponder
 } from 'react-native';
 
-import {DeviceEventEmitter} from 'react-native';
 import bindingx from 'react-native-bindingx';
 
 export default class AnimatedBall extends Component {
@@ -25,18 +24,7 @@ export default class AnimatedBall extends Component {
   _x = 0;
   _y = 0;
 
-  componentWillMount() {
-    let self = this;
-    // DeviceEventEmitter.addListener('stateChanged', function(e) {
-    //     if(e.state === 'end') {
-    //       self._x += e.deltaX;
-    //       self._y += e.deltaY;
-    //     }
-    // });
-  }
-
   onPanEnd = (e) => {
-    console.log('******',e)
     if (e.state === 'end') {
       this._x += e.deltaX;
       this._y += e.deltaY;
@@ -46,44 +34,36 @@ export default class AnimatedBall extends Component {
   onBind() {
 
     let expression_x_origin = "x+" + this._x;
-    let expression_x_transformed = '{"type":"+","children":[{"type":"Identifier","value":"x"},{"type":"NumericLiteral","value":"' + this._x + '"}]}';
 
     let expression_y_origin = "y+" + this._y;
-    let expression_y_transformed = '{"type":"+","children":[{"type":"Identifier","value":"y"},{"type":"NumericLiteral","value":"' + this._y + '"}]}';
 
     let anchor = findNodeHandle(this.refs._anchor);
-    let token = NativeModules.bindingx.bind({
+    let token = bindingx.bind({
       eventType: 'pan',
       anchor: anchor,
       props: [
         {
           element: anchor,
           property: 'transform.translateX',
-          expression: {
-            transformed: expression_x_transformed,
-            origin: expression_x_origin
-          }
+          expression: expression_x_origin
         },
         {
           element: anchor,
           property: 'transform.translateY',
-          expression: {
-            transformed: expression_y_transformed,
-            origin: expression_y_origin
-          }
+          expression: expression_y_origin
         }
       ]
-    });
+    },this.onPanEnd);
     //ToastAndroid.show('token>>>>>' + JSON.stringify(token), ToastAndroid.SHORT);
   }
 
   onUnBind() {
-    // let anchor = findNodeHandle(this.refs._anchor);
-    //
-    // NativeModules.bindingx.unbind({
-    //   token: anchor,
-    //   eventType: 'pan'
-    // });
+    let anchor = findNodeHandle(this.refs._anchor);
+
+    bindingx.unbind({
+      token: anchor,
+      eventType: 'pan'
+    });
   }
 
   render() {

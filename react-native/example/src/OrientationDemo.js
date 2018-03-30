@@ -13,7 +13,7 @@ import {
     PanResponder
 } from 'react-native';
 
-import { DeviceEventEmitter } from 'react-native';
+import bindingx from 'react-native-bindingx';
 
 export default class TimingDemo extends Component {
 
@@ -21,16 +21,12 @@ export default class TimingDemo extends Component {
     _token = null;
 
     componentWillMount() {
-        let self = this;
-        DeviceEventEmitter.addListener('stateChanged', function(e: Event) {
-            ToastAndroid.show('event:'+JSON.stringify(e), ToastAndroid.SHORT);
-        });
     }
 
 
     onBind(){
         let anchor = findNodeHandle(this.refs._anchor);
-        let token = NativeModules.bindingx.bind({
+        let token = bindingx.bind({
             eventType: 'orientation',
             options: {
                 sceneType: '2d' //2d场景会返回x,y分量
@@ -39,18 +35,12 @@ export default class TimingDemo extends Component {
                 {
                     element: anchor,
                     property: 'transform.translateX',
-                    expression: {
-                        origin: 'x+0',
-                        transformed: "{\"type\":\"+\",\"children\":[{\"type\":\"Identifier\",\"value\":\"x\"},{\"type\":\"NumericLiteral\",\"value\":0}]}"
-                    }
+                    expression: 'x+0'
                 },
                 {
                     element: anchor,
                     property: 'transform.translateY',
-                    expression: {
-                        origin: 'y+0',
-                        transformed: "{\"type\":\"+\",\"children\":[{\"type\":\"Identifier\",\"value\":\"y\"},{\"type\":\"NumericLiteral\",\"value\":0}]}"
-                    }
+                    expression: 'y+0'
                 }
             ]
         });
@@ -62,7 +52,7 @@ export default class TimingDemo extends Component {
         if(this._token === null) {
             return;
         }
-        NativeModules.bindingx.unbind({
+        bindingx.unbind({
             token:this._token,
             eventType:'orientation'
         });
