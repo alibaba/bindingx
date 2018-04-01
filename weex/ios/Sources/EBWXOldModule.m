@@ -218,7 +218,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
 
 - (NSDictionary *)getComputedStyle:(NSString *)sourceRef {
     if (![sourceRef isKindOfClass:NSString.class] || [WXUtility isBlankString:sourceRef]) {
-        WX_LOG(WXLogFlagWarning, @"createBinding params error");
+        WX_LOG(WXLogFlagWarning, @"getComputedStyle params error");
         return nil;
     }
     
@@ -229,7 +229,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         // find sourceRef & targetRef
         WXComponent *sourceComponent = [weexInstance componentForRef:sourceRef];
         if (!sourceComponent) {
-            WX_LOG(WXLogFlagWarning, @"createBinding can't find source component");
+            WX_LOG(WXLogFlagWarning, @"getComputedStyle can't find source component");
             return;
         }
         NSDictionary* mapping = [EBWXUtils cssPropertyMapping];

@@ -253,7 +253,11 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSArray *, supportFeatures)
 
 RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *, getComputedStyle:(NSString *)sourceRef)
 {
-    if ([EBUtility isBlankString:sourceRef]) {
+    NSString *ref = sourceRef;
+    if ([ref isKindOfClass:NSNumber.class]) {
+        ref = [(NSNumber *)sourceRef stringValue];
+    }
+    if ([EBUtility isBlankString:ref]) {
         RCTLogWarn(@"getComputedStyle params error");
         return nil;
     }
@@ -263,7 +267,7 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *, getComputedStyle:(NSString *
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
     RCTExecuteOnMainQueue(^{
-        UIView* view = [EBUtility getViewByRef:sourceRef];
+        UIView* view = [EBUtility getViewByRef:ref];
         if (!view) {
             RCTLogWarn(@"source Ref not exist");
         } else {
