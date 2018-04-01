@@ -84,7 +84,7 @@ RCT_EXPORT_METHOD(prepare:(NSDictionary *)dictionary)
     }
     
     __weak typeof(self) welf = self;
-    RCTExecuteOnUIManagerQueue(^{
+    RCTExecuteOnMainQueue(^{
         // find sourceRef & targetRef
         UIView* sourceComponent = [EBUtility getViewByRef:anchor];
         if (!sourceComponent && (exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
@@ -97,7 +97,7 @@ RCT_EXPORT_METHOD(prepare:(NSDictionary *)dictionary)
         EBExpressionHandler *handler = [welf.bindData handlerForToken:anchor expressionType:exprType];
         if (!handler) {
             // create handler for key
-            handler = [EBExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
+            handler = [EBExpressionHandler handlerWithExpressionType:exprType source:anchor];
             [welf.bindData putHandler:handler forToken:anchor expressionType:exprType];
         }
         
@@ -196,7 +196,7 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *,bind:(NSDictionary *)dictiona
                                    }
                                    [welf sendEventWithName:BINDING_EVENT_NAME body:body];
                                    if (keepAlive) {
-                                       [welf stopObserving];
+//                                       [welf stopObserving];
                                    }
                                }];
         pthread_mutex_unlock(&mutex);
@@ -251,13 +251,10 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSArray *, supportFeatures)
     return @[@"pan",@"scroll",@"orientation",@"timing"];
 }
 
-RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *, getComputedStyle:(NSString *)sourceRef)
+RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *, getComputedStyle:(nonnull NSNumber *)sourceRef)
 {
-    NSString *ref = sourceRef;
-    if ([ref isKindOfClass:NSNumber.class]) {
-        ref = [(NSNumber *)sourceRef stringValue];
-    }
-    if ([EBUtility isBlankString:ref]) {
+    [EBUtility setUIManager:self.bridge.uiManager];
+    if (!sourceRef) {
         RCTLogWarn(@"getComputedStyle params error");
         return nil;
     }
@@ -267,7 +264,7 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *, getComputedStyle:(NSString *
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
     RCTExecuteOnMainQueue(^{
-        UIView* view = [EBUtility getViewByRef:ref];
+        UIView* view = [EBUtility getViewByRef:sourceRef];
         if (!view) {
             RCTLogWarn(@"source Ref not exist");
         } else {
