@@ -64,6 +64,8 @@
 		D9A27DCA2047E237003AC20E /* EBWXOldModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27DC82047E237003AC20E /* EBWXOldModule.m */; };
 		D9F1C5A5206CE4800029B542 /* EBWXUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F1C5A3206CE4800029B542 /* EBWXUtils.m */; };
 		D9F1C5A6206CE4800029B542 /* EBWXUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D9F1C5A4206CE4800029B542 /* EBWXUtils.h */; };
+		D9F28AE22071E11100CE451B /* EBHandlerFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = D9F28AE02071E11100CE451B /* EBHandlerFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9F28AE32071E11100CE451B /* EBHandlerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F28AE12071E11100CE451B /* EBHandlerFactory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -127,6 +129,8 @@
 		D9A27DC82047E237003AC20E /* EBWXOldModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBWXOldModule.m; sourceTree = "<group>"; };
 		D9F1C5A3206CE4800029B542 /* EBWXUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBWXUtils.m; sourceTree = "<group>"; };
 		D9F1C5A4206CE4800029B542 /* EBWXUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBWXUtils.h; sourceTree = "<group>"; };
+		D9F28AE02071E11100CE451B /* EBHandlerFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EBHandlerFactory.h; sourceTree = "<group>"; };
+		D9F28AE12071E11100CE451B /* EBHandlerFactory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EBHandlerFactory.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,6 +238,8 @@
 				D9A27D6C2047E226003AC20E /* Info.plist */,
 				D9A27D7C2047E227003AC20E /* NSObject+EBTuplePacker.h */,
 				D9A27D772047E227003AC20E /* NSObject+EBTuplePacker.m */,
+				D9F28AE02071E11100CE451B /* EBHandlerFactory.h */,
+				D9F28AE12071E11100CE451B /* EBHandlerFactory.m */,
 			);
 			name = core;
 			path = ../../../core/ios/BindingX;
@@ -272,6 +278,7 @@
 				D9A27DBD2047E229003AC20E /* EBJSMath.h in Headers */,
 				D9A27DAB2047E229003AC20E /* NSObject+EBTuplePacker.h in Headers */,
 				D9A27DB72047E229003AC20E /* EBExpressionProperty.h in Headers */,
+				D9F28AE22071E11100CE451B /* EBHandlerFactory.h in Headers */,
 				D9F1C5A6206CE4800029B542 /* EBWXUtils.h in Headers */,
 				D9A27DBA2047E229003AC20E /* EBJSTransform.h in Headers */,
 				D955B11E202FDCD4000274AC /* EBUtility+WX.h in Headers */,
@@ -403,6 +410,7 @@
 				D9A27DBB2047E229003AC20E /* EBExpressionHandler.m in Sources */,
 				D9A27DAE2047E229003AC20E /* EBNativeFunction.m in Sources */,
 				D9A27DAC2047E229003AC20E /* EBExpression.m in Sources */,
+				D9F28AE32071E11100CE451B /* EBHandlerFactory.m in Sources */,
 				D9A27DC52047E229003AC20E /* EBGyroManager.m in Sources */,
 				D9A27DAF2047E229003AC20E /* EBUtility.m in Sources */,
 				D9A27DC02047E229003AC20E /* EBJSMath.m in Sources */,

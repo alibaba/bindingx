@@ -18,7 +18,6 @@
 #import "EBExpressionGesture.h"
 #import "EBExpressionScroller.h"
 #import "EBExpression.h"
-#import "EBExpressionProperty.h"
 #import "EBExpressionExecutor.h"
 #import "EBExpressionScope.h"
 #import "EBExpressionTiming.h"

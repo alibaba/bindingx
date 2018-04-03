@@ -18,7 +18,6 @@
 #import "EBExpressionScope.h"
 #import "EBExpression.h"
 #import "EBExpressionExecutor.h"
-#import "EBExpressionProperty.h"
 #import "EBUtility.h"
 
 @interface EBExpressionGesture () <UIGestureRecognizerDelegate>

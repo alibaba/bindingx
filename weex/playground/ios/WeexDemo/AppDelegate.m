@@ -19,6 +19,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import <ATSDK/ATManager.h>
 #import "WXNavigationImpl.h"
+#import <BindingX/EBHandlerFactory.h>
+#import "CustomEBHandler.h"
 
 @interface AppDelegate ()
 @end
@@ -42,6 +44,8 @@
     // check if there are any UI changes on main thread.
     [UIView wx_checkUIThread];
 #endif
+    
+    [EBHandlerFactory addHandler:[CustomEBHandler new]];
     
     return YES;
 }
