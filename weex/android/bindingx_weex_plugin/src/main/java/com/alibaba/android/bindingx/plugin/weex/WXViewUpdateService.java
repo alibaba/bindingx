@@ -146,6 +146,10 @@ final class WXViewUpdateService {
         sUIHandler.post(new WeakRunnable(runnable));
     }
 
+    public static void clearCallbacks() {
+        sUIHandler.removeCallbacksAndMessages(null);
+    }
+
     private static final class ContentOffsetUpdater implements IWXViewUpdater {
 
         @Override
