@@ -34,6 +34,7 @@ import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
 import com.alibaba.android.bindingx.core.internal.Utils;
 import com.taobao.weex.common.Constants;
+import com.taobao.weex.dom.CSSShorthand;
 import com.taobao.weex.dom.transition.WXTransition;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXScroller;
@@ -695,7 +696,7 @@ final class WXViewUpdateService {
                     Drawable drawable = targetView.getBackground();
                     if(drawable != null && drawable instanceof BorderDrawable) {
                         BorderDrawable borderDrawable = (BorderDrawable) drawable;
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) getRealSize(d,translator));
+                        borderDrawable.setBorderRadius(CSSShorthand.CORNER.BORDER_TOP_LEFT, (float) getRealSize(d,translator));
                     }
                 }
             });
@@ -720,7 +721,7 @@ final class WXViewUpdateService {
                     Drawable drawable = targetView.getBackground();
                     if(drawable != null && drawable instanceof BorderDrawable) {
                         BorderDrawable borderDrawable = (BorderDrawable) drawable;
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) getRealSize(d,translator));
+                        borderDrawable.setBorderRadius(CSSShorthand.CORNER.BORDER_TOP_RIGHT, (float) getRealSize(d,translator));
                     }
                 }
             });
@@ -745,7 +746,7 @@ final class WXViewUpdateService {
                     Drawable drawable = targetView.getBackground();
                     if(drawable != null && drawable instanceof BorderDrawable) {
                         BorderDrawable borderDrawable = (BorderDrawable) drawable;
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) getRealSize(d,translator));
+                        borderDrawable.setBorderRadius(CSSShorthand.CORNER.BORDER_BOTTOM_LEFT, (float) getRealSize(d,translator));
                     }
                 }
             });
@@ -770,7 +771,7 @@ final class WXViewUpdateService {
                     Drawable drawable = targetView.getBackground();
                     if(drawable != null && drawable instanceof BorderDrawable) {
                         BorderDrawable borderDrawable = (BorderDrawable) drawable;
-                        borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) getRealSize(d,translator));
+                        borderDrawable.setBorderRadius(CSSShorthand.CORNER.BORDER_BOTTOM_RIGHT, (float) getRealSize(d,translator));
                     }
                 }
             });
@@ -812,10 +813,10 @@ final class WXViewUpdateService {
                             }
 
                             BorderDrawable borderDrawable = (BorderDrawable) drawable;
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) getRealSize(topLeft,translator));
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) getRealSize(topRight,translator));
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) getRealSize(bottomLeft,translator));
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) getRealSize(bottomRight,translator));
+                            borderDrawable.setBorderRadius(CSSShorthand.CORNER.BORDER_TOP_LEFT, (float) getRealSize(topLeft,translator));
+                            borderDrawable.setBorderRadius(CSSShorthand.CORNER.BORDER_TOP_RIGHT, (float) getRealSize(topRight,translator));
+                            borderDrawable.setBorderRadius(CSSShorthand.CORNER.BORDER_BOTTOM_LEFT, (float) getRealSize(bottomLeft,translator));
+                            borderDrawable.setBorderRadius(CSSShorthand.CORNER.BORDER_BOTTOM_RIGHT, (float) getRealSize(bottomRight,translator));
                         }
                     }
                 });
@@ -827,10 +828,10 @@ final class WXViewUpdateService {
                         Drawable drawable = targetView.getBackground();
                         if(drawable != null && drawable instanceof BorderDrawable) {
                             BorderDrawable borderDrawable = (BorderDrawable) drawable;
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_LEFT_RADIUS, (float) getRealSize(value,translator));
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_TOP_RIGHT_RADIUS, (float) getRealSize(value,translator));
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_LEFT_RADIUS, (float) getRealSize(value,translator));
-                            borderDrawable.setBorderRadius(BorderDrawable.BORDER_BOTTOM_RIGHT_RADIUS, (float) getRealSize(value,translator));
+                            borderDrawable.setBorderRadius(CSSShorthand.CORNER.BORDER_TOP_LEFT, (float) getRealSize(value,translator));
+                            borderDrawable.setBorderRadius(CSSShorthand.CORNER.BORDER_TOP_RIGHT, (float) getRealSize(value,translator));
+                            borderDrawable.setBorderRadius(CSSShorthand.CORNER.BORDER_BOTTOM_LEFT, (float) getRealSize(value,translator));
+                            borderDrawable.setBorderRadius(CSSShorthand.CORNER.BORDER_BOTTOM_RIGHT, (float) getRealSize(value,translator));
                         }
                     }
                 });
