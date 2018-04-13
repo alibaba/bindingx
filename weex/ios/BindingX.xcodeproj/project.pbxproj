@@ -62,6 +62,8 @@
 		D9A27DC62047E229003AC20E /* EBGyroQuaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D972047E229003AC20E /* EBGyroQuaternion.m */; };
 		D9A27DC92047E237003AC20E /* EBWXOldModule.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27DC72047E237003AC20E /* EBWXOldModule.h */; };
 		D9A27DCA2047E237003AC20E /* EBWXOldModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27DC82047E237003AC20E /* EBWXOldModule.m */; };
+		D9F1C5A5206CE4800029B542 /* EBWXUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F1C5A3206CE4800029B542 /* EBWXUtils.m */; };
+		D9F1C5A6206CE4800029B542 /* EBWXUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D9F1C5A4206CE4800029B542 /* EBWXUtils.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -123,6 +125,8 @@
 		D9A27D972047E229003AC20E /* EBGyroQuaternion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBGyroQuaternion.m; sourceTree = "<group>"; };
 		D9A27DC72047E237003AC20E /* EBWXOldModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBWXOldModule.h; sourceTree = "<group>"; };
 		D9A27DC82047E237003AC20E /* EBWXOldModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBWXOldModule.m; sourceTree = "<group>"; };
+		D9F1C5A3206CE4800029B542 /* EBWXUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBWXUtils.m; sourceTree = "<group>"; };
+		D9F1C5A4206CE4800029B542 /* EBWXUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBWXUtils.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +178,8 @@
 				D9A27DC82047E237003AC20E /* EBWXOldModule.m */,
 				D955B11B202FDCD4000274AC /* EBWXModule.h */,
 				D955B119202FDCD4000274AC /* EBWXModule.m */,
+				D9F1C5A4206CE4800029B542 /* EBWXUtils.h */,
+				D9F1C5A3206CE4800029B542 /* EBWXUtils.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -266,6 +272,7 @@
 				D9A27DBD2047E229003AC20E /* EBJSMath.h in Headers */,
 				D9A27DAB2047E229003AC20E /* NSObject+EBTuplePacker.h in Headers */,
 				D9A27DB72047E229003AC20E /* EBExpressionProperty.h in Headers */,
+				D9F1C5A6206CE4800029B542 /* EBWXUtils.h in Headers */,
 				D9A27DBA2047E229003AC20E /* EBJSTransform.h in Headers */,
 				D955B11E202FDCD4000274AC /* EBUtility+WX.h in Headers */,
 				D9A27DB22047E229003AC20E /* EBGyroEuler.h in Headers */,
@@ -392,6 +399,7 @@
 			files = (
 				D9A27DB92047E229003AC20E /* EBExpressionGesture.m in Sources */,
 				D9A27D9F2047E229003AC20E /* EBExpressionScope.m in Sources */,
+				D9F1C5A5206CE4800029B542 /* EBWXUtils.m in Sources */,
 				D9A27DBB2047E229003AC20E /* EBExpressionHandler.m in Sources */,
 				D9A27DAE2047E229003AC20E /* EBNativeFunction.m in Sources */,
 				D9A27DAC2047E229003AC20E /* EBExpression.m in Sources */,

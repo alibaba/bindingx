@@ -25,10 +25,10 @@
 <script>
   import {isWeex} from 'universal-env';
   import bindingx from '../../src/index';
-
+    console.error(JSON.stringify(WXEnvironment))
   function getEl(el) {
-    if (typeof el === 'string' || typeof el === 'number') return el;
-    return isWeex ? el.ref : el instanceof HTMLElement ? el : el.$el;
+    // if (typeof el === 'string' || typeof el === 'number') return el;
+    // return isWeex ? el.ref : el instanceof HTMLElement ? el : el.$el;
   }
 
 
@@ -42,7 +42,7 @@
     },
     methods: {
       onappear () {
-        this.bind();
+        // this.bind();
       },
       bind () {
         var box = getEl(this.$refs.box);

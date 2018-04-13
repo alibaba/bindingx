@@ -13,12 +13,13 @@ import {
   AppRegistry
 } from 'react-native';
 
+
 import AnimatedBall from './AnimatedBall';
 import TimingDemo from './TimingDemo';
 import OrientationDemo from './OrientationDemo';
 import ScrollViewDemo from './ScrollViewDemo';
 
-export default class App extends Component<{}> {
+export default class App extends Component {
 
   constructor(props) {
     super(props);

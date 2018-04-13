@@ -150,4 +150,44 @@
     _isBRChanged = YES;
 }
 
+- (void)setMarginTop:(CGFloat)marginTop {
+    _marginTop = marginTop;
+    _isMarginTopChanged = YES;
+}
+
+- (void)setMarginRight:(CGFloat)marginRight {
+    _marginRight = marginRight;
+    _isMarginRightChanged = YES;
+}
+
+- (void)setMarginBottom:(CGFloat)marginBottom {
+    _marginBottom = marginBottom;
+    _isMarginBottomChanged = YES;
+}
+
+- (void)setMarginLeft:(CGFloat)marginLeft {
+    _marginLeft = marginLeft;
+    _isMarginLeftChanged = YES;
+}
+
+- (void)setPaddingTop:(CGFloat)paddingTop {
+    _paddingTop = paddingTop;
+    _isPaddingTopChanged = YES;
+}
+
+- (void)setPaddingRight:(CGFloat)paddingRight {
+    _paddingRight = paddingRight;
+    _isPaddingRightChanged = YES;
+}
+
+- (void)setPaddingBottom:(CGFloat)paddingBottom {
+    _paddingBottom = paddingBottom;
+    _isPaddingBottomChanged = YES;
+}
+
+- (void)setPaddingLeft:(CGFloat)paddingLeft {
+    _paddingLeft = paddingLeft;
+    _isPaddingLeftChanged = YES;
+}
+
 @end
