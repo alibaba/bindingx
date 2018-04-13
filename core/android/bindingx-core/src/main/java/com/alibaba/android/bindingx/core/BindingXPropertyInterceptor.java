@@ -69,7 +69,7 @@ public class BindingXPropertyInterceptor {
 
     public interface IPropertyUpdateInterceptor {
         /**
-         * @param targetView target view that will be updated
+         * @param targetView target view that will be updated. Maybe null if component/node is virtual.
          * @param propertyName the property that will be changed by property value
          * @param propertyValue the property value that will changed to
          * @param translator handle device resolution for different platforms
@@ -78,7 +78,7 @@ public class BindingXPropertyInterceptor {
          *
          * @return true if intercepted (which means that the property is accepted and consumed), false otherwise
          * */
-         boolean updateView(@NonNull View targetView,
+         boolean updateView(@Nullable View targetView,
                                                @NonNull String propertyName,
                                                @NonNull Object propertyValue,
                                                @NonNull PlatformManager.IDeviceResolutionTranslator translator,
