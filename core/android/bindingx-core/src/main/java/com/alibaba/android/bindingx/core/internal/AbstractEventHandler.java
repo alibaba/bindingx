@@ -233,17 +233,14 @@ public abstract class AbstractEventHandler implements IEventHandler {
 
                 View targetView = mPlatformManager.getViewFinder().findViewBy(holder.targetRef, instanceId);
                 for(BindingXPropertyInterceptor.IPropertyUpdateInterceptor interceptor : interceptorList) {
-                    // if intercepted then return
-                    if(interceptor.updateView(
+                    interceptor.updateView(
                             targetView,
                             holder.prop,
                             obj,
                             mPlatformManager.getResolutionTranslator(),
                             holder.config,
                             holder.targetRef,
-                            instanceId)) {
-                        return;
-                    }
+                            instanceId);
                 }
 
                 if (targetView == null) {
