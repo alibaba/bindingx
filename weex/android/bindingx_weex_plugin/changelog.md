@@ -24,3 +24,8 @@
 #### 1.0.5
 
 1. horizontal scroller支持contentOffsetX/contentOffsetY属性
+
+#### 1.0.6-weexcore
+
+1. weex core适配
+
