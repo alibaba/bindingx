@@ -25,7 +25,7 @@ dependencies {
     implementation project(path: ':bindingx_weex_plugin')
     implementation project(':qrcode_extends')
 
-    implementation 'com.taobao.android:weex_sdk:0.18.1.62-WeexCore'
+    implementation 'com.taobao.android:weex_sdk:0.18.1.66-WeexCore'
 
     implementation 'org.weex.plugin:plugin-loader:1.0.0'
 
