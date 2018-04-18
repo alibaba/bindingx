@@ -1,8 +1,8 @@
 {
   "name": "react-native-bindingx",
-  "version": "0.0.1",
+  "version": "0.0.7",
   "description": "Bindingx for react-native",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "node webpack.dev.config.js",
     "build": "webpack",
@@ -15,16 +15,13 @@
     "reactnative",
     "react"
   ],
+  "peerDependencies":{
+    "react-native": "^0.54.4"
+  },
   "dependencies": {
-    "bindingx-parser": "0.0.x",
-    "bindingx-web-polyfill": "0.0.x",
-    "object-assign": "^4.1.1",
-    "simple-lodash": "^0.0.2",
-    "universal-env": "0.x.x"
+    "bindingx-parser": "^0.0.2"
   },
-  "devDependencies": {
-
-  },
+  "devDependencies": {},
   "author": "",
   "license": "Apache-2.0"
 }

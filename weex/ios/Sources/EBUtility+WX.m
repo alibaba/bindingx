@@ -105,6 +105,30 @@
     if (model.isBRBLChanged) {
         styles[@"borderBottomLeftRadius"] = @(model.brBL);
     }
+    if (model.isMarginTopChanged) {
+        styles[@"marginTop"] = @(model.marginTop);
+    }
+    if (model.isMarginRightChanged) {
+        styles[@"marginRight"] = @(model.marginRight);
+    }
+    if (model.isMarginBottomChanged) {
+        styles[@"marginBottom"] = @(model.marginBottom);
+    }
+    if (model.isMarginLeftChanged) {
+        styles[@"marginLeft"] = @(model.marginLeft);
+    }
+    if (model.isPaddingTopChanged) {
+        styles[@"paddingTop"] = @(model.paddingTop);
+    }
+    if (model.isPaddingRightChanged) {
+        styles[@"paddingRight"] = @(model.paddingRight);
+    }
+    if (model.isPaddingBottomChanged) {
+        styles[@"paddingBottom"] = @(model.paddingBottom);
+    }
+    if (model.isPaddingLeftChanged) {
+        styles[@"paddingLeft"] = @(model.paddingLeft);
+    }
     
     if (styles.count > 0) {
         WXComponent* component = nil;
@@ -181,12 +205,20 @@
 
 + (void)addScrollDelegate:(id<UIScrollViewDelegate>)delegate source:(id)source
 {
-    [source addScrollDelegate:delegate];
+    if ([source respondsToSelector:@selector(addScrollDelegate:)]) {
+        [source addScrollDelegate:delegate];
+    } else {
+        WXLogError(@"bind `scroll` type on a component could't scroll");
+    }
 }
 
 + (void)removeScrollDelegate:(id<UIScrollViewDelegate>)delegate source:(id)source
 {
-    [source removeScrollDelegate:delegate];
+    if ([source respondsToSelector:@selector(removeScrollDelegate:)]) {
+        [source removeScrollDelegate:delegate];
+    } else {
+        WXLogError(@"bind `scroll` type on a component could't scroll");
+    }
 }
 
 + (NSString *)makeColor:(NSObject *)result {

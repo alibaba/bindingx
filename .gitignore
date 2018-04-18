@@ -2,11 +2,10 @@
 node_modules
 */node_modules
 npm-debug.log
-.idea/*
 .project
-*/.idea
+*/.idea/*
 .vscode
-
+.idea/
 
 ######################### ignore for iOS ##############################
 # Created by https://www.gitignore.io/api/objective-c

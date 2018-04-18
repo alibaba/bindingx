@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-    StyleSheet,
-    View,
-    Text,
-    NativeModules,
-    findNodeHandle,
-    TouchableHighlight,
-    ToastAndroid,
-    PanResponder
+  StyleSheet,
+  View,
+  Text,
+  NativeModules,
+  findNodeHandle,
+  TouchableHighlight,
+  ToastAndroid,
+  PanResponder
 } from 'react-native';
 
-import { DeviceEventEmitter } from 'react-native';
+import bindingx from 'react-native-bindingx';
 
 export default class AnimatedBall extends Component {
 
@@ -24,54 +24,53 @@ export default class AnimatedBall extends Component {
   _x = 0;
   _y = 0;
 
-  componentWillMount() {
-    let self = this;
-    DeviceEventEmitter.addListener('stateChanged', function(e: Event) {
-        if(e.state === 'end') {
-          self._x += e.deltaX;
-          self._y += e.deltaY;
-        }
+  componentDidMount() {
+    let anchor = findNodeHandle(this.refs._anchor);
+    bindingx.prepare({
+      eventType: 'pan',
+      anchor: anchor
     });
   }
 
-  onBind(){
+  onPanEnd = (e) => {
+    if (e.state === 'end') {
+      this._x += e.deltaX;
+      this._y += e.deltaY;
+    }
+  }
+
+  onBind() {
 
     let expression_x_origin = "x+" + this._x;
-    let expression_x_transformed = '{"type":"+","children":[{"type":"Identifier","value":"x"},{"type":"NumericLiteral","value":"'+this._x+'"}]}';
 
     let expression_y_origin = "y+" + this._y;
-    let expression_y_transformed = '{"type":"+","children":[{"type":"Identifier","value":"y"},{"type":"NumericLiteral","value":"'+this._y+'"}]}';
 
     let anchor = findNodeHandle(this.refs._anchor);
-    let token = NativeModules.bindingx.bind({
-      eventType:'pan',
-      anchor:anchor,
-      props:[
+    let token = bindingx.bind({
+      eventType: 'pan',
+      anchor: anchor,
+      props: [
         {
           element: anchor,
-          property:'transform.translateX',
-          expression:{
-            transformed:expression_x_transformed,
-            origin:expression_x_origin
-        }},
+          property: 'transform.translateX',
+          expression: expression_x_origin
+        },
         {
           element: anchor,
-          property:'transform.translateY',
-          expression:{
-            transformed:expression_y_transformed,
-            origin:expression_y_origin
-        }}
+          property: 'transform.translateY',
+          expression: expression_y_origin
+        }
       ]
-    });
-    ToastAndroid.show('token>>>>>'+JSON.stringify(token), ToastAndroid.SHORT);
+    },this.onPanEnd);
+    //ToastAndroid.show('token>>>>>' + JSON.stringify(token), ToastAndroid.SHORT);
   }
 
-  onUnBind(){
+  onUnBind() {
     let anchor = findNodeHandle(this.refs._anchor);
 
-    NativeModules.bindingx.unbind({
-      token:anchor,
-      eventType:'pan'
+    bindingx.unbind({
+      token: anchor,
+      eventType: 'pan'
     });
   }
 
@@ -79,9 +78,9 @@ export default class AnimatedBall extends Component {
     return (
       <View style={styles.container}>
         <View
-            ref="_anchor"
-            style={styles.anchor}
-            {...this._panResponder.panHandlers}
+          ref="_anchor"
+          style={styles.anchor}
+          {...this._panResponder.panHandlers}
         />
 
       </View>
@@ -99,24 +98,24 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 10,
   },
-  text:{
+  text: {
     textAlign: 'center',
     color: '#ffffff',
   },
-  wrapper:{
-    backgroundColor:'#0000ff',
-    height:48,
-    alignItems:'center',
-    justifyContent:'center'
+  wrapper: {
+    backgroundColor: '#0000ff',
+    height: 48,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  margin:{
-    marginTop:20
+  margin: {
+    marginTop: 20
   },
-  anchor:{
-    width:80,
-    height:80,
-    backgroundColor:'#ff0000',
-    marginTop:48
+  anchor: {
+    width: 80,
+    height: 80,
+    backgroundColor: '#ff0000',
+    marginTop: 48
   }
 
 

@@ -34,6 +34,7 @@ import com.taobao.weex.common.Constants;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXScroller;
 import com.taobao.weex.ui.component.list.WXListComponent;
+import com.taobao.weex.ui.view.WXHorizontalScrollView;
 import com.taobao.weex.ui.view.WXScrollView;
 import com.taobao.weex.ui.view.listview.WXRecyclerView;
 import com.taobao.weex.ui.view.refresh.wrapper.BounceRecyclerView;
@@ -60,6 +61,7 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
 
     private RecyclerView.OnScrollListener mListOnScrollListener;
     private WXScrollView.WXScrollViewListener mWxScrollViewListener;
+    private WXHorizontalScrollView.ScrollViewListener mHorizontalViewScrollListener;
     private AppBarLayout.OnOffsetChangedListener mOnOffsetChangedListener;
 
     private static HashMap<String/*list ref*/,ContentOffsetHolder/*offsetX,offsetY*/> sOffsetHolderMap =
@@ -86,6 +88,10 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
             if (innerView != null && innerView instanceof WXScrollView) {
                 mWxScrollViewListener = new InnerScrollViewListener();
                 ((WXScrollView) innerView).addScrollViewListener(mWxScrollViewListener);
+                return true;
+            } else if(innerView != null && innerView instanceof WXHorizontalScrollView) {
+                mHorizontalViewScrollListener = new InnerScrollViewListener();
+                ((WXHorizontalScrollView) innerView).addScrollViewListener(mHorizontalViewScrollListener);
                 return true;
             }
 
@@ -152,7 +158,9 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
             View innerView = scroller.getInnerView();
             if (innerView != null && innerView instanceof WXScrollView && mWxScrollViewListener != null) {
                 ((WXScrollView) innerView).removeScrollViewListener(mWxScrollViewListener);
-
+                return true;
+            } else if(innerView != null && innerView instanceof WXHorizontalScrollView && mHorizontalViewScrollListener != null) {
+                ((WXHorizontalScrollView) innerView).removeScrollViewListener(mHorizontalViewScrollListener);
                 return true;
             }
         } else if (sourceComponent instanceof WXListComponent) {
@@ -218,7 +226,7 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
         }
     }
 
-    private class InnerScrollViewListener implements WXScrollView.WXScrollViewListener {
+    private class InnerScrollViewListener implements WXScrollView.WXScrollViewListener,WXHorizontalScrollView.ScrollViewListener {
         private int mContentOffsetX=0;
         private int mContentOffsetY=0;
 
@@ -227,7 +235,30 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
 
         @Override
         public void onScroll(WXScrollView wxScrollView, int x, int y) {
+            onScrollInternal(x, y);
+        }
 
+        @Override
+        public void onScrollChanged(WXHorizontalScrollView wxHorizontalScrollView, int x, int y, int oldX, int oldY) {
+            onScrollInternal(x, y);
+        }
+
+        @Override
+        public void onScrollChanged(WXScrollView wxScrollView, int i, int i1, int i2, int i3) {
+
+        }
+
+        @Override
+        public void onScrollToBottom(WXScrollView wxScrollView, int i, int i1) {
+
+        }
+
+        @Override
+        public void onScrollStopped(WXScrollView wxScrollView, int i, int i1) {
+
+        }
+
+        private void onScrollInternal(int x, int y) {
             final int dx = x - mContentOffsetX;
             final int dy = y - mContentOffsetY;
 
@@ -263,20 +294,6 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
             },mInstanceId);
         }
 
-        @Override
-        public void onScrollChanged(WXScrollView wxScrollView, int i, int i1, int i2, int i3) {
-
-        }
-
-        @Override
-        public void onScrollToBottom(WXScrollView wxScrollView, int i, int i1) {
-
-        }
-
-        @Override
-        public void onScrollStopped(WXScrollView wxScrollView, int i, int i1) {
-
-        }
     }
 
     private class InnerListScrollListener extends RecyclerView.OnScrollListener{

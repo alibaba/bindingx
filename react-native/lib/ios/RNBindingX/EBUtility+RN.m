@@ -118,8 +118,8 @@ __weak static RCTUIManager* _uiManager = nil;
 {
     UIView* view = [EBUtility getViewByRef:source];
     for (UIGestureRecognizer *obj in view.gestureRecognizers) {
-        if ([obj  isKindOfClass:[UIPanGestureRecognizer class]]) {
-            callback(true,true);
+        if ([obj isKindOfClass:[UIPanGestureRecognizer class]]) {
+            callback(NO,NO);
             return (UIPanGestureRecognizer *)obj;
         }
     }

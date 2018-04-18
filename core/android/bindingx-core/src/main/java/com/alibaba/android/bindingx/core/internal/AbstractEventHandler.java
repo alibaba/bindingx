@@ -204,12 +204,6 @@ public abstract class AbstractEventHandler implements IEventHandler {
                 }
                 String instanceId = TextUtils.isEmpty(holder.targetInstanceId)? mInstanceId : holder.targetInstanceId;
 
-                View targetView = mPlatformManager.getViewFinder().findViewBy(holder.targetRef, instanceId);
-                if (targetView == null) {
-                    LogProxy.e("failed to execute expression,target view not found.[ref:" + holder.targetRef + "]");
-                    continue;
-                }
-
                 ExpressionPair expressionPair = holder.expressionPair;
                 if(expressionPair == null
                         || TextUtils.isEmpty(expressionPair.transformed)
@@ -237,18 +231,21 @@ public abstract class AbstractEventHandler implements IEventHandler {
                 List<BindingXPropertyInterceptor.IPropertyUpdateInterceptor> interceptorList =
                         BindingXPropertyInterceptor.getInstance().getInterceptors();
 
+                View targetView = mPlatformManager.getViewFinder().findViewBy(holder.targetRef, instanceId);
                 for(BindingXPropertyInterceptor.IPropertyUpdateInterceptor interceptor : interceptorList) {
-                    // if intercepted then return
-                    if(interceptor.updateView(
+                    interceptor.updateView(
                             targetView,
                             holder.prop,
                             obj,
                             mPlatformManager.getResolutionTranslator(),
                             holder.config,
                             holder.targetRef,
-                            instanceId)) {
-                        return;
-                    }
+                            instanceId);
+                }
+
+                if (targetView == null) {
+                    LogProxy.e("failed to execute expression,target view not found.[ref:" + holder.targetRef + "]");
+                    continue;
                 }
 
                 // default behavior

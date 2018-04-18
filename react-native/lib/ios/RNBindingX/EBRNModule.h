@@ -19,16 +19,16 @@
 
 @interface EBRNModule : RCTEventEmitter
 
-- (void)prepare:(NSDictionary *)dictionary;
+- (void)prepare:(nonnull NSDictionary *)dictionary;
 
-- (NSDictionary *)bind:(NSDictionary *)dictionary;
+- (nonnull NSDictionary *)bind:(nonnull NSDictionary *)dictionary;
 
-- (void)unbind:(NSDictionary *)options;
+- (void)unbind:(nonnull NSDictionary *)options;
 
 - (void)unbindAll;
 
-- (NSArray *)supportFeatures;
+- (nonnull NSArray *)supportFeatures;
 
-- (NSDictionary *)getComputedStyle:(NSString *)sourceRef;
+- (nonnull NSDictionary *)getComputedStyle:(nonnull NSString *)sourceRef;
 
 @end
