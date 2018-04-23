@@ -65,8 +65,9 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
 
 + (BOOL)executeExpression:(NSMapTable *)expressionMap exitExpression:(NSDictionary *)exitExpression scope:(NSDictionary *)scope {
     
-    for (id target in expressionMap) {
-        NSDictionary *expressionDictionary = [expressionMap objectForKey:target];
+    NSMapTable *_expressionMap = [expressionMap copy];
+    for (id target in _expressionMap) {
+        NSDictionary *expressionDictionary = [_expressionMap objectForKey:target];
         EBExpressionProperty *model = [[EBExpressionProperty alloc] init];
         
         // gather property
