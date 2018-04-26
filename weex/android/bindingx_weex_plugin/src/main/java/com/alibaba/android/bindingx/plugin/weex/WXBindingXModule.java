@@ -40,6 +40,7 @@ import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.annotation.JSMethod;
 import com.taobao.weex.bridge.JSCallback;
 import com.taobao.weex.bridge.WXBridgeManager;
+import com.taobao.weex.dom.CSSShorthand;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXText;
 import com.taobao.weex.ui.view.WXTextView;
@@ -149,6 +150,19 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
         }
 
         Map<String, Object> map = new HashMap<>();
+
+        map.put("width", resolutionTranslator.nativeToWeb(component.getLayoutWidth()));
+        map.put("height", resolutionTranslator.nativeToWeb(component.getLayoutHeight()));
+
+        map.put("padding-left", resolutionTranslator.nativeToWeb(component.getPadding().get(CSSShorthand.EDGE.LEFT)));
+        map.put("padding-top", resolutionTranslator.nativeToWeb(component.getPadding().get(CSSShorthand.EDGE.TOP)));
+        map.put("padding-right", resolutionTranslator.nativeToWeb(component.getPadding().get(CSSShorthand.EDGE.RIGHT)));
+        map.put("padding-bottom", resolutionTranslator.nativeToWeb(component.getPadding().get(CSSShorthand.EDGE.BOTTOM)));
+
+        map.put("margin-left", resolutionTranslator.nativeToWeb(component.getMargin().get(CSSShorthand.EDGE.LEFT)));
+        map.put("margin-top", resolutionTranslator.nativeToWeb(component.getMargin().get(CSSShorthand.EDGE.TOP)));
+        map.put("margin-right", resolutionTranslator.nativeToWeb(component.getMargin().get(CSSShorthand.EDGE.RIGHT)));
+        map.put("margin-bottom", resolutionTranslator.nativeToWeb(component.getMargin().get(CSSShorthand.EDGE.BOTTOM)));
 
         map.put("translateX", resolutionTranslator.nativeToWeb(sourceView.getTranslationX()));
         map.put("translateY", resolutionTranslator.nativeToWeb(sourceView.getTranslationY()));
