@@ -30,6 +30,7 @@ import com.alibaba.android.bindingx.core.PlatformManager;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -192,6 +193,12 @@ public class BindingXOrientationHandler extends AbstractEventHandler implements 
         mLastGamma = gamma;
 
         try {
+            if(LogProxy.sEnableLog) {
+                LogProxy.d(String.format(Locale.getDefault(),
+                        "[OrientationHandler] orientation changed. (alpha:%f,beta:%f,gamma:%f,x:%f,y:%f,z:%f)",
+                        alpha,beta,gamma,x,y,z));
+            }
+
             JSMath.applyOrientationValuesToScope(mScope,alpha,beta,gamma,mStartAlpha,mStartBeta,mStartGamma, x,y,z);
             if(!evaluateExitExpression(mExitExpressionPair,mScope)) {
                 consumeExpression(mExpressionHoldersMap, mScope, BindingXEventType.TYPE_ORIENTATION);

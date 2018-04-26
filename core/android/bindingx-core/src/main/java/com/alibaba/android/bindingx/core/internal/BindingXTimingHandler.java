@@ -29,6 +29,7 @@ import com.alibaba.android.bindingx.core.PlatformManager;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -101,6 +102,9 @@ public class BindingXTimingHandler extends AbstractEventHandler implements Anima
         }
 
         try {
+            if(LogProxy.sEnableLog) {
+                LogProxy.d(String.format(Locale.getDefault(), "[TimingHandler] timing elapsed. (t:%d)", deltaT));
+            }
             JSMath.applyTimingValuesToScope(mScope, deltaT);
             if(!isFinish) {
                 consumeExpression(mExpressionHoldersMap, mScope, BindingXEventType.TYPE_TIMING);

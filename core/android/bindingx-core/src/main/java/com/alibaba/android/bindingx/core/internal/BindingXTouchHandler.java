@@ -30,6 +30,7 @@ import com.alibaba.android.bindingx.core.PlatformManager;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -138,6 +139,9 @@ public class BindingXTouchHandler extends AbstractEventHandler implements View.O
         float deltaX = curX - downX;
         float deltaY = curY - downY;
         try {
+            if(LogProxy.sEnableLog) {
+                LogProxy.d(String.format(Locale.getDefault(), "[TouchHandler] pan moved. (x:%f,y:%f)", deltaX,deltaY));
+            }
             JSMath.applyXYToScope(mScope, deltaX, deltaY, mPlatformManager.getResolutionTranslator());
             if(!evaluateExitExpression(mExitExpressionPair,mScope)) {
                 consumeExpression(mExpressionHoldersMap, mScope, BindingXEventType.TYPE_PAN);

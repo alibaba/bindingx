@@ -19,6 +19,8 @@ import android.util.Log;
 
 import com.alibaba.android.bindingx.core.internal.BindingXConstants;
 
+import java.util.Map;
+
 /**
  * Description:
  *
@@ -29,7 +31,26 @@ import com.alibaba.android.bindingx.core.internal.BindingXConstants;
  */
 public final class LogProxy {
 
-    public static boolean sEnableLog = true;
+    private static final String KEY_DEBUG = "debug";
+    public static boolean sEnableLog = false;
+
+    public static void enableLogIfNeeded(Map<String, Object> params) {
+        if(params == null) {
+            return;
+        }
+        Object obj = params.get(KEY_DEBUG);
+        if(obj == null) {
+            return;
+        }
+        boolean result = false;
+        if(obj instanceof Boolean) {
+            result = (boolean) obj;
+        } else if(obj instanceof String) {
+            String s = (String) obj;
+            result = "true".equals(s);
+        }
+        sEnableLog = result;
+    }
 
     public static void i(String message) {
         if(sEnableLog) {

@@ -78,9 +78,11 @@ public abstract class AbstractScrollEventHandler extends AbstractEventHandler {
      * */
     protected void handleScrollEvent(int contentOffsetX, int contentOffsetY, int dx, int dy,
                                    int tdx, int tdy) {
-        LogProxy.d(String.format(Locale.getDefault(),
-                "[ExpressionScrollHandler] scroll changed. (contentOffsetX:%d,contentOffsetY:%d,dx:%d,dy:%d,tdx:%d,tdy:%d)",
-                contentOffsetX,contentOffsetY,dx,dy,tdx,tdy));
+        if(LogProxy.sEnableLog) {
+            LogProxy.d(String.format(Locale.getDefault(),
+                    "[ScrollHandler] scroll changed. (contentOffsetX:%d,contentOffsetY:%d,dx:%d,dy:%d,tdx:%d,tdy:%d)",
+                    contentOffsetX,contentOffsetY,dx,dy,tdx,tdy));
+        }
 
         this.mContentOffsetX = contentOffsetX;
         this.mContentOffsetY = contentOffsetY;

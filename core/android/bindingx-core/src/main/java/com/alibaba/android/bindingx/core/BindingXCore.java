@@ -92,7 +92,7 @@ public class BindingXCore {
                          @NonNull JavaScriptCallback callback) {
         String eventType = Utils.getStringValue(params, BindingXConstants.KEY_EVENT_TYPE);
         String anchorInstanceId = Utils.getStringValue(params, BindingXConstants.KEY_INSTANCE_ID);
-
+        LogProxy.enableLogIfNeeded(params);
         Object configObj = params.get(BindingXConstants.KEY_OPTIONS);
         Map<String, Object> configMap = null;
         if(configObj != null && configObj instanceof Map) {

@@ -29,3 +29,6 @@
 
 1. weex core适配
 
+#### 1.0.7
+
+1. getComputedStyle支持width/height/margin/padding
