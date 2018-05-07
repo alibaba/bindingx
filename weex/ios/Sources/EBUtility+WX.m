@@ -205,12 +205,20 @@
 
 + (void)addScrollDelegate:(id<UIScrollViewDelegate>)delegate source:(id)source
 {
-    [source addScrollDelegate:delegate];
+    if ([source respondsToSelector:@selector(addScrollDelegate:)]) {
+        [source addScrollDelegate:delegate];
+    } else {
+        WXLogError(@"bind `scroll` type on a component could't scroll");
+    }
 }
 
 + (void)removeScrollDelegate:(id<UIScrollViewDelegate>)delegate source:(id)source
 {
-    [source removeScrollDelegate:delegate];
+    if ([source respondsToSelector:@selector(removeScrollDelegate:)]) {
+        [source removeScrollDelegate:delegate];
+    } else {
+        WXLogError(@"bind `scroll` type on a component could't scroll");
+    }
 }
 
 + (NSString *)makeColor:(NSObject *)result {

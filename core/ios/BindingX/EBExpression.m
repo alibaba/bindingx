@@ -124,12 +124,12 @@
         CGFloat num2 = [self toNumber:[self executeNodeInScope:scope node:children[1]]];
         return @(num1 != num2);
     } else if ([type isEqualToString:@"||"]) {
-        NSNumber *num1 = [self toBoolean:[self executeNodeInScope:scope node:children[0]]];
-        NSNumber *num2 = [self toBoolean:[self executeNodeInScope:scope node:children[1]]];
+        BOOL num1 = [self toBool:[self executeNodeInScope:scope node:children[0]]];
+        BOOL num2 = [self toBool:[self executeNodeInScope:scope node:children[1]]];
         return @(num1 || num2);
     } else if ([type isEqualToString:@"&&"]) {
-        NSNumber *num1 = [self toBoolean:[self executeNodeInScope:scope node:children[0]]];
-        NSNumber *num2 = [self toBoolean:[self executeNodeInScope:scope node:children[1]]];
+        BOOL num1 = [self toBool:[self executeNodeInScope:scope node:children[0]]];
+        BOOL num2 = [self toBool:[self executeNodeInScope:scope node:children[1]]];
         return @(num1 && num2);
     }
     

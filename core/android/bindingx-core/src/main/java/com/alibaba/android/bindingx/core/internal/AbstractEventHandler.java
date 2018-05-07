@@ -23,6 +23,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.bindingx.core.BindingXCore;
+import com.alibaba.android.bindingx.core.BindingXPropertyInterceptor;
 import com.alibaba.android.bindingx.core.IEventHandler;
 import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
@@ -203,12 +204,6 @@ public abstract class AbstractEventHandler implements IEventHandler {
                 }
                 String instanceId = TextUtils.isEmpty(holder.targetInstanceId)? mInstanceId : holder.targetInstanceId;
 
-                View targetView = mPlatformManager.getViewFinder().findViewBy(holder.targetRef, instanceId);
-                if (targetView == null) {
-                    LogProxy.e("failed to execute expression,target view not found.[ref:" + holder.targetRef + "]");
-                    continue;
-                }
-
                 ExpressionPair expressionPair = holder.expressionPair;
                 if(expressionPair == null
                         || TextUtils.isEmpty(expressionPair.transformed)
@@ -231,7 +226,29 @@ public abstract class AbstractEventHandler implements IEventHandler {
                     LogProxy.e("failed to execute expression,expression result is NaN");
                     continue;
                 }
-                //apply transform to target view.
+                //apply transformation/layout change ... to target view.
+
+                List<BindingXPropertyInterceptor.IPropertyUpdateInterceptor> interceptorList =
+                        BindingXPropertyInterceptor.getInstance().getInterceptors();
+
+                View targetView = mPlatformManager.getViewFinder().findViewBy(holder.targetRef, instanceId);
+                for(BindingXPropertyInterceptor.IPropertyUpdateInterceptor interceptor : interceptorList) {
+                    interceptor.updateView(
+                            targetView,
+                            holder.prop,
+                            obj,
+                            mPlatformManager.getResolutionTranslator(),
+                            holder.config,
+                            holder.targetRef,
+                            instanceId);
+                }
+
+                if (targetView == null) {
+                    LogProxy.e("failed to execute expression,target view not found.[ref:" + holder.targetRef + "]");
+                    continue;
+                }
+
+                // default behavior
                 mPlatformManager.getViewUpdater().synchronouslyUpdateViewOnUIThread(
                         targetView,
                         holder.prop,
