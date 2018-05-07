@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <BindingX/EBHandlerFactory.h>
 
-@interface CustomEBHandler : NSObject <EBHandler>
+@interface CustomEBHandler : NSObject <EBHandlerProtocol>
 
 @end

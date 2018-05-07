@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		75366A6310F1B497DE83EB19 /* libPods-BindingX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD59D44D801E4D64FEAB61A /* libPods-BindingX.a */; };
 		C45843F01E84EF7B00D88C0B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C45843EF1E84EF7B00D88C0B /* Info.plist */; };
+		D94C355120A005B50075FAA5 /* BindingX.h in Headers */ = {isa = PBXBuildFile; fileRef = D94C355020A005B50075FAA5 /* BindingX.h */; };
 		D955B11C202FDCD4000274AC /* EBUtility+WX.m in Sources */ = {isa = PBXBuildFile; fileRef = D955B118202FDCD4000274AC /* EBUtility+WX.m */; };
 		D955B11D202FDCD4000274AC /* EBWXModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D955B119202FDCD4000274AC /* EBWXModule.m */; };
 		D955B11E202FDCD4000274AC /* EBUtility+WX.h in Headers */ = {isa = PBXBuildFile; fileRef = D955B11A202FDCD4000274AC /* EBUtility+WX.h */; };
@@ -16,7 +17,6 @@
 		D9A27D982047E229003AC20E /* EBGyroVector3.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D692047E226003AC20E /* EBGyroVector3.m */; };
 		D9A27D992047E229003AC20E /* EBJSEvaluate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D6A2047E226003AC20E /* EBJSEvaluate.m */; };
 		D9A27D9A2047E229003AC20E /* EBBindData.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D6B2047E226003AC20E /* EBBindData.m */; };
-		D9A27D9B2047E229003AC20E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9A27D6C2047E226003AC20E /* Info.plist */; };
 		D9A27D9C2047E229003AC20E /* EBExpressionTiming.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D6D2047E226003AC20E /* EBExpressionTiming.m */; };
 		D9A27D9D2047E229003AC20E /* EBExpressionScope.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D6E2047E226003AC20E /* EBExpressionScope.h */; };
 		D9A27D9E2047E229003AC20E /* EBExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D6F2047E226003AC20E /* EBExpression.h */; };
@@ -74,6 +74,7 @@
 		87F9AEB97654FF7EEA032F16 /* Pods-BindingX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BindingX.release.xcconfig"; path = "Pods/Target Support Files/Pods-BindingX/Pods-BindingX.release.xcconfig"; sourceTree = "<group>"; };
 		C45843E41E84EF5B00D88C0B /* BindingX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BindingX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C45843EF1E84EF7B00D88C0B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D94C355020A005B50075FAA5 /* BindingX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BindingX.h; sourceTree = "<group>"; };
 		D955B118202FDCD4000274AC /* EBUtility+WX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EBUtility+WX.m"; sourceTree = "<group>"; };
 		D955B119202FDCD4000274AC /* EBWXModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBWXModule.m; sourceTree = "<group>"; };
 		D955B11A202FDCD4000274AC /* EBUtility+WX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EBUtility+WX.h"; sourceTree = "<group>"; };
@@ -81,7 +82,6 @@
 		D9A27D692047E226003AC20E /* EBGyroVector3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBGyroVector3.m; sourceTree = "<group>"; };
 		D9A27D6A2047E226003AC20E /* EBJSEvaluate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBJSEvaluate.m; sourceTree = "<group>"; };
 		D9A27D6B2047E226003AC20E /* EBBindData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBBindData.m; sourceTree = "<group>"; };
-		D9A27D6C2047E226003AC20E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9A27D6D2047E226003AC20E /* EBExpressionTiming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionTiming.m; sourceTree = "<group>"; };
 		D9A27D6E2047E226003AC20E /* EBExpressionScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionScope.h; sourceTree = "<group>"; };
 		D9A27D6F2047E226003AC20E /* EBExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpression.h; sourceTree = "<group>"; };
@@ -235,11 +235,11 @@
 				D9A27D922047E229003AC20E /* EBTaffyTuple.m */,
 				D9A27D742047E227003AC20E /* EBUtility.h */,
 				D9A27D802047E227003AC20E /* EBUtility.m */,
-				D9A27D6C2047E226003AC20E /* Info.plist */,
 				D9A27D7C2047E227003AC20E /* NSObject+EBTuplePacker.h */,
 				D9A27D772047E227003AC20E /* NSObject+EBTuplePacker.m */,
 				D9F28AE02071E11100CE451B /* EBHandlerFactory.h */,
 				D9F28AE12071E11100CE451B /* EBHandlerFactory.m */,
+				D94C355020A005B50075FAA5 /* BindingX.h */,
 			);
 			name = core;
 			path = ../../../core/ios/BindingX;
@@ -261,6 +261,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D94C355120A005B50075FAA5 /* BindingX.h in Headers */,
 				D9A27DAD2047E229003AC20E /* EBExpressionOrientation.h in Headers */,
 				D9A27DAA2047E229003AC20E /* EBNativeFunction.h in Headers */,
 				D9A27DC22047E229003AC20E /* EBExpressionExecutor.h in Headers */,
@@ -352,7 +353,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9A27D9B2047E229003AC20E /* Info.plist in Resources */,
 				C45843F01E84EF7B00D88C0B /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

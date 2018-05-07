@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol EBHandler
+@protocol EBHandlerProtocol
 
 - (void)execute:(NSDictionary *)model to:(id)target;
 
@@ -16,8 +16,10 @@
 
 @interface EBHandlerFactory : NSObject
 
-+ (NSArray<id<EBHandler>>*)handlers;
++ (NSArray<id<EBHandlerProtocol>>*)handlers;
 
-+ (void)addHandler:(id<EBHandler>)handler;
++ (void)addHandler:(id<EBHandlerProtocol>)handler;
+
++ (void)removeHandler:(id<EBHandlerProtocol>)handler;
 
 @end

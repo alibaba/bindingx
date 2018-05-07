@@ -97,7 +97,7 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
         }
         
         // customer handler
-        for (id<EBHandler> handler in [EBHandlerFactory handlers]) {
+        for (id<EBHandlerProtocol> handler in EBHandlerFactory.handlers) {
             [handler execute:properties to:target];
         }
         

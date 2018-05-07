@@ -10,7 +10,7 @@
 
 @interface EBHandlerFactory ()
 
-@property(nonatomic, strong) NSMutableArray<id<EBHandler>>* handlers;
+@property(nonatomic, strong) NSMutableArray<id<EBHandlerProtocol>>* handlers;
 
 @end
 
@@ -26,12 +26,16 @@
     return _sharedInstance;
 }
 
-+ (NSArray<id<EBHandler>> *)handlers {
-    return [EBHandlerFactory sharedInstance].handlers;
++ (NSArray<id<EBHandlerProtocol>> *)handlers {
+    return [[EBHandlerFactory sharedInstance].handlers copy];
 }
 
-+ (void)addHandler:(id<EBHandler>)handler {
-    return [[EBHandlerFactory sharedInstance].handlers addObject:handler];
++ (void)addHandler:(id<EBHandlerProtocol>)handler {
+    [[EBHandlerFactory sharedInstance].handlers addObject:handler];
+}
+
++ (void)removeHandler:(id<EBHandlerProtocol>)handler {
+    [[EBHandlerFactory sharedInstance].handlers removeObject:handler];
 }
 
 @end
