@@ -51,14 +51,23 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
     WXEPViewPropertyBorderTopRightRadius,
     WXEPViewPropertyBorderBottomRightRadius,
     WXEPViewPropertyBorderBottomLeftRadius,
+    WXEPViewPropertyMarginTop,
+    WXEPViewPropertyMarginRight,
+    WXEPViewPropertyMarginBottom,
+    WXEPViewPropertyMarginLeft,
+    WXEPViewPropertyPaddingTop,
+    WXEPViewPropertyPaddingRight,
+    WXEPViewPropertyPaddingBottom,
+    WXEPViewPropertyPaddingLeft,
 };
 
 @implementation EBExpressionExecutor
 
 + (BOOL)executeExpression:(NSMapTable *)expressionMap exitExpression:(NSDictionary *)exitExpression scope:(NSDictionary *)scope {
     
-    for (id target in expressionMap) {
-        NSDictionary *expressionDictionary = [expressionMap objectForKey:target];
+    NSMapTable *_expressionMap = [expressionMap copy];
+    for (id target in _expressionMap) {
+        NSDictionary *expressionDictionary = [_expressionMap objectForKey:target];
         EBExpressionProperty *model = [[EBExpressionProperty alloc] init];
         
         // gather property
@@ -193,6 +202,30 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
         case WXEPViewPropertyBorderBottomLeftRadius:
             [*model setBrBL:[EBExpressionExecutor unpackSingleRet:result]];
             break;
+        case WXEPViewPropertyMarginTop:
+            [*model setMarginTop:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyMarginRight:
+            [*model setMarginRight:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyMarginBottom:
+            [*model setMarginBottom:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyMarginLeft:
+            [*model setMarginLeft:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyPaddingTop:
+            [*model setPaddingTop:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyPaddingRight:
+            [*model setPaddingRight:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyPaddingBottom:
+            [*model setPaddingBottom:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
+        case WXEPViewPropertyPaddingLeft:
+            [*model setPaddingLeft:[EBExpressionExecutor unpackSingleRet:result]];
+            break;
         default:
             break;
     }
@@ -242,6 +275,14 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
                 @"border-top-right-radius":@(WXEPViewPropertyBorderTopRightRadius),
                 @"border-bottom-right-radius":@(WXEPViewPropertyBorderBottomRightRadius),
                 @"border-bottom-left-radius":@(WXEPViewPropertyBorderBottomLeftRadius),
+                @"margin-top":@(WXEPViewPropertyMarginTop),
+                @"margin-right":@(WXEPViewPropertyMarginRight),
+                @"margin-bottom":@(WXEPViewPropertyMarginBottom),
+                @"margin-left":@(WXEPViewPropertyMarginLeft),
+                @"padding-top":@(WXEPViewPropertyPaddingTop),
+                @"padding-right":@(WXEPViewPropertyPaddingRight),
+                @"padding-bottom":@(WXEPViewPropertyPaddingBottom),
+                @"padding-left":@(WXEPViewPropertyPaddingLeft),
                 };
     });
     return map;

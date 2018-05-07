@@ -24,6 +24,14 @@ export default class AnimatedBall extends Component {
   _x = 0;
   _y = 0;
 
+  componentDidMount() {
+    let anchor = findNodeHandle(this.refs._anchor);
+    bindingx.prepare({
+      eventType: 'pan',
+      anchor: anchor
+    });
+  }
+
   onPanEnd = (e) => {
     if (e.state === 'end') {
       this._x += e.deltaX;

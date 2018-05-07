@@ -225,6 +225,7 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
                     mBindingXCore.doRelease();
                     mBindingXCore = null;
                 }
+                WXViewUpdateService.clearCallbacks();
             }
         }, null);
     }
