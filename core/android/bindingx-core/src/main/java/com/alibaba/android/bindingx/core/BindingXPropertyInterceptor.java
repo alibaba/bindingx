@@ -15,6 +15,8 @@
  */
 package com.alibaba.android.bindingx.core;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -33,6 +35,8 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 public class BindingXPropertyInterceptor {
+
+    private final Handler sUIHandler = new Handler(Looper.getMainLooper());
 
     private final LinkedList<IPropertyUpdateInterceptor> mPropertyInterceptors = new LinkedList<>();
 
@@ -59,6 +63,36 @@ public class BindingXPropertyInterceptor {
 
     public void clear() {
         mPropertyInterceptors.clear();
+    }
+
+    public void performIntercept(@Nullable final View targetView,
+                                 @NonNull final String propertyName,
+                                 @NonNull final Object propertyValue,
+                                 @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
+                                 @NonNull final Map<String, Object> config,
+                                 final Object... extension) {
+        if(mPropertyInterceptors.isEmpty()) {
+            return;
+        }
+
+        sUIHandler.post(new WeakRunnable(new Runnable() {
+            @Override
+            public void run() {
+                for(BindingXPropertyInterceptor.IPropertyUpdateInterceptor interceptor : mPropertyInterceptors) {
+                    interceptor.updateView(
+                            targetView,
+                            propertyName,
+                            propertyValue,
+                            translator,
+                            config,
+                            extension);
+                }
+            }
+        }));
+    }
+
+    public void clearCallbacks() {
+        sUIHandler.removeCallbacksAndMessages(null);
     }
 
     @NonNull

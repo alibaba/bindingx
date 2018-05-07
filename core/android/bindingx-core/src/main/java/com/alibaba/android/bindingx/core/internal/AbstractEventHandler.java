@@ -95,6 +95,7 @@ public abstract class AbstractEventHandler implements IEventHandler {
     @CallSuper
     public void onDestroy() {
         mCachedExpressionMap.clear();
+        BindingXPropertyInterceptor.getInstance().clearCallbacks();
     }
 
     private void applyFunctionsToScope() {
@@ -230,20 +231,16 @@ public abstract class AbstractEventHandler implements IEventHandler {
                 }
                 //apply transformation/layout change ... to target view.
 
-                List<BindingXPropertyInterceptor.IPropertyUpdateInterceptor> interceptorList =
-                        BindingXPropertyInterceptor.getInstance().getInterceptors();
-
                 View targetView = mPlatformManager.getViewFinder().findViewBy(holder.targetRef, instanceId);
-                for(BindingXPropertyInterceptor.IPropertyUpdateInterceptor interceptor : interceptorList) {
-                    interceptor.updateView(
-                            targetView,
-                            holder.prop,
-                            obj,
-                            mPlatformManager.getResolutionTranslator(),
-                            holder.config,
-                            holder.targetRef,
-                            instanceId);
-                }
+                BindingXPropertyInterceptor.getInstance().performIntercept(
+                        targetView,
+                        holder.prop,
+                        obj,
+                        mPlatformManager.getResolutionTranslator(),
+                        holder.config,
+                        holder.targetRef,
+                        instanceId
+                );
 
                 if (targetView == null) {
                     LogProxy.e("failed to execute expression,target view not found.[ref:" + holder.targetRef + "]");
