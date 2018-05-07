@@ -1,1 +1,3 @@
-//TODO @伯才
+import bindingx from './src/bindingx';
+
+module.exports = bindingx;
