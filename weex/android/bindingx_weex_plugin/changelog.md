@@ -32,3 +32,7 @@
 #### 1.0.7
 
 1. getComputedStyle支持width/height/margin/padding
+
+#### 1.0.8
+
+1. 代码重构(WeakRunnable抽到bindingx-core)

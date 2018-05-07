@@ -32,6 +32,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
+import com.alibaba.android.bindingx.core.WeakRunnable;
 import com.alibaba.android.bindingx.core.internal.Utils;
 import com.taobao.weex.common.Constants;
 import com.taobao.weex.dom.CSSShorthand;
@@ -43,7 +44,6 @@ import com.taobao.weex.ui.view.WXTextView;
 import com.taobao.weex.ui.view.border.BorderDrawable;
 import com.taobao.weex.utils.WXUtils;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -851,21 +851,5 @@ final class WXViewUpdateService {
         }
         WXScroller scroller = (WXScroller) component;
         return scroller.getInnerView();
-    }
-
-    static class WeakRunnable implements Runnable {
-        private final WeakReference<Runnable> mDelegateRunnable;
-
-        WeakRunnable(@NonNull Runnable runnable){
-            mDelegateRunnable = new WeakReference<>(runnable);
-        }
-
-        @Override
-        public void run() {
-            Runnable runnable = mDelegateRunnable.get();
-            if(runnable != null) {
-                runnable.run();
-            }
-        }
     }
 }
