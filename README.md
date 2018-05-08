@@ -127,7 +127,7 @@ module will be registed automatically.
 
 Notice:
 
-1. migrate to android gradle plugin 3.0;
+1. migrate to [android gradle plugin 3.0](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration);
 2. use `implementation` instead of `compile` in your build.gradle;
 3. add google repository to your root build.gradle:
 
