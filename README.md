@@ -113,7 +113,30 @@ module will be registed automatically.
 
 ### React Native
 
-we will upload React Native bindingx plugin to npm as soon as possible, then you can use `npm install` command to install. But for now, you should compile our plugin using source code.
+*Prerequisites*: integrate [react native](https://facebook.github.io/react-native/) to your application.
+
+#### Android
+
+1. install dependencies: `npm install react-native-bindingx --save`;
+2. link library: `react-native link react-native-bindingx`;
+3. add `bindingx-core` library to `build.gradle` manually:
+
+  ```
+  implementation 'com.alibaba.android:bindingx-core:{latest_version}'
+  ```  
+
+Notice:
+
+1. migrate to android gradle plugin 3.0;
+2. use `implementation` instead of `compile` in your build.gradle;
+3. add google repository to your root build.gradle:
+
+  ```
+  repositories {
+    google()
+    ...
+  }
+  ```
 
 # Who is using
 
