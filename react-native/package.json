@@ -6,10 +6,12 @@
     "start": "node node_modules/react-native/local-cli/cli.js start --root ./example",
     "test": "jest"
   },
+  "main":"lib/index.js",
   "dependencies": {
     "react": "16.0.0",
     "react-native": "0.51.0",
-    "react-native-bindingx": "0.x.x"
+    "react-native-bindingx": "0.0.x",
+    "react-navigation": "^1.5.8"
   },
   "devDependencies": {
     "babel-jest": "22.0.3",
