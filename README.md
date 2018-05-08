@@ -36,18 +36,18 @@ Below are some examples which is using bindingx. You can get more examples by ru
 # Demo examples
   1. pan gesture: [rax](https://jsplayground.taobao.org/raxplayground/34ceb3e5-8927-4e0c-a282-2dd37c9d7b74)  [vue](https://jsplayground.taobao.org/vueplayground/1518d8ac-4403-414f-ba83-616eb8b77dc6)  [rn](https://github.com/alibaba/bindingx/blob/master/react-native/example/src/AnimatedBall.js)
   2. timing: [rax](https://jsplayground.taobao.org/raxplayground/31211efb-d643-4cd0-8e9e-46b0c29ddd50)  [vue](https://jsplayground.taobao.org/vueplayground/6a016074-225c-461e-bfa7-b73b8336ea3d)  [rn](https://github.com/alibaba/bindingx/blob/master/react-native/example/src/TimingDemo.js)
-  3. scroll: [rax](https://jsplayground.taobao.org/raxplayground/8e3b0234-f218-41e2-b146-db76a00e4096)  [vue](https://jsplayground.taobao.org/vueplayground/ca7bef18-ce30-4e00-9a41-746b8646348b)  [rn](https://github.com/alibaba/bindingx/blob/master/react-native/example/src/ScrollViewDemo.js)
+  3. scroll: [rax](https://jsplayground.taobao.org/raxplayground/8e3b0234-f218-41e2-b146-db76a00e4096)  [vue](https://jsplayground.taobao.org/vueplayground/0fe39539-f08c-4be0-a589-499be32f6351)  [rn](https://github.com/alibaba/bindingx/blob/master/react-native/example/src/ScrollViewDemo.js)
   4. orientation: [rax](https://jsplayground.taobao.org/raxplayground/1d3ed4e1-506b-4308-bffa-ecf241a0cc70)  [vue](https://jsplayground.taobao.org/vueplayground/18a9115c-c85b-4a12-a1b2-2b0c401a6eb6)  [rn](https://github.com/alibaba/bindingx/blob/master/react-native/example/src/OrientationDemo.js)
 
 # RealLife examples
 
-  1. Draggable ball: [rax](https://jsplayground.taobao.org/raxplayground/3ec5c8ef-42ff-47fb-9791-4bd7c257b4a7)  [vue](https://jsplayground.taobao.org/vueplayground/de9c7e84-2dc0-4873-8bb0-ce899e64f6ab) 
-  2. Swipeable card: [rax](https://jsplayground.taobao.org/raxplayground/7ac0f12b-72e7-4aa5-b398-693ba7b34cd6)  [vue](https://jsplayground.taobao.org/vueplayground/9e4899f6-0fe1-4ffa-86ec-b9c28d22bae9) 
-  3. Expandable menu: [rax](https://jsplayground.taobao.org/raxplayground/3f93ffd1-3028-4a9e-9e94-0188973bc44b)  [vue](https://jsplayground.taobao.org/vueplayground/3a388c50-18f8-45d3-b1cf-3f5f0c226c19) 
-  4. Slide layout: [rax](https://jsplayground.taobao.org/raxplayground/34e0eae9-ca2d-481f-94b5-239732651eeb)  [vue](https://jsplayground.taobao.org/vueplayground/925802dc-c7c9-4309-b1e1-f83458bb39c4) 
-  5. Circle menu: [rax](https://jsplayground.taobao.org/raxplayground/0b2fa94c-b107-422f-8c2c-60481af89d31)  [vue](https://jsplayground.taobao.org/vueplayground/42ffd6b2-9ff6-4161-8224-34779b3af7e6) 
-  6. Navigation with Tab: [rax](https://jsplayground.taobao.org/raxplayground/b8583160-f63f-4ab6-9f98-af7a3da283f8)  [vue](https://jsplayground.taobao.org/vueplayground/2f9e0733-b853-4d97-b350-2630c1a50c83) 
-  7. Ripple effect: [rax](https://jsplayground.taobao.org/raxplayground/c4a295f5-bec2-485e-8e05-de80c7274191)  [vue](https://jsplayground.taobao.org/vueplayground/2741ac64-3956-4dc9-ad61-d59b5768d97f) 
+  1. Draggable ball: [rax](https://jsplayground.taobao.org/raxplayground/3ec5c8ef-42ff-47fb-9791-4bd7c257b4a7)  [vue](https://jsplayground.taobao.org/vueplayground/de9c7e84-2dc0-4873-8bb0-ce899e64f6ab)
+  2. Swipeable card: [rax](https://jsplayground.taobao.org/raxplayground/7ac0f12b-72e7-4aa5-b398-693ba7b34cd6)  [vue](https://jsplayground.taobao.org/vueplayground/9e4899f6-0fe1-4ffa-86ec-b9c28d22bae9)
+  3. Expandable menu: [rax](https://jsplayground.taobao.org/raxplayground/3f93ffd1-3028-4a9e-9e94-0188973bc44b)  [vue](https://jsplayground.taobao.org/vueplayground/3a388c50-18f8-45d3-b1cf-3f5f0c226c19)
+  4. Slide layout: [rax](https://jsplayground.taobao.org/raxplayground/34e0eae9-ca2d-481f-94b5-239732651eeb)  [vue](https://jsplayground.taobao.org/vueplayground/925802dc-c7c9-4309-b1e1-f83458bb39c4)
+  5. Circle menu: [rax](https://jsplayground.taobao.org/raxplayground/0b2fa94c-b107-422f-8c2c-60481af89d31)  [vue](https://jsplayground.taobao.org/vueplayground/42ffd6b2-9ff6-4161-8224-34779b3af7e6)
+  6. Navigation with Tab: [rax](https://jsplayground.taobao.org/raxplayground/b8583160-f63f-4ab6-9f98-af7a3da283f8)  [vue](https://jsplayground.taobao.org/vueplayground/2f9e0733-b853-4d97-b350-2630c1a50c83)
+  7. Ripple effect: [rax](https://jsplayground.taobao.org/raxplayground/c4a295f5-bec2-485e-8e05-de80c7274191)  [vue](https://jsplayground.taobao.org/vueplayground/2741ac64-3956-4dc9-ad61-d59b5768d97f)
 
 Note: Weex has two DSL (rax & vue). The link is jumping to JS-Playground. But now our JS-Playground not support React-Native code, so it is jumping to plain source code.
 

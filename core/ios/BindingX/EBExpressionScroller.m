@@ -73,7 +73,6 @@
         [EBUtility performBlockOnBridgeThread:^{
             if (self.turnChange) {
                 [welf fireTurnEvent:scope];
-                return;
             }
             BOOL exit = ![welf executeExpression:scope];
             if (exit) {
