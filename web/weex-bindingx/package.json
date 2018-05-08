@@ -1,6 +1,6 @@
 {
   "name": "weex-bindingx",
-  "version": "0.0.23",
+  "version": "0.0.25",
   "description": "bindingx,expression,binding,weex",
   "main": "lib/index.js",
   "repository": {
@@ -27,7 +27,6 @@
     "universal-env": "0.x.x"
   },
   "devDependencies": {
-    "@ali/weex-vue-render": "^1.0.12",
     "autoprefixer": "^8.0.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -43,12 +42,12 @@
     "file-loader": "^1.1.6",
     "postcss-plugin-px2rem": "^0.7.0",
     "postcss-plugin-weex": "^0.1.6",
-    "rax": "^0.5.3",
-    "rax-listview": "^0.5.2",
-    "rax-picker": "^0.5.2",
-    "rax-text": "^0.5.2",
-    "rax-view": "^0.5.2",
-    "rax-webpack-plugin": "^0.5.2",
+    "rax": "0.x.x",
+    "rax-listview": "0.x.x",
+    "rax-picker": "0.x.x",
+    "rax-text": "0.x.x",
+    "rax-view": "0.x.x",
+    "rax-webpack-plugin": "0.x.x",
     "vue": "^2.5.13",
     "vue-loader": "^14.1.1",
     "vue-style-loader": "^3.1.2",
@@ -58,7 +57,8 @@
     "webpack-dev-server": "^2.7.1",
     "webpack-merge": "^4.1.1",
     "weex-loader": "^0.7.2",
-    "weex-vue-precompiler": "^0.1.17"
+    "weex-vue-precompiler": "^0.1.17",
+    "weex-vue-render": "^1.0.24"
   },
   "author": "",
   "license": "Apache-2.0"

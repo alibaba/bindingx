@@ -21,7 +21,7 @@ class App extends Component {
         anchor: block,
         eventType: 'pan'
       });
-      console.error(bindingx.getComputedStyle(block))
+      console.error(bindingx.getComputedStyle(block));
     }, 50);
 
 
