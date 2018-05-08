@@ -1,27 +1,27 @@
 
-  ;(function(fn) {
-    if (typeof exports === "object" && typeof module !== "undefined") {
+;(function(fn) {
+  if (typeof exports === "object" && typeof module !== "undefined") {
+    module.exports = fn();
+  } else if (typeof define === "function") {
+    define("index.native", function(require, exports, module){
       module.exports = fn();
-    } else if (typeof define === "function") {
-      define("index.native", function(require, exports, module){
-        module.exports = fn();
-      });
+    });
+  } else {
+    var root;
+    if (typeof window !== "undefined") {
+      root = window;
+    } else if (typeof self !== "undefined") {
+      root = self;
+    } else if (typeof global !== "undefined") {
+      root = global;
     } else {
-      var root;
-      if (typeof window !== "undefined") {
-        root = window;
-      } else if (typeof self !== "undefined") {
-        root = self;
-      } else if (typeof global !== "undefined") {
-        root = global;
-      } else {
-        // NOTICE: In JavaScript strict mode, this is null
-        root = this;
-      }
-      root["index.native"] = fn();
+      // NOTICE: In JavaScript strict mode, this is null
+      root = this;
     }
-  })(function(){
-    return /******/ (function(modules) { // webpackBootstrap
+    root["index.native"] = fn();
+  }
+})(function(){
+  return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/

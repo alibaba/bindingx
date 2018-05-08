@@ -62,12 +62,14 @@
 - (void)removeExpressionBinding {
     [super removeExpressionBinding];
     
-    if (self.tmpDelegate) {
-        self.gesture.delegate = self.tmpDelegate;
-        [self.gesture removeTarget:self action:nil];
-        self.tmpDelegate = nil;
-    }
-    self.gesture = nil;
+    [EBUtility performBlockOnMainThread:^{
+        if (self.tmpDelegate) {
+            self.gesture.delegate = self.tmpDelegate;
+            [self.gesture removeTarget:self action:nil];
+            self.tmpDelegate = nil;
+        }
+        self.gesture = nil;
+    }];
 }
 
 #pragma mark - private methods

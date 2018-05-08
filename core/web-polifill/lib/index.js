@@ -1712,7 +1712,7 @@ var Binding = function () {
         var element = prop.element;
 
         if (!_simpleLodash2.default.find(elTransforms, function (o) {
-          return o.element === element;
+          return o.element === element && element instanceof HTMLElement;
         })) {
           elTransforms.push({
             element: element,
@@ -1742,69 +1742,81 @@ var Binding = function () {
   }, {
     key: 'setProperty',
     value: function setProperty(el, property, val) {
-      var elTransform = _simpleLodash2.default.find(this.elTransforms, function (o) {
-        return o.element === el;
-      });
-      switch (property) {
-        case 'transform.translateX':
-          elTransform.transform.translateX = (0, _utils.px)(val);
-          break;
-        case 'transform.translateY':
-          elTransform.transform.translateY = (0, _utils.px)(val);
-          break;
-        case 'transform.translateZ':
-          elTransform.transform.translateZ = (0, _utils.px)(val);
-          break;
-        case 'transform.rotateX':
-          elTransform.transform.rotateX = val;
-          break;
-        case 'transform.rotateY':
-          elTransform.transform.rotateY = val;
-          break;
-        case 'transform.rotateZ':
-          elTransform.transform.rotateZ = val;
-          break;
-        case 'transform.rotate':
-          elTransform.transform.rotateZ = val;
-          break;
-        case 'transform.scaleX':
-          elTransform.transform.scaleX = val;
-          break;
-        case 'transform.scaleY':
-          elTransform.transform.scaleY = val;
-          break;
-        case 'transform.scale':
-          elTransform.transform.scaleX = val;
-          elTransform.transform.scaleY = val;
-          break;
-        case 'opacity':
-          el.style.opacity = val;
-          break;
-        case 'background-color':
-          el.style['background-color'] = val;
-          break;
-        case 'color':
-          el.style.color = val;
-          break;
-        case 'width':
-        case 'height':
-        case 'border-top-left-radius':
-        case 'border-top-right-radius':
-        case 'border-bottom-left-radius':
-        case 'border-bottom-right-radius':
-        case 'border-radius':
-        case 'margin-top':
-        case 'margin-bottom':
-        case 'margin-left':
-        case 'margin-right':
-        case 'padding-top':
-        case 'padding-bottom':
-        case 'padding-left':
-        case 'padding-right':
-          el.style[property] = (0, _utils.px)(val) + 'px';
-          break;
+      if (el instanceof HTMLElement) {
+        var elTransform = _simpleLodash2.default.find(this.elTransforms, function (o) {
+          return o.element === el;
+        });
+        switch (property) {
+          case 'transform.translateX':
+            elTransform.transform.translateX = (0, _utils.px)(val);
+            break;
+          case 'transform.translateY':
+            elTransform.transform.translateY = (0, _utils.px)(val);
+            break;
+          case 'transform.translateZ':
+            elTransform.transform.translateZ = (0, _utils.px)(val);
+            break;
+          case 'transform.rotateX':
+            elTransform.transform.rotateX = val;
+            break;
+          case 'transform.rotateY':
+            elTransform.transform.rotateY = val;
+            break;
+          case 'transform.rotateZ':
+            elTransform.transform.rotateZ = val;
+            break;
+          case 'transform.rotate':
+            elTransform.transform.rotateZ = val;
+            break;
+          case 'transform.scaleX':
+            elTransform.transform.scaleX = val;
+            break;
+          case 'transform.scaleY':
+            elTransform.transform.scaleY = val;
+            break;
+          case 'transform.scale':
+            elTransform.transform.scaleX = val;
+            elTransform.transform.scaleY = val;
+            break;
+          case 'opacity':
+            el.style.opacity = val;
+            break;
+          case 'background-color':
+            el.style['background-color'] = val;
+            break;
+          case 'color':
+            el.style.color = val;
+            break;
+          case 'width':
+          case 'height':
+          case 'border-top-left-radius':
+          case 'border-top-right-radius':
+          case 'border-bottom-left-radius':
+          case 'border-bottom-right-radius':
+          case 'border-radius':
+          case 'margin-top':
+          case 'margin-bottom':
+          case 'margin-left':
+          case 'margin-right':
+          case 'padding-top':
+          case 'padding-bottom':
+          case 'padding-left':
+          case 'padding-right':
+            el.style[property] = (0, _utils.px)(val) + 'px';
+            break;
+        }
+        el.style[vendorTransform] = ['translateX(' + elTransform.transform.translateX + 'px)', 'translateY(' + elTransform.transform.translateY + 'px)', 'translateZ(' + elTransform.transform.translateZ + 'px)', 'scaleX(' + elTransform.transform.scaleX + ')', 'scaleY(' + elTransform.transform.scaleY + ')', 'rotateX(' + elTransform.transform.rotateX + 'deg)', 'rotateY(' + elTransform.transform.rotateY + 'deg)', 'rotateZ(' + elTransform.transform.rotateZ + 'deg)'].join(' ');
+      } else {
+
+        switch (property) {
+          case 'lottie-progress':
+            // for lottie
+            if (typeof el.setProgress == 'function') {
+              el.setProgress(val);
+            }
+            break;
+        }
       }
-      el.style[vendorTransform] = ['translateX(' + elTransform.transform.translateX + 'px)', 'translateY(' + elTransform.transform.translateY + 'px)', 'translateZ(' + elTransform.transform.translateZ + 'px)', 'scaleX(' + elTransform.transform.scaleX + ')', 'scaleY(' + elTransform.transform.scaleY + ')', 'rotateX(' + elTransform.transform.rotateX + 'deg)', 'rotateY(' + elTransform.transform.rotateY + 'deg)', 'rotateZ(' + elTransform.transform.rotateZ + 'deg)'].join(' ');
     }
   }, {
     key: 'destroy',
@@ -1890,26 +1902,35 @@ module.exports = {
     });
   },
   getComputedStyle: function getComputedStyle(elRef) {
-    var computedStyle = window.getComputedStyle(elRef);
-    var style = (0, _utils.matrixToTransformObj)(computedStyle[vendorTransform]);
-    style.opacity = Number(computedStyle.opacity);
-    style['background-color'] = computedStyle['background-color'];
-    style.color = computedStyle.color;
-    style.width = (0, _utils.pxTo750)(computedStyle.width.replace('px', ''));
-    style.height = (0, _utils.pxTo750)(computedStyle.height.replace('px', ''));
-    style['border-top-left-radius'] = (0, _utils.pxTo750)(computedStyle['border-top-left-radius'].replace('px', ''));
-    style['border-top-right-radius'] = (0, _utils.pxTo750)(computedStyle['border-top-right-radius'].replace('px', ''));
-    style['border-bottom-left-radius'] = (0, _utils.pxTo750)(computedStyle['border-bottom-left-radius'].replace('px', ''));
-    style['border-bottom-right-radius'] = (0, _utils.pxTo750)(computedStyle['border-bottom-right-radius'].replace('px', ''));
-    style['margin-top'] = (0, _utils.pxTo750)(computedStyle['margin-top'].replace('px', ''));
-    style['margin-bottom'] = (0, _utils.pxTo750)(computedStyle['margin-bottom'].replace('px', ''));
-    style['margin-left'] = (0, _utils.pxTo750)(computedStyle['margin-left'].replace('px', ''));
-    style['margin-right'] = (0, _utils.pxTo750)(computedStyle['margin-right'].replace('px', ''));
-    style['padding-top'] = (0, _utils.pxTo750)(computedStyle['padding-top'].replace('px', ''));
-    style['padding-bottom'] = (0, _utils.pxTo750)(computedStyle['padding-bottom'].replace('px', ''));
-    style['padding-left'] = (0, _utils.pxTo750)(computedStyle['padding-left'].replace('px', ''));
-    style['padding-right'] = (0, _utils.pxTo750)(computedStyle['padding-right'].replace('px', ''));
-    return style;
+    if (elRef instanceof HTMLElement) {
+      var computedStyle = window.getComputedStyle(elRef);
+      var style = (0, _utils.matrixToTransformObj)(computedStyle[vendorTransform]);
+      style.opacity = Number(computedStyle.opacity);
+      style['background-color'] = computedStyle['background-color'];
+      style.color = computedStyle.color;
+      style.width = (0, _utils.pxTo750)(computedStyle.width.replace('px', ''));
+      style.height = (0, _utils.pxTo750)(computedStyle.height.replace('px', ''));
+      style['border-top-left-radius'] = (0, _utils.pxTo750)(computedStyle['border-top-left-radius'].replace('px', ''));
+      style['border-top-right-radius'] = (0, _utils.pxTo750)(computedStyle['border-top-right-radius'].replace('px', ''));
+      style['border-bottom-left-radius'] = (0, _utils.pxTo750)(computedStyle['border-bottom-left-radius'].replace('px', ''));
+      style['border-bottom-right-radius'] = (0, _utils.pxTo750)(computedStyle['border-bottom-right-radius'].replace('px', ''));
+      style['margin-top'] = (0, _utils.pxTo750)(computedStyle['margin-top'].replace('px', ''));
+      style['margin-bottom'] = (0, _utils.pxTo750)(computedStyle['margin-bottom'].replace('px', ''));
+      style['margin-left'] = (0, _utils.pxTo750)(computedStyle['margin-left'].replace('px', ''));
+      style['margin-right'] = (0, _utils.pxTo750)(computedStyle['margin-right'].replace('px', ''));
+      style['padding-top'] = (0, _utils.pxTo750)(computedStyle['padding-top'].replace('px', ''));
+      style['padding-bottom'] = (0, _utils.pxTo750)(computedStyle['padding-bottom'].replace('px', ''));
+      style['padding-left'] = (0, _utils.pxTo750)(computedStyle['padding-left'].replace('px', ''));
+      style['padding-right'] = (0, _utils.pxTo750)(computedStyle['padding-right'].replace('px', ''));
+      return style;
+    } else {
+      // TODO lottie support
+      // if(typeof elRef.setProgress == 'function') {
+      //   return {
+      // 'lottie-progress':
+      // }
+      // }
+    }
   }
 };
 
