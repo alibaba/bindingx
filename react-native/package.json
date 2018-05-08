@@ -6,8 +6,9 @@
     "start": "node node_modules/react-native/local-cli/cli.js start --root ./example",
     "test": "jest"
   },
-  "main":"lib/index.js",
+  "main": "lib/index.js",
   "dependencies": {
+    "hoek": "^5.0.3",
     "react": "16.0.0",
     "react-native": "0.51.0",
     "react-native-bindingx": "0.0.x",
