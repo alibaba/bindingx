@@ -45,6 +45,7 @@
     "rax": "0.x.x",
     "rax-listview": "0.x.x",
     "rax-picker": "0.x.x",
+    "rax-scrollview": "^0.6.1",
     "rax-text": "0.x.x",
     "rax-view": "0.x.x",
     "rax-webpack-plugin": "0.x.x",

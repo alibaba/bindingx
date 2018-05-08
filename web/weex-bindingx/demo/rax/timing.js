@@ -50,16 +50,12 @@ class App extends Component {
     let origin = this.state.easing === 'cubicBezier' ? `cubicBezier(t, ${begin}, ${end}, ${duration}, ${x1}, ${y1}, ${x2}, ${y2})` : `${this.state.easing}(t,${begin},${end},${duration})`;
     bindingx.bind({
       eventType: 'timing',
-      exitExpression: {
-        origin: `t>${duration}`
-      },
+      exitExpression: `t>${duration}`,
       props: [
         {
           element: blockEl,
           property: 'transform.rotate',
-          expression: {
-            origin
-          },
+          expression: origin,
           config: {
             perspective: 1000,
             transformOrigin: 'center',
@@ -68,9 +64,7 @@ class App extends Component {
         {
           element: blockEl,
           property: 'transform.translateX',
-          expression: {
-            origin
-          },
+          expression: origin,
           config: {
             perspective: 1000,
             transformOrigin: 'center',
