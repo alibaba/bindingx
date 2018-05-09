@@ -1,14 +1,17 @@
 {
   "name": "react-native-bindingx",
-  "version": "0.0.8",
+  "version": "0.1.1",
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start --root ./example",
+    "start": "npm install && node node_modules/react-native/local-cli/cli.js start --root ./example",
+    "postinstall": "ln -sf lib/{ios,android} .",
     "test": "jest"
   },
   "main": "lib/index.js",
+  "nativePackage": true,
   "dependencies": {
     "react": "16.0.0",
-    "react-native": "0.51.0"
+    "react-native": "0.51.0",
+    "bindingx-parser": "^0.0.2"
   },
   "devDependencies": {
     "babel-jest": "22.0.3",
