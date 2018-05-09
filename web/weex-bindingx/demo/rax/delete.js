@@ -16,7 +16,15 @@ class App extends Component {
 
   }
 
-  bindExp = (anchor) => {
+  bindExp = (index) => {
+
+    let anchor = this.refs[`cell_${index}`];
+    if(this.slideIndex === index) {
+      this.stop();
+    }
+
+    let start = bindingx.getComputedStyle(getEl(anchor)).translateX || 0;
+
     bindingx.bind({
       eventType: 'pan',
       anchor: getEl(anchor),
@@ -27,7 +35,7 @@ class App extends Component {
         {
           element: getEl(anchor),
           property: 'transform.translateX',
-          expression: `x+0`
+          expression: `x+${start}`
         }
       ]
     })
@@ -35,30 +43,43 @@ class App extends Component {
 
   onHorizontalPan = (e, index) => {
     if (e.state == 'start') {
-      this.bindExp(this.refs[`cell_${index}`]);
+      this.bindExp(index);
     }
     if (e.state == 'end') {
-      this.slideIn(this.refs[`cell_${index}`]);
+      this.slideIn(index);
     }
   }
 
   onTouchStart = (e, index) => {
-    this.bindExp(this.refs[`cell_${index}`]);
+    this.bindExp(index);
   }
 
   onTouchEnd = (e, index) => {
-    this.slideIn(this.refs[`cell_${index}`]);
+    this.slideIn(index);
   }
 
-  slideIn = (el) => {
-    let start = 0;
+  stop = ()=>{
+
+    if(this.slideToken){
+      bindingx.unbind({
+        eventType:'timing',
+        token:this.slideToken
+      })
+    }
+  }
+
+  slideIn = (index) => {
+    let el = this.refs[`cell_${index}`];
+    let start = bindingx.getComputedStyle(getEl(el)).translateX;
     let end = 0;
     let offset = end - start;
     let duration = 500;
 
-    bindingx.bind({
+    this.slideIndex = index;
+
+    let res = bindingx.bind({
       eventType:'timing',
-      //exitExpression:`t>${duration}`,
+      exitExpression:`t>${duration}`,
       props:[{
         element:getEl(el),
         property:'transform.translateX',
@@ -66,9 +87,11 @@ class App extends Component {
       }]
     },(e)=>{
       if(e.state == 'exit'){
-
+        this.slideIndex = undefined;
       }
-    })
+    });
+
+    this.slideToken = res.token;
   }
 
 
@@ -87,7 +110,7 @@ class App extends Component {
                 onTouchEnd: (e) => this.onTouchEnd(e, index)
               }} style={styles.cell}>
                 <Text className="text">
-                  这里是 Rax Playground, 支持 web 和 weex 的预览.
+                  drag me!
                 </Text>
               </View>
             })}

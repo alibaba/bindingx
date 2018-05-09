@@ -6,7 +6,7 @@ import bindingx from '../src/';
 const scrollView = document.getElementById('scrollView');
 const block = document.getElementById('block');
 
-const expressionOpacity = '';
+const expressionOpacity = 'max(0,min(1,y/750))';
 
 bindingx.bind({
   anchor: scrollView,
