@@ -306,7 +306,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
             [styles setValue:sourceComponent.styles[@"borderRadius"] forKey:@"border-bottom-left-radius"];
             [styles setValue:sourceComponent.styles[@"borderRadius"] forKey:@"border-bottom-right-radius"];
         }
-        WXPerformBlockSyncOnMainThread(^{
+        WXPerformBlockOnMainThread(^{
             CALayer *layer = sourceComponent.view.layer;
             styles[@"translateX"] = [EBUtility transformFactor:@"transform.translation.x" layer:layer];
             styles[@"translateY"] = [EBUtility transformFactor:@"transform.translation.y" layer:layer];
@@ -321,7 +321,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         });
     });
     
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)));
     return styles;
 }
 
