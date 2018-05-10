@@ -17,7 +17,6 @@
 #import "EBExpressionScroller.h"
 #import "EBExpressionScope.h"
 #import "EBExpression.h"
-#import "EBExpressionProperty.h"
 #import "EBExpressionExecutor.h"
 #import "EBUtility.h"
 

@@ -21,6 +21,7 @@
 #import "EBUtility.h"
 #import "EBExpression.h"
 #import <JavaScriptCore/JavaScriptCore.h>
+#import "EBHandlerFactory.h"
 
 typedef NS_ENUM(NSInteger, WXEPViewProperty) {
     WXEPViewPropertyUndefined = 0,
@@ -69,6 +70,7 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
     for (id target in _expressionMap) {
         NSDictionary *expressionDictionary = [_expressionMap objectForKey:target];
         EBExpressionProperty *model = [[EBExpressionProperty alloc] init];
+        NSMutableDictionary *properties = [NSMutableDictionary new];
         
         // gather property
         for (NSString *property in expressionDictionary) {
@@ -87,12 +89,21 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
                 result = [[context evaluateScript:expression] toObject];
             }
             if (result) {
+                [properties setObject:result forKey:property];
+                [properties addEntriesFromDictionary:config];
+                
                 [EBExpressionExecutor change:&model property:property config:config to:result];
             }
         }
         
+        // customer handler
+        for (id<EBHandlerProtocol> handler in EBHandlerFactory.handlers) {
+            [handler execute:properties to:target];
+        }
+        
         // execute
         [EBUtility execute:model to:target];
+        
     }
     
     // exit expression
