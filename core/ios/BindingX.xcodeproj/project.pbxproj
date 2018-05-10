@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D94C354E20A004C00075FAA5 /* EBHandlerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = D94C354C20A004C00075FAA5 /* EBHandlerFactory.m */; };
+		D94C354F20A004C00075FAA5 /* EBHandlerFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = D94C354D20A004C00075FAA5 /* EBHandlerFactory.h */; };
 		D985535F20467B25006F8F8A /* EBBindData.h in Headers */ = {isa = PBXBuildFile; fileRef = D985535D20467B25006F8F8A /* EBBindData.h */; };
 		D985536020467B25006F8F8A /* EBBindData.m in Sources */ = {isa = PBXBuildFile; fileRef = D985535E20467B25006F8F8A /* EBBindData.m */; };
 		D991797F2032810400D87FA3 /* BindingX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D99179752032810400D87FA3 /* BindingX.framework */; };
@@ -74,6 +76,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D94C354C20A004C00075FAA5 /* EBHandlerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBHandlerFactory.m; sourceTree = "<group>"; };
+		D94C354D20A004C00075FAA5 /* EBHandlerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBHandlerFactory.h; sourceTree = "<group>"; };
 		D985535D20467B25006F8F8A /* EBBindData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EBBindData.h; sourceTree = "<group>"; };
 		D985535E20467B25006F8F8A /* EBBindData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EBBindData.m; sourceTree = "<group>"; };
 		D99179752032810400D87FA3 /* BindingX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BindingX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -175,6 +179,8 @@
 		D99179772032810400D87FA3 /* BindingX */ = {
 			isa = PBXGroup;
 			children = (
+				D94C354D20A004C00075FAA5 /* EBHandlerFactory.h */,
+				D94C354C20A004C00075FAA5 /* EBHandlerFactory.m */,
 				D991799D2032812B00D87FA3 /* EBExpression.h */,
 				D991799F2032812B00D87FA3 /* EBExpression.m */,
 				D99179962032812B00D87FA3 /* EBExpressionExecutor.h */,
@@ -263,6 +269,7 @@
 				D99179CB2032812F00D87FA3 /* EBExpressionTiming.h in Headers */,
 				D99179CE2032812F00D87FA3 /* EBExpression.h in Headers */,
 				D99179F02032812F00D87FA3 /* EBGyroQuaternion.h in Headers */,
+				D94C354F20A004C00075FAA5 /* EBHandlerFactory.h in Headers */,
 				D99179DC2032812F00D87FA3 /* EBTaffyTuple.h in Headers */,
 				D99179CC2032812F00D87FA3 /* EBGyroVector3.h in Headers */,
 				D99179C22032812F00D87FA3 /* EBJSEase.h in Headers */,
@@ -376,6 +383,7 @@
 			files = (
 				D99179E22032812F00D87FA3 /* EBExpressionScroller.m in Sources */,
 				D99179D72032812F00D87FA3 /* EBExpressionOrientation.m in Sources */,
+				D94C354E20A004C00075FAA5 /* EBHandlerFactory.m in Sources */,
 				D99179CD2032812F00D87FA3 /* EBGyroVector3.m in Sources */,
 				D99179DA2032812F00D87FA3 /* EBJSTransform.m in Sources */,
 				D99179D62032812F00D87FA3 /* EBExpressionScope.m in Sources */,
