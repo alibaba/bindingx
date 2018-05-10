@@ -57,6 +57,7 @@ public class LogProxyTest {
 
     @Test
     public void i() throws Exception {
+        LogProxy.sEnableLog = true;
         LogProxy.i(FAKE_MESSAGE);
         verifyStatic();
         Log.i(TAG, FAKE_MESSAGE);
@@ -83,6 +84,7 @@ public class LogProxyTest {
 
     @Test
     public void v() throws Exception {
+        LogProxy.sEnableLog = true;
         LogProxy.v(FAKE_MESSAGE);
         verifyStatic();
         Log.v(TAG, FAKE_MESSAGE);
@@ -109,6 +111,7 @@ public class LogProxyTest {
 
     @Test
     public void d() throws Exception {
+        LogProxy.sEnableLog = true;
         LogProxy.d(FAKE_MESSAGE);
         verifyStatic();
         Log.d(TAG, FAKE_MESSAGE);
@@ -135,6 +138,7 @@ public class LogProxyTest {
 
     @Test
     public void w() throws Exception {
+        LogProxy.sEnableLog = true;
         LogProxy.w(FAKE_MESSAGE);
         verifyStatic();
         Log.w(TAG, FAKE_MESSAGE);
@@ -161,6 +165,7 @@ public class LogProxyTest {
 
     @Test
     public void e() throws Exception {
+        LogProxy.sEnableLog = true;
         LogProxy.e(FAKE_MESSAGE);
         verifyStatic();
         Log.e(TAG, FAKE_MESSAGE);
