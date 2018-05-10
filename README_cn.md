@@ -120,8 +120,29 @@
 
 确保你已经集成了react native。
 
-注: 目前我们还没有把插件代码上传到npm，所以您现在需要通过源码依赖我们的RN插件。
-我们近期会将插件上传到npm，届时您可以通过npm安装插件。
+#### Android
+
+1. 安装依赖 `npm install react-native-bindingx --save`
+2. 链接: `react-native link react-native-bindingx`
+3. 在你项目的`build.gradle`中增加`bindingx-core`依赖:
+
+  ```
+  implementation 'com.alibaba.android:bindingx-core:{latest_version}'
+  ```
+
+注意事项:
+
+1. `bindingx`默认使用gradle 3.x编译，如果你的项目还是运行在gradle 2.x上，需要升级到3.x；
+2. gradle 3.x使用`implementation`关键字替代了`compile`关键字，需要修改；
+3. 增加google源:
+
+  ```
+  repositories {
+    google()
+    ...
+  }
+  ```
+
 
 ### 文档与教程
 

@@ -25,7 +25,7 @@ module.exports = {
     historyApiFallback: true,
     inline: true,
     publicPath: '/dist/',
-    port: 8081
+    port: 8088
   },
   module: {
     loaders: [

@@ -267,14 +267,14 @@ function Parser() {
       try {
         if (Object.getOwnPropertyNames(token).some(
             (e) => {
-              if (terminalSymbolIndex.hasOwnProperty(e)) {
-                useDiv = this.syntacticalParser.insertSymbol(new Symbol(e, token), haveLineTerminator);
-                haveLineTerminator = false;
-                return true;
-              } else
-                return false;
-            }))
-          continue;
+            if (terminalSymbolIndex.hasOwnProperty(e)) {
+          useDiv = this.syntacticalParser.insertSymbol(new Symbol(e, token), haveLineTerminator);
+          haveLineTerminator = false;
+          return true;
+        } else
+          return false;
+      }))
+        continue;
         if ((token.Keyword || token.Punctuator || token.DivPunctuator) && terminalSymbolIndex.hasOwnProperty(token.toString())) {
           useDiv = this.syntacticalParser.insertSymbol(new Symbol(token.toString(), token), haveLineTerminator);
         }
@@ -444,7 +444,7 @@ function visit(tree) {
     return {
       type: 'Arguments',
       children: argumentList.map(e => visit(e))
-    };
+  };
   }
 
 
@@ -478,11 +478,11 @@ function visit(tree) {
   return {
     type: childNodes.filter(e => e.token && e.token.Punctuator)[0].name,
     children: childNodes.filter(e => !e.token || !e.token.Punctuator).map(e => visit(e))
-  };
+};
 }
 
 function parse(originExp) {
-  let exp = new JavaScriptExpression(originExp);
+  var exp = new JavaScriptExpression(originExp);
   return JSON.stringify(visit(exp.tree), null);
 }
 
