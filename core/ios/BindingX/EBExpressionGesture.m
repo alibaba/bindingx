@@ -45,14 +45,16 @@
     _gesture.delegate = _tmpDelegate;
 }
 
-- (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)expressionMap
-                       options:(NSDictionary *)options
-                exitExpression:(NSDictionary *)exitExpression
-                      callback:(EBKeepAliveCallback)callback {
-    [super updateTargetExpression:expressionMap
-                          options:options
-                   exitExpression:exitExpression
-                         callback:callback];
+- (void)updateTargetMap:(NSMapTable<NSString *,id> *)targetMap
+         expressionDict:(NSDictionary *)expressionDict
+                options:(NSDictionary *)options
+         exitExpression:(NSDictionary *)exitExpression
+               callback:(EBKeepAliveCallback)callback {
+    [super updateTargetMap:targetMap
+            expressionDict:expressionDict
+                   options:options
+            exitExpression:exitExpression
+                  callback:callback];
     
     [self initGesture];
 }
@@ -122,7 +124,8 @@
     
     if (!keepAlive) {
         // free resouces
-        self.expressionMap = nil;
+        self.targetMap = nil;
+        self.expressionDict = nil;
         self.callback = nil;
     }
 }

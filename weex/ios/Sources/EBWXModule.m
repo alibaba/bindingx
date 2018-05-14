@@ -159,7 +159,8 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
             return;
         }
         
-        NSMapTable<id, NSDictionary *> *targetExpression = [NSMapTable new];
+        NSMapTable<NSString *, id> *targetMap = [NSMapTable strongToWeakObjectsMapTable];
+        NSMutableDictionary<NSString *, NSDictionary *> *expressionDict = [NSMutableDictionary dictionary];
         for (NSDictionary *targetDic in props) {
             NSString *targetRef = targetDic[@"element"];
             NSString *property = targetDic[@"property"];
@@ -181,7 +182,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
                     });
                 }
                 
-                NSMutableDictionary *propertyDic = [[targetExpression objectForKey:targetComponent] mutableCopy];
+                NSMutableDictionary *propertyDic = [[expressionDict objectForKey:targetRef] mutableCopy];
                 if (!propertyDic) {
                     propertyDic = [NSMutableDictionary dictionary];
                 }
@@ -193,7 +194,8 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
                     expDict[@"config"] = targetDic[@"config"];
                 }
                 propertyDic[property] = expDict;
-                [targetExpression setObject:propertyDic forKey:targetComponent];
+                [targetMap setObject:targetComponent forKey:targetRef];
+                [expressionDict setObject:propertyDic forKey:targetRef];
             }
         }
         
@@ -207,12 +209,13 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
             [welf.bindData putHandler:handler forToken:token expressionType:exprType];
         }
         
-        [handler updateTargetExpression:targetExpression
-                                options:options
-                         exitExpression:[EBBindData parseExpression:exitExpression]
-                               callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
-                                   callback(result,keepAlive);
-                               }];
+        [handler updateTargetMap:targetMap
+                          expressionDict:expressionDict
+                                 options:options
+                          exitExpression:[EBBindData parseExpression:exitExpression]
+                                callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
+                                    callback(result,keepAlive);
+                                }];
         
         pthread_mutex_unlock(&mutex);
     });

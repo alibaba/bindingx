@@ -150,7 +150,8 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *,bind:(NSDictionary *)dictiona
     __weak typeof(self) welf = self;
     RCTExecuteOnUIManagerQueue(^{
         
-        NSMapTable<id, NSDictionary *> *targetExpression = [NSMapTable new];
+        NSMapTable<NSString *, id> *targetMap = [NSMapTable strongToWeakObjectsMapTable];
+        NSMutableDictionary<NSString *, NSDictionary *> *expressionDict = [NSMutableDictionary dictionary];
         for (NSDictionary *targetDic in props) {
             NSString *targetRef = targetDic[@"element"];
             NSString *property = targetDic[@"property"];
@@ -158,7 +159,7 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *,bind:(NSDictionary *)dictiona
             
             if (targetRef) {
                 
-                NSMutableDictionary *propertyDic = [[targetExpression  objectForKey:targetRef] mutableCopy];
+                NSMutableDictionary *propertyDic = [[expressionDict objectForKey:targetRef] mutableCopy];
                 if (!propertyDic) {
                     propertyDic = [NSMutableDictionary dictionary];
                 }
@@ -169,7 +170,8 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *,bind:(NSDictionary *)dictiona
                     expDict[@"config"] = targetDic[@"config"];
                 }
                 propertyDic[property] = expDict;
-                [targetExpression setObject:propertyDic forKey:targetRef];
+                [targetMap setObject:targetRef forKey:targetRef];
+                [expressionDict setObject:propertyDic forKey:targetRef];
             }
         }
         
@@ -183,7 +185,8 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *,bind:(NSDictionary *)dictiona
             [welf.bindData putHandler:handler forToken:token expressionType:exprType];
         }
         
-        [handler updateTargetExpression:targetExpression
+        [handler updateTargetMap:targetMap
+                  expressionDict:expressionDict
                                 options:options
                          exitExpression:[EBBindData parseExpression:exitExpression]
                                callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
