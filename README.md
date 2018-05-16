@@ -106,7 +106,7 @@ We provide two ways to integrate bindingx plugin.
 add dependencies in your application's `Podfile`
 
 ```
-  pod 'BindingX', '~> 1.0.1'
+  pod 'BindingX', '~> 1.0.2'
 ```
 
 module will be registed automatically.
@@ -115,17 +115,16 @@ module will be registed automatically.
 
 *Prerequisites*: integrate [react native](https://facebook.github.io/react-native/) to your application.
 
-#### Android
-
 1. install dependencies: `npm install react-native-bindingx --save`;
 2. link library: `react-native link react-native-bindingx`;
-3. add `bindingx-core` library to `build.gradle` manually:
+
+#### Android 
+
+add `bindingx-core` library to `build.gradle` manually:
 
   ```
   implementation 'com.alibaba.android:bindingx-core:{latest_version}'
   ```  
-
-Notice:
 
 1. migrate to [android gradle plugin 3.0](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration);
 2. use `implementation` instead of `compile` in your build.gradle;
