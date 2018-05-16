@@ -18,7 +18,6 @@
 #import <React/RCTUIManagerUtils.h>
 #import <React/RCTUtils.h>
 #import <React/RCTScrollView.h>
-#import <React/RCTShadowText.h>
 #import <UIKit/UIKit.h>
 
 __weak static RCTUIManager* _uiManager = nil;
@@ -90,11 +89,6 @@ __weak static RCTUIManager* _uiManager = nil;
             [_uiManager synchronouslyUpdateViewOnUIThread:reactTag viewName:viewName props:styles];
         });
         
-        if (model.isColorChanged) {
-            UIColor* color = [self makeColor:model.color];
-            RCTShadowText *shadowText = (RCTShadowText *)[_uiManager shadowViewForReactTag:reactTag];
-            shadowText.color = color;
-        }
     });
     
     if (model.isContentOffsetXChanged || model.isContentOffsetYChanged) {

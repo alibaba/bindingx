@@ -7,149 +7,115 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		086D90C1F74671543A35EA7F /* libPods-RNBindingX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE05DC8499B09B9275CF5771 /* libPods-RNBindingX.a */; };
-		9C5589A1B97E7BEFB39E1375 /* libPods-RNBindingXTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB459CADE4FEECC5C9240CA5 /* libPods-RNBindingXTests.a */; };
-		D955B1B4202FF851000274AC /* EBUtility+RN.m in Sources */ = {isa = PBXBuildFile; fileRef = D955B1B0202FF850000274AC /* EBUtility+RN.m */; };
-		D955B1B7202FF851000274AC /* EBUtility+RN.h in Headers */ = {isa = PBXBuildFile; fileRef = D955B1B3202FF851000274AC /* EBUtility+RN.h */; };
-		D98553792046A948006F8F8A /* EBBindData.m in Sources */ = {isa = PBXBuildFile; fileRef = D98553772046A948006F8F8A /* EBBindData.m */; };
-		D985537A2046A948006F8F8A /* EBBindData.h in Headers */ = {isa = PBXBuildFile; fileRef = D98553782046A948006F8F8A /* EBBindData.h */; };
-		D9A6A8C12043A5D9001AEC67 /* EBGyroVector3.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8952043A5D4001AEC67 /* EBGyroVector3.m */; };
-		D9A6A8C22043A5D9001AEC67 /* EBJSEvaluate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8962043A5D4001AEC67 /* EBJSEvaluate.m */; };
-		D9A6A8C32043A5D9001AEC67 /* EBExpressionTiming.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8972043A5D4001AEC67 /* EBExpressionTiming.m */; };
-		D9A6A8C42043A5D9001AEC67 /* EBExpressionScope.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8982043A5D4001AEC67 /* EBExpressionScope.h */; };
-		D9A6A8C52043A5D9001AEC67 /* EBExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8992043A5D4001AEC67 /* EBExpression.h */; };
-		D9A6A8C62043A5D9001AEC67 /* EBExpressionScope.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A89A2043A5D4001AEC67 /* EBExpressionScope.m */; };
-		D9A6A8C72043A5D9001AEC67 /* EBGyroQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A89B2043A5D4001AEC67 /* EBGyroQuaternion.h */; };
-		D9A6A8C82043A5D9001AEC67 /* EBGyroVector3.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A89C2043A5D4001AEC67 /* EBGyroVector3.h */; };
-		D9A6A8C92043A5D9001AEC67 /* EBJSEase.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A89D2043A5D4001AEC67 /* EBJSEase.h */; };
-		D9A6A8CA2043A5D9001AEC67 /* EBUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A89E2043A5D4001AEC67 /* EBUtility.h */; };
-		D9A6A8CB2043A5D9001AEC67 /* EBExpressionProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A89F2043A5D5001AEC67 /* EBExpressionProperty.m */; };
-		D9A6A8CC2043A5D9001AEC67 /* EBGyroEuler.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8A02043A5D5001AEC67 /* EBGyroEuler.m */; };
-		D9A6A8CD2043A5D9001AEC67 /* NSObject+EBTuplePacker.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8A12043A5D5001AEC67 /* NSObject+EBTuplePacker.m */; };
-		D9A6A8CE2043A5D9001AEC67 /* EBExpressionScroller.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8A22043A5D5001AEC67 /* EBExpressionScroller.h */; };
-		D9A6A8CF2043A5D9001AEC67 /* EBTaffyTuple.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8A32043A5D5001AEC67 /* EBTaffyTuple.h */; };
-		D9A6A8D02043A5D9001AEC67 /* EBGyroOrientationEvaluator.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8A42043A5D5001AEC67 /* EBGyroOrientationEvaluator.h */; };
-		D9A6A8D12043A5D9001AEC67 /* EBNativeFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8A52043A5D5001AEC67 /* EBNativeFunction.h */; };
-		D9A6A8D22043A5D9001AEC67 /* NSObject+EBTuplePacker.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8A62043A5D5001AEC67 /* NSObject+EBTuplePacker.h */; };
-		D9A6A8D32043A5D9001AEC67 /* EBExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8A72043A5D5001AEC67 /* EBExpression.m */; };
-		D9A6A8D42043A5D9001AEC67 /* EBExpressionOrientation.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8A82043A5D5001AEC67 /* EBExpressionOrientation.h */; };
-		D9A6A8D52043A5D9001AEC67 /* EBNativeFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8A92043A5D5001AEC67 /* EBNativeFunction.m */; };
-		D9A6A8D62043A5D9001AEC67 /* EBUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8AA2043A5D5001AEC67 /* EBUtility.m */; };
-		D9A6A8D72043A5D9001AEC67 /* EBGyroOrientationEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8AB2043A5D6001AEC67 /* EBGyroOrientationEvaluator.m */; };
-		D9A6A8D82043A5D9001AEC67 /* EBJSTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8AC2043A5D6001AEC67 /* EBJSTransform.m */; };
-		D9A6A8D92043A5D9001AEC67 /* EBGyroEuler.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8AD2043A5D6001AEC67 /* EBGyroEuler.h */; };
-		D9A6A8DA2043A5D9001AEC67 /* EBExpressionExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8AE2043A5D6001AEC67 /* EBExpressionExecutor.m */; };
-		D9A6A8DB2043A5D9001AEC67 /* EBGyroManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8AF2043A5D6001AEC67 /* EBGyroManager.h */; };
-		D9A6A8DC2043A5D9001AEC67 /* EBJSEase.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8B02043A5D6001AEC67 /* EBJSEase.m */; };
-		D9A6A8DD2043A5D9001AEC67 /* EBExpressionGesture.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8B12043A5D6001AEC67 /* EBExpressionGesture.h */; };
-		D9A6A8DE2043A5D9001AEC67 /* EBExpressionProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8B22043A5D7001AEC67 /* EBExpressionProperty.h */; };
-		D9A6A8DF2043A5D9001AEC67 /* EBJSTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8B32043A5D7001AEC67 /* EBJSTransform.h */; };
-		D9A6A8E02043A5D9001AEC67 /* EBExpressionGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8B42043A5D7001AEC67 /* EBExpressionGesture.m */; };
-		D9A6A8E12043A5D9001AEC67 /* EBExpressionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8B52043A5D7001AEC67 /* EBExpressionHandler.m */; };
-		D9A6A8E22043A5D9001AEC67 /* EBExpressionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8B62043A5D7001AEC67 /* EBExpressionHandler.h */; };
-		D9A6A8E32043A5D9001AEC67 /* EBJSMath.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8B72043A5D7001AEC67 /* EBJSMath.h */; };
-		D9A6A8E42043A5D9001AEC67 /* EBExpressionOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8B82043A5D7001AEC67 /* EBExpressionOrientation.m */; };
-		D9A6A8E52043A5D9001AEC67 /* EBExpressionTiming.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8B92043A5D8001AEC67 /* EBExpressionTiming.h */; };
-		D9A6A8E62043A5D9001AEC67 /* EBJSMath.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8BA2043A5D8001AEC67 /* EBJSMath.m */; };
-		D9A6A8E72043A5D9001AEC67 /* EBTaffyTuple.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8BB2043A5D8001AEC67 /* EBTaffyTuple.m */; };
-		D9A6A8E82043A5D9001AEC67 /* EBExpressionExecutor.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8BC2043A5D8001AEC67 /* EBExpressionExecutor.h */; };
-		D9A6A8E92043A5D9001AEC67 /* EBJSEvaluate.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6A8BD2043A5D8001AEC67 /* EBJSEvaluate.h */; };
-		D9A6A8EA2043A5D9001AEC67 /* EBExpressionScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8BE2043A5D8001AEC67 /* EBExpressionScroller.m */; };
-		D9A6A8EB2043A5D9001AEC67 /* EBGyroManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8BF2043A5D9001AEC67 /* EBGyroManager.m */; };
-		D9A6A8EC2043A5D9001AEC67 /* EBGyroQuaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6A8C02043A5D9001AEC67 /* EBGyroQuaternion.m */; };
-		D9A6AA422043DE6E001AEC67 /* EBRNModule.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A6AA402043DE6E001AEC67 /* EBRNModule.h */; };
-		D9A6AA432043DE6E001AEC67 /* EBRNModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6AA412043DE6E001AEC67 /* EBRNModule.m */; };
-		D9A6AA4D2043E142001AEC67 /* RNBindingX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955B1A5202FF82A000274AC /* RNBindingX.framework */; };
+		D9F01A0F20AAE84F0014349F /* EBUtility+RN.m in Sources */ = {isa = PBXBuildFile; fileRef = D955B1B0202FF850000274AC /* EBUtility+RN.m */; };
+		D9F01A1020AAE84F0014349F /* EBRNModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A6AA412043DE6E001AEC67 /* EBRNModule.m */; };
+		D9F01AEA20ABCE1A0014349F /* EBJSMath.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01ABB20ABCE150014349F /* EBJSMath.m */; };
+		D9F01AEB20ABCE1A0014349F /* EBExpressionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01ABC20ABCE150014349F /* EBExpressionHandler.m */; };
+		D9F01AEC20ABCE1A0014349F /* EBNativeFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01ABD20ABCE150014349F /* EBNativeFunction.m */; };
+		D9F01AED20ABCE1A0014349F /* EBExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01AC020ABCE150014349F /* EBExpression.m */; };
+		D9F01AEE20ABCE1A0014349F /* EBExpressionGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01AC520ABCE160014349F /* EBExpressionGesture.m */; };
+		D9F01AEF20ABCE1A0014349F /* EBExpressionProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01AC620ABCE160014349F /* EBExpressionProperty.m */; };
+		D9F01AF020ABCE1A0014349F /* EBJSEase.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01AC820ABCE160014349F /* EBJSEase.m */; };
+		D9F01AF120ABCE1A0014349F /* EBGyroQuaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01ACA20ABCE160014349F /* EBGyroQuaternion.m */; };
+		D9F01AF220ABCE1A0014349F /* EBGyroOrientationEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01ACE20ABCE170014349F /* EBGyroOrientationEvaluator.m */; };
+		D9F01AF320ABCE1A0014349F /* EBHandlerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01ACF20ABCE170014349F /* EBHandlerFactory.m */; };
+		D9F01AF420ABCE1A0014349F /* EBGyroEuler.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01AD320ABCE170014349F /* EBGyroEuler.m */; };
+		D9F01AF520ABCE1A0014349F /* EBGyroVector3.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01AD420ABCE170014349F /* EBGyroVector3.m */; };
+		D9F01AF620ABCE1A0014349F /* EBJSEvaluate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01AD520ABCE170014349F /* EBJSEvaluate.m */; };
+		D9F01AF720ABCE1A0014349F /* EBExpressionTiming.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01AD720ABCE170014349F /* EBExpressionTiming.m */; };
+		D9F01AF820ABCE1A0014349F /* EBBindData.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01AD820ABCE180014349F /* EBBindData.m */; };
+		D9F01AF920ABCE1A0014349F /* EBGyroManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01AD920ABCE180014349F /* EBGyroManager.m */; };
+		D9F01AFA20ABCE1A0014349F /* NSObject+EBTuplePacker.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01ADC20ABCE180014349F /* NSObject+EBTuplePacker.m */; };
+		D9F01AFB20ABCE1A0014349F /* EBTaffyTuple.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01ADD20ABCE180014349F /* EBTaffyTuple.m */; };
+		D9F01AFC20ABCE1A0014349F /* EBUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01ADE20ABCE180014349F /* EBUtility.m */; };
+		D9F01AFD20ABCE1A0014349F /* EBExpressionScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01AE120ABCE190014349F /* EBExpressionScroller.m */; };
+		D9F01AFE20ABCE1A0014349F /* EBExpressionExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01AE320ABCE190014349F /* EBExpressionExecutor.m */; };
+		D9F01AFF20ABCE1A0014349F /* EBJSTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01AE720ABCE190014349F /* EBJSTransform.m */; };
+		D9F01B0020ABCE1A0014349F /* EBExpressionScope.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01AE820ABCE190014349F /* EBExpressionScope.m */; };
+		D9F01B0120ABCE1A0014349F /* EBExpressionOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F01AE920ABCE1A0014349F /* EBExpressionOrientation.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		D9A6AA4E2043E142001AEC67 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D955B19C202FF82A000274AC /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D955B1A4202FF82A000274AC;
-			remoteInfo = RNBindingX;
+/* Begin PBXCopyFilesBuildPhase section */
+		D9F01A0420AAE8420014349F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXContainerItemProxy section */
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		22E206646D407E09F01C771E /* Pods-RNBindingX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBindingX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RNBindingX/Pods-RNBindingX.debug.xcconfig"; sourceTree = "<group>"; };
 		BB15E6679FBB269F8447243B /* Pods-RNBindingX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBindingX.release.xcconfig"; path = "Pods/Target Support Files/Pods-RNBindingX/Pods-RNBindingX.release.xcconfig"; sourceTree = "<group>"; };
 		BC0F083B31F0772E06C3FFFE /* Pods-RNBindingXTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBindingXTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RNBindingXTests/Pods-RNBindingXTests.release.xcconfig"; sourceTree = "<group>"; };
 		BE05DC8499B09B9275CF5771 /* libPods-RNBindingX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNBindingX.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D955B1A5202FF82A000274AC /* RNBindingX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RNBindingX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D955B1A9202FF82A000274AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D955B1B0202FF850000274AC /* EBUtility+RN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EBUtility+RN.m"; sourceTree = "<group>"; };
 		D955B1B3202FF851000274AC /* EBUtility+RN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EBUtility+RN.h"; sourceTree = "<group>"; };
-		D98553772046A948006F8F8A /* EBBindData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBBindData.m; sourceTree = "<group>"; };
-		D98553782046A948006F8F8A /* EBBindData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBBindData.h; sourceTree = "<group>"; };
-		D9A6A8952043A5D4001AEC67 /* EBGyroVector3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBGyroVector3.m; path = ../BindingX/EBGyroVector3.m; sourceTree = "<group>"; };
-		D9A6A8962043A5D4001AEC67 /* EBJSEvaluate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBJSEvaluate.m; path = ../BindingX/EBJSEvaluate.m; sourceTree = "<group>"; };
-		D9A6A8972043A5D4001AEC67 /* EBExpressionTiming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionTiming.m; path = ../BindingX/EBExpressionTiming.m; sourceTree = "<group>"; };
-		D9A6A8982043A5D4001AEC67 /* EBExpressionScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionScope.h; path = ../BindingX/EBExpressionScope.h; sourceTree = "<group>"; };
-		D9A6A8992043A5D4001AEC67 /* EBExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpression.h; path = ../BindingX/EBExpression.h; sourceTree = "<group>"; };
-		D9A6A89A2043A5D4001AEC67 /* EBExpressionScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionScope.m; path = ../BindingX/EBExpressionScope.m; sourceTree = "<group>"; };
-		D9A6A89B2043A5D4001AEC67 /* EBGyroQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBGyroQuaternion.h; path = ../BindingX/EBGyroQuaternion.h; sourceTree = "<group>"; };
-		D9A6A89C2043A5D4001AEC67 /* EBGyroVector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBGyroVector3.h; path = ../BindingX/EBGyroVector3.h; sourceTree = "<group>"; };
-		D9A6A89D2043A5D4001AEC67 /* EBJSEase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBJSEase.h; path = ../BindingX/EBJSEase.h; sourceTree = "<group>"; };
-		D9A6A89E2043A5D4001AEC67 /* EBUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBUtility.h; path = ../BindingX/EBUtility.h; sourceTree = "<group>"; };
-		D9A6A89F2043A5D5001AEC67 /* EBExpressionProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionProperty.m; path = ../BindingX/EBExpressionProperty.m; sourceTree = "<group>"; };
-		D9A6A8A02043A5D5001AEC67 /* EBGyroEuler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBGyroEuler.m; path = ../BindingX/EBGyroEuler.m; sourceTree = "<group>"; };
-		D9A6A8A12043A5D5001AEC67 /* NSObject+EBTuplePacker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+EBTuplePacker.m"; path = "../BindingX/NSObject+EBTuplePacker.m"; sourceTree = "<group>"; };
-		D9A6A8A22043A5D5001AEC67 /* EBExpressionScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionScroller.h; path = ../BindingX/EBExpressionScroller.h; sourceTree = "<group>"; };
-		D9A6A8A32043A5D5001AEC67 /* EBTaffyTuple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBTaffyTuple.h; path = ../BindingX/EBTaffyTuple.h; sourceTree = "<group>"; };
-		D9A6A8A42043A5D5001AEC67 /* EBGyroOrientationEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBGyroOrientationEvaluator.h; path = ../BindingX/EBGyroOrientationEvaluator.h; sourceTree = "<group>"; };
-		D9A6A8A52043A5D5001AEC67 /* EBNativeFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBNativeFunction.h; path = ../BindingX/EBNativeFunction.h; sourceTree = "<group>"; };
-		D9A6A8A62043A5D5001AEC67 /* NSObject+EBTuplePacker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+EBTuplePacker.h"; path = "../BindingX/NSObject+EBTuplePacker.h"; sourceTree = "<group>"; };
-		D9A6A8A72043A5D5001AEC67 /* EBExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpression.m; path = ../BindingX/EBExpression.m; sourceTree = "<group>"; };
-		D9A6A8A82043A5D5001AEC67 /* EBExpressionOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionOrientation.h; path = ../BindingX/EBExpressionOrientation.h; sourceTree = "<group>"; };
-		D9A6A8A92043A5D5001AEC67 /* EBNativeFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBNativeFunction.m; path = ../BindingX/EBNativeFunction.m; sourceTree = "<group>"; };
-		D9A6A8AA2043A5D5001AEC67 /* EBUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBUtility.m; path = ../BindingX/EBUtility.m; sourceTree = "<group>"; };
-		D9A6A8AB2043A5D6001AEC67 /* EBGyroOrientationEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBGyroOrientationEvaluator.m; path = ../BindingX/EBGyroOrientationEvaluator.m; sourceTree = "<group>"; };
-		D9A6A8AC2043A5D6001AEC67 /* EBJSTransform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBJSTransform.m; path = ../BindingX/EBJSTransform.m; sourceTree = "<group>"; };
-		D9A6A8AD2043A5D6001AEC67 /* EBGyroEuler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBGyroEuler.h; path = ../BindingX/EBGyroEuler.h; sourceTree = "<group>"; };
-		D9A6A8AE2043A5D6001AEC67 /* EBExpressionExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionExecutor.m; path = ../BindingX/EBExpressionExecutor.m; sourceTree = "<group>"; };
-		D9A6A8AF2043A5D6001AEC67 /* EBGyroManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBGyroManager.h; path = ../BindingX/EBGyroManager.h; sourceTree = "<group>"; };
-		D9A6A8B02043A5D6001AEC67 /* EBJSEase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBJSEase.m; path = ../BindingX/EBJSEase.m; sourceTree = "<group>"; };
-		D9A6A8B12043A5D6001AEC67 /* EBExpressionGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionGesture.h; path = ../BindingX/EBExpressionGesture.h; sourceTree = "<group>"; };
-		D9A6A8B22043A5D7001AEC67 /* EBExpressionProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionProperty.h; path = ../BindingX/EBExpressionProperty.h; sourceTree = "<group>"; };
-		D9A6A8B32043A5D7001AEC67 /* EBJSTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBJSTransform.h; path = ../BindingX/EBJSTransform.h; sourceTree = "<group>"; };
-		D9A6A8B42043A5D7001AEC67 /* EBExpressionGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionGesture.m; path = ../BindingX/EBExpressionGesture.m; sourceTree = "<group>"; };
-		D9A6A8B52043A5D7001AEC67 /* EBExpressionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionHandler.m; path = ../BindingX/EBExpressionHandler.m; sourceTree = "<group>"; };
-		D9A6A8B62043A5D7001AEC67 /* EBExpressionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionHandler.h; path = ../BindingX/EBExpressionHandler.h; sourceTree = "<group>"; };
-		D9A6A8B72043A5D7001AEC67 /* EBJSMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBJSMath.h; path = ../BindingX/EBJSMath.h; sourceTree = "<group>"; };
-		D9A6A8B82043A5D7001AEC67 /* EBExpressionOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionOrientation.m; path = ../BindingX/EBExpressionOrientation.m; sourceTree = "<group>"; };
-		D9A6A8B92043A5D8001AEC67 /* EBExpressionTiming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionTiming.h; path = ../BindingX/EBExpressionTiming.h; sourceTree = "<group>"; };
-		D9A6A8BA2043A5D8001AEC67 /* EBJSMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBJSMath.m; path = ../BindingX/EBJSMath.m; sourceTree = "<group>"; };
-		D9A6A8BB2043A5D8001AEC67 /* EBTaffyTuple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBTaffyTuple.m; path = ../BindingX/EBTaffyTuple.m; sourceTree = "<group>"; };
-		D9A6A8BC2043A5D8001AEC67 /* EBExpressionExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBExpressionExecutor.h; path = ../BindingX/EBExpressionExecutor.h; sourceTree = "<group>"; };
-		D9A6A8BD2043A5D8001AEC67 /* EBJSEvaluate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBJSEvaluate.h; path = ../BindingX/EBJSEvaluate.h; sourceTree = "<group>"; };
-		D9A6A8BE2043A5D8001AEC67 /* EBExpressionScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBExpressionScroller.m; path = ../BindingX/EBExpressionScroller.m; sourceTree = "<group>"; };
-		D9A6A8BF2043A5D9001AEC67 /* EBGyroManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBGyroManager.m; path = ../BindingX/EBGyroManager.m; sourceTree = "<group>"; };
-		D9A6A8C02043A5D9001AEC67 /* EBGyroQuaternion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBGyroQuaternion.m; path = ../BindingX/EBGyroQuaternion.m; sourceTree = "<group>"; };
 		D9A6AA402043DE6E001AEC67 /* EBRNModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBRNModule.h; sourceTree = "<group>"; };
 		D9A6AA412043DE6E001AEC67 /* EBRNModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBRNModule.m; sourceTree = "<group>"; };
-		D9A6AA482043E142001AEC67 /* RNBindingXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RNBindingXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D9A6AA4C2043E142001AEC67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D9F01A0620AAE8420014349F /* libRNBindingX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNBindingX.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9F01AB920ABCE150014349F /* EBNativeFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBNativeFunction.h; sourceTree = "<group>"; };
+		D9F01ABA20ABCE150014349F /* EBJSMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBJSMath.h; sourceTree = "<group>"; };
+		D9F01ABB20ABCE150014349F /* EBJSMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBJSMath.m; sourceTree = "<group>"; };
+		D9F01ABC20ABCE150014349F /* EBExpressionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionHandler.m; sourceTree = "<group>"; };
+		D9F01ABD20ABCE150014349F /* EBNativeFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBNativeFunction.m; sourceTree = "<group>"; };
+		D9F01ABE20ABCE150014349F /* EBGyroManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBGyroManager.h; sourceTree = "<group>"; };
+		D9F01ABF20ABCE150014349F /* EBGyroVector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBGyroVector3.h; sourceTree = "<group>"; };
+		D9F01AC020ABCE150014349F /* EBExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpression.m; sourceTree = "<group>"; };
+		D9F01AC120ABCE160014349F /* EBExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpression.h; sourceTree = "<group>"; };
+		D9F01AC220ABCE160014349F /* EBJSEvaluate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBJSEvaluate.h; sourceTree = "<group>"; };
+		D9F01AC320ABCE160014349F /* NSObject+EBTuplePacker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+EBTuplePacker.h"; sourceTree = "<group>"; };
+		D9F01AC420ABCE160014349F /* EBExpressionProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionProperty.h; sourceTree = "<group>"; };
+		D9F01AC520ABCE160014349F /* EBExpressionGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionGesture.m; sourceTree = "<group>"; };
+		D9F01AC620ABCE160014349F /* EBExpressionProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionProperty.m; sourceTree = "<group>"; };
+		D9F01AC720ABCE160014349F /* EBExpressionOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionOrientation.h; sourceTree = "<group>"; };
+		D9F01AC820ABCE160014349F /* EBJSEase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBJSEase.m; sourceTree = "<group>"; };
+		D9F01AC920ABCE160014349F /* EBExpressionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionHandler.h; sourceTree = "<group>"; };
+		D9F01ACA20ABCE160014349F /* EBGyroQuaternion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBGyroQuaternion.m; sourceTree = "<group>"; };
+		D9F01ACB20ABCE160014349F /* BindingX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingX.h; sourceTree = "<group>"; };
+		D9F01ACC20ABCE160014349F /* EBExpressionScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionScroller.h; sourceTree = "<group>"; };
+		D9F01ACD20ABCE160014349F /* EBGyroOrientationEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBGyroOrientationEvaluator.h; sourceTree = "<group>"; };
+		D9F01ACE20ABCE170014349F /* EBGyroOrientationEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBGyroOrientationEvaluator.m; sourceTree = "<group>"; };
+		D9F01ACF20ABCE170014349F /* EBHandlerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBHandlerFactory.m; sourceTree = "<group>"; };
+		D9F01AD020ABCE170014349F /* EBBindData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBBindData.h; sourceTree = "<group>"; };
+		D9F01AD120ABCE170014349F /* EBExpressionTiming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionTiming.h; sourceTree = "<group>"; };
+		D9F01AD220ABCE170014349F /* EBTaffyTuple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBTaffyTuple.h; sourceTree = "<group>"; };
+		D9F01AD320ABCE170014349F /* EBGyroEuler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBGyroEuler.m; sourceTree = "<group>"; };
+		D9F01AD420ABCE170014349F /* EBGyroVector3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBGyroVector3.m; sourceTree = "<group>"; };
+		D9F01AD520ABCE170014349F /* EBJSEvaluate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBJSEvaluate.m; sourceTree = "<group>"; };
+		D9F01AD620ABCE170014349F /* EBUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBUtility.h; sourceTree = "<group>"; };
+		D9F01AD720ABCE170014349F /* EBExpressionTiming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionTiming.m; sourceTree = "<group>"; };
+		D9F01AD820ABCE180014349F /* EBBindData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBBindData.m; sourceTree = "<group>"; };
+		D9F01AD920ABCE180014349F /* EBGyroManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBGyroManager.m; sourceTree = "<group>"; };
+		D9F01ADA20ABCE180014349F /* EBExpressionScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionScope.h; sourceTree = "<group>"; };
+		D9F01ADB20ABCE180014349F /* EBExpressionGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionGesture.h; sourceTree = "<group>"; };
+		D9F01ADC20ABCE180014349F /* NSObject+EBTuplePacker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+EBTuplePacker.m"; sourceTree = "<group>"; };
+		D9F01ADD20ABCE180014349F /* EBTaffyTuple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBTaffyTuple.m; sourceTree = "<group>"; };
+		D9F01ADE20ABCE180014349F /* EBUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBUtility.m; sourceTree = "<group>"; };
+		D9F01ADF20ABCE180014349F /* EBHandlerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBHandlerFactory.h; sourceTree = "<group>"; };
+		D9F01AE020ABCE180014349F /* EBJSTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBJSTransform.h; sourceTree = "<group>"; };
+		D9F01AE120ABCE190014349F /* EBExpressionScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionScroller.m; sourceTree = "<group>"; };
+		D9F01AE220ABCE190014349F /* EBExpressionExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBExpressionExecutor.h; sourceTree = "<group>"; };
+		D9F01AE320ABCE190014349F /* EBExpressionExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionExecutor.m; sourceTree = "<group>"; };
+		D9F01AE420ABCE190014349F /* EBGyroQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBGyroQuaternion.h; sourceTree = "<group>"; };
+		D9F01AE520ABCE190014349F /* EBGyroEuler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBGyroEuler.h; sourceTree = "<group>"; };
+		D9F01AE620ABCE190014349F /* EBJSEase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBJSEase.h; sourceTree = "<group>"; };
+		D9F01AE720ABCE190014349F /* EBJSTransform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBJSTransform.m; sourceTree = "<group>"; };
+		D9F01AE820ABCE190014349F /* EBExpressionScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionScope.m; sourceTree = "<group>"; };
+		D9F01AE920ABCE1A0014349F /* EBExpressionOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBExpressionOrientation.m; sourceTree = "<group>"; };
 		DB459CADE4FEECC5C9240CA5 /* libPods-RNBindingXTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNBindingXTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6D10BCEBB7C4B2F9A2632EC /* Pods-RNBindingXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBindingXTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RNBindingXTests/Pods-RNBindingXTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D955B1A1202FF82A000274AC /* Frameworks */ = {
+		D9F01A0320AAE8420014349F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				086D90C1F74671543A35EA7F /* libPods-RNBindingX.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D9A6AA452043E142001AEC67 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D9A6AA4D2043E142001AEC67 /* RNBindingX.framework in Frameworks */,
-				9C5589A1B97E7BEFB39E1375 /* libPods-RNBindingXTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,7 +146,6 @@
 			isa = PBXGroup;
 			children = (
 				D955B1A7202FF82A000274AC /* RNBindingX */,
-				D9A6AA492043E142001AEC67 /* RNBindingXTests */,
 				D955B1A6202FF82A000274AC /* Products */,
 				0FCA19E944CBB2BE0B6762D1 /* Pods */,
 				5671271A8550C4B4B4663A29 /* Frameworks */,
@@ -190,8 +155,7 @@
 		D955B1A6202FF82A000274AC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D955B1A5202FF82A000274AC /* RNBindingX.framework */,
-				D9A6AA482043E142001AEC67 /* RNBindingXTests.xctest */,
+				D9F01A0620AAE8420014349F /* libRNBindingX.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -199,7 +163,7 @@
 		D955B1A7202FF82A000274AC /* RNBindingX */ = {
 			isa = PBXGroup;
 			children = (
-				D955B21B2030102B000274AC /* core */,
+				D9F0193120AAD9D90014349F /* core */,
 				D955B1B3202FF851000274AC /* EBUtility+RN.h */,
 				D955B1B0202FF850000274AC /* EBUtility+RN.m */,
 				D9A6AA402043DE6E001AEC67 /* EBRNModule.h */,
@@ -209,116 +173,72 @@
 			path = RNBindingX;
 			sourceTree = "<group>";
 		};
-		D955B21B2030102B000274AC /* core */ = {
+		D9F0193120AAD9D90014349F /* core */ = {
 			isa = PBXGroup;
 			children = (
-				D98553782046A948006F8F8A /* EBBindData.h */,
-				D98553772046A948006F8F8A /* EBBindData.m */,
-				D9A6A8992043A5D4001AEC67 /* EBExpression.h */,
-				D9A6A8A72043A5D5001AEC67 /* EBExpression.m */,
-				D9A6A8BC2043A5D8001AEC67 /* EBExpressionExecutor.h */,
-				D9A6A8AE2043A5D6001AEC67 /* EBExpressionExecutor.m */,
-				D9A6A8B12043A5D6001AEC67 /* EBExpressionGesture.h */,
-				D9A6A8B42043A5D7001AEC67 /* EBExpressionGesture.m */,
-				D9A6A8B62043A5D7001AEC67 /* EBExpressionHandler.h */,
-				D9A6A8B52043A5D7001AEC67 /* EBExpressionHandler.m */,
-				D9A6A8A82043A5D5001AEC67 /* EBExpressionOrientation.h */,
-				D9A6A8B82043A5D7001AEC67 /* EBExpressionOrientation.m */,
-				D9A6A8B22043A5D7001AEC67 /* EBExpressionProperty.h */,
-				D9A6A89F2043A5D5001AEC67 /* EBExpressionProperty.m */,
-				D9A6A8982043A5D4001AEC67 /* EBExpressionScope.h */,
-				D9A6A89A2043A5D4001AEC67 /* EBExpressionScope.m */,
-				D9A6A8A22043A5D5001AEC67 /* EBExpressionScroller.h */,
-				D9A6A8BE2043A5D8001AEC67 /* EBExpressionScroller.m */,
-				D9A6A8B92043A5D8001AEC67 /* EBExpressionTiming.h */,
-				D9A6A8972043A5D4001AEC67 /* EBExpressionTiming.m */,
-				D9A6A8AD2043A5D6001AEC67 /* EBGyroEuler.h */,
-				D9A6A8A02043A5D5001AEC67 /* EBGyroEuler.m */,
-				D9A6A8AF2043A5D6001AEC67 /* EBGyroManager.h */,
-				D9A6A8BF2043A5D9001AEC67 /* EBGyroManager.m */,
-				D9A6A8A42043A5D5001AEC67 /* EBGyroOrientationEvaluator.h */,
-				D9A6A8AB2043A5D6001AEC67 /* EBGyroOrientationEvaluator.m */,
-				D9A6A89B2043A5D4001AEC67 /* EBGyroQuaternion.h */,
-				D9A6A8C02043A5D9001AEC67 /* EBGyroQuaternion.m */,
-				D9A6A89C2043A5D4001AEC67 /* EBGyroVector3.h */,
-				D9A6A8952043A5D4001AEC67 /* EBGyroVector3.m */,
-				D9A6A89D2043A5D4001AEC67 /* EBJSEase.h */,
-				D9A6A8B02043A5D6001AEC67 /* EBJSEase.m */,
-				D9A6A8BD2043A5D8001AEC67 /* EBJSEvaluate.h */,
-				D9A6A8962043A5D4001AEC67 /* EBJSEvaluate.m */,
-				D9A6A8B72043A5D7001AEC67 /* EBJSMath.h */,
-				D9A6A8BA2043A5D8001AEC67 /* EBJSMath.m */,
-				D9A6A8B32043A5D7001AEC67 /* EBJSTransform.h */,
-				D9A6A8AC2043A5D6001AEC67 /* EBJSTransform.m */,
-				D9A6A8A52043A5D5001AEC67 /* EBNativeFunction.h */,
-				D9A6A8A92043A5D5001AEC67 /* EBNativeFunction.m */,
-				D9A6A8A32043A5D5001AEC67 /* EBTaffyTuple.h */,
-				D9A6A8BB2043A5D8001AEC67 /* EBTaffyTuple.m */,
-				D9A6A89E2043A5D4001AEC67 /* EBUtility.h */,
-				D9A6A8AA2043A5D5001AEC67 /* EBUtility.m */,
-				D9A6A8A62043A5D5001AEC67 /* NSObject+EBTuplePacker.h */,
-				D9A6A8A12043A5D5001AEC67 /* NSObject+EBTuplePacker.m */,
+				D9F01ACB20ABCE160014349F /* BindingX.h */,
+				D9F01AD020ABCE170014349F /* EBBindData.h */,
+				D9F01AD820ABCE180014349F /* EBBindData.m */,
+				D9F01AC120ABCE160014349F /* EBExpression.h */,
+				D9F01AC020ABCE150014349F /* EBExpression.m */,
+				D9F01AE220ABCE190014349F /* EBExpressionExecutor.h */,
+				D9F01AE320ABCE190014349F /* EBExpressionExecutor.m */,
+				D9F01ADB20ABCE180014349F /* EBExpressionGesture.h */,
+				D9F01AC520ABCE160014349F /* EBExpressionGesture.m */,
+				D9F01AC920ABCE160014349F /* EBExpressionHandler.h */,
+				D9F01ABC20ABCE150014349F /* EBExpressionHandler.m */,
+				D9F01AC720ABCE160014349F /* EBExpressionOrientation.h */,
+				D9F01AE920ABCE1A0014349F /* EBExpressionOrientation.m */,
+				D9F01AC420ABCE160014349F /* EBExpressionProperty.h */,
+				D9F01AC620ABCE160014349F /* EBExpressionProperty.m */,
+				D9F01ADA20ABCE180014349F /* EBExpressionScope.h */,
+				D9F01AE820ABCE190014349F /* EBExpressionScope.m */,
+				D9F01ACC20ABCE160014349F /* EBExpressionScroller.h */,
+				D9F01AE120ABCE190014349F /* EBExpressionScroller.m */,
+				D9F01AD120ABCE170014349F /* EBExpressionTiming.h */,
+				D9F01AD720ABCE170014349F /* EBExpressionTiming.m */,
+				D9F01AE520ABCE190014349F /* EBGyroEuler.h */,
+				D9F01AD320ABCE170014349F /* EBGyroEuler.m */,
+				D9F01ABE20ABCE150014349F /* EBGyroManager.h */,
+				D9F01AD920ABCE180014349F /* EBGyroManager.m */,
+				D9F01ACD20ABCE160014349F /* EBGyroOrientationEvaluator.h */,
+				D9F01ACE20ABCE170014349F /* EBGyroOrientationEvaluator.m */,
+				D9F01AE420ABCE190014349F /* EBGyroQuaternion.h */,
+				D9F01ACA20ABCE160014349F /* EBGyroQuaternion.m */,
+				D9F01ABF20ABCE150014349F /* EBGyroVector3.h */,
+				D9F01AD420ABCE170014349F /* EBGyroVector3.m */,
+				D9F01ADF20ABCE180014349F /* EBHandlerFactory.h */,
+				D9F01ACF20ABCE170014349F /* EBHandlerFactory.m */,
+				D9F01AE620ABCE190014349F /* EBJSEase.h */,
+				D9F01AC820ABCE160014349F /* EBJSEase.m */,
+				D9F01AC220ABCE160014349F /* EBJSEvaluate.h */,
+				D9F01AD520ABCE170014349F /* EBJSEvaluate.m */,
+				D9F01ABA20ABCE150014349F /* EBJSMath.h */,
+				D9F01ABB20ABCE150014349F /* EBJSMath.m */,
+				D9F01AE020ABCE180014349F /* EBJSTransform.h */,
+				D9F01AE720ABCE190014349F /* EBJSTransform.m */,
+				D9F01AB920ABCE150014349F /* EBNativeFunction.h */,
+				D9F01ABD20ABCE150014349F /* EBNativeFunction.m */,
+				D9F01AD220ABCE170014349F /* EBTaffyTuple.h */,
+				D9F01ADD20ABCE180014349F /* EBTaffyTuple.m */,
+				D9F01AD620ABCE170014349F /* EBUtility.h */,
+				D9F01ADE20ABCE180014349F /* EBUtility.m */,
+				D9F01AC320ABCE160014349F /* NSObject+EBTuplePacker.h */,
+				D9F01ADC20ABCE180014349F /* NSObject+EBTuplePacker.m */,
 			);
-			name = core;
-			path = ../../../../core/ios/BindingX;
-			sourceTree = "<group>";
-		};
-		D9A6AA492043E142001AEC67 /* RNBindingXTests */ = {
-			isa = PBXGroup;
-			children = (
-				D9A6AA4C2043E142001AEC67 /* Info.plist */,
-			);
-			path = RNBindingXTests;
+			path = core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		D955B1A2202FF82A000274AC /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D9A6A8C72043A5D9001AEC67 /* EBGyroQuaternion.h in Headers */,
-				D9A6A8E82043A5D9001AEC67 /* EBExpressionExecutor.h in Headers */,
-				D9A6A8D22043A5D9001AEC67 /* NSObject+EBTuplePacker.h in Headers */,
-				D9A6A8E22043A5D9001AEC67 /* EBExpressionHandler.h in Headers */,
-				D9A6A8D12043A5D9001AEC67 /* EBNativeFunction.h in Headers */,
-				D9A6A8C92043A5D9001AEC67 /* EBJSEase.h in Headers */,
-				D9A6A8C52043A5D9001AEC67 /* EBExpression.h in Headers */,
-				D985537A2046A948006F8F8A /* EBBindData.h in Headers */,
-				D9A6A8DB2043A5D9001AEC67 /* EBGyroManager.h in Headers */,
-				D9A6A8D42043A5D9001AEC67 /* EBExpressionOrientation.h in Headers */,
-				D9A6A8CF2043A5D9001AEC67 /* EBTaffyTuple.h in Headers */,
-				D9A6A8DD2043A5D9001AEC67 /* EBExpressionGesture.h in Headers */,
-				D9A6A8D92043A5D9001AEC67 /* EBGyroEuler.h in Headers */,
-				D9A6A8E32043A5D9001AEC67 /* EBJSMath.h in Headers */,
-				D9A6A8DE2043A5D9001AEC67 /* EBExpressionProperty.h in Headers */,
-				D9A6A8CA2043A5D9001AEC67 /* EBUtility.h in Headers */,
-				D9A6A8DF2043A5D9001AEC67 /* EBJSTransform.h in Headers */,
-				D9A6A8C42043A5D9001AEC67 /* EBExpressionScope.h in Headers */,
-				D9A6A8CE2043A5D9001AEC67 /* EBExpressionScroller.h in Headers */,
-				D9A6A8E52043A5D9001AEC67 /* EBExpressionTiming.h in Headers */,
-				D9A6A8D02043A5D9001AEC67 /* EBGyroOrientationEvaluator.h in Headers */,
-				D9A6A8C82043A5D9001AEC67 /* EBGyroVector3.h in Headers */,
-				D9A6AA422043DE6E001AEC67 /* EBRNModule.h in Headers */,
-				D955B1B7202FF851000274AC /* EBUtility+RN.h in Headers */,
-				D9A6A8E92043A5D9001AEC67 /* EBJSEvaluate.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
-		D955B1A4202FF82A000274AC /* RNBindingX */ = {
+		D9F01A0520AAE8420014349F /* RNBindingX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D955B1AD202FF82A000274AC /* Build configuration list for PBXNativeTarget "RNBindingX" */;
+			buildConfigurationList = D9F01A0C20AAE8420014349F /* Build configuration list for PBXNativeTarget "RNBindingX" */;
 			buildPhases = (
-				3E3FBA0FF83339A9564918AE /* [CP] Check Pods Manifest.lock */,
-				D955B1A0202FF82A000274AC /* Sources */,
-				D955B1A1202FF82A000274AC /* Frameworks */,
-				D955B1A2202FF82A000274AC /* Headers */,
-				D955B1A3202FF82A000274AC /* Resources */,
-				80B67943937D19C07AB21414 /* [CP] Copy Pods Resources */,
+				D9F01A0220AAE8420014349F /* Sources */,
+				D9F01A0320AAE8420014349F /* Frameworks */,
+				D9F01A0420AAE8420014349F /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -326,29 +246,8 @@
 			);
 			name = RNBindingX;
 			productName = RNBindingX;
-			productReference = D955B1A5202FF82A000274AC /* RNBindingX.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		D9A6AA472043E142001AEC67 /* RNBindingXTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D9A6AA502043E142001AEC67 /* Build configuration list for PBXNativeTarget "RNBindingXTests" */;
-			buildPhases = (
-				ACC17D45B7FB07A641856F30 /* [CP] Check Pods Manifest.lock */,
-				D9A6AA442043E142001AEC67 /* Sources */,
-				D9A6AA452043E142001AEC67 /* Frameworks */,
-				D9A6AA462043E142001AEC67 /* Resources */,
-				9AF832D49638B21FBB7B9953 /* [CP] Embed Pods Frameworks */,
-				3EC549235F1502FEB3EF715F /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				D9A6AA4F2043E142001AEC67 /* PBXTargetDependency */,
-			);
-			name = RNBindingXTests;
-			productName = RNBindingXTests;
-			productReference = D9A6AA482043E142001AEC67 /* RNBindingXTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
+			productReference = D9F01A0620AAE8420014349F /* libRNBindingX.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
@@ -359,12 +258,8 @@
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = Alibaba;
 				TargetAttributes = {
-					D955B1A4202FF82A000274AC = {
-						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
-					};
-					D9A6AA472043E142001AEC67 = {
-						CreatedOnToolsVersion = 9.2;
+					D9F01A0520AAE8420014349F = {
+						CreatedOnToolsVersion = 9.3.1;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -381,162 +276,46 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D955B1A4202FF82A000274AC /* RNBindingX */,
-				D9A6AA472043E142001AEC67 /* RNBindingXTests */,
+				D9F01A0520AAE8420014349F /* RNBindingX */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		D955B1A3202FF82A000274AC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D9A6AA462043E142001AEC67 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		3E3FBA0FF83339A9564918AE /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-RNBindingX-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3EC549235F1502FEB3EF715F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RNBindingXTests/Pods-RNBindingXTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		80B67943937D19C07AB21414 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RNBindingX/Pods-RNBindingX-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9AF832D49638B21FBB7B9953 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RNBindingXTests/Pods-RNBindingXTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		ACC17D45B7FB07A641856F30 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-RNBindingXTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		D955B1A0202FF82A000274AC /* Sources */ = {
+		D9F01A0220AAE8420014349F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9A6A8E72043A5D9001AEC67 /* EBTaffyTuple.m in Sources */,
-				D9A6A8E42043A5D9001AEC67 /* EBExpressionOrientation.m in Sources */,
-				D9A6A8C32043A5D9001AEC67 /* EBExpressionTiming.m in Sources */,
-				D9A6A8D62043A5D9001AEC67 /* EBUtility.m in Sources */,
-				D9A6A8D82043A5D9001AEC67 /* EBJSTransform.m in Sources */,
-				D9A6A8E12043A5D9001AEC67 /* EBExpressionHandler.m in Sources */,
-				D9A6A8D72043A5D9001AEC67 /* EBGyroOrientationEvaluator.m in Sources */,
-				D9A6A8C62043A5D9001AEC67 /* EBExpressionScope.m in Sources */,
-				D9A6A8C22043A5D9001AEC67 /* EBJSEvaluate.m in Sources */,
-				D9A6A8DC2043A5D9001AEC67 /* EBJSEase.m in Sources */,
-				D9A6AA432043DE6E001AEC67 /* EBRNModule.m in Sources */,
-				D9A6A8EB2043A5D9001AEC67 /* EBGyroManager.m in Sources */,
-				D9A6A8CB2043A5D9001AEC67 /* EBExpressionProperty.m in Sources */,
-				D9A6A8E62043A5D9001AEC67 /* EBJSMath.m in Sources */,
-				D9A6A8E02043A5D9001AEC67 /* EBExpressionGesture.m in Sources */,
-				D9A6A8CD2043A5D9001AEC67 /* NSObject+EBTuplePacker.m in Sources */,
-				D9A6A8D32043A5D9001AEC67 /* EBExpression.m in Sources */,
-				D98553792046A948006F8F8A /* EBBindData.m in Sources */,
-				D9A6A8D52043A5D9001AEC67 /* EBNativeFunction.m in Sources */,
-				D9A6A8CC2043A5D9001AEC67 /* EBGyroEuler.m in Sources */,
-				D9A6A8EC2043A5D9001AEC67 /* EBGyroQuaternion.m in Sources */,
-				D9A6A8EA2043A5D9001AEC67 /* EBExpressionScroller.m in Sources */,
-				D9A6A8DA2043A5D9001AEC67 /* EBExpressionExecutor.m in Sources */,
-				D9A6A8C12043A5D9001AEC67 /* EBGyroVector3.m in Sources */,
-				D955B1B4202FF851000274AC /* EBUtility+RN.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D9A6AA442043E142001AEC67 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				D9F01AEA20ABCE1A0014349F /* EBJSMath.m in Sources */,
+				D9F01AF220ABCE1A0014349F /* EBGyroOrientationEvaluator.m in Sources */,
+				D9F01AFF20ABCE1A0014349F /* EBJSTransform.m in Sources */,
+				D9F01AF320ABCE1A0014349F /* EBHandlerFactory.m in Sources */,
+				D9F01AEC20ABCE1A0014349F /* EBNativeFunction.m in Sources */,
+				D9F01AFC20ABCE1A0014349F /* EBUtility.m in Sources */,
+				D9F01AFE20ABCE1A0014349F /* EBExpressionExecutor.m in Sources */,
+				D9F01AED20ABCE1A0014349F /* EBExpression.m in Sources */,
+				D9F01AF020ABCE1A0014349F /* EBJSEase.m in Sources */,
+				D9F01B0120ABCE1A0014349F /* EBExpressionOrientation.m in Sources */,
+				D9F01AEE20ABCE1A0014349F /* EBExpressionGesture.m in Sources */,
+				D9F01AF120ABCE1A0014349F /* EBGyroQuaternion.m in Sources */,
+				D9F01B0020ABCE1A0014349F /* EBExpressionScope.m in Sources */,
+				D9F01AFB20ABCE1A0014349F /* EBTaffyTuple.m in Sources */,
+				D9F01AF520ABCE1A0014349F /* EBGyroVector3.m in Sources */,
+				D9F01AF820ABCE1A0014349F /* EBBindData.m in Sources */,
+				D9F01AFA20ABCE1A0014349F /* NSObject+EBTuplePacker.m in Sources */,
+				D9F01AF620ABCE1A0014349F /* EBJSEvaluate.m in Sources */,
+				D9F01AEB20ABCE1A0014349F /* EBExpressionHandler.m in Sources */,
+				D9F01AEF20ABCE1A0014349F /* EBExpressionProperty.m in Sources */,
+				D9F01A1020AAE84F0014349F /* EBRNModule.m in Sources */,
+				D9F01AF420ABCE1A0014349F /* EBGyroEuler.m in Sources */,
+				D9F01AFD20ABCE1A0014349F /* EBExpressionScroller.m in Sources */,
+				D9F01AF720ABCE1A0014349F /* EBExpressionTiming.m in Sources */,
+				D9F01A0F20AAE84F0014349F /* EBUtility+RN.m in Sources */,
+				D9F01AF920ABCE1A0014349F /* EBGyroManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		D9A6AA4F2043E142001AEC67 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D955B1A4202FF82A000274AC /* RNBindingX */;
-			targetProxy = D9A6AA4E2043E142001AEC67 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		D955B1AB202FF82A000274AC /* Debug */ = {
@@ -649,74 +428,34 @@
 			};
 			name = Release;
 		};
-		D955B1AE202FF82A000274AC /* Debug */ = {
+		D9F01A0D20AAE8420014349F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 22E206646D407E09F01C771E /* Pods-RNBindingX.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 6L37LAR3GU;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = RNBindingX/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alibaba.RNBindingX;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		D955B1AF202FF82A000274AC /* Release */ = {
+		D9F01A0E20AAE8420014349F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BB15E6679FBB269F8447243B /* Pods-RNBindingX.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 6L37LAR3GU;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = RNBindingX/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alibaba.RNBindingX;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		D9A6AA512043E142001AEC67 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E6D10BCEBB7C4B2F9A2632EC /* Pods-RNBindingXTests.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6L37LAR3GU;
-				INFOPLIST_FILE = RNBindingXTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alibaba.RNBindingXTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		D9A6AA522043E142001AEC67 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BC0F083B31F0772E06C3FFFE /* Pods-RNBindingXTests.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6L37LAR3GU;
-				INFOPLIST_FILE = RNBindingXTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alibaba.RNBindingXTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -733,20 +472,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D955B1AD202FF82A000274AC /* Build configuration list for PBXNativeTarget "RNBindingX" */ = {
+		D9F01A0C20AAE8420014349F /* Build configuration list for PBXNativeTarget "RNBindingX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D955B1AE202FF82A000274AC /* Debug */,
-				D955B1AF202FF82A000274AC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D9A6AA502043E142001AEC67 /* Build configuration list for PBXNativeTarget "RNBindingXTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D9A6AA512043E142001AEC67 /* Debug */,
-				D9A6AA522043E142001AEC67 /* Release */,
+				D9F01A0D20AAE8420014349F /* Debug */,
+				D9F01A0E20AAE8420014349F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

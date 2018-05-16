@@ -20,8 +20,6 @@
 #import "EBUtility+RN.h"
 #import <React/RCTUIManager.h>
 #import <React/RCTUIManagerUtils.h>
-#import <React/RCTText.h>
-#import <React/RCTShadowText.h>
 #import "EBBindData.h"
 
 #define BINDING_EVENT_NAME @"bindingx:statechange"
@@ -286,17 +284,6 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *, getComputedStyle:(nonnull NS
         dispatch_semaphore_signal(semaphore);
     });
     
-    //color for RCTText
-    RCTExecuteOnUIManagerQueue(^{
-        RCTShadowView* shadowView = [self.bridge.uiManager shadowViewForReactTag:@([sourceRef integerValue])];
-        if ([shadowView isKindOfClass:RCTShadowText.class]) {
-            RCTShadowText *shadowText = (RCTShadowText *)shadowView;
-            styles[@"color"] = [self colorAsString:shadowText.color.CGColor];
-        }
-        dispatch_semaphore_signal(semaphore);
-    });
-    
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     
     return styles;
