@@ -1,6 +1,6 @@
 {
   "name": "react-native-bindingx",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "scripts": {
     "start": "npm install && node node_modules/react-native/local-cli/cli.js start --root ./example",
     "postinstall": "ln -sf lib/{ios,android} .",
