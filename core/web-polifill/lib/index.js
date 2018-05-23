@@ -1742,28 +1742,21 @@ var Binding = function () {
   }, {
     key: 'setProperty',
     value: function setProperty(el, property, val) {
+
       if (el instanceof HTMLElement) {
         var elTransform = _simpleLodash2.default.find(this.elTransforms, function (o) {
           return o.element === el;
         });
         switch (property) {
           case 'transform.translateX':
-            elTransform.transform.translateX = (0, _utils.px)(val);
-            break;
           case 'transform.translateY':
-            elTransform.transform.translateY = (0, _utils.px)(val);
-            break;
           case 'transform.translateZ':
-            elTransform.transform.translateZ = (0, _utils.px)(val);
+            elTransform[property] = (0, _utils.px)(val);
             break;
           case 'transform.rotateX':
-            elTransform.transform.rotateX = val;
-            break;
           case 'transform.rotateY':
-            elTransform.transform.rotateY = val;
-            break;
           case 'transform.rotateZ':
-            elTransform.transform.rotateZ = val;
+            elTransform[property] = val;
             break;
           case 'transform.rotate':
             elTransform.transform.rotateZ = val;
@@ -1806,6 +1799,48 @@ var Binding = function () {
             break;
         }
         el.style[vendorTransform] = ['translateX(' + elTransform.transform.translateX + 'px)', 'translateY(' + elTransform.transform.translateY + 'px)', 'translateZ(' + elTransform.transform.translateZ + 'px)', 'scaleX(' + elTransform.transform.scaleX + ')', 'scaleY(' + elTransform.transform.scaleY + ')', 'rotateX(' + elTransform.transform.rotateX + 'deg)', 'rotateY(' + elTransform.transform.rotateY + 'deg)', 'rotateZ(' + elTransform.transform.rotateZ + 'deg)'].join(' ');
+      } else if (el instanceof SVGElement) {
+        var _elTransform = _simpleLodash2.default.find(this.elTransforms, function (o) {
+          return o.element === el;
+        });
+        switch (property) {
+          case 'svg-dashoffset':
+            el.setAttribute('stroke-dashoffset', val);
+            break;
+          case 'svg-transform.translateX':
+            _elTransform.transform.translateX = (0, _utils.px)(val);
+            break;
+          case 'svg-transform.translateY':
+            _elTransform.transform.translateY = (0, _utils.px)(val);
+            break;
+          case 'svg-transform.translateZ':
+            _elTransform.transform.translateZ = (0, _utils.px)(val);
+            break;
+          case 'svg-transform.rotateX':
+            _elTransform.transform.rotateX = val;
+            break;
+          case 'svg-transform.rotateY':
+            _elTransform.transform.rotateY = val;
+            break;
+          case 'svg-transform.rotateZ':
+            _elTransform.transform.rotateZ = val;
+            break;
+          case 'svg-transform.rotate':
+            _elTransform.transform.rotateZ = val;
+            break;
+          case 'svg-transform.scaleX':
+            _elTransform.transform.scaleX = val;
+            break;
+          case 'svg-transform.scaleY':
+            _elTransform.transform.scaleY = val;
+            break;
+          case 'svg-transform.scale':
+            _elTransform.transform.scaleX = val;
+            _elTransform.transform.scaleY = val;
+            break;
+        }
+
+        el.style[vendorTransform] = ['translateX(' + _elTransform.transform.translateX + 'px)', 'translateY(' + _elTransform.transform.translateY + 'px)', 'translateZ(' + _elTransform.transform.translateZ + 'px)', 'scaleX(' + _elTransform.transform.scaleX + ')', 'scaleY(' + _elTransform.transform.scaleY + ')', 'rotateX(' + _elTransform.transform.rotateX + 'deg)', 'rotateY(' + _elTransform.transform.rotateY + 'deg)', 'rotateZ(' + _elTransform.transform.rotateZ + 'deg)'].join(' ');
       } else {
 
         switch (property) {

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .block {
+            width: 187.5px;
+            height: 187.5px;
+            background: red;
+            position: absolute;
+        }
+
+        select {
+            position: absolute;
+            bottom: 0;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<svg width="375" height="375"
+     style="display: flex; background-color: rgb(204, 204, 204); margin-bottom: 5px;">
+    <polygon id="polygon"  points="50,5 20,99 95,39 5,39 80,99" fill="none" stroke="red"
+              stroke-width="2.5" stroke-dasharray="480,480"
+             stroke-dashoffset="0"></polygon>
+</svg>
+
+<select id="easing"></select>
+
+<script src="/dist/svg.js"></script>
+</body>
+</html>
