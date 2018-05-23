@@ -39,6 +39,7 @@ import com.taobao.weex.ui.view.WXScrollView;
 import com.taobao.weex.ui.view.listview.WXRecyclerView;
 import com.taobao.weex.ui.view.refresh.wrapper.BounceRecyclerView;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,7 +109,7 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
                             sOffsetHolderMap.put(sourceRef,new ContentOffsetHolder(0,0));
                         }
                     }
-                    mListOnScrollListener = new InnerListScrollListener(isVertical);
+                    mListOnScrollListener = new InnerListScrollListener(isVertical, new WeakReference<WXListComponent>(list));
                     recyclerView.addOnScrollListener(mListOnScrollListener);
                     return true;
                 }
@@ -304,9 +305,11 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
         private int mLastDx=0,mLastDy=0;
 
         private boolean isVertical;
+        private WeakReference<WXListComponent> mComponentRef;
 
-        InnerListScrollListener(boolean isVertical){
+        InnerListScrollListener(boolean isVertical, WeakReference<WXListComponent> componentRef){
             this.isVertical = isVertical;
+            this.mComponentRef = componentRef;
             if(!TextUtils.isEmpty(mSourceRef) && sOffsetHolderMap != null) {
                 ContentOffsetHolder holder = sOffsetHolderMap.get(mSourceRef);
                 if(holder != null) {
@@ -323,8 +326,13 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
             // the listener, then we'll missing that scrolled distance.
             // so you should bind it as early as possible
 
+            if(/*ViewCompat.isInLayout(recyclerView) &&*/ mComponentRef != null && mComponentRef.get() != null) {
+                // it seems more reliable to use this method
+                mContentOffsetY = Math.abs(mComponentRef.get().calcContentOffset(recyclerView));
+            } else {
+                mContentOffsetY += dy;
+            }
             mContentOffsetX += dx;
-            mContentOffsetY += dy;
 
             boolean isTurning = false;
             if(!isSameDirection(dx,mLastDx) && !isVertical) {
