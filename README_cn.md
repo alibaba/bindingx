@@ -116,21 +116,18 @@
 自动注册module，无需手动注册。
 
 ### React Native接入
-#### 前置条件
-
-确保你已经集成了react native。
-
-#### Android
+*前置条件*: 确保你已经集成了react native。
 
 1. 安装依赖 `npm install react-native-bindingx --save`
 2. 链接: `react-native link react-native-bindingx`
-3. 在你项目的`build.gradle`中增加`bindingx-core`依赖:
+
+#### Android
+
+在你项目的`build.gradle`中增加`bindingx-core`依赖:
 
   ```
   implementation 'com.alibaba.android:bindingx-core:{latest_version}'
   ```
-
-注意事项:
 
 1. `bindingx`默认使用gradle 3.x编译，如果你的项目还是运行在gradle 2.x上，需要升级到3.x；
 2. gradle 3.x使用`implementation`关键字替代了`compile`关键字，需要修改；
