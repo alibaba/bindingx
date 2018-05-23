@@ -165,7 +165,7 @@ class Binding {
       });
       switch (property) {
         case 'svg-dashoffset':
-          el.setAttribute('stroke-dashoffset', val);
+          el.setAttribute('stroke-dashoffset', px(val));
           break;
         case 'svg-transform.translateX':
           elTransform.transform.translateX = px(val);

@@ -2613,7 +2613,7 @@ var Binding = function () {
         });
         switch (property) {
           case 'svg-dashoffset':
-            el.setAttribute('stroke-dashoffset', val);
+            el.setAttribute('stroke-dashoffset', (0, _utils.px)(val));
             break;
           case 'svg-transform.translateX':
             _elTransform.transform.translateX = (0, _utils.px)(val);
