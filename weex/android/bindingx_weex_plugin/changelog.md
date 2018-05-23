@@ -37,6 +37,6 @@
 
 1. 代码重构(WeakRunnable抽到bindingx-core)
 
-#### 1.0.8.1
+#### 1.0.8.1 & 1.0.8.2
 
 1. 修复bindingx在某些情况下(比如在调用scrollToElement后)无法准确获取列表contentOffset的问题。

@@ -19,6 +19,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -326,8 +327,7 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
             // the listener, then we'll missing that scrolled distance.
             // so you should bind it as early as possible
 
-            if(/*ViewCompat.isInLayout(recyclerView) &&*/ mComponentRef != null && mComponentRef.get() != null) {
-                // it seems more reliable to use this method
+            if(ViewCompat.isInLayout(recyclerView) && mComponentRef != null && mComponentRef.get() != null) {
                 mContentOffsetY = Math.abs(mComponentRef.get().calcContentOffset(recyclerView));
             } else {
                 mContentOffsetY += dy;

@@ -11,7 +11,7 @@ ext {
 
     mavenGroup = 'com.alibaba.android'
     mavenArtifactId = 'bindingx_weex_plugin'
-    mavenVersion = '1.0.8.1'
+    mavenVersion = '1.0.8.2'
 
     orgName = 'rowandjj'
 }
