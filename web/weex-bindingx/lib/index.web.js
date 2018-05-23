@@ -2557,14 +2557,22 @@ var Binding = function () {
         });
         switch (property) {
           case 'transform.translateX':
+            elTransform.transform.translateX = (0, _utils.px)(val);
+            break;
           case 'transform.translateY':
+            elTransform.transform.translateY = (0, _utils.px)(val);
+            break;
           case 'transform.translateZ':
-            elTransform[property] = (0, _utils.px)(val);
+            elTransform.transform.translateZ = (0, _utils.px)(val);
             break;
           case 'transform.rotateX':
+            elTransform.transform.rotateX = val;
+            break;
           case 'transform.rotateY':
+            elTransform.transform.rotateY = val;
+            break;
           case 'transform.rotateZ':
-            elTransform[property] = val;
+            elTransform.transform.rotateZ = val;
             break;
           case 'transform.rotate':
             elTransform.transform.rotateZ = val;

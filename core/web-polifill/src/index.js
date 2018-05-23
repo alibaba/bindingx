@@ -100,14 +100,22 @@ class Binding {
       });
       switch (property) {
         case 'transform.translateX':
+          elTransform.transform.translateX = px(val);
+          break;
         case 'transform.translateY':
+          elTransform.transform.translateY = px(val);
+          break;
         case 'transform.translateZ':
-          elTransform[property] = px(val);
+          elTransform.transform.translateZ = px(val);
           break;
         case 'transform.rotateX':
+          elTransform.transform.rotateX = val;
+          break;
         case 'transform.rotateY':
+          elTransform.transform.rotateY = val;
+          break;
         case 'transform.rotateZ':
-          elTransform[property] = val;
+          elTransform.transform.rotateZ = val;
           break;
         case 'transform.rotate':
           elTransform.transform.rotateZ = val;
