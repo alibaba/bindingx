@@ -93,6 +93,7 @@ class Binding {
 
   // TODO scroll.contentOffset 待确认及补全
   setProperty(el, property, val) {
+
     if (el instanceof HTMLElement) {
       let elTransform = _.find(this.elTransforms, (o) => {
         return o.element === el;
@@ -166,7 +167,60 @@ class Binding {
         `rotateY(${elTransform.transform.rotateY}deg)`,
         `rotateZ(${elTransform.transform.rotateZ}deg)`
       ].join(' ');
+    } else if (el instanceof SVGElement) {
+      let elTransform = _.find(this.elTransforms, (o) => {
+        return o.element === el;
+      });
+      switch (property) {
+        case 'svg-dashoffset':
+          el.setAttribute('stroke-dashoffset', px(val));
+          break;
+        case 'svg-transform.translateX':
+          elTransform.transform.translateX = px(val);
+          break;
+        case 'svg-transform.translateY':
+          elTransform.transform.translateY = px(val);
+          break;
+        case 'svg-transform.translateZ':
+          elTransform.transform.translateZ = px(val);
+          break;
+        case 'svg-transform.rotateX':
+          elTransform.transform.rotateX = val;
+          break;
+        case 'svg-transform.rotateY':
+          elTransform.transform.rotateY = val;
+          break;
+        case 'svg-transform.rotateZ':
+          elTransform.transform.rotateZ = val;
+          break;
+        case 'svg-transform.rotate':
+          elTransform.transform.rotateZ = val;
+          break;
+        case 'svg-transform.scaleX':
+          elTransform.transform.scaleX = val;
+          break;
+        case 'svg-transform.scaleY':
+          elTransform.transform.scaleY = val;
+          break;
+        case 'svg-transform.scale':
+          elTransform.transform.scaleX = val;
+          elTransform.transform.scaleY = val;
+          break;
+      }
+
+      el.style[vendorTransform] = [
+        `translateX(${elTransform.transform.translateX}px)`,
+        `translateY(${elTransform.transform.translateY}px)`,
+        `translateZ(${elTransform.transform.translateZ}px)`,
+        `scaleX(${elTransform.transform.scaleX})`,
+        `scaleY(${elTransform.transform.scaleY})`,
+        `rotateX(${elTransform.transform.rotateX}deg)`,
+        `rotateY(${elTransform.transform.rotateY}deg)`,
+        `rotateZ(${elTransform.transform.rotateZ}deg)`
+      ].join(' ');
+
     } else {
+
 
       switch (property) {
         case 'lottie-progress':
