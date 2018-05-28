@@ -58,6 +58,8 @@
 }
 
 - (void)removeExpressionBinding {
+    [super removeExpressionBinding];
+    
     [EBUtility removeScrollDelegate:self source:self.source];
     
     if ([NSThread isMainThread]) {
