@@ -74,16 +74,14 @@
         NSDictionary *scope = [self setUpScope:scrollView];
         
         __block __weak typeof(self) welf = self;
-        [EBUtility performBlockOnBridgeThread:^{
-            if (self.turnChange) {
-                [welf fireTurnEvent:scope];
-            }
-            BOOL exit = ![welf executeExpression:scope];
-            if (exit) {
-                [welf fireStateChangedEvent:@"exit"];
-                return;
-            }
-        }];
+        if (self.turnChange) {
+            [welf fireTurnEvent:scope];
+        }
+        BOOL exit = ![welf executeExpression:scope];
+        if (exit) {
+            [welf fireStateChangedEvent:@"exit"];
+            return;
+        }
     } @catch (NSException *exception) {
         NSLog(@"%@",exception);
     }

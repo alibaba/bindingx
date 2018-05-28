@@ -11,7 +11,7 @@
 @implementation CustomEBHandler
 
 - (void)execute:(NSDictionary *)model to:(id)target {
-    NSLog(@"%@", model);
+//    NSLog(@"%@", model);
 }
 
 @end
