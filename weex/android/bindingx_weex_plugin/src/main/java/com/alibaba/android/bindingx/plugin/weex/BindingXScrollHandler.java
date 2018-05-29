@@ -328,7 +328,11 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
             // so you should bind it as early as possible
 
             if(ViewCompat.isInLayout(recyclerView) && mComponentRef != null && mComponentRef.get() != null) {
-                mContentOffsetY = Math.abs(mComponentRef.get().calcContentOffset(recyclerView));
+                if (RecycleUtil.recyclerVerticalScrollOffset(recyclerView) != 0){
+                    mContentOffsetY = Math.abs(mComponentRef.get().calcContentOffset(recyclerView));
+                } else {
+                    mContentOffsetY = 0;
+                }
             } else {
                 mContentOffsetY += dy;
             }
