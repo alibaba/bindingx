@@ -23,6 +23,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.alibaba.android.bindingx.core.BindingXCore;
 import com.alibaba.android.bindingx.core.LogProxy;
@@ -38,7 +39,9 @@ import com.taobao.weex.ui.component.list.WXListComponent;
 import com.taobao.weex.ui.view.WXHorizontalScrollView;
 import com.taobao.weex.ui.view.WXScrollView;
 import com.taobao.weex.ui.view.listview.WXRecyclerView;
+import com.taobao.weex.ui.view.refresh.core.WXSwipeLayout;
 import com.taobao.weex.ui.view.refresh.wrapper.BounceRecyclerView;
+import com.taobao.weex.ui.view.refresh.wrapper.BounceScrollerView;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -62,6 +65,7 @@ import java.util.Map;
 public class BindingXScrollHandler extends AbstractScrollEventHandler {
 
     private RecyclerView.OnScrollListener mListOnScrollListener;
+    private WXSwipeLayout.OnRefreshOffsetChangedListener mRefreshOffsetChangedListener;
     private WXScrollView.WXScrollViewListener mWxScrollViewListener;
     private WXHorizontalScrollView.ScrollViewListener mHorizontalViewScrollListener;
     private AppBarLayout.OnOffsetChangedListener mOnOffsetChangedListener;
@@ -86,6 +90,14 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
         this.mSourceRef = sourceRef;
         if (sourceComponent instanceof WXScroller) {
             WXScroller scroller = (WXScroller) sourceComponent;
+            ViewGroup group = scroller.getHostView();
+            if(group != null && group instanceof BounceScrollerView) {
+                WXSwipeLayout layout = ((BounceScrollerView) group).getSwipeLayout();
+                if(layout != null) {
+                    mRefreshOffsetChangedListener = new InnerSwipeOffsetListener();
+                    layout.addOnRefreshOffsetChangedListener(mRefreshOffsetChangedListener);
+                }
+            }
             View innerView = scroller.getInnerView();
             if (innerView != null && innerView instanceof WXScrollView) {
                 mWxScrollViewListener = new InnerScrollViewListener();
@@ -101,6 +113,11 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
             WXListComponent list = (WXListComponent) sourceComponent;
             BounceRecyclerView hostView = list.getHostView();
             if (hostView != null) {
+                WXSwipeLayout layout = hostView.getSwipeLayout();
+                if(layout != null) {
+                    mRefreshOffsetChangedListener = new InnerSwipeOffsetListener();
+                    layout.addOnRefreshOffsetChangedListener(mRefreshOffsetChangedListener);
+                }
                 WXRecyclerView recyclerView = hostView.getInnerView();
                 boolean isVertical = list.getOrientation() == Constants.Orientation.VERTICAL;
                 if (recyclerView != null) {
@@ -157,6 +174,13 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
         }
         if (sourceComponent instanceof WXScroller) {
             WXScroller scroller = (WXScroller) sourceComponent;
+            ViewGroup group = scroller.getHostView();
+            if(group != null && group instanceof BounceScrollerView) {
+                WXSwipeLayout layout = ((BounceScrollerView) group).getSwipeLayout();
+                if(layout != null && mRefreshOffsetChangedListener != null) {
+                    layout.removeOnRefreshOffsetChangedListener(mRefreshOffsetChangedListener);
+                }
+            }
             View innerView = scroller.getInnerView();
             if (innerView != null && innerView instanceof WXScrollView && mWxScrollViewListener != null) {
                 ((WXScrollView) innerView).removeScrollViewListener(mWxScrollViewListener);
@@ -169,6 +193,9 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
             WXListComponent list = (WXListComponent) sourceComponent;
             BounceRecyclerView hostView = list.getHostView();
             if (hostView != null) {
+                if(hostView.getSwipeLayout() != null && mRefreshOffsetChangedListener != null) {
+                    hostView.getSwipeLayout().removeOnRefreshOffsetChangedListener(mRefreshOffsetChangedListener);
+                }
                 WXRecyclerView recyclerView = hostView.getInnerView();
                 if (recyclerView != null && mListOnScrollListener != null) {
                     recyclerView.removeOnScrollListener(mListOnScrollListener);
@@ -296,6 +323,47 @@ public class BindingXScrollHandler extends AbstractScrollEventHandler {
             },mInstanceId);
         }
 
+    }
+
+    private class InnerSwipeOffsetListener implements WXSwipeLayout.OnRefreshOffsetChangedListener {
+        private int mContentOffsetY=0;
+
+        private int mTy=0;
+        private int mLastDy=0;
+
+        @Override
+        public void onOffsetChanged(int offset) {
+            int normalizedOffset = -offset;
+            final int dy = normalizedOffset - mContentOffsetY;
+
+            mContentOffsetY = normalizedOffset;
+
+            if(dy == 0) {
+                return;
+            }
+
+            boolean isTurning = false;
+            if(!isSameDirection(dy, mLastDy)) {
+                mTy = mContentOffsetY;
+                isTurning = true;
+            }
+
+            final int tdy = mContentOffsetY - mTy;
+
+            mLastDy = dy;
+
+            if(isTurning) {
+                BindingXScrollHandler.super.fireEventByState(BindingXConstants.STATE_TURNING,mContentOffsetX,mContentOffsetY,
+                        0,dy,0,tdy);
+            }
+
+            WXBridgeManager.getInstance().post(new Runnable() {
+                @Override
+                public void run() {
+                    BindingXScrollHandler.super.handleScrollEvent(mContentOffsetX,mContentOffsetY,0,dy,0,tdy);
+                }
+            },mInstanceId);
+        }
     }
 
     private class InnerListScrollListener extends RecyclerView.OnScrollListener{
