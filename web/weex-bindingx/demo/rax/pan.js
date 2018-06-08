@@ -33,19 +33,19 @@ class App extends Component {
       <ScrollView ref={'scrollView'} style={{borderWidth: 2, borderColor: 'red', width: 600, height: 600}}>
         <View>
           {[0, 1, 2, 3, 4, 5].map((i) => {
-            return <View style={{height: 500}}>{i}</View>
+            return <View key={i} style={{height: 500}}>{i}</View>;
           })}
         </View>
       </ScrollView>
       <View ref="block" onTouchStart={this.bindExp}
-            style={{
-              width: 200,
-              height: 200,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              backgroundColor: 'red'
-            }}>hello</View>
+        style={{
+          width: 200,
+          height: 200,
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          backgroundColor: 'red'
+        }}>hello</View>
     </View>);
   }
 
@@ -87,6 +87,6 @@ class App extends Component {
 }
 
 
-render(<App/>);
+render(<App />);
 
 

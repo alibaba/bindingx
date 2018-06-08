@@ -19,7 +19,7 @@ class App extends Component {
   bindExp = (index) => {
 
     let anchor = this.refs[`cell_${index}`];
-    if(this.slideIndex === index) {
+    if (this.slideIndex === index) {
       this.stop();
     }
 
@@ -38,7 +38,7 @@ class App extends Component {
           expression: `x+${start}`
         }
       ]
-    })
+    });
   }
 
   onHorizontalPan = (e, index) => {
@@ -58,13 +58,13 @@ class App extends Component {
     this.slideIn(index);
   }
 
-  stop = ()=>{
+  stop = () => {
 
-    if(this.slideToken){
+    if (this.slideToken) {
       bindingx.unbind({
-        eventType:'timing',
-        token:this.slideToken
-      })
+        eventType: 'timing',
+        token: this.slideToken
+      });
     }
   }
 
@@ -78,15 +78,15 @@ class App extends Component {
     this.slideIndex = index;
 
     let res = bindingx.bind({
-      eventType:'timing',
-      exitExpression:`t>${duration}`,
-      props:[{
-        element:getEl(el),
-        property:'transform.translateX',
-        expression:`easeOutSine(t,${start},${offset},${duration})`
+      eventType: 'timing',
+      exitExpression: `t>${duration}`,
+      props: [{
+        element: getEl(el),
+        property: 'transform.translateX',
+        expression: `easeOutSine(t,${start},${offset},${duration})`
       }]
-    },(e)=>{
-      if(e.state == 'exit'){
+    }, (e) => {
+      if (e.state == 'exit') {
         this.slideIndex = undefined;
       }
     });
@@ -103,7 +103,7 @@ class App extends Component {
         <ScrollView>
           <View className="content">
             {[0, 1, 2, 3, 4, 5, 6].map((i, index) => {
-              return <View ref={`cell_${index}`} key={index} {...isWeex ? {
+              return (<View ref={`cell_${index}`} key={index} {...isWeex ? {
                 onHorizontalPan: (e) => this.onHorizontalPan(e, index)
               } : {
                 onTouchStart: (e) => this.onTouchStart(e, index),
@@ -112,7 +112,7 @@ class App extends Component {
                 <Text className="text">
                   drag me!
                 </Text>
-              </View>
+              </View>);
             })}
           </View>
         </ScrollView>
@@ -123,8 +123,8 @@ class App extends Component {
 
 
 const styles = {
-  container:{
-    flex:1
+  container: {
+    flex: 1
   },
   cell: {
     width: 300,
@@ -133,7 +133,7 @@ const styles = {
     borderColor: '#000',
     height: 300
   }
-}
+};
 
-render(<App/>);
+render(<App />);
 

@@ -2556,6 +2556,16 @@ var Binding = function () {
           return o.element === el;
         });
         switch (property) {
+          // case 'scroll.contentOffset':
+          //   el.scrollTop = px(val);
+          //   el.scrollLeft = px(val);
+          //   break;
+          case 'scroll.contentOffsetY':
+            el.scrollTop = (0, _utils.px)(val);
+            break;
+          case 'scroll.contentOffsetX':
+            el.scrollLeft = (0, _utils.px)(val);
+            break;
           case 'transform.translateX':
             elTransform.transform.translateX = (0, _utils.px)(val);
             break;
