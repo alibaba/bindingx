@@ -91,7 +91,6 @@ class Binding {
     return Expression.execute(expression, assign(Fn, params));
   }
 
-  // TODO scroll.contentOffset 待确认及补全
   setProperty(el, property, val) {
 
     if (el instanceof HTMLElement) {
