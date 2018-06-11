@@ -129,7 +129,7 @@ class Menu extends Component {
       bindingProps = bindingProps.concat([
         {
           config: {
-            // transformOrigin: 'left top'
+            transformOrigin: 'left top'
           },
           element: getEl(this.refs[`item_${i}`]),
           property: 'transform.scale',
@@ -175,7 +175,7 @@ class Menu extends Component {
       overflow: 'hidden',
       backgroundColor: 'rgb(86,57,91)'
     }}>
-      <View>
+      <View style={{flex:1}}>
         {['DASHBOARD', 'HISTORY', 'STATISTICS', 'SETTINGS'].map((item, i) => {
           return (<View key={i} ref={`item_${i}`}
             style={{
@@ -421,7 +421,7 @@ class App extends Component {
       <View ref={'ball'}
         style={{width: 200, height: 200, backgroundColor: 'rgb(234,115,102)', marginTop: 100, borderRadius: 200}} />
       <View ref={'bar'} style={{width: 400, height: 40, marginTop: 50, backgroundColor: 'rgb(234,115,102)'}} />
-      <View style={{width: 750, alignItems: 'flex-start', marginTop: 100}}>
+      <View style={{width: 750, alignItems: 'flex-start', marginTop: 100,height:800}}>
         <View ref={'block1'} style={{width: 750, position: 'absolute', alignItems: 'center'}}>
           <View style={{backgroundColor: 'rgb(155,87,124)', width: 700, height: 600, marginTop: 100}} />
         </View>
