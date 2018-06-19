@@ -92,6 +92,10 @@ class Binding {
   }
 
   setProperty(el, property, val) {
+    // for debug
+    if (this.options.debug) {
+      console.log('property:', property, ' value:', val);
+    }
 
     if (el instanceof HTMLElement) {
       let elTransform = _.find(this.elTransforms, (o) => {

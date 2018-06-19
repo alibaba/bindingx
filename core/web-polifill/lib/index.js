@@ -1736,12 +1736,13 @@ var Binding = function () {
     value: function getValue(params, expression) {
       return _expression2.default.execute(expression, (0, _objectAssign2.default)(_fn2.default, params));
     }
-
-    // TODO scroll.contentOffset 待确认及补全
-
   }, {
     key: 'setProperty',
     value: function setProperty(el, property, val) {
+      // for debug
+      if (this.options.debug) {
+        console.log('property:', property, ' value:', val);
+      }
 
       if (el instanceof HTMLElement) {
         var elTransform = _simpleLodash2.default.find(this.elTransforms, function (o) {
