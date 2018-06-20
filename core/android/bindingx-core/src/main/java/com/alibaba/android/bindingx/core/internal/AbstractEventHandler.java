@@ -23,6 +23,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.bindingx.core.BindingXCore;
+import com.alibaba.android.bindingx.core.BindingXJSFunctionRegister;
 import com.alibaba.android.bindingx.core.BindingXPropertyInterceptor;
 import com.alibaba.android.bindingx.core.IEventHandler;
 import com.alibaba.android.bindingx.core.LogProxy;
@@ -101,6 +102,11 @@ public abstract class AbstractEventHandler implements IEventHandler {
     private void applyFunctionsToScope() {
         JSMath.applyToScope(mScope);
         TimingFunctions.applyToScope(mScope);
+        // register custom js functions
+        Map<String,JSFunctionInterface> customFunctions = BindingXJSFunctionRegister.getInstance().getJSFunctions();
+        if(customFunctions != null && !customFunctions.isEmpty()) {
+            mScope.putAll(customFunctions);
+        }
     }
 
     private void transformArgs(@NonNull String eventType, @NonNull List<Map<String, Object>> originalArgs) {

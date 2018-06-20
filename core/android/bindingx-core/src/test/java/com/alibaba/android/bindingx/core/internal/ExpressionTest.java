@@ -15,10 +15,14 @@
  */
 package com.alibaba.android.bindingx.core.internal;
 
+import com.alibaba.android.bindingx.core.BindingXJSFunctionRegister;
+
+import org.json.JSONException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +45,9 @@ public class ExpressionTest {
 
     // (y-2)/x > 1 ? 100 : 200
     private static final String EXP_5 = "{\"type\":\"?\",\"children\":[{\"type\":\">\",\"children\":[{\"type\":\"/\",\"children\":[{\"type\":\"-\",\"children\":[{\"type\":\"Identifier\",\"value\":\"y\"},{\"type\":\"NumericLiteral\",\"value\":2}]},{\"type\":\"Identifier\",\"value\":\"x\"}]},{\"type\":\"NumericLiteral\",\"value\":1}]},{\"type\":\"NumericLiteral\",\"value\":100},{\"type\":\"NumericLiteral\",\"value\":200}]}";
+
+    // foo(1,2,'M')
+    private static final String EXP_6 = "{\"type\":\"CallExpression\",\"children\":[{\"type\":\"Identifier\",\"value\":\"foo\"},{\"type\":\"Arguments\",\"children\":[{\"type\":\"NumericLiteral\",\"value\":1},{\"type\":\"NumericLiteral\",\"value\":2},{\"type\":\"StringLiteral\",\"value\":\"'M'\"}]}]}";
 
     @Test
     public void execute() throws Exception {
@@ -70,6 +77,22 @@ public class ExpressionTest {
         Expression e5 = new Expression(EXP_5);
         double value5 = (double) e5.execute(scope);
         assertEquals(200d, value5, 0.1);
+
+        Expression e6 = new Expression(EXP_6);
+
+        BindingXJSFunctionRegister.getInstance().registerJSFunction("foo", new JSFunctionInterface() {
+            @Override
+            public Object execute(ArrayList<Object> arguments) throws NumberFormatException, JSONException {
+                return arguments;
+            }
+        });
+
+        scope.putAll(BindingXJSFunctionRegister.getInstance().getJSFunctions());
+
+        ArrayList<Object> result = (ArrayList<Object>) e6.execute(scope);
+        assertEquals(1.0, result.get(0));
+        assertEquals(2.0, result.get(1));
+        assertEquals("'M'", result.get(2));
     }
 
 }

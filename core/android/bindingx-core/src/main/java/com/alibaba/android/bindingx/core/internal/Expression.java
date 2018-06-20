@@ -31,8 +31,7 @@ import java.util.Map;
  * */
 class Expression {
 
-
-    JSONObject root;
+    private JSONObject root;
 
     Expression(String json) {
         try {
@@ -60,18 +59,11 @@ class Expression {
 
     private boolean toBoolean(Object value) {
         if (value instanceof String)
-            return (String) value == "";
+            return "".equals(value);
         if (value instanceof Double)
             return (double) value != 0;
-        return ((Boolean) value).booleanValue();
+        return ((Boolean) value);
     }
-
-    private Object toPrimitive(Object value) {
-        if (value instanceof JSObjectInterface)
-            return "[object Object]";
-        return value;
-    }
-
 
     private String toString(Object value) {
         if (value instanceof Boolean)
