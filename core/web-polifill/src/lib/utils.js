@@ -31,7 +31,7 @@ const matrixToTransformObj = function(matrix) {
     values = matrix.match(/([-+]?[\d\.]+)/g);
   let [a, b, c, d, e, f] = values;
   obj.rotate = obj.rotateZ = Math.round(
-      Math.atan2(parseFloat(b), parseFloat(a)) * (180 / Math.PI)) || 0;
+    Math.atan2(parseFloat(b), parseFloat(a)) * (180 / Math.PI)) || 0;
   obj.translateX = e !== undefined ? pxTo750(e) : 0;
   obj.translateY = f !== undefined ? pxTo750(f) : 0;
   obj.scaleX = Math.sqrt(a * a + b * b);
@@ -78,10 +78,101 @@ function prefixStyle(attrName) {
 }
 
 
+// Parses an SVG path into an object.
+var length = {a: 7, c: 6, h: 1, l: 2, m: 2, q: 4, s: 4, t: 2, v: 1, z: 0};
+var segment = /([astvzqmhlc])([^astvzqmhlc]*)/ig;
+
+
+function parseValues(args) {
+  var numbers = args.match(/-?[0-9]*\.?[0-9]+(?:e[-+]?\d+)?/ig);
+  return numbers ? numbers.map(Number) : [];
+}
+
+/*
+// var d='M3,7 5-6 L1,7 1e2-.4 m-10,10 l10,0  \
+//   V27 89 H23           v10 h10             \
+//   C33,43 38,47 43,47   c0,5 5,10 10,10     \
+//   S63,67 63,67         s-10,10 10,10       \
+//   Q50,50 73,57         q20,-5 0,-10        \
+//   T70,40               t0,-15              \
+//   A5,5 45 1,0 40,20    a5,5 20 0,1 -10-10  Z';
+//
+// console.log(parseSVGPath(d))
+
+ */
+function parseSVGPath(path, fn) {
+  var data = [];
+  path.replace(segment, function(_, command, args) {
+    var type = command.toLowerCase();
+    args = parseValues(args);
+
+    // overloaded moveTo
+    if (type === 'm' && args.length > 2) {
+      data.push([command].concat(args.splice(0, 2)));
+      type = 'l';
+      command = command === 'm' ? 'l' : 'L';
+    }
+
+    while (args.length >= 0) {
+      if (args.length === length[type]) {
+        args.unshift(command);
+        return data.push(args);
+      }
+      if (args.length < length[type]) {
+        throw new Error('malformed path data');
+      }
+      data.push([command].concat(args.splice(0, length[type])));
+    }
+  });
+
+
+  if (typeof fn === 'function') {
+    return data.map((path) => {
+      return path.map((o, i) => {
+        return i > 0 ? fn(o) : o;
+      });
+    });
+  }
+
+  return data;
+}
+
+
+function stringifySVGPath(pathArray, fn) {
+
+  if (typeof fn === 'function') {
+    pathArray = pathArray.map((path) => {
+      return path.map((o, i) => {
+        return i > 0 ? fn(o) : o;
+      });
+    });
+  }
+
+
+  return pathArray.map((path) => {
+    return path.join(' ');
+  }).join(' ');
+}
+
+
+function interceptSVGPath(pathObj, index, values, cmd) {
+  if (pathObj && pathObj[index]) {
+    cmd = (cmd && cmd.replace(/'|"/g, '') || pathObj[index][0]).replace(/'|"/g, '');
+    values = [cmd, ...values];
+    Array.prototype.splice.call(pathObj[index], 0, values.length, ...values);
+  }
+
+  return pathObj;
+}
+
+
 export {
   matrixToTransformObj,
   pxTo750,
   px,
   clamp,
-  prefixStyle
+  prefixStyle,
+  parseSVGPath,
+  stringifySVGPath,
+  interceptSVGPath
 };
