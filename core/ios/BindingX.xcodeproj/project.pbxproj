@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D924ECF620D9251800417D69 /* BindingX.h in Headers */ = {isa = PBXBuildFile; fileRef = D924ECF520D9251700417D69 /* BindingX.h */; };
+		D924ECF620D9251800417D69 /* BindingX.h in Headers */ = {isa = PBXBuildFile; fileRef = D924ECF520D9251700417D69 /* BindingX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D94C354E20A004C00075FAA5 /* EBHandlerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = D94C354C20A004C00075FAA5 /* EBHandlerFactory.m */; };
-		D94C354F20A004C00075FAA5 /* EBHandlerFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = D94C354D20A004C00075FAA5 /* EBHandlerFactory.h */; };
+		D94C354F20A004C00075FAA5 /* EBHandlerFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = D94C354D20A004C00075FAA5 /* EBHandlerFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D985535F20467B25006F8F8A /* EBBindData.h in Headers */ = {isa = PBXBuildFile; fileRef = D985535D20467B25006F8F8A /* EBBindData.h */; };
 		D985536020467B25006F8F8A /* EBBindData.m in Sources */ = {isa = PBXBuildFile; fileRef = D985535E20467B25006F8F8A /* EBBindData.m */; };
 		D991797F2032810400D87FA3 /* BindingX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D99179752032810400D87FA3 /* BindingX.framework */; };
@@ -52,7 +52,7 @@
 		D99179E32032812F00D87FA3 /* EBGyroEuler.m in Sources */ = {isa = PBXBuildFile; fileRef = D99179B22032812E00D87FA3 /* EBGyroEuler.m */; };
 		D99179E52032812F00D87FA3 /* EBExpressionExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = D99179B42032812E00D87FA3 /* EBExpressionExecutor.m */; };
 		D99179E62032812F00D87FA3 /* EBTaffyTuple.m in Sources */ = {isa = PBXBuildFile; fileRef = D99179B52032812E00D87FA3 /* EBTaffyTuple.m */; };
-		D99179E72032812F00D87FA3 /* EBNativeFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = D99179B62032812E00D87FA3 /* EBNativeFunction.h */; };
+		D99179E72032812F00D87FA3 /* EBNativeFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = D99179B62032812E00D87FA3 /* EBNativeFunction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D99179E92032812F00D87FA3 /* EBExpressionTiming.m in Sources */ = {isa = PBXBuildFile; fileRef = D99179B82032812E00D87FA3 /* EBExpressionTiming.m */; };
 		D99179EC2032812F00D87FA3 /* EBExpressionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = D99179BB2032812F00D87FA3 /* EBExpressionHandler.m */; };
 		D99179ED2032812F00D87FA3 /* EBExpressionOrientation.h in Headers */ = {isa = PBXBuildFile; fileRef = D99179BC2032812F00D87FA3 /* EBExpressionOrientation.h */; };

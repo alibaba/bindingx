@@ -31,7 +31,7 @@
 		D9A27DA72047E229003AC20E /* EBExpressionScroller.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D782047E227003AC20E /* EBExpressionScroller.h */; };
 		D9A27DA82047E229003AC20E /* EBTaffyTuple.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D792047E227003AC20E /* EBTaffyTuple.h */; };
 		D9A27DA92047E229003AC20E /* EBGyroOrientationEvaluator.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D7A2047E227003AC20E /* EBGyroOrientationEvaluator.h */; };
-		D9A27DAA2047E229003AC20E /* EBNativeFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D7B2047E227003AC20E /* EBNativeFunction.h */; };
+		D9A27DAA2047E229003AC20E /* EBNativeFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D7B2047E227003AC20E /* EBNativeFunction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D9A27DAB2047E229003AC20E /* NSObject+EBTuplePacker.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D7C2047E227003AC20E /* NSObject+EBTuplePacker.h */; };
 		D9A27DAC2047E229003AC20E /* EBExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D7D2047E227003AC20E /* EBExpression.m */; };
 		D9A27DAD2047E229003AC20E /* EBExpressionOrientation.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D7E2047E227003AC20E /* EBExpressionOrientation.h */; };
