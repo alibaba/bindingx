@@ -78,7 +78,7 @@
         NSArray* argumentNodes = [children[1] objectForKey:@"children"];
         NSMutableArray* arguments = [[NSMutableArray alloc] init];
         for(int i = 0; i < [argumentNodes count]; i++)
-            arguments[i] = [self executeNodeInScope:scope node:argumentNodes[i]];
+            arguments[i] = [self executeNodeInScope:scope node:argumentNodes[i]];//TODO:Identifier nil check
         return [(EBNativeFunction *)[self executeNodeInScope:scope node:children[0]] call:arguments];
     } else if([type isEqualToString:@"?"]) {
         if([self toBool:[self executeNodeInScope:scope node:children[0]]]){

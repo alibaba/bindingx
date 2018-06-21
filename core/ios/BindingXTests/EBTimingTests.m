@@ -23,7 +23,8 @@
     
     EBExpressionHandler *timing = [EBExpressionHandler handlerWithExpressionType:WXExpressionTypeTiming
                                                                          source:@"123"];
-    NSMapTable<id, NSDictionary *> *targetExpression = [NSMapTable new];
+    NSMapTable<NSString *, id> *targetMap = [NSMapTable strongToWeakObjectsMapTable];
+    NSMutableDictionary<NSString *, NSDictionary *> *expressionDict = [NSMutableDictionary new];
     NSDictionary *expression = nil;
     
     NSDictionary *exitExpression = @{
@@ -33,16 +34,14 @@
                                              @{@"type":@"NumericLiteral",@"value":@(5000)}
                                         ]
                                      };
-    [targetExpression setObject:expression forKey:@"123"];
-    [timing updateTargetExpression:targetExpression
-                           options:nil
-                    exitExpression:exitExpression
-                          callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
-                              NSLog(@"%@",result);
-                              if ([result[@"state"] isEqualToString:@"exit"]) {
-                                  [expectationExit fulfill];
-                              }
-                          }];
+    [targetMap setObject:@"123" forKey:@"123"];
+    [expressionDict setObject:expression forKey:@"123"];
+    [timing updateTargetMap:targetMap expressionDict:expressionDict options:nil exitExpression:exitExpression callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
+        NSLog(@"%@",result);
+        if ([result[@"state"] isEqualToString:@"exit"]) {
+            [expectationExit fulfill];
+        }
+    }];
     
     [self waitForExpectationsWithTimeout:5.1 handler:^(NSError * _Nullable error) {
         NSLog(@"fulfilled");

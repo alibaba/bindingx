@@ -8,9 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol EBHandlerProtocol
+@protocol EBHandlerProtocol <NSObject>
 
-- (void)execute:(NSDictionary *)model to:(id)target;
+- (void)execute:(NSDictionary *)properties to:(id)target;
+
+@optional
+- (NSDictionary *)customScope;
 
 @end
 
