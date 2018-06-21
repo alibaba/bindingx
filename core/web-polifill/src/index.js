@@ -19,7 +19,15 @@
 import _ from 'simple-lodash';
 import Expression from './lib/expression';
 import {PanHandler, OrientationHandler, TimingHandler, ScrollHandler} from './lib/handlers';
-import {matrixToTransformObj, px, pxTo750, prefixStyle} from './lib/utils';
+import {
+  matrixToTransformObj,
+  px,
+  pxTo750,
+  prefixStyle,
+  interceptSVGPath,
+  parseSVGPath,
+  stringifySVGPath
+} from './lib/utils';
 import Fn from './lib/fn';
 import assign from 'object-assign';
 
@@ -31,6 +39,8 @@ class Binding {
   _eventHandler = null;
 
   elTransforms = [];
+
+  elPaths = [];
 
   token = null;
 
@@ -91,14 +101,27 @@ class Binding {
     return Expression.execute(expression, assign(Fn, params));
   }
 
-  // TODO scroll.contentOffset 待确认及补全
   setProperty(el, property, val) {
+    // for debug
+    if (this.options.debug) {
+      console.log('property:', property, ' value:', val);
+    }
 
     if (el instanceof HTMLElement) {
       let elTransform = _.find(this.elTransforms, (o) => {
         return o.element === el;
       });
       switch (property) {
+        // case 'scroll.contentOffset':
+        //   el.scrollTop = px(val);
+        //   el.scrollLeft = px(val);
+        //   break;
+        case 'scroll.contentOffsetY':
+          el.scrollTop = px(val);
+          break;
+        case 'scroll.contentOffsetX':
+          el.scrollLeft = px(val);
+          break;
         case 'transform.translateX':
           elTransform.transform.translateX = px(val);
           break;
@@ -206,6 +229,29 @@ class Binding {
           elTransform.transform.scaleX = val;
           elTransform.transform.scaleY = val;
           break;
+        case 'svg-path':
+          let exist = _.find(this.elPaths, (o) => {
+            return o.element === el;
+          });
+          if (!exist || !exist.path) {
+            exist = {
+              element: el,
+              path: parseSVGPath(el.getAttribute('d'), pxTo750)
+            };
+            this.elPaths.push(exist);
+          }
+
+          if (exist && exist.path) {
+            exist.path = interceptSVGPath(exist.path, val.index, val.values, val.cmd);
+          }
+          break;
+      }
+
+      let exist = _.find(this.elPaths, (o) => {
+        return o.element === el;
+      });
+      if (exist && exist.path) {
+        el.setAttribute('d', stringifySVGPath(exist.path, px));
       }
 
       el.style[vendorTransform] = [

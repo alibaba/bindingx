@@ -365,6 +365,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 /**
  Copyright 2018 Alibaba Group
 
@@ -451,11 +453,98 @@ function prefixStyle(attrName) {
   return vendor + attrName.charAt(0).toUpperCase() + attrName.substr(1);
 }
 
+// Parses an SVG path into an object.
+var length = { a: 7, c: 6, h: 1, l: 2, m: 2, q: 4, s: 4, t: 2, v: 1, z: 0 };
+var segment = /([astvzqmhlc])([^astvzqmhlc]*)/ig;
+
+function parseValues(args) {
+  var numbers = args.match(/-?[0-9]*\.?[0-9]+(?:e[-+]?\d+)?/ig);
+  return numbers ? numbers.map(Number) : [];
+}
+
+/*
+// var d='M3,7 5-6 L1,7 1e2-.4 m-10,10 l10,0  \
+//   V27 89 H23           v10 h10             \
+//   C33,43 38,47 43,47   c0,5 5,10 10,10     \
+//   S63,67 63,67         s-10,10 10,10       \
+//   Q50,50 73,57         q20,-5 0,-10        \
+//   T70,40               t0,-15              \
+//   A5,5 45 1,0 40,20    a5,5 20 0,1 -10-10  Z';
+//
+// console.log(parseSVGPath(d))
+
+ */
+function parseSVGPath(path, fn) {
+  var data = [];
+  path.replace(segment, function (_, command, args) {
+    var type = command.toLowerCase();
+    args = parseValues(args);
+
+    // overloaded moveTo
+    if (type === 'm' && args.length > 2) {
+      data.push([command].concat(args.splice(0, 2)));
+      type = 'l';
+      command = command === 'm' ? 'l' : 'L';
+    }
+
+    while (args.length >= 0) {
+      if (args.length === length[type]) {
+        args.unshift(command);
+        return data.push(args);
+      }
+      if (args.length < length[type]) {
+        throw new Error('malformed path data');
+      }
+      data.push([command].concat(args.splice(0, length[type])));
+    }
+  });
+
+  if (typeof fn === 'function') {
+    return data.map(function (path) {
+      return path.map(function (o, i) {
+        return i > 0 ? fn(o) : o;
+      });
+    });
+  }
+
+  return data;
+}
+
+function stringifySVGPath(pathArray, fn) {
+
+  if (typeof fn === 'function') {
+    pathArray = pathArray.map(function (path) {
+      return path.map(function (o, i) {
+        return i > 0 ? fn(o) : o;
+      });
+    });
+  }
+
+  return pathArray.map(function (path) {
+    return path.join(' ');
+  }).join(' ');
+}
+
+function interceptSVGPath(pathObj, index, values, cmd) {
+  if (pathObj && pathObj[index]) {
+    var _Array$prototype$spli;
+
+    cmd = (cmd && cmd.replace(/'|"/g, '') || pathObj[index][0]).replace(/'|"/g, '');
+    values = [cmd].concat(_toConsumableArray(values));
+    (_Array$prototype$spli = Array.prototype.splice).call.apply(_Array$prototype$spli, [pathObj[index], 0, values.length].concat(_toConsumableArray(values)));
+  }
+
+  return pathObj;
+}
+
 exports.matrixToTransformObj = matrixToTransformObj;
 exports.pxTo750 = pxTo750;
 exports.px = px;
 exports.clamp = clamp;
 exports.prefixStyle = prefixStyle;
+exports.parseSVGPath = parseSVGPath;
+exports.stringifySVGPath = stringifySVGPath;
+exports.interceptSVGPath = interceptSVGPath;
 
 /***/ }),
 /* 3 */
@@ -1672,6 +1761,7 @@ var Binding = function () {
 
     this._eventHandler = null;
     this.elTransforms = [];
+    this.elPaths = [];
     this.token = null;
 
     this.options = options;
@@ -1736,18 +1826,29 @@ var Binding = function () {
     value: function getValue(params, expression) {
       return _expression2.default.execute(expression, (0, _objectAssign2.default)(_fn2.default, params));
     }
-
-    // TODO scroll.contentOffset 待确认及补全
-
   }, {
     key: 'setProperty',
     value: function setProperty(el, property, val) {
+      // for debug
+      if (this.options.debug) {
+        console.log('property:', property, ' value:', val);
+      }
 
       if (el instanceof HTMLElement) {
         var elTransform = _simpleLodash2.default.find(this.elTransforms, function (o) {
           return o.element === el;
         });
         switch (property) {
+          // case 'scroll.contentOffset':
+          //   el.scrollTop = px(val);
+          //   el.scrollLeft = px(val);
+          //   break;
+          case 'scroll.contentOffsetY':
+            el.scrollTop = (0, _utils.px)(val);
+            break;
+          case 'scroll.contentOffsetX':
+            el.scrollLeft = (0, _utils.px)(val);
+            break;
           case 'transform.translateX':
             elTransform.transform.translateX = (0, _utils.px)(val);
             break;
@@ -1846,6 +1947,29 @@ var Binding = function () {
             _elTransform.transform.scaleX = val;
             _elTransform.transform.scaleY = val;
             break;
+          case 'svg-path':
+            var _exist = _simpleLodash2.default.find(this.elPaths, function (o) {
+              return o.element === el;
+            });
+            if (!_exist || !_exist.path) {
+              _exist = {
+                element: el,
+                path: (0, _utils.parseSVGPath)(el.getAttribute('d'), _utils.pxTo750)
+              };
+              this.elPaths.push(_exist);
+            }
+
+            if (_exist && _exist.path) {
+              _exist.path = (0, _utils.interceptSVGPath)(_exist.path, val.index, val.values, val.cmd);
+            }
+            break;
+        }
+
+        var exist = _simpleLodash2.default.find(this.elPaths, function (o) {
+          return o.element === el;
+        });
+        if (exist && exist.path) {
+          el.setAttribute('d', (0, _utils.stringifySVGPath)(exist.path, _utils.px));
         }
 
         el.style[vendorTransform] = ['translateX(' + _elTransform.transform.translateX + 'px)', 'translateY(' + _elTransform.transform.translateY + 'px)', 'translateZ(' + _elTransform.transform.translateZ + 'px)', 'scaleX(' + _elTransform.transform.scaleX + ')', 'scaleY(' + _elTransform.transform.scaleY + ')', 'rotateX(' + _elTransform.transform.rotateX + 'deg)', 'rotateY(' + _elTransform.transform.rotateY + 'deg)', 'rotateZ(' + _elTransform.transform.rotateZ + 'deg)'].join(' ');
@@ -3301,6 +3425,17 @@ var Fn = {
     var db = parseInt((to.db - from.db) * percent + from.db);
     var resDec = dr * 16 * 16 * 16 * 16 + dg * 16 * 16 + db;
     return '#' + decToHex(resDec);
+  },
+
+  svgDrawCmd: function svgDrawCmd(index, values, cmd) {
+    return {
+      index: index,
+      values: values,
+      cmd: cmd
+    };
+  },
+  asArray: function asArray() {
+    return [].concat(Array.prototype.slice.call(arguments));
   }
 };
 

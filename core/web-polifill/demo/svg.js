@@ -14,8 +14,10 @@ const easings = [
   'easeInOutBounce', 'cubicBezier'
 ];
 
+const svg = document.querySelector('svg');
 const polygon = document.getElementById('polygon');
 const easing = document.getElementById('easing');
+const path = document.getElementById('path');
 
 let options = '';
 easings.forEach((v) => {
@@ -101,4 +103,28 @@ function animate(timingFunc) {
 
 
 
+svg.addEventListener('touchstart',()=>{
+  bindingx.bind({
+    anchor: svg,
+    eventType: 'pan',
+    props: [
+      {
+        element: path,
+        property: 'svg-path',
+        expression: {
+          origin:`svgDrawCmd(0,asArray(x,y),'')`,
+          transformed:parse(`svgDrawCmd(0,asArray(x,y),'')`)
+        },
+      },
+      {
+        element: path,
+        property: 'svg-path',
+        expression: {
+          origin:`svgDrawCmd(1,asArray(x,y),'')`,
+          transformed:parse(`svgDrawCmd(1,asArray(x,y),'')`)
+        },
+      }
+    ]
+  })
+})
 

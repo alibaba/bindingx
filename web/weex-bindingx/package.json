@@ -1,6 +1,6 @@
 {
   "name": "weex-bindingx",
-  "version": "0.0.30",
+  "version": "0.0.33",
   "description": "bindingx,expression,binding,weex",
   "main": "lib/index.js",
   "repository": {
@@ -45,6 +45,7 @@
     "rax": "0.x.x",
     "rax-listview": "0.x.x",
     "rax-picker": "0.x.x",
+    "rax-picture": "^0.6.4",
     "rax-scrollview": "^0.6.1",
     "rax-text": "0.x.x",
     "rax-view": "0.x.x",

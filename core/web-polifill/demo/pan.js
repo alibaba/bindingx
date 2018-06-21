@@ -12,6 +12,7 @@ block.addEventListener('touchstart', () => {
 
   bindingx.bind({
     anchor: block,
+    // debug:true,
     eventType: 'pan',
     props: [
       {
