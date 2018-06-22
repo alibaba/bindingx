@@ -80,6 +80,7 @@
         BOOL exit = ![welf executeExpression:scope];
         if (exit) {
             [welf fireStateChangedEvent:@"exit"];
+            //not remove scroll
             return;
         }
     } @catch (NSException *exception) {

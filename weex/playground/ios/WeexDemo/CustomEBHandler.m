@@ -14,4 +14,8 @@
 //    NSLog(@"%@", model);
 }
 
+- (NSDictionary *)customScope {
+    return nil;
+}
+
 @end

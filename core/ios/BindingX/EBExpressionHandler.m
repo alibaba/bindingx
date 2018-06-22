@@ -23,6 +23,7 @@
 #import "EBExpressionTiming.h"
 #import "EBExpressionOrientation.h"
 #import "EBUtility.h"
+#import "EBHandlerFactory.h"
 
 @interface EBExpressionHandler ()
 
@@ -93,7 +94,13 @@
 }
 
 - (NSMutableDictionary *)generalScope {
-    return [EBExpressionScope generalScope];
+    NSMutableDictionary *generalScope= [EBExpressionScope generalScope];
+    for (id<EBHandlerProtocol> handler in EBHandlerFactory.handlers) {
+        if ([handler respondsToSelector:NSSelectorFromString(@"customScope")]) {
+            [generalScope addEntriesFromDictionary:[handler customScope]];
+        }
+    }
+    return generalScope;
 }
 
 @end

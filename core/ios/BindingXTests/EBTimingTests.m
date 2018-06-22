@@ -1,10 +1,18 @@
-//
-//  BindingXTests.m
-//  BindingXTests
-//
-//  Created by 对象 on 2018/2/13.
-//  Copyright © 2018年 Alibaba. All rights reserved.
-//
+/**
+ * Copyright 2018 Alibaba Group
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #import <XCTest/XCTest.h>
 #import "EBTestCase.h"
@@ -23,7 +31,8 @@
     
     EBExpressionHandler *timing = [EBExpressionHandler handlerWithExpressionType:WXExpressionTypeTiming
                                                                          source:@"123"];
-    NSMapTable<id, NSDictionary *> *targetExpression = [NSMapTable new];
+    NSMapTable<NSString *, id> *targetMap = [NSMapTable strongToWeakObjectsMapTable];
+    NSMutableDictionary<NSString *, NSDictionary *> *expressionDict = [NSMutableDictionary new];
     NSDictionary *expression = nil;
     
     NSDictionary *exitExpression = @{
@@ -33,16 +42,14 @@
                                              @{@"type":@"NumericLiteral",@"value":@(5000)}
                                         ]
                                      };
-    [targetExpression setObject:expression forKey:@"123"];
-    [timing updateTargetExpression:targetExpression
-                           options:nil
-                    exitExpression:exitExpression
-                          callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
-                              NSLog(@"%@",result);
-                              if ([result[@"state"] isEqualToString:@"exit"]) {
-                                  [expectationExit fulfill];
-                              }
-                          }];
+    [targetMap setObject:@"123" forKey:@"123"];
+    [expressionDict setObject:expression forKey:@"123"];
+    [timing updateTargetMap:targetMap expressionDict:expressionDict options:nil exitExpression:exitExpression callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
+        NSLog(@"%@",result);
+        if ([result[@"state"] isEqualToString:@"exit"]) {
+            [expectationExit fulfill];
+        }
+    }];
     
     [self waitForExpectationsWithTimeout:5.1 handler:^(NSError * _Nullable error) {
         NSLog(@"fulfilled");
