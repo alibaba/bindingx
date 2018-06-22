@@ -97,34 +97,52 @@ function animate(timingFunc) {
   }, (e) => {
     console.log(e);
   });
-
 }
 
 
-
-
-svg.addEventListener('touchstart',()=>{
+svg.addEventListener('touchstart', () => {
   bindingx.bind({
+    // debug:true,
     anchor: svg,
     eventType: 'pan',
     props: [
+      // {
+      //   element: path,
+      //   property: 'svg-path',
+      //   expression: {
+      //     origin: `svgDrawCmd(0,asArray(x,y),'')`,
+      //     transformed: parse(`svgDrawCmd(0,asArray(x,y),'')`)
+      //   },
+      // },
+      // {
+      //   element: path,
+      //   property: 'svg-path',
+      //   expression: {
+      //     origin: `svgDrawCmd(1,asArray(x,y,650,100,750,0),'')`,
+      //     transformed: parse(`svgDrawCmd(1,asArray(x,y,650,100,750,0),'')`)
+      //   },
+      // },
       {
-        element: path,
-        property: 'svg-path',
-        expression: {
-          origin:`svgDrawCmd(0,asArray(x,y),'')`,
-          transformed:parse(`svgDrawCmd(0,asArray(x,y),'')`)
-        },
+        element:path,
+        property:'svg-path',
+        expression:{
+          origin:`svgDrawCmds(svgDrawCmd(1,asArray(x,y,650,100,750,0),''),svgDrawCmd(0,asArray(x,y),''))`,
+          transformed:parse(`svgDrawCmds(svgDrawCmd(1,asArray(x,y,650,100,750,0),''),svgDrawCmd(0,asArray(x,y),''))`)
+        }
       },
       {
         element: path,
-        property: 'svg-path',
+        property: 'svg-transform.translateX',
         expression: {
-          origin:`svgDrawCmd(1,asArray(x,y),'')`,
-          transformed:parse(`svgDrawCmd(1,asArray(x,y),'')`)
+          origin: `x+0`,
+          transformed: parse(`x+0`)
         },
       }
+
+
     ]
   })
 })
 
+
+console.log(bindingx.getComputedStyle(path))

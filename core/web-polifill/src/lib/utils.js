@@ -159,7 +159,8 @@ function interceptSVGPath(pathObj, index, values, cmd) {
   if (pathObj && pathObj[index]) {
     cmd = (cmd && cmd.replace(/'|"/g, '') || pathObj[index][0]).replace(/'|"/g, '');
     values = [cmd, ...values];
-    Array.prototype.splice.call(pathObj[index], 0, values.length, ...values);
+    pathObj[index] = values;
+    // Array.prototype.splice.call(pathObj[index], 0, values.length, ...values);
   }
 
   return pathObj;
