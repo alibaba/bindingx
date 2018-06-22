@@ -1,6 +1,6 @@
 {
   "name": "weex-bindingx",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "bindingx,expression,binding,weex",
   "main": "lib/index.js",
   "repository": {
