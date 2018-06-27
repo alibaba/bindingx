@@ -1,6 +1,6 @@
 {
   "name": "weex-bindingx",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "description": "bindingx,expression,binding,weex",
   "main": "lib/index.js",
   "repository": {
@@ -50,6 +50,7 @@
     "rax-text": "0.x.x",
     "rax-view": "0.x.x",
     "rax-webpack-plugin": "0.x.x",
+    "uglifyjs-webpack-plugin": "^1.2.7",
     "vue": "^2.5.13",
     "vue-loader": "^14.1.1",
     "vue-style-loader": "^3.1.2",
