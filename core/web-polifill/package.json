@@ -1,6 +1,6 @@
 {
   "name": "bindingx-web-polyfill",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "The web polyfill for BindingX.",
   "main": "lib/index.js",
   "scripts": {

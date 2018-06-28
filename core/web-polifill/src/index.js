@@ -128,7 +128,9 @@ class Binding {
           scaleZ: 1,
           rotateX: 0,
           rotateY: 0,
-          rotateZ: 0
+          rotateZ: 0,
+          skewX: 0,
+          skewY: 0
         };
 
         // only for svg element to have the initial style
@@ -139,6 +141,8 @@ class Binding {
           initialTransform.rotateZ = style.rotateZ;
           initialTransform.scaleX = style.scaleX;
           initialTransform.scaleY = style.scaleY;
+          initialTransform.skewX = style.skewX;
+          initialTransform.skewY = style.skewY;
         }
 
         elTransforms.push({
@@ -280,6 +284,12 @@ class Binding {
           setTransform(elTransform, 'scaleX', val);
           setTransform(elTransform, 'scaleY', val);
           break;
+        case 'svg-transform.skewX':
+          setTransform(elTransform, 'skewX', val);
+          break;
+        case 'svg-transform.skewY':
+          setTransform(elTransform, 'skewY', val);
+          break;
         case 'svg-path':
           let exist = _.find(this.elPaths, (o) => {
             return o.element === el;
@@ -321,7 +331,9 @@ class Binding {
           `scaleY(${elTransform.transform.scaleY})`,
           `rotateX(${elTransform.transform.rotateX}deg)`,
           `rotateY(${elTransform.transform.rotateY}deg)`,
-          `rotateZ(${elTransform.transform.rotateZ}deg)`
+          `rotateZ(${elTransform.transform.rotateZ}deg)`,
+          `skewX(${elTransform.transform.skewX}deg)`,
+          `skewY(${elTransform.transform.skewY}deg)`,
         ].join(' ');
       }
 

@@ -388,15 +388,26 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  *
  * @param string matrix
  * @return object
+ *
+ * see https://stackoverflow.com/questions/9818702/is-there-js-plugin-convert-the-matrix-parameter-to-css3-transform-property
  */
 
 // TODO matrix4 for 3D
 var matrixToTransformObj = function matrixToTransformObj(matrix) {
   // this happens when there was no rotation yet in CSS
   if (matrix === 'none') {
-    matrix = 'matrix(0,0,0,0,0)';
+    matrix = 'matrix(1,0,0,1,0,0)';
   }
-  var obj = {},
+  var atan = Math.atan,
+      atan2 = Math.atan2,
+      round = Math.round,
+      sqrt = Math.sqrt,
+      PI = Math.PI;
+
+  var obj = {
+    skewY: 0,
+    skewX: 0
+  },
       values = matrix.match(/([-+]?[\d\.]+)/g);
 
   var _values = _slicedToArray(values, 6),
@@ -407,11 +418,20 @@ var matrixToTransformObj = function matrixToTransformObj(matrix) {
       e = _values[4],
       f = _values[5];
 
-  obj.rotate = obj.rotateZ = Math.round(Math.atan2(parseFloat(b), parseFloat(a)) * (180 / Math.PI)) || 0;
+  obj.rotate = obj.rotateZ = round(atan2(parseFloat(b), parseFloat(a)) * (180 / Math.PI)) || 0;
   obj.translateX = e !== undefined ? pxTo750(e) : 0;
   obj.translateY = f !== undefined ? pxTo750(f) : 0;
-  obj.scaleX = Math.sqrt(a * a + b * b);
-  obj.scaleY = Math.sqrt(c * c + d * d);
+  obj.scaleX = sqrt(a * a + b * b);
+  obj.scaleY = sqrt(c * c + d * d);
+
+  if (a) {
+    obj.skewX = atan(c / a) * 180 / PI;
+    obj.skewY = atan(b / a) * 180 / PI;
+  } else if (b) {
+    obj.skewX = atan(d / b) * 180 / PI;
+  } else {
+    obj.skewX = PI * 0.25 * 180 / PI;
+  }
   return obj;
 };
 
@@ -1850,7 +1870,9 @@ var Binding = function () {
             scaleZ: 1,
             rotateX: 0,
             rotateY: 0,
-            rotateZ: 0
+            rotateZ: 0,
+            skewX: 0,
+            skewY: 0
           };
 
           // only for svg element to have the initial style
@@ -1861,6 +1883,8 @@ var Binding = function () {
             initialTransform.rotateZ = style.rotateZ;
             initialTransform.scaleX = style.scaleX;
             initialTransform.scaleY = style.scaleY;
+            initialTransform.skewX = style.skewX;
+            initialTransform.skewY = style.skewY;
           }
 
           elTransforms.push({
@@ -1994,6 +2018,12 @@ var Binding = function () {
             setTransform(_elTransform, 'scaleX', val);
             setTransform(_elTransform, 'scaleY', val);
             break;
+          case 'svg-transform.skewX':
+            setTransform(_elTransform, 'skewX', val);
+            break;
+          case 'svg-transform.skewY':
+            setTransform(_elTransform, 'skewY', val);
+            break;
           case 'svg-path':
             var _exist = _simpleLodash2.default.find(this.elPaths, function (o) {
               return o.element === el;
@@ -2026,7 +2056,7 @@ var Binding = function () {
         }
 
         if (_elTransform.shouldTransform) {
-          el.style[vendorTransform] = ['translateX(' + _elTransform.transform.translateX + 'px)', 'translateY(' + _elTransform.transform.translateY + 'px)', 'translateZ(' + _elTransform.transform.translateZ + 'px)', 'scaleX(' + _elTransform.transform.scaleX + ')', 'scaleY(' + _elTransform.transform.scaleY + ')', 'rotateX(' + _elTransform.transform.rotateX + 'deg)', 'rotateY(' + _elTransform.transform.rotateY + 'deg)', 'rotateZ(' + _elTransform.transform.rotateZ + 'deg)'].join(' ');
+          el.style[vendorTransform] = ['translateX(' + _elTransform.transform.translateX + 'px)', 'translateY(' + _elTransform.transform.translateY + 'px)', 'translateZ(' + _elTransform.transform.translateZ + 'px)', 'scaleX(' + _elTransform.transform.scaleX + ')', 'scaleY(' + _elTransform.transform.scaleY + ')', 'rotateX(' + _elTransform.transform.rotateX + 'deg)', 'rotateY(' + _elTransform.transform.rotateY + 'deg)', 'rotateZ(' + _elTransform.transform.rotateZ + 'deg)', 'skewX(' + _elTransform.transform.skewX + 'deg)', 'skewY(' + _elTransform.transform.skewY + 'deg)'].join(' ');
         }
       } else {
 

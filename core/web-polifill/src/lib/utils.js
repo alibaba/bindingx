@@ -19,23 +19,38 @@
  *
  * @param string matrix
  * @return object
+ *
+ * see https://stackoverflow.com/questions/9818702/is-there-js-plugin-convert-the-matrix-parameter-to-css3-transform-property
  */
 
 // TODO matrix4 for 3D
 const matrixToTransformObj = function(matrix) {
   // this happens when there was no rotation yet in CSS
   if (matrix === 'none') {
-    matrix = 'matrix(0,0,0,0,0)';
+    matrix = 'matrix(1,0,0,1,0,0)';
   }
-  let obj = {},
+  let {atan, atan2, round, sqrt, PI} = Math;
+  let obj = {
+      skewY: 0,
+      skewX: 0
+    },
     values = matrix.match(/([-+]?[\d\.]+)/g);
   let [a, b, c, d, e, f] = values;
-  obj.rotate = obj.rotateZ = Math.round(
-    Math.atan2(parseFloat(b), parseFloat(a)) * (180 / Math.PI)) || 0;
+  obj.rotate = obj.rotateZ = round(
+    atan2(parseFloat(b), parseFloat(a)) * (180 / Math.PI)) || 0;
   obj.translateX = e !== undefined ? pxTo750(e) : 0;
   obj.translateY = f !== undefined ? pxTo750(f) : 0;
-  obj.scaleX = Math.sqrt(a * a + b * b);
-  obj.scaleY = Math.sqrt(c * c + d * d);
+  obj.scaleX = sqrt(a * a + b * b);
+  obj.scaleY = sqrt(c * c + d * d);
+
+  if (a) {
+    obj.skewX = atan(c / a) * 180 / PI;
+    obj.skewY = atan(b / a) * 180 / PI;
+  } else if (b) {
+    obj.skewX = atan(d / b) * 180 / PI;
+  } else {
+    obj.skewX = PI * 0.25 * 180 / PI;
+  }
   return obj;
 };
 
