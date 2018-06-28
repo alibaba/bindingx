@@ -123,9 +123,8 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
             callback(@{@"state":@"error",@"msg":@"createBinding can't find source component"}, NO);
             return;
         }
-        
-        NSMapTable<NSString *, id> *targetMap = [NSMapTable strongToWeakObjectsMapTable];
-        NSMutableDictionary<NSString *, NSDictionary *> *expressionDict = [NSMutableDictionary dictionary];
+
+        NSMapTable<id, NSDictionary *> *targetExpressionMap = [NSMapTable weakToStrongObjectsMapTable];
         for (NSDictionary *targetDic in targetExpression) {
             NSString *targetRef = targetDic[@"element"];
             NSString *property = targetDic[@"property"];
@@ -139,8 +138,8 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
                         [targetComponent.view.layer removeAllAnimations];
                     });
                 }
-                
-                NSMutableDictionary *propertyDic = [[expressionDict objectForKey:targetRef] mutableCopy];
+
+                NSMutableDictionary *propertyDic = [[targetExpressionMap objectForKey:targetComponent] mutableCopy];
                 if (!propertyDic) {
                     propertyDic = [NSMutableDictionary dictionary];
                 }
@@ -152,8 +151,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
                     expDict[@"config"] = targetDic[@"config"];
                 }
                 propertyDic[property] = expDict;
-                [targetMap setObject:targetComponent forKey:targetRef];
-                [expressionDict setObject:propertyDic forKey:targetRef];
+                [targetExpressionMap setObject:propertyDic forKey:targetComponent];
             }
         }
         
@@ -166,15 +164,14 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
             handler = [EBExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
             [welf.bindData putHandler:handler forToken:sourceRef expressionType:exprType];
         }
-        
-        [handler updateTargetMap:targetMap
-                  expressionDict:expressionDict
-                         options:nil
-                  exitExpression:[EBBindData parseExpression:exitExpression]
-                        callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
-                            callback(result,keepAlive);
-                        }];
-        
+
+        [handler updateTargetExpression:targetExpressionMap
+                                options:nil
+                         exitExpression:[EBBindData parseExpression:exitExpression]
+                               callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
+                                   callback(result,keepAlive);
+                               }];
+
         pthread_mutex_unlock(&mutex);
     });
 }

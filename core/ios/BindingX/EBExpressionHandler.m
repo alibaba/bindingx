@@ -40,21 +40,22 @@
     return self;
 }
 
-- (void)updateTargetMap:(NSMapTable<NSString *, id> *)targetMap
-         expressionDict:(NSDictionary *)expressionDict
-                options:(NSDictionary *)options
-         exitExpression:(NSDictionary *)exitExpression
-               callback:(EBKeepAliveCallback)callback {
-    self.targetMap = targetMap;
-    self.expressionDict = expressionDict;
-    self.exitExpression = exitExpression;
+- (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)expressionMap
+                       options:(NSDictionary *)options
+                exitExpression:(NSDictionary *)exitExpression
+                      callback:(EBKeepAliveCallback)callback {
+    [EBUtility performBlockOnMainThread:^{
+        self.expressionMap = expressionMap;
+        self.exitExpression = exitExpression;
+    }];
     self.callback = callback;
     self.options = options;
 }
 
 - (void)removeExpressionBinding {
-    self.targetMap = nil;
-    self.expressionDict = nil;
+    [EBUtility performBlockOnMainThread:^{
+        self.expressionMap = nil;
+    }];
 }
 
 + (WXExpressionType)stringToExprType:(NSString *)typeStr {
@@ -87,10 +88,12 @@
 }
 
 - (BOOL)executeExpression:(NSDictionary *)scope {
-    return [EBExpressionExecutor executeWithTargetMap:_targetMap
-                                       expressionDict:_expressionDict
-                                       exitExpression:_exitExpression
-                                                scope:scope];
+    if (![NSThread isMainThread]) {
+        NSLog(@"not main thread!");
+    }
+    return [EBExpressionExecutor executeExpression:_expressionMap
+                                    exitExpression:_exitExpression
+                                             scope:scope];
 }
 
 - (NSMutableDictionary *)generalScope {

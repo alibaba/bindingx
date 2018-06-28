@@ -161,14 +161,16 @@
     }
     
     if ((model.isContentOffsetXChanged || model.isContentOffsetYChanged) && [component conformsToProtocol:@protocol(WXScrollerProtocol)]) {
-        id<WXScrollerProtocol> scroller = (id<WXScrollerProtocol>)target;
-        CGFloat offsetX = (model.isContentOffsetXChanged ? model.contentOffsetX : scroller.contentOffset.x);
-        CGFloat offsetY = (model.isContentOffsetYChanged ? model.contentOffsetY : scroller.contentOffset.y);
-        offsetX = MIN(offsetX, scroller.contentSize.width-component.view.frame.size.width);
-        offsetX = MAX(0, offsetX);
-        offsetY = MIN(offsetY, scroller.contentSize.height-component.view.frame.size.height);
-        offsetY = MAX(0, offsetY);
-        [scroller setContentOffset:CGPointMake(offsetX, offsetY) animated:NO];
+        WXPerformBlockOnMainThread(^{
+            id<WXScrollerProtocol> scroller = (id<WXScrollerProtocol>)target;
+            CGFloat offsetX = (model.isContentOffsetXChanged ? model.contentOffsetX : scroller.contentOffset.x);
+            CGFloat offsetY = (model.isContentOffsetYChanged ? model.contentOffsetY : scroller.contentOffset.y);
+            offsetX = MIN(offsetX, scroller.contentSize.width-component.view.frame.size.width);
+            offsetX = MAX(0, offsetX);
+            offsetY = MIN(offsetY, scroller.contentSize.height-component.view.frame.size.height);
+            offsetY = MAX(0, offsetY);
+            [scroller setContentOffset:CGPointMake(offsetX, offsetY) animated:NO];
+        });
     }
 }
 

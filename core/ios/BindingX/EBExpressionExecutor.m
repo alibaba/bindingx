@@ -64,18 +64,12 @@ typedef NS_ENUM(NSInteger, WXEPViewProperty) {
 
 @implementation EBExpressionExecutor
 
-+ (BOOL)executeWithTargetMap:(NSMapTable *)targetMap
-              expressionDict:(NSDictionary *)expressionDict
-              exitExpression:(NSDictionary *)exitExpression
-                       scope:(NSDictionary *)scope {
++ (BOOL)executeExpression:(NSMapTable *)expressionMap
+           exitExpression:(NSDictionary *)exitExpression
+                    scope:(NSDictionary *)scope {
     
-    for (NSString *targetRef in expressionDict) {
-        id target = [targetMap objectForKey:targetRef];
-        if (!target) {
-            continue;
-        }
-        
-        NSDictionary *expressionDictionary = [expressionDict objectForKey:targetRef];
+    for (id target in expressionMap) {
+        NSDictionary *expressionDictionary = [expressionMap objectForKey:target];
         EBExpressionProperty *model = [[EBExpressionProperty alloc] init];
         NSMutableDictionary *properties = [NSMutableDictionary new];
         

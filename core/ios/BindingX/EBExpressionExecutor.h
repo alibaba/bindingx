@@ -19,9 +19,8 @@
 
 @interface EBExpressionExecutor : NSObject
 
-+ (BOOL)executeWithTargetMap:(NSMapTable *)targetMap
-              expressionDict:(NSDictionary *)expressionDict
-              exitExpression:(NSDictionary *)exitExpression
-                       scope:(NSDictionary *)scope;
++ (BOOL)executeExpression:(NSMapTable *)expressionMap
+           exitExpression:(NSDictionary *)exitExpression
+                    scope:(NSDictionary *)scope;
 
 @end
