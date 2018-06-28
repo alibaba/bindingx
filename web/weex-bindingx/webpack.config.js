@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const RaxPlugin = require('rax-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 // const PlatformLoader = require('rax-webpack-plugin/lib/PlatformLoader');
 
 let indexConfig = {
@@ -23,7 +24,8 @@ let indexConfig = {
       // polyfillModules: [],
       // Check duplicate dependencies, default is ['rax']
       // duplicateCheck: ['rax'],
-    })
+    }),
+    new UglifyJsPlugin()
   ],
   entry: {
     index: './src/index.js'
@@ -54,7 +56,8 @@ let weexConfig = {
     new webpack.ProgressPlugin(),
     new RaxPlugin({
       target: 'umd'
-    })
+    }),
+    new UglifyJsPlugin()
   ],
   entry: {
     'index.weex': './src/index.js',
@@ -94,7 +97,8 @@ let webConfig = {
     new webpack.ProgressPlugin(),
     new RaxPlugin({
       target: 'umd'
-    })
+    }),
+    new UglifyJsPlugin()
   ],
   entry: {
     index: './src/index.js'

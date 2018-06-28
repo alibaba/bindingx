@@ -101,6 +101,9 @@ let Fn = {
       cmd
     };
   },
+  svgDrawCmds: function() {
+    return arguments;
+  },
   asArray: function() {
     return [...arguments];
   }

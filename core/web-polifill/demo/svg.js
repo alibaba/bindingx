@@ -18,7 +18,7 @@ const svg = document.querySelector('svg');
 const polygon = document.getElementById('polygon');
 const easing = document.getElementById('easing');
 const path = document.getElementById('path');
-
+const rect = document.getElementById('rect');
 let options = '';
 easings.forEach((v) => {
   options += `<option>${v}</option>`;
@@ -93,38 +93,59 @@ function animate(timingFunc) {
           transformed: parse(expression3)
         }
       },
+
     ]
   }, (e) => {
     console.log(e);
   });
-
 }
 
 
-
-
-svg.addEventListener('touchstart',()=>{
+svg.addEventListener('touchstart', () => {
   bindingx.bind({
+    // debug:true,
     anchor: svg,
     eventType: 'pan',
     props: [
       {
-        element: path,
-        property: 'svg-path',
-        expression: {
-          origin:`svgDrawCmd(0,asArray(x,y),'')`,
-          transformed:parse(`svgDrawCmd(0,asArray(x,y),'')`)
-        },
+        element:path,
+        property:'svg-path',
+        expression:{
+          origin:`svgDrawCmds(svgDrawCmd(1,asArray(x,y,650,100,750,0),''),svgDrawCmd(0,asArray(x,y),''))`,
+          transformed:parse(`svgDrawCmds(svgDrawCmd(1,asArray(x,y,650,100,750,0),''),svgDrawCmd(0,asArray(x,y),''))`)
+        }
       },
+      // {
+      //   element: path,
+      //   property: 'svg-transform.translateX',
+      //   expression: {
+      //     origin: `x+0`,
+      //     transformed: parse(`x+0`)
+      //   },
+      // },
+
+      // {
+      //   element:rect,
+      //   property:'svg-transform.rotate',
+      //   expression: {
+      //     origin: `x+0`,
+      //     transformed: parse(`x+0`)
+      //   }
+      // }
+
       {
-        element: path,
-        property: 'svg-path',
+        element:rect,
+        property:'svg-transform.skewX',
         expression: {
-          origin:`svgDrawCmd(1,asArray(x,y),'')`,
-          transformed:parse(`svgDrawCmd(1,asArray(x,y),'')`)
-        },
+          origin: `x+0`,
+          transformed: parse(`x+0`)
+        }
       }
+
+
     ]
   })
 })
 
+
+console.log(bindingx.getComputedStyle(rect))
