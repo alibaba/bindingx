@@ -424,14 +424,14 @@ var matrixToTransformObj = function matrixToTransformObj(matrix) {
   obj.scaleX = sqrt(a * a + b * b);
   obj.scaleY = sqrt(c * c + d * d);
 
-  if (a) {
-    obj.skewX = atan(c / a) * 180 / PI;
-    obj.skewY = atan(b / a) * 180 / PI;
-  } else if (b) {
-    obj.skewX = atan(d / b) * 180 / PI;
-  } else {
-    obj.skewX = PI * 0.25 * 180 / PI;
-  }
+  // if (a) {
+  //   obj.skewX = atan(c / a) * 180 / PI;
+  //   obj.skewY = atan(b / a) * 180 / PI;
+  // } else if (b) {
+  //   obj.skewX = atan(d / b) * 180 / PI;
+  // } else {
+  //   obj.skewX = PI * 0.25 * 180 / PI;
+  // }
   return obj;
 };
 
