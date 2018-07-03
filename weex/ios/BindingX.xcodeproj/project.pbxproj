@@ -48,7 +48,7 @@
 		D9A27DB92047E229003AC20E /* EBExpressionGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D8A2047E228003AC20E /* EBExpressionGesture.m */; };
 		D9A27DBA2047E229003AC20E /* EBJSTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D8B2047E228003AC20E /* EBJSTransform.h */; };
 		D9A27DBB2047E229003AC20E /* EBExpressionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D8C2047E228003AC20E /* EBExpressionHandler.m */; };
-		D9A27DBC2047E229003AC20E /* EBExpressionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D8D2047E228003AC20E /* EBExpressionHandler.h */; };
+		D9A27DBC2047E229003AC20E /* EBExpressionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D8D2047E228003AC20E /* EBExpressionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D9A27DBD2047E229003AC20E /* EBJSMath.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D8E2047E228003AC20E /* EBJSMath.h */; };
 		D9A27DBE2047E229003AC20E /* EBExpressionOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A27D8F2047E229003AC20E /* EBExpressionOrientation.m */; };
 		D9A27DBF2047E229003AC20E /* EBExpressionTiming.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A27D902047E229003AC20E /* EBExpressionTiming.h */; };

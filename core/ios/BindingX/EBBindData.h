@@ -21,11 +21,11 @@
 
 @interface EBBindData : NSObject
 
-- (EBExpressionHandler *)handlerForToken:(NSString *)token expressionType:(WXExpressionType)exprType;
+- (EBExpressionHandler *)handlerForToken:(NSString *)token eventType:(NSString *)eventType;
 
-- (void)putHandler:(EBExpressionHandler *)handler forToken:(NSString *)token expressionType:(WXExpressionType)exprType;
+- (void)putHandler:(EBExpressionHandler *)handler forToken:(NSString *)token eventType:(NSString *)eventType;
 
-- (void)removeHandler:(EBExpressionHandler *)handler forToken:(NSString *)token expressionType:(WXExpressionType)exprType;
+- (void)removeHandler:(EBExpressionHandler *)handler forToken:(NSString *)token eventType:(NSString *)eventType;
 
 - (void)unbindAll;
 

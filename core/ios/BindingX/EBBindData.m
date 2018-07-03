@@ -18,40 +18,45 @@
 
 @interface EBBindData ()
 
-@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, EBExpressionHandler *> *> *sourceMap;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, EBExpressionHandler *> *> *sourceMap;
 
 @end
 
 @implementation EBBindData
 
-- (NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, EBExpressionHandler *> *> *)sourceMap {
+- (NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, EBExpressionHandler *> *> *)sourceMap {
     if (!_sourceMap) {
-        _sourceMap = [NSMutableDictionary<NSString *, NSMutableDictionary<NSNumber *, EBExpressionHandler *> *> dictionary];
+        _sourceMap = [NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, EBExpressionHandler *> *> dictionary];
     }
     return _sourceMap;
 }
 
-- (NSMutableDictionary<NSNumber *, EBExpressionHandler *> *)handlerMapForToken:(NSString *)token {
+- (NSMutableDictionary<NSString *, EBExpressionHandler *> *)handlerMapForToken:(NSString *)token {
     return [self.sourceMap objectForKey:token];
 }
 
-- (EBExpressionHandler *)handlerForToken:(NSString *)token expressionType:(WXExpressionType)exprType {
-    return [[self handlerMapForToken:token] objectForKey:[NSNumber numberWithInteger:exprType]];
+- (EBExpressionHandler *)handlerForToken:(NSString *)token
+                               eventType:(NSString *)eventType {
+    return [[self handlerMapForToken:token] objectForKey:eventType];
 }
 
-- (void)putHandler:(EBExpressionHandler *)handler forToken:(NSString *)token expressionType:(WXExpressionType)exprType {
-    NSMutableDictionary<NSNumber *, EBExpressionHandler *> *handlerMap = [self handlerMapForToken:token];
+- (void)putHandler:(EBExpressionHandler *)handler
+          forToken:(NSString *)token
+         eventType:(NSString *)eventType {
+    NSMutableDictionary<NSString *, EBExpressionHandler *> *handlerMap = [self handlerMapForToken:token];
     if (!handlerMap) {
-        handlerMap = [NSMutableDictionary<NSNumber *, EBExpressionHandler *> dictionary];
+        handlerMap = [NSMutableDictionary<NSString *, EBExpressionHandler *> dictionary];
         self.sourceMap[token] = handlerMap;
     }
-    handlerMap[[NSNumber numberWithInteger:exprType]] = handler;
+    handlerMap[eventType] = handler;
 }
 
-- (void)removeHandler:(EBExpressionHandler *)handler forToken:(NSString *)token expressionType:(WXExpressionType)exprType {
-    NSMutableDictionary<NSNumber *, EBExpressionHandler *> *handlerMap = [self handlerMapForToken:token];
+- (void)removeHandler:(EBExpressionHandler *)handler
+             forToken:(NSString *)token
+            eventType:(NSString *)eventType {
+    NSMutableDictionary<NSString *, EBExpressionHandler *> *handlerMap = [self handlerMapForToken:token];
     if (handlerMap) {
-        [handlerMap removeObjectForKey:[NSNumber numberWithInteger:exprType]];
+        [handlerMap removeObjectForKey:eventType];
     }
 }
 

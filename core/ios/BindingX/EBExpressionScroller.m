@@ -31,9 +31,8 @@
 
 @implementation EBExpressionScroller
 
-- (instancetype)initWithExpressionType:(WXExpressionType)exprType
-                                source:(id)source {
-    if (self = [super initWithExpressionType:exprType source:source]) {
+- (instancetype)init {
+    if (self = [super init]) {
         [self initScroller];
     }
     return self;

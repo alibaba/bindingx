@@ -14,7 +14,7 @@
 		D985536020467B25006F8F8A /* EBBindData.m in Sources */ = {isa = PBXBuildFile; fileRef = D985535E20467B25006F8F8A /* EBBindData.m */; };
 		D991797F2032810400D87FA3 /* BindingX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D99179752032810400D87FA3 /* BindingX.framework */; };
 		D99179842032810400D87FA3 /* EBTimingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D99179832032810400D87FA3 /* EBTimingTests.m */; };
-		D99179C02032812F00D87FA3 /* EBExpressionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = D991798F2032812A00D87FA3 /* EBExpressionHandler.h */; };
+		D99179C02032812F00D87FA3 /* EBExpressionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = D991798F2032812A00D87FA3 /* EBExpressionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D99179C12032812F00D87FA3 /* EBJSEase.m in Sources */ = {isa = PBXBuildFile; fileRef = D99179902032812A00D87FA3 /* EBJSEase.m */; };
 		D99179C22032812F00D87FA3 /* EBJSEase.h in Headers */ = {isa = PBXBuildFile; fileRef = D99179912032812B00D87FA3 /* EBJSEase.h */; };
 		D99179C32032812F00D87FA3 /* EBGyroQuaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = D99179922032812B00D87FA3 /* EBGyroQuaternion.m */; };

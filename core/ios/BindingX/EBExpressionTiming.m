@@ -25,9 +25,8 @@
 
 @implementation EBExpressionTiming
 
-- (instancetype)initWithExpressionType:(WXExpressionType)exprType
-                                source:(id)source {
-    if (self = [super initWithExpressionType:exprType source:source]) {
+- (instancetype)init {
+    if (self = [super init]) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:)
                                                      name:UIApplicationWillResignActiveNotification object:nil];
         
@@ -40,6 +39,10 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
++ (BOOL)requireSource {
+    return NO;
 }
 
 - (void)updateTargetExpression:(NSMapTable<id,NSDictionary *> *)targetExpression

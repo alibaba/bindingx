@@ -17,17 +17,24 @@
 #import <Foundation/Foundation.h>
 #import "EBUtility.h"
 
-typedef NS_ENUM(NSInteger, WXExpressionType) {
-    WXExpressionTypeUndefined = -1,
-    WXExpressionTypePan,
-    WXExpressionTypeScroll,
-    WXExpressionTypeTiming,
-    WXExpressionTypeOrientation
-};
+@class EBExpressionHandler;
+
+@interface EBEventHandlerFactory : NSObject
+
++ (BOOL)containsEvent:(NSString *)event;
+
++ (BOOL)eventRequireSource:(NSString *)event;
+
++ (NSArray<NSString *> *)supportEvents;
+
++ (void)registerEvent:(NSString *)event withClass:(Class)clazz;
+
++ (EBExpressionHandler *)createHandlerWithEvent:(NSString *)event source:(id)source;
+
+@end
 
 @interface EBExpressionHandler : NSObject
 
-@property (nonatomic, assign) WXExpressionType exprType;
 @property (nonatomic, weak) id source;
 
 @property (nonatomic, copy) NSDictionary *exitExpression;
@@ -35,20 +42,14 @@ typedef NS_ENUM(NSInteger, WXExpressionType) {
 @property (nonatomic, strong) NSMapTable<id, NSDictionary *> *expressionMap;
 @property (nonatomic, strong) NSDictionary *options;
 
-- (instancetype)initWithExpressionType:(WXExpressionType)exprType
-                                source:(id)source;
-
 - (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)expressionMap
                        options:(NSDictionary *)options
                 exitExpression:(NSDictionary *)exitExpression
                       callback:(EBKeepAliveCallback)callback;
 
++ (BOOL)requireSource;
+
 - (void)removeExpressionBinding;
-
-+ (WXExpressionType)stringToExprType:(NSString *)typeStr;
-
-+ (EBExpressionHandler *)handlerWithExpressionType:(WXExpressionType)exprType
-                                            source:(id)source;
 
 - (BOOL)executeExpression:(NSDictionary *)scope;
 
