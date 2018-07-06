@@ -156,7 +156,7 @@ public abstract class AbstractEventHandler implements IEventHandler {
      *
      * @return true if expression return true and false otherwise
      * */
-    boolean evaluateExitExpression(ExpressionPair exitExpression, @NonNull Map<String,Object> scope) {
+    protected boolean evaluateExitExpression(ExpressionPair exitExpression, @NonNull Map<String,Object> scope) {
         boolean exit = false;
         if (exitExpression != null
                 && !TextUtils.isEmpty(exitExpression.transformed)
@@ -190,7 +190,7 @@ public abstract class AbstractEventHandler implements IEventHandler {
      * @param currentType current event type
      *
      * */
-    void consumeExpression(@Nullable Map<String, List<ExpressionHolder>> args, @NonNull Map<String,Object> scope,
+    protected void consumeExpression(@Nullable Map<String, List<ExpressionHolder>> args, @NonNull Map<String,Object> scope,
                            @NonNull String currentType) throws IllegalArgumentException, JSONException {
         //https://developer.mozilla.org/zh-CN/docs/Web/CSS/transform
         if (args == null) {
@@ -270,7 +270,7 @@ public abstract class AbstractEventHandler implements IEventHandler {
 
     protected abstract void onExit(@NonNull Map<String, Object> scope);
 
-    void clearExpressions() {
+    protected void clearExpressions() {
         LogProxy.d("all expression are cleared");
         if (mExpressionHoldersMap != null) {
             mExpressionHoldersMap.clear();
