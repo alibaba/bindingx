@@ -107,8 +107,8 @@ public class BindingXCore {
 
         String anchor = Utils.getStringValue(params, BindingXConstants.KEY_ANCHOR); // maybe nullable
         List<Map<String, Object>> expressionArgs = Utils.getRuntimeProps(params);
-
-        return doBind(anchor, anchorInstanceId, eventType, configMap, exitExpressionPair, expressionArgs, callback, context, instanceId);
+        Map<String,ExpressionPair> interceptors = Utils.getCustomInterceptors(params);
+        return doBind(anchor, anchorInstanceId, eventType, configMap, exitExpressionPair, expressionArgs, interceptors, callback, context, instanceId);
     }
 
     /**
@@ -244,12 +244,16 @@ public class BindingXCore {
 
 
     /**
+     *
+     * Note: maybe refactor next version because parameters too long
+     *
      * @param anchor             a reference of some view. Maybe null
      * @param anchorInstanceId   optional instance id of anchor
      * @param eventType          event type such as pan
      * @param globalConfig       global config
      * @param exitExpressionPair exit expression
      * @param expressionArgs     runtime props
+     * @param interceptors       interceptors which can custom when native will callback js
      * @param callback           result callback
      * @param context            android context
      * @param instanceId         optional instance id
@@ -260,6 +264,7 @@ public class BindingXCore {
                          @Nullable Map<String, Object> globalConfig,
                          @Nullable ExpressionPair exitExpressionPair,
                          @Nullable List<Map<String, Object>> expressionArgs,
+                         @Nullable Map<String,ExpressionPair> interceptors,
                          @Nullable JavaScriptCallback callback,
                          @Nullable Context context,
                          @Nullable String instanceId) {
@@ -287,6 +292,7 @@ public class BindingXCore {
         if (handler != null) {
             handler.onBindExpression(eventType, globalConfig, exitExpressionPair, expressionArgs, callback);
             LogProxy.d("createBinding success.[exitExp:" + exitExpressionPair + ",args:" + expressionArgs + "]");
+            handler.setInterceptors(interceptors);
         } else {
             LogProxy.e("internal error.binding failed for ref:" + anchor + ",type:" + eventType);
         }

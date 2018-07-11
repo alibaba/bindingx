@@ -28,6 +28,7 @@ import com.alibaba.android.bindingx.core.BindingXEventType;
 import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -257,7 +258,15 @@ public class BindingXTouchHandler extends AbstractEventHandler implements View.O
         fireEventByState(BindingXConstants.STATE_EXIT, deltaX, deltaY);
     }
 
-    private void fireEventByState(@BindingXConstants.State String state, double dx, double dy) {
+    @Override
+    protected void onUserIntercept(String interceptorName, @NonNull Map<String, Object> scope) {
+        double deltaX = (double) scope.get("internal_x");
+        double deltaY = (double) scope.get("internal_y");
+        fireEventByState(BindingXConstants.STATE_INTERCEPTOR, deltaX, deltaY, Collections.singletonMap(BindingXConstants.STATE_INTERCEPTOR,interceptorName));
+    }
+
+    @SuppressWarnings("unchecked")
+    private void fireEventByState(@BindingXConstants.State String state, double dx, double dy, Object... extension) {
         if (mCallback != null) {
             Map<String, Object> param = new HashMap<>();
             param.put("state", state);
@@ -266,6 +275,11 @@ public class BindingXTouchHandler extends AbstractEventHandler implements View.O
             param.put("deltaX", x);
             param.put("deltaY", y);
             param.put(BindingXConstants.KEY_TOKEN, mToken);
+
+            if(extension != null && extension.length > 0 && extension[0] instanceof Map) {
+                param.putAll((Map<String,Object>) extension[0]);
+            }
+
             mCallback.callback(param);
             LogProxy.d(">>>>>>>>>>>fire event:(" + state + "," + x + "," + y + ")");
         }

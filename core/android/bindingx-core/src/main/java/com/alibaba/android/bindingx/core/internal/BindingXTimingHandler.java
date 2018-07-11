@@ -27,6 +27,7 @@ import com.alibaba.android.bindingx.core.BindingXEventType;
 import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -150,12 +151,23 @@ public class BindingXTimingHandler extends AbstractEventHandler implements Anima
         mStartTime = 0;
     }
 
-    private void fireEventByState(@BindingXConstants.State String state, long t) {
+    @Override
+    protected void onUserIntercept(String interceptorName, @NonNull Map<String, Object> scope) {
+        double t = (double) scope.get("t");
+        fireEventByState(BindingXConstants.STATE_INTERCEPTOR, (long)t, Collections.singletonMap(BindingXConstants.STATE_INTERCEPTOR,interceptorName));
+    }
+
+    @SuppressWarnings("unchecked")
+    private void fireEventByState(@BindingXConstants.State String state, long t, Object... extension) {
         if (mCallback != null) {
             Map<String, Object> param = new HashMap<>();
             param.put("state", state);
             param.put("t", t);
             param.put(BindingXConstants.KEY_TOKEN, mToken);
+
+            if(extension != null && extension.length > 0 && extension[0] instanceof Map) {
+                param.putAll((Map<String,Object>) extension[0]);
+            }
 
             mCallback.callback(param);
             LogProxy.d(">>>>>>>>>>>fire event:(" + state + "," + t + ")");

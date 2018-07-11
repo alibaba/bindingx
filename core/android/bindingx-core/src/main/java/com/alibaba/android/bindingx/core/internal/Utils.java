@@ -35,6 +35,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public final class Utils {
 
@@ -102,6 +103,59 @@ public final class Utils {
         }catch (Exception e) {
             return null;
         }
+    }
+
+    /**
+     *
+     * structure:
+     *
+     * interceptors: {
+     *     interceptor_name: {
+     *         expression: {
+     *             origin:'',
+     *             transformed:''
+     *         }
+     *     },
+     *     ...
+     * }
+     *
+     * for now, each interceptor object include only one k-v . So we simplify it to:
+     *
+     * interceptors: {
+     *     interceptor_name:{
+     *         origin:'',
+     *         transformed:''
+     *     },
+     *     ...
+     * }
+     *
+     * */
+    @Nullable
+    @SuppressWarnings("unchecked")
+    public static Map<String,ExpressionPair> getCustomInterceptors(@NonNull Map<String,Object> params) {
+        Object value = params.get(BindingXConstants.KEY_INTERCEPTORS);
+        if(value == null || !(value instanceof Map)) {
+            return null;
+        }
+        Map<String, ExpressionPair> interceptors = new HashMap<>(8);
+        Set<Map.Entry> set =  ((Map)value).entrySet();
+        for(Map.Entry entry : set) {
+            Object k = entry.getKey();
+            Object v = entry.getValue();
+            if(k instanceof String && v instanceof Map) {
+                //unchecked
+                ExpressionPair pair = null;
+                try {
+                    pair = Utils.getExpressionPair((Map<String, Object>) v, BindingXConstants.KEY_EXPRESSION);
+                }catch (Exception e) {// maybe class cast error
+                    //ignore
+                }
+                if(pair != null) {
+                    interceptors.put((String) k, pair);
+                }
+            }
+        }
+        return interceptors;
     }
 
     @Nullable
