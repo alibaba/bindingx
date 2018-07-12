@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		75366A6310F1B497DE83EB19 /* libPods-BindingX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD59D44D801E4D64FEAB61A /* libPods-BindingX.a */; };
-		C45843F01E84EF7B00D88C0B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C45843EF1E84EF7B00D88C0B /* Info.plist */; };
 		D94C355120A005B50075FAA5 /* BindingX.h in Headers */ = {isa = PBXBuildFile; fileRef = D94C355020A005B50075FAA5 /* BindingX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D955B11C202FDCD4000274AC /* EBUtility+WX.m in Sources */ = {isa = PBXBuildFile; fileRef = D955B118202FDCD4000274AC /* EBUtility+WX.m */; };
 		D955B11D202FDCD4000274AC /* EBWXModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D955B119202FDCD4000274AC /* EBWXModule.m */; };
@@ -353,7 +352,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C45843F01E84EF7B00D88C0B /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

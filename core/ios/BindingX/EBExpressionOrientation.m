@@ -59,16 +59,14 @@
     return self;
 }
 
-- (void)updateTargetMap:(NSMapTable<NSString *,id> *)targetMap
-         expressionDict:(NSDictionary *)expressionDict
-                options:(NSDictionary *)options
-         exitExpression:(NSDictionary *)exitExpression
-               callback:(EBKeepAliveCallback)callback {
-    [super updateTargetMap:targetMap
-            expressionDict:expressionDict
-                   options:options
-            exitExpression:exitExpression
-                  callback:callback];
+- (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)targetExpression
+         options:(NSDictionary *)options
+       exitExpression:(NSDictionary *)exitExpression
+             callback:(EBKeepAliveCallback)callback {
+    [super updateTargetExpression:targetExpression
+            options:options
+          exitExpression:exitExpression
+                callback:callback];
     
     if (options != nil) {
         _sceneType = [options[@"sceneType"] lowercaseString];

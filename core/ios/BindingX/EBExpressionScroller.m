@@ -39,16 +39,14 @@
     return self;
 }
 
-- (void)updateTargetMap:(NSMapTable<NSString *,id> *)targetMap
-         expressionDict:(NSDictionary *)expressionDict
-                options:(NSDictionary *)options
-         exitExpression:(NSDictionary *)exitExpression
-               callback:(EBKeepAliveCallback)callback {
-    [super updateTargetMap:targetMap
-            expressionDict:expressionDict
-                   options:options
-            exitExpression:exitExpression
-                  callback:callback];
+- (void)updateTargetExpression:(NSMapTable<id,NSDictionary *> *)expressionMap
+                       options:(NSDictionary *)options
+                exitExpression:(NSDictionary *)exitExpression
+                      callback:(EBKeepAliveCallback)callback {
+    [super updateTargetExpression:expressionMap
+                          options:options
+                   exitExpression:exitExpression
+                         callback:callback];
     
     [self initScroller];
 }
@@ -73,14 +71,13 @@
         _turnChange = false;
         NSDictionary *scope = [self setUpScope:scrollView];
         
-        __block __weak typeof(self) welf = self;
         if (self.turnChange) {
-            [welf fireTurnEvent:scope];
+            [self fireTurnEvent:scope];
+            return;
         }
-        BOOL exit = ![welf executeExpression:scope];
+        BOOL exit = ![self executeExpression:scope];
         if (exit) {
-            [welf fireStateChangedEvent:@"exit"];
-            //not remove scroll
+            [self fireStateChangedEvent:@"exit"];
             return;
         }
     } @catch (NSException *exception) {
