@@ -1,14 +1,11 @@
 {
-  "npm/weex-bindingx/0.0.37/index.cmd": {
+  "npm/weex-bindingx/0.0.38/index.cmd": {
     "requires": []
   },
-  "npm/weex-bindingx/0.0.37/index.native.cmd": {
+  "npm/weex-bindingx/0.0.38/index.web.cmd": {
     "requires": []
   },
-  "npm/weex-bindingx/0.0.37/index.web.cmd": {
-    "requires": []
-  },
-  "npm/weex-bindingx/0.0.37/index.weex.cmd": {
+  "npm/weex-bindingx/0.0.38/index.weex.cmd": {
     "requires": []
   }
 }
