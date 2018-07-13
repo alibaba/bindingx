@@ -47,6 +47,8 @@ public class BindingXCore {
     private Map<String/*token*/, Map<String/*event type*/, IEventHandler>> mBindingCouples;
     private final Map<String, ObjectCreator<IEventHandler, Context, PlatformManager>> mInternalEventHandlerCreatorMap =
             new HashMap<>(8);
+    private final static Map<String, ObjectCreator<IEventHandler, Context, PlatformManager>> sGlobalEventHandlerCreatorMap =
+            new HashMap<>(4);
     private final PlatformManager mPlatformManager;
 
     /**
@@ -352,6 +354,26 @@ public class BindingXCore {
         mInternalEventHandlerCreatorMap.put(eventType, creator);
     }
 
+    /**
+     * register an eventHandler to handle a specific EventType.
+     * Same as {@link BindingXCore#registerEventHandler(String, ObjectCreator)}
+     *
+     * @param eventType the event type name like pan/orientation
+     * @param creator a factory to create an instance of {@link IEventHandler}
+     * */
+    @SuppressWarnings("unused")
+    public static void registerGlobalEventHandler(String eventType, ObjectCreator<IEventHandler, Context, PlatformManager> creator) {
+        if (TextUtils.isEmpty(eventType) || creator == null) {
+            return;
+        }
+        sGlobalEventHandlerCreatorMap.put(eventType, creator);
+    }
+
+    @SuppressWarnings("unused")
+    public static boolean unregisterGlobalEventHandler(String eventType) {
+        return sGlobalEventHandlerCreatorMap.remove(eventType) != null;
+    }
+
     private String generateToken() {
         return UUID.randomUUID().toString();
     }
@@ -364,6 +386,9 @@ public class BindingXCore {
             return null;
         }
         ObjectCreator<IEventHandler, Context, PlatformManager> creator = mInternalEventHandlerCreatorMap.get(eventType);
+        if(creator == null) {
+            creator = sGlobalEventHandlerCreatorMap.get(eventType);
+        }
         return (creator != null) ? creator.createWith(context,mPlatformManager,instanceId) : null;
     }
 
