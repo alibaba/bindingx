@@ -117,6 +117,14 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
     }
 
     @JSMethod(uiThread = false)
+    public void bindAsync(Map<String, Object> params, final JSCallback callback, JSCallback tokenCallback) {
+        Map<String, String> result = bind(params, callback);
+        if(tokenCallback != null && result != null) {
+            tokenCallback.invoke(result);
+        }
+    }
+
+    @JSMethod(uiThread = false)
     public void unbind(Map<String, Object> params) {
         if (mBindingXCore != null) {
             mBindingXCore.doUnbind(params);
@@ -133,6 +141,14 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
     @JSMethod(uiThread = false)
     public List<String> supportFeatures() {
         return Arrays.asList("pan", "orientation", "timing", "scroll");
+    }
+
+    @JSMethod(uiThread = false)
+    public void getComputedStyleAsync(@Nullable String ref,@Nullable JSCallback callback) {
+        Map<String,Object> result = getComputedStyle(ref);
+        if(callback != null) {
+            callback.invoke(result);
+        }
     }
 
     @JSMethod(uiThread = false)

@@ -48,3 +48,7 @@
 #### 1.0.9
 
 1. 适配bindingx-core 1.0.9
+
+#### 1.0.9.1 & 1.0.9.2
+
+1. bind/getComputedStyle方法增加异步版本
