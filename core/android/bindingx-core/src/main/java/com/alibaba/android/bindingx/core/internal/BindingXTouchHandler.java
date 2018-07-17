@@ -16,6 +16,8 @@
 package com.alibaba.android.bindingx.core.internal;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -51,7 +53,8 @@ public class BindingXTouchHandler extends AbstractEventHandler implements View.O
 
     public BindingXTouchHandler(Context context, PlatformManager manager, Object... extension) {
         super(context, manager, extension);
-        mGestureDetector = new GestureDetector(context, this);
+        Handler handler = new Handler(Looper.myLooper() == null ? Looper.getMainLooper() : Looper.myLooper());
+        mGestureDetector = new GestureDetector(context, this, handler);
     }
 
     void setPanGestureAvailable(boolean available) {
