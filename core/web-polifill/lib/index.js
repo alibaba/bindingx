@@ -365,6 +365,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 /**
  Copyright 2018 Alibaba Group
 
@@ -386,15 +388,26 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
  *
  * @param string matrix
  * @return object
+ *
+ * see https://stackoverflow.com/questions/9818702/is-there-js-plugin-convert-the-matrix-parameter-to-css3-transform-property
  */
 
 // TODO matrix4 for 3D
 var matrixToTransformObj = function matrixToTransformObj(matrix) {
   // this happens when there was no rotation yet in CSS
   if (matrix === 'none') {
-    matrix = 'matrix(0,0,0,0,0)';
+    matrix = 'matrix(1,0,0,1,0,0)';
   }
-  var obj = {},
+  var atan = Math.atan,
+      atan2 = Math.atan2,
+      round = Math.round,
+      sqrt = Math.sqrt,
+      PI = Math.PI;
+
+  var obj = {
+    skewY: 0,
+    skewX: 0
+  },
       values = matrix.match(/([-+]?[\d\.]+)/g);
 
   var _values = _slicedToArray(values, 6),
@@ -405,11 +418,20 @@ var matrixToTransformObj = function matrixToTransformObj(matrix) {
       e = _values[4],
       f = _values[5];
 
-  obj.rotate = obj.rotateZ = Math.round(Math.atan2(parseFloat(b), parseFloat(a)) * (180 / Math.PI)) || 0;
+  obj.rotate = obj.rotateZ = round(atan2(parseFloat(b), parseFloat(a)) * (180 / Math.PI)) || 0;
   obj.translateX = e !== undefined ? pxTo750(e) : 0;
   obj.translateY = f !== undefined ? pxTo750(f) : 0;
-  obj.scaleX = Math.sqrt(a * a + b * b);
-  obj.scaleY = Math.sqrt(c * c + d * d);
+  obj.scaleX = sqrt(a * a + b * b);
+  obj.scaleY = sqrt(c * c + d * d);
+
+  // if (a) {
+  //   obj.skewX = atan(c / a) * 180 / PI;
+  //   obj.skewY = atan(b / a) * 180 / PI;
+  // } else if (b) {
+  //   obj.skewX = atan(d / b) * 180 / PI;
+  // } else {
+  //   obj.skewX = PI * 0.25 * 180 / PI;
+  // }
   return obj;
 };
 
@@ -451,11 +473,97 @@ function prefixStyle(attrName) {
   return vendor + attrName.charAt(0).toUpperCase() + attrName.substr(1);
 }
 
+// Parses an SVG path into an object.
+var length = { a: 7, c: 6, h: 1, l: 2, m: 2, q: 4, s: 4, t: 2, v: 1, z: 0 };
+var segment = /([astvzqmhlc])([^astvzqmhlc]*)/ig;
+
+function parseValues(args) {
+  var numbers = args.match(/-?[0-9]*\.?[0-9]+(?:e[-+]?\d+)?/ig);
+  return numbers ? numbers.map(Number) : [];
+}
+
+/*
+// var d='M3,7 5-6 L1,7 1e2-.4 m-10,10 l10,0  \
+//   V27 89 H23           v10 h10             \
+//   C33,43 38,47 43,47   c0,5 5,10 10,10     \
+//   S63,67 63,67         s-10,10 10,10       \
+//   Q50,50 73,57         q20,-5 0,-10        \
+//   T70,40               t0,-15              \
+//   A5,5 45 1,0 40,20    a5,5 20 0,1 -10-10  Z';
+//
+// console.log(parseSVGPath(d))
+
+ */
+function parseSVGPath(path, fn) {
+  var data = [];
+  path.replace(segment, function (_, command, args) {
+    var type = command.toLowerCase();
+    args = parseValues(args);
+
+    // overloaded moveTo
+    if (type === 'm' && args.length > 2) {
+      data.push([command].concat(args.splice(0, 2)));
+      type = 'l';
+      command = command === 'm' ? 'l' : 'L';
+    }
+
+    while (args.length >= 0) {
+      if (args.length === length[type]) {
+        args.unshift(command);
+        return data.push(args);
+      }
+      if (args.length < length[type]) {
+        throw new Error('malformed path data');
+      }
+      data.push([command].concat(args.splice(0, length[type])));
+    }
+  });
+
+  if (typeof fn === 'function') {
+    return data.map(function (path) {
+      return path.map(function (o, i) {
+        return i > 0 ? fn(o) : o;
+      });
+    });
+  }
+
+  return data;
+}
+
+function stringifySVGPath(pathArray, fn) {
+
+  if (typeof fn === 'function') {
+    pathArray = pathArray.map(function (path) {
+      return path.map(function (o, i) {
+        return i > 0 ? fn(o) : o;
+      });
+    });
+  }
+
+  return pathArray.map(function (path) {
+    return path.join(' ');
+  }).join(' ');
+}
+
+function interceptSVGPath(pathObj, index, values, cmd) {
+  if (pathObj && pathObj[index]) {
+    cmd = (cmd && cmd.replace(/'|"/g, '') || pathObj[index][0]).replace(/'|"/g, '');
+    values = [cmd].concat(_toConsumableArray(values));
+    pathObj[index] = values;
+    // Array.prototype.splice.call(pathObj[index], 0, values.length, ...values);
+  }
+
+  return pathObj;
+}
+
 exports.matrixToTransformObj = matrixToTransformObj;
 exports.pxTo750 = pxTo750;
 exports.px = px;
 exports.clamp = clamp;
 exports.prefixStyle = prefixStyle;
+exports.parseSVGPath = parseSVGPath;
+exports.stringifySVGPath = stringifySVGPath;
+exports.interceptSVGPath = interceptSVGPath;
 
 /***/ }),
 /* 3 */
@@ -1666,12 +1774,50 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 // transform
 var vendorTransform = (0, _utils.prefixStyle)('transform');
 
+function setTransform(transformObj, property, value) {
+  transformObj.transform[property] = value;
+  transformObj.shouldTransform = true;
+}
+
+function bindingXGetComputedStyle(elRef) {
+  if (elRef instanceof HTMLElement || elRef instanceof SVGElement) {
+    var computedStyle = window.getComputedStyle(elRef);
+    var style = (0, _utils.matrixToTransformObj)(computedStyle[vendorTransform]);
+    style.opacity = Number(computedStyle.opacity);
+    style['background-color'] = computedStyle['background-color'];
+    style.color = computedStyle.color;
+    style.width = (0, _utils.pxTo750)(computedStyle.width.replace('px', ''));
+    style.height = (0, _utils.pxTo750)(computedStyle.height.replace('px', ''));
+    style['border-top-left-radius'] = (0, _utils.pxTo750)(computedStyle['border-top-left-radius'].replace('px', ''));
+    style['border-top-right-radius'] = (0, _utils.pxTo750)(computedStyle['border-top-right-radius'].replace('px', ''));
+    style['border-bottom-left-radius'] = (0, _utils.pxTo750)(computedStyle['border-bottom-left-radius'].replace('px', ''));
+    style['border-bottom-right-radius'] = (0, _utils.pxTo750)(computedStyle['border-bottom-right-radius'].replace('px', ''));
+    style['margin-top'] = (0, _utils.pxTo750)(computedStyle['margin-top'].replace('px', ''));
+    style['margin-bottom'] = (0, _utils.pxTo750)(computedStyle['margin-bottom'].replace('px', ''));
+    style['margin-left'] = (0, _utils.pxTo750)(computedStyle['margin-left'].replace('px', ''));
+    style['margin-right'] = (0, _utils.pxTo750)(computedStyle['margin-right'].replace('px', ''));
+    style['padding-top'] = (0, _utils.pxTo750)(computedStyle['padding-top'].replace('px', ''));
+    style['padding-bottom'] = (0, _utils.pxTo750)(computedStyle['padding-bottom'].replace('px', ''));
+    style['padding-left'] = (0, _utils.pxTo750)(computedStyle['padding-left'].replace('px', ''));
+    style['padding-right'] = (0, _utils.pxTo750)(computedStyle['padding-right'].replace('px', ''));
+    return style;
+  } else {
+    // TODO lottie support
+    // if(typeof elRef.setProgress == 'function') {
+    //   return {
+    // 'lottie-progress':
+    // }
+    // }
+  }
+}
+
 var Binding = function () {
   function Binding(options, callback) {
     _classCallCheck(this, Binding);
 
     this._eventHandler = null;
     this.elTransforms = [];
+    this.elPaths = [];
     this.token = null;
 
     this.options = options;
@@ -1712,21 +1858,38 @@ var Binding = function () {
         var element = prop.element;
 
         if (!_simpleLodash2.default.find(elTransforms, function (o) {
-          return o.element === element && element instanceof HTMLElement;
+          return o.element === element;
         })) {
+
+          var initialTransform = {
+            translateX: 0,
+            translateY: 0,
+            translateZ: 0,
+            scaleX: 1,
+            scaleY: 1,
+            scaleZ: 1,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0,
+            skewX: 0,
+            skewY: 0
+          };
+
+          // only for svg element to have the initial style
+          if (element instanceof SVGElement) {
+            var style = bindingXGetComputedStyle(element);
+            initialTransform.translateX = (0, _utils.px)(style.translateX);
+            initialTransform.translateY = (0, _utils.px)(style.translateY);
+            initialTransform.rotateZ = style.rotateZ;
+            initialTransform.scaleX = style.scaleX;
+            initialTransform.scaleY = style.scaleY;
+            initialTransform.skewX = style.skewX;
+            initialTransform.skewY = style.skewY;
+          }
+
           elTransforms.push({
             element: element,
-            transform: {
-              translateX: 0,
-              translateY: 0,
-              translateZ: 0,
-              scaleX: 1,
-              scaleY: 1,
-              scaleZ: 1,
-              rotateX: 0,
-              rotateY: 0,
-              rotateZ: 0
-            }
+            transform: initialTransform
           });
         }
       });
@@ -1736,48 +1899,57 @@ var Binding = function () {
     value: function getValue(params, expression) {
       return _expression2.default.execute(expression, (0, _objectAssign2.default)(_fn2.default, params));
     }
-
-    // TODO scroll.contentOffset 待确认及补全
-
   }, {
     key: 'setProperty',
     value: function setProperty(el, property, val) {
+      // for debug
+      if (this.options.debug) {
+        console.log('property:', property, ' value:', val);
+      }
 
       if (el instanceof HTMLElement) {
         var elTransform = _simpleLodash2.default.find(this.elTransforms, function (o) {
           return o.element === el;
         });
         switch (property) {
+          // case 'scroll.contentOffset':
+          //   el.scrollTop = px(val);
+          //   el.scrollLeft = px(val);
+          //   break;
+          case 'scroll.contentOffsetY':
+            el.scrollTop = (0, _utils.px)(val);
+            break;
+          case 'scroll.contentOffsetX':
+            el.scrollLeft = (0, _utils.px)(val);
+            break;
           case 'transform.translateX':
-            elTransform.transform.translateX = (0, _utils.px)(val);
+            setTransform(elTransform, 'translateX', (0, _utils.px)(val));
             break;
           case 'transform.translateY':
-            elTransform.transform.translateY = (0, _utils.px)(val);
+            setTransform(elTransform, 'translateY', (0, _utils.px)(val));
             break;
           case 'transform.translateZ':
-            elTransform.transform.translateZ = (0, _utils.px)(val);
+            setTransform(elTransform, 'translateZ', (0, _utils.px)(val));
             break;
           case 'transform.rotateX':
-            elTransform.transform.rotateX = val;
+            setTransform(elTransform, 'rotateX', val);
             break;
           case 'transform.rotateY':
-            elTransform.transform.rotateY = val;
+            setTransform(elTransform, 'rotateY', val);
             break;
           case 'transform.rotateZ':
-            elTransform.transform.rotateZ = val;
-            break;
           case 'transform.rotate':
-            elTransform.transform.rotateZ = val;
+            setTransform(elTransform, 'rotateZ', val);
             break;
           case 'transform.scaleX':
-            elTransform.transform.scaleX = val;
+            setTransform(elTransform, 'scaleX', val);
             break;
           case 'transform.scaleY':
-            elTransform.transform.scaleY = val;
+            setTransform(elTransform, 'scaleY', val);
             break;
           case 'transform.scale':
-            elTransform.transform.scaleX = val;
-            elTransform.transform.scaleY = val;
+            setTransform(elTransform, 'scaleX', val);
+            setTransform(elTransform, 'scaleY', val);
             break;
           case 'opacity':
             el.style.opacity = val;
@@ -1806,7 +1978,9 @@ var Binding = function () {
             el.style[property] = (0, _utils.px)(val) + 'px';
             break;
         }
-        el.style[vendorTransform] = ['translateX(' + elTransform.transform.translateX + 'px)', 'translateY(' + elTransform.transform.translateY + 'px)', 'translateZ(' + elTransform.transform.translateZ + 'px)', 'scaleX(' + elTransform.transform.scaleX + ')', 'scaleY(' + elTransform.transform.scaleY + ')', 'rotateX(' + elTransform.transform.rotateX + 'deg)', 'rotateY(' + elTransform.transform.rotateY + 'deg)', 'rotateZ(' + elTransform.transform.rotateZ + 'deg)'].join(' ');
+        if (elTransform && elTransform.shouldTransform) {
+          el.style[vendorTransform] = ['translateX(' + elTransform.transform.translateX + 'px)', 'translateY(' + elTransform.transform.translateY + 'px)', 'translateZ(' + elTransform.transform.translateZ + 'px)', 'scaleX(' + elTransform.transform.scaleX + ')', 'scaleY(' + elTransform.transform.scaleY + ')', 'rotateX(' + elTransform.transform.rotateX + 'deg)', 'rotateY(' + elTransform.transform.rotateY + 'deg)', 'rotateZ(' + elTransform.transform.rotateZ + 'deg)'].join(' ');
+        }
       } else if (el instanceof SVGElement) {
         var _elTransform = _simpleLodash2.default.find(this.elTransforms, function (o) {
           return o.element === el;
@@ -1816,39 +1990,74 @@ var Binding = function () {
             el.setAttribute('stroke-dashoffset', (0, _utils.px)(val));
             break;
           case 'svg-transform.translateX':
-            _elTransform.transform.translateX = (0, _utils.px)(val);
+            setTransform(_elTransform, 'translateX', (0, _utils.px)(val));
             break;
           case 'svg-transform.translateY':
-            _elTransform.transform.translateY = (0, _utils.px)(val);
+            setTransform(_elTransform, 'translateY', (0, _utils.px)(val));
             break;
           case 'svg-transform.translateZ':
-            _elTransform.transform.translateZ = (0, _utils.px)(val);
+            setTransform(_elTransform, 'translateZ', (0, _utils.px)(val));
             break;
           case 'svg-transform.rotateX':
-            _elTransform.transform.rotateX = val;
+            setTransform(_elTransform, 'rotateX', val);
             break;
           case 'svg-transform.rotateY':
-            _elTransform.transform.rotateY = val;
+            setTransform(_elTransform, 'rotateY', val);
             break;
           case 'svg-transform.rotateZ':
-            _elTransform.transform.rotateZ = val;
-            break;
           case 'svg-transform.rotate':
-            _elTransform.transform.rotateZ = val;
+            setTransform(_elTransform, 'rotateZ', val);
             break;
           case 'svg-transform.scaleX':
-            _elTransform.transform.scaleX = val;
+            setTransform(_elTransform, 'scaleX', val);
             break;
           case 'svg-transform.scaleY':
-            _elTransform.transform.scaleY = val;
+            setTransform(_elTransform, 'scaleY', val);
             break;
           case 'svg-transform.scale':
-            _elTransform.transform.scaleX = val;
-            _elTransform.transform.scaleY = val;
+            setTransform(_elTransform, 'scaleX', val);
+            setTransform(_elTransform, 'scaleY', val);
+            break;
+          case 'svg-transform.skewX':
+            setTransform(_elTransform, 'skewX', val);
+            break;
+          case 'svg-transform.skewY':
+            setTransform(_elTransform, 'skewY', val);
+            break;
+          case 'svg-path':
+            var _exist = _simpleLodash2.default.find(this.elPaths, function (o) {
+              return o.element === el;
+            });
+            if (!_exist || !_exist.path) {
+              _exist = {
+                element: el,
+                path: (0, _utils.parseSVGPath)(el.getAttribute('d'), _utils.pxTo750)
+              };
+              this.elPaths.push(_exist);
+            }
+
+            if (_exist && _exist.path) {
+              if (val && val.length) {
+                for (var i = 0; i < val.length; i++) {
+                  _exist.path = (0, _utils.interceptSVGPath)(_exist.path, val[i].index, val[i].values, val[i].cmd);
+                }
+              } else {
+                _exist.path = (0, _utils.interceptSVGPath)(_exist.path, val.index, val.values, val.cmd);
+              }
+            }
             break;
         }
 
-        el.style[vendorTransform] = ['translateX(' + _elTransform.transform.translateX + 'px)', 'translateY(' + _elTransform.transform.translateY + 'px)', 'translateZ(' + _elTransform.transform.translateZ + 'px)', 'scaleX(' + _elTransform.transform.scaleX + ')', 'scaleY(' + _elTransform.transform.scaleY + ')', 'rotateX(' + _elTransform.transform.rotateX + 'deg)', 'rotateY(' + _elTransform.transform.rotateY + 'deg)', 'rotateZ(' + _elTransform.transform.rotateZ + 'deg)'].join(' ');
+        var exist = _simpleLodash2.default.find(this.elPaths, function (o) {
+          return o.element === el;
+        });
+        if (exist && exist.path) {
+          el.setAttribute('d', (0, _utils.stringifySVGPath)(exist.path, _utils.px));
+        }
+
+        if (_elTransform.shouldTransform) {
+          el.style[vendorTransform] = ['translateX(' + _elTransform.transform.translateX + 'px)', 'translateY(' + _elTransform.transform.translateY + 'px)', 'translateZ(' + _elTransform.transform.translateZ + 'px)', 'scaleX(' + _elTransform.transform.scaleX + ')', 'scaleY(' + _elTransform.transform.scaleY + ')', 'rotateX(' + _elTransform.transform.rotateX + 'deg)', 'rotateY(' + _elTransform.transform.rotateY + 'deg)', 'rotateZ(' + _elTransform.transform.rotateZ + 'deg)', 'skewX(' + _elTransform.transform.skewX + 'deg)', 'skewY(' + _elTransform.transform.skewY + 'deg)'].join(' ');
+        }
       } else {
 
         switch (property) {
@@ -1944,37 +2153,8 @@ module.exports = {
       });
     });
   },
-  getComputedStyle: function getComputedStyle(elRef) {
-    if (elRef instanceof HTMLElement) {
-      var computedStyle = window.getComputedStyle(elRef);
-      var style = (0, _utils.matrixToTransformObj)(computedStyle[vendorTransform]);
-      style.opacity = Number(computedStyle.opacity);
-      style['background-color'] = computedStyle['background-color'];
-      style.color = computedStyle.color;
-      style.width = (0, _utils.pxTo750)(computedStyle.width.replace('px', ''));
-      style.height = (0, _utils.pxTo750)(computedStyle.height.replace('px', ''));
-      style['border-top-left-radius'] = (0, _utils.pxTo750)(computedStyle['border-top-left-radius'].replace('px', ''));
-      style['border-top-right-radius'] = (0, _utils.pxTo750)(computedStyle['border-top-right-radius'].replace('px', ''));
-      style['border-bottom-left-radius'] = (0, _utils.pxTo750)(computedStyle['border-bottom-left-radius'].replace('px', ''));
-      style['border-bottom-right-radius'] = (0, _utils.pxTo750)(computedStyle['border-bottom-right-radius'].replace('px', ''));
-      style['margin-top'] = (0, _utils.pxTo750)(computedStyle['margin-top'].replace('px', ''));
-      style['margin-bottom'] = (0, _utils.pxTo750)(computedStyle['margin-bottom'].replace('px', ''));
-      style['margin-left'] = (0, _utils.pxTo750)(computedStyle['margin-left'].replace('px', ''));
-      style['margin-right'] = (0, _utils.pxTo750)(computedStyle['margin-right'].replace('px', ''));
-      style['padding-top'] = (0, _utils.pxTo750)(computedStyle['padding-top'].replace('px', ''));
-      style['padding-bottom'] = (0, _utils.pxTo750)(computedStyle['padding-bottom'].replace('px', ''));
-      style['padding-left'] = (0, _utils.pxTo750)(computedStyle['padding-left'].replace('px', ''));
-      style['padding-right'] = (0, _utils.pxTo750)(computedStyle['padding-right'].replace('px', ''));
-      return style;
-    } else {
-      // TODO lottie support
-      // if(typeof elRef.setProgress == 'function') {
-      //   return {
-      // 'lottie-progress':
-      // }
-      // }
-    }
-  }
+
+  getComputedStyle: bindingXGetComputedStyle
 };
 
 /***/ }),
@@ -3301,6 +3481,20 @@ var Fn = {
     var db = parseInt((to.db - from.db) * percent + from.db);
     var resDec = dr * 16 * 16 * 16 * 16 + dg * 16 * 16 + db;
     return '#' + decToHex(resDec);
+  },
+
+  svgDrawCmd: function svgDrawCmd(index, values, cmd) {
+    return {
+      index: index,
+      values: values,
+      cmd: cmd
+    };
+  },
+  svgDrawCmds: function svgDrawCmds() {
+    return arguments;
+  },
+  asArray: function asArray() {
+    return [].concat(Array.prototype.slice.call(arguments));
   }
 };
 

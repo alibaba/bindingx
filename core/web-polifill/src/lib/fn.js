@@ -92,6 +92,20 @@ let Fn = {
     let db = parseInt((to.db - from.db) * percent + from.db);
     let resDec = dr * 16 * 16 * 16 * 16 + dg * 16 * 16 + db;
     return `#${decToHex(resDec)}`;
+  },
+
+  svgDrawCmd: function(index, values, cmd) {
+    return {
+      index,
+      values,
+      cmd
+    };
+  },
+  svgDrawCmds: function() {
+    return arguments;
+  },
+  asArray: function() {
+    return [...arguments];
   }
 };
 

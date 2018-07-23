@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const RaxWebpackPlugin = require('rax-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const fs = require('fs');
 const colors = require('chalk');
 
@@ -34,6 +35,7 @@ var config = {
       frameworkComment: true,
       platforms: []
     }),
+    new UglifyJsPlugin()
   ],
   module: {
     loaders: [{

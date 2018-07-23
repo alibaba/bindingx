@@ -19,18 +19,68 @@
 import _ from 'simple-lodash';
 import Expression from './lib/expression';
 import {PanHandler, OrientationHandler, TimingHandler, ScrollHandler} from './lib/handlers';
-import {matrixToTransformObj, px, pxTo750, prefixStyle} from './lib/utils';
+import {
+  matrixToTransformObj,
+  px,
+  pxTo750,
+  prefixStyle,
+  interceptSVGPath,
+  parseSVGPath,
+  stringifySVGPath
+} from './lib/utils';
 import Fn from './lib/fn';
 import assign from 'object-assign';
 
 // transform
 const vendorTransform = prefixStyle('transform');
 
+
+function setTransform(transformObj, property, value) {
+  transformObj.transform[property] = value;
+  transformObj.shouldTransform = true;
+}
+
+
+function bindingXGetComputedStyle(elRef) {
+  if (elRef instanceof HTMLElement || elRef instanceof SVGElement) {
+    let computedStyle = window.getComputedStyle(elRef);
+    let style = matrixToTransformObj(computedStyle[vendorTransform]);
+    style.opacity = Number(computedStyle.opacity);
+    style['background-color'] = computedStyle['background-color'];
+    style.color = computedStyle.color;
+    style.width = pxTo750(computedStyle.width.replace('px', ''));
+    style.height = pxTo750(computedStyle.height.replace('px', ''));
+    style['border-top-left-radius'] = pxTo750(computedStyle['border-top-left-radius'].replace('px', ''));
+    style['border-top-right-radius'] = pxTo750(computedStyle['border-top-right-radius'].replace('px', ''));
+    style['border-bottom-left-radius'] = pxTo750(computedStyle['border-bottom-left-radius'].replace('px', ''));
+    style['border-bottom-right-radius'] = pxTo750(computedStyle['border-bottom-right-radius'].replace('px', ''));
+    style['margin-top'] = pxTo750(computedStyle['margin-top'].replace('px', ''));
+    style['margin-bottom'] = pxTo750(computedStyle['margin-bottom'].replace('px', ''));
+    style['margin-left'] = pxTo750(computedStyle['margin-left'].replace('px', ''));
+    style['margin-right'] = pxTo750(computedStyle['margin-right'].replace('px', ''));
+    style['padding-top'] = pxTo750(computedStyle['padding-top'].replace('px', ''));
+    style['padding-bottom'] = pxTo750(computedStyle['padding-bottom'].replace('px', ''));
+    style['padding-left'] = pxTo750(computedStyle['padding-left'].replace('px', ''));
+    style['padding-right'] = pxTo750(computedStyle['padding-right'].replace('px', ''));
+    return style;
+  } else {
+    // TODO lottie support
+    // if(typeof elRef.setProgress == 'function') {
+    //   return {
+    // 'lottie-progress':
+    // }
+    // }
+  }
+}
+
+
 class Binding {
 
   _eventHandler = null;
 
   elTransforms = [];
+
+  elPaths = [];
 
   token = null;
 
@@ -66,21 +116,38 @@ class Binding {
     props.forEach((prop) => {
       let {element} = prop;
       if (!_.find(elTransforms, (o) => {
-        return o.element === element && element instanceof HTMLElement;
+        return o.element === element;
       })) {
+
+        let initialTransform = {
+          translateX: 0,
+          translateY: 0,
+          translateZ: 0,
+          scaleX: 1,
+          scaleY: 1,
+          scaleZ: 1,
+          rotateX: 0,
+          rotateY: 0,
+          rotateZ: 0,
+          skewX: 0,
+          skewY: 0
+        };
+
+        // only for svg element to have the initial style
+        if (element instanceof SVGElement) {
+          let style = bindingXGetComputedStyle(element);
+          initialTransform.translateX = px(style.translateX);
+          initialTransform.translateY = px(style.translateY);
+          initialTransform.rotateZ = style.rotateZ;
+          initialTransform.scaleX = style.scaleX;
+          initialTransform.scaleY = style.scaleY;
+          initialTransform.skewX = style.skewX;
+          initialTransform.skewY = style.skewY;
+        }
+
         elTransforms.push({
           element,
-          transform: {
-            translateX: 0,
-            translateY: 0,
-            translateZ: 0,
-            scaleX: 1,
-            scaleY: 1,
-            scaleZ: 1,
-            rotateX: 0,
-            rotateY: 0,
-            rotateZ: 0
-          }
+          transform: initialTransform
         });
       }
     });
@@ -91,44 +158,55 @@ class Binding {
     return Expression.execute(expression, assign(Fn, params));
   }
 
-  // TODO scroll.contentOffset 待确认及补全
   setProperty(el, property, val) {
+    // for debug
+    if (this.options.debug) {
+      console.log('property:', property, ' value:', val);
+    }
 
     if (el instanceof HTMLElement) {
       let elTransform = _.find(this.elTransforms, (o) => {
         return o.element === el;
       });
       switch (property) {
+        // case 'scroll.contentOffset':
+        //   el.scrollTop = px(val);
+        //   el.scrollLeft = px(val);
+        //   break;
+        case 'scroll.contentOffsetY':
+          el.scrollTop = px(val);
+          break;
+        case 'scroll.contentOffsetX':
+          el.scrollLeft = px(val);
+          break;
         case 'transform.translateX':
-          elTransform.transform.translateX = px(val);
+          setTransform(elTransform, 'translateX', px(val));
           break;
         case 'transform.translateY':
-          elTransform.transform.translateY = px(val);
+          setTransform(elTransform, 'translateY', px(val));
           break;
         case 'transform.translateZ':
-          elTransform.transform.translateZ = px(val);
+          setTransform(elTransform, 'translateZ', px(val));
           break;
         case 'transform.rotateX':
-          elTransform.transform.rotateX = val;
+          setTransform(elTransform, 'rotateX', val);
           break;
         case 'transform.rotateY':
-          elTransform.transform.rotateY = val;
+          setTransform(elTransform, 'rotateY', val);
           break;
         case 'transform.rotateZ':
-          elTransform.transform.rotateZ = val;
-          break;
         case 'transform.rotate':
-          elTransform.transform.rotateZ = val;
+          setTransform(elTransform, 'rotateZ', val);
           break;
         case 'transform.scaleX':
-          elTransform.transform.scaleX = val;
+          setTransform(elTransform, 'scaleX', val);
           break;
         case 'transform.scaleY':
-          elTransform.transform.scaleY = val;
+          setTransform(elTransform, 'scaleY', val);
           break;
         case 'transform.scale':
-          elTransform.transform.scaleX = val;
-          elTransform.transform.scaleY = val;
+          setTransform(elTransform, 'scaleX', val);
+          setTransform(elTransform, 'scaleY', val);
           break;
         case 'opacity':
           el.style.opacity = val;
@@ -157,16 +235,18 @@ class Binding {
           el.style[property] = `${px(val)}px`;
           break;
       }
-      el.style[vendorTransform] = [
-        `translateX(${elTransform.transform.translateX}px)`,
-        `translateY(${elTransform.transform.translateY}px)`,
-        `translateZ(${elTransform.transform.translateZ}px)`,
-        `scaleX(${elTransform.transform.scaleX})`,
-        `scaleY(${elTransform.transform.scaleY})`,
-        `rotateX(${elTransform.transform.rotateX}deg)`,
-        `rotateY(${elTransform.transform.rotateY}deg)`,
-        `rotateZ(${elTransform.transform.rotateZ}deg)`
-      ].join(' ');
+      if (elTransform && elTransform.shouldTransform) {
+        el.style[vendorTransform] = [
+          `translateX(${elTransform.transform.translateX}px)`,
+          `translateY(${elTransform.transform.translateY}px)`,
+          `translateZ(${elTransform.transform.translateZ}px)`,
+          `scaleX(${elTransform.transform.scaleX})`,
+          `scaleY(${elTransform.transform.scaleY})`,
+          `rotateX(${elTransform.transform.rotateX}deg)`,
+          `rotateY(${elTransform.transform.rotateY}deg)`,
+          `rotateZ(${elTransform.transform.rotateZ}deg)`
+        ].join(' ');
+      }
     } else if (el instanceof SVGElement) {
       let elTransform = _.find(this.elTransforms, (o) => {
         return o.element === el;
@@ -176,48 +256,86 @@ class Binding {
           el.setAttribute('stroke-dashoffset', px(val));
           break;
         case 'svg-transform.translateX':
-          elTransform.transform.translateX = px(val);
+          setTransform(elTransform, 'translateX', px(val));
           break;
         case 'svg-transform.translateY':
-          elTransform.transform.translateY = px(val);
+          setTransform(elTransform, 'translateY', px(val));
           break;
         case 'svg-transform.translateZ':
-          elTransform.transform.translateZ = px(val);
+          setTransform(elTransform, 'translateZ', px(val));
           break;
         case 'svg-transform.rotateX':
-          elTransform.transform.rotateX = val;
+          setTransform(elTransform, 'rotateX', val);
           break;
         case 'svg-transform.rotateY':
-          elTransform.transform.rotateY = val;
+          setTransform(elTransform, 'rotateY', val);
           break;
         case 'svg-transform.rotateZ':
-          elTransform.transform.rotateZ = val;
-          break;
         case 'svg-transform.rotate':
-          elTransform.transform.rotateZ = val;
+          setTransform(elTransform, 'rotateZ', val);
           break;
         case 'svg-transform.scaleX':
-          elTransform.transform.scaleX = val;
+          setTransform(elTransform, 'scaleX', val);
           break;
         case 'svg-transform.scaleY':
-          elTransform.transform.scaleY = val;
+          setTransform(elTransform, 'scaleY', val);
           break;
         case 'svg-transform.scale':
-          elTransform.transform.scaleX = val;
-          elTransform.transform.scaleY = val;
+          setTransform(elTransform, 'scaleX', val);
+          setTransform(elTransform, 'scaleY', val);
+          break;
+        case 'svg-transform.skewX':
+          setTransform(elTransform, 'skewX', val);
+          break;
+        case 'svg-transform.skewY':
+          setTransform(elTransform, 'skewY', val);
+          break;
+        case 'svg-path':
+          let exist = _.find(this.elPaths, (o) => {
+            return o.element === el;
+          });
+          if (!exist || !exist.path) {
+            exist = {
+              element: el,
+              path: parseSVGPath(el.getAttribute('d'), pxTo750)
+            };
+            this.elPaths.push(exist);
+          }
+
+          if (exist && exist.path) {
+            if (val && val.length) {
+              for (let i = 0; i < val.length; i++) {
+                exist.path = interceptSVGPath(exist.path, val[i].index, val[i].values, val[i].cmd);
+              }
+            } else {
+              exist.path = interceptSVGPath(exist.path, val.index, val.values, val.cmd);
+            }
+
+          }
           break;
       }
 
-      el.style[vendorTransform] = [
-        `translateX(${elTransform.transform.translateX}px)`,
-        `translateY(${elTransform.transform.translateY}px)`,
-        `translateZ(${elTransform.transform.translateZ}px)`,
-        `scaleX(${elTransform.transform.scaleX})`,
-        `scaleY(${elTransform.transform.scaleY})`,
-        `rotateX(${elTransform.transform.rotateX}deg)`,
-        `rotateY(${elTransform.transform.rotateY}deg)`,
-        `rotateZ(${elTransform.transform.rotateZ}deg)`
-      ].join(' ');
+      let exist = _.find(this.elPaths, (o) => {
+        return o.element === el;
+      });
+      if (exist && exist.path) {
+        el.setAttribute('d', stringifySVGPath(exist.path, px));
+      }
+
+      if (elTransform.shouldTransform) {
+        el.style[vendorTransform] = [
+          `translateX(${elTransform.transform.translateX}px)`,
+          `translateY(${elTransform.transform.translateY}px)`,
+          `translateZ(${elTransform.transform.translateZ}px)`,
+          `scaleX(${elTransform.transform.scaleX})`,
+          `scaleY(${elTransform.transform.scaleY})`,
+          `rotateX(${elTransform.transform.rotateX}deg)`,
+          `rotateY(${elTransform.transform.rotateY}deg)`,
+          `rotateZ(${elTransform.transform.rotateZ}deg)`,
+          `skewX(${elTransform.transform.skewX}deg)`,
+          `skewY(${elTransform.transform.skewY}deg)`,
+        ].join(' ');
+      }
 
     } else {
 
@@ -312,38 +430,7 @@ module.exports = {
       });
     });
   },
-  getComputedStyle(elRef) {
-    if (elRef instanceof HTMLElement) {
-      let computedStyle = window.getComputedStyle(elRef);
-      let style = matrixToTransformObj(computedStyle[vendorTransform]);
-      style.opacity = Number(computedStyle.opacity);
-      style['background-color'] = computedStyle['background-color'];
-      style.color = computedStyle.color;
-      style.width = pxTo750(computedStyle.width.replace('px', ''));
-      style.height = pxTo750(computedStyle.height.replace('px', ''));
-      style['border-top-left-radius'] = pxTo750(computedStyle['border-top-left-radius'].replace('px', ''));
-      style['border-top-right-radius'] = pxTo750(computedStyle['border-top-right-radius'].replace('px', ''));
-      style['border-bottom-left-radius'] = pxTo750(computedStyle['border-bottom-left-radius'].replace('px', ''));
-      style['border-bottom-right-radius'] = pxTo750(computedStyle['border-bottom-right-radius'].replace('px', ''));
-      style['margin-top'] = pxTo750(computedStyle['margin-top'].replace('px', ''));
-      style['margin-bottom'] = pxTo750(computedStyle['margin-bottom'].replace('px', ''));
-      style['margin-left'] = pxTo750(computedStyle['margin-left'].replace('px', ''));
-      style['margin-right'] = pxTo750(computedStyle['margin-right'].replace('px', ''));
-      style['padding-top'] = pxTo750(computedStyle['padding-top'].replace('px', ''));
-      style['padding-bottom'] = pxTo750(computedStyle['padding-bottom'].replace('px', ''));
-      style['padding-left'] = pxTo750(computedStyle['padding-left'].replace('px', ''));
-      style['padding-right'] = pxTo750(computedStyle['padding-right'].replace('px', ''));
-      return style;
-    } else {
-      // TODO lottie support
-      // if(typeof elRef.setProgress == 'function') {
-      //   return {
-      // 'lottie-progress':
-      // }
-      // }
-    }
-  }
-
+  getComputedStyle: bindingXGetComputedStyle
 };
 
 

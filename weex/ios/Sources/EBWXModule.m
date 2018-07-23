@@ -39,11 +39,13 @@ WX_PlUGIN_EXPORT_MODULE(bindingx, EBWXModule)
 @synthesize weexInstance;
 
 WX_EXPORT_METHOD_SYNC(@selector(prepare:))
-WX_EXPORT_METHOD_SYNC(@selector(bind:callback:))
+WX_EXPORT_METHOD_SYNC(@selector(bind:callback:tokenCallback:))
+WX_EXPORT_METHOD_SYNC(@selector(bindAsync:callback:tokenCallback:))
 WX_EXPORT_METHOD_SYNC(@selector(unbind:))
 WX_EXPORT_METHOD_SYNC(@selector(unbindAll))
 WX_EXPORT_METHOD_SYNC(@selector(supportFeatures))
-WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
+WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:callback:))
+WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -105,7 +107,8 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
 }
 
 - (NSDictionary *)bind:(NSDictionary *)dictionary
-              callback:(WXKeepAliveCallback)callback {
+              callback:(WXKeepAliveCallback)callback
+         tokenCallback:(WXKeepAliveCallback)tokenCallback {
     
     if (!dictionary) {
         WX_LOG(WXLogFlagWarning, @"bind params error, need json input");
@@ -159,8 +162,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
             return;
         }
         
-        NSMapTable<NSString *, id> *targetMap = [NSMapTable strongToWeakObjectsMapTable];
-        NSMutableDictionary<NSString *, NSDictionary *> *expressionDict = [NSMutableDictionary dictionary];
+        NSMapTable<id, NSDictionary *> *targetExpression = [NSMapTable weakToStrongObjectsMapTable];
         for (NSDictionary *targetDic in props) {
             NSString *targetRef = targetDic[@"element"];
             NSString *property = targetDic[@"property"];
@@ -182,7 +184,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
                     });
                 }
                 
-                NSMutableDictionary *propertyDic = [[expressionDict objectForKey:targetRef] mutableCopy];
+                NSMutableDictionary *propertyDic = [[targetExpression objectForKey:targetComponent] mutableCopy];
                 if (!propertyDic) {
                     propertyDic = [NSMutableDictionary dictionary];
                 }
@@ -194,8 +196,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
                     expDict[@"config"] = targetDic[@"config"];
                 }
                 propertyDic[property] = expDict;
-                [targetMap setObject:targetComponent forKey:targetRef];
-                [expressionDict setObject:propertyDic forKey:targetRef];
+                [targetExpression setObject:propertyDic forKey:targetComponent];
             }
         }
         
@@ -209,17 +210,29 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
             [welf.bindData putHandler:handler forToken:token expressionType:exprType];
         }
         
-        [handler updateTargetMap:targetMap
-                          expressionDict:expressionDict
-                                 options:options
-                          exitExpression:[EBBindData parseExpression:exitExpression]
-                                callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
-                                    callback(result,keepAlive);
-                                }];
+        [handler updateTargetExpression:targetExpression
+                                options:options
+                         exitExpression:[EBBindData parseExpression:exitExpression]
+                               callback:^(id  _Nonnull source, id  _Nonnull result, BOOL keepAlive) {
+                                   callback(result,keepAlive);
+                               }];
         
         pthread_mutex_unlock(&mutex);
     });
-    return @{@"token":token};
+    
+    NSDictionary *ret = @{@"token":token};
+    if (tokenCallback) {
+        tokenCallback(ret, NO);
+    }
+    return ret;
+}
+
+- (void)bindAsync:(NSDictionary *)dictionary
+         callback:(WXKeepAliveCallback)callback
+    tokenCallback:(WXKeepAliveCallback)tokenCallback {
+    [self bind:dictionary
+             callback:callback
+        tokenCallback:tokenCallback];
 }
 
 - (void)unbind:(NSDictionary *)dictionary {
@@ -269,7 +282,8 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
     return EBsupportFeatures;
 }
 
-- (NSDictionary *)getComputedStyle:(NSString *)sourceRef {
+- (NSDictionary *)getComputedStyle:(NSString *)sourceRef
+                          callback:(WXKeepAliveCallback)callback {
     if (![sourceRef isKindOfClass:NSString.class] || [WXUtility isBlankString:sourceRef]) {
         WX_LOG(WXLogFlagWarning, @"getComputedStyle params error");
         return nil;
@@ -325,7 +339,16 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
     });
     
     dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)));
+    if (callback) {
+        callback(styles, NO);
+    }
     return styles;
+}
+
+- (void)getComputedStyleAsync:(NSString *)sourceRef
+                callback:(WXKeepAliveCallback)callback {
+    [self getComputedStyle:sourceRef
+                  callback:callback];
 }
 
 @end
