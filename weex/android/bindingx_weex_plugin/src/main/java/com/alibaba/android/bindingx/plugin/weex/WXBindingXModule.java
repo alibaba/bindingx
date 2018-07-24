@@ -88,6 +88,13 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
                             return new BindingXScrollHandler(context, manager, extension);
                         }
                     });
+
+            mBindingXCore.registerEventHandler(BindingXEventType.TYPE_PAN, new BindingXCore.ObjectCreator<IEventHandler, Context, PlatformManager>() {
+                @Override
+                public IEventHandler createWith(@NonNull Context context, @NonNull PlatformManager manager, Object... extension) {
+                    return new BindingXGestureHandler(context, manager, extension);
+                }
+            });
         }
     }
 
