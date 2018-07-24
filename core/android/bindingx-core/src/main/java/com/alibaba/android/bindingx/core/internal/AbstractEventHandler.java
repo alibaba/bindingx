@@ -77,6 +77,11 @@ public abstract class AbstractEventHandler implements IEventHandler {
     }
 
     @Override
+    public void setGlobalConfig(@Nullable Map<String, Object> globalConfig) {
+        // nope
+    }
+
+    @Override
     public void onBindExpression(@NonNull String eventType,
                                  @Nullable Map<String,Object> globalConfig,
                                  @Nullable ExpressionPair exitExpressionPair,

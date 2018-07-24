@@ -186,7 +186,8 @@ public class BindingXCore {
                             @Nullable String instanceId, /*optional default instance id*/
                             @Nullable String anchor,
                             @Nullable String anchorInstanceId,
-                            @Nullable String eventType) {
+                            @Nullable String eventType,
+                            @Nullable Map<String, Object> globalConfig) {
         if (TextUtils.isEmpty(eventType)) {
             LogProxy.e("[doPrepare] failed. can not found eventType");
             return null;
@@ -225,6 +226,7 @@ public class BindingXCore {
                 /*maybe anchor is not in current instance*/
                 targetHandler.setAnchorInstanceId(anchorInstanceId);
                 targetHandler.setToken(token);
+                targetHandler.setGlobalConfig(globalConfig);
                 if (targetHandler.onCreate(token, eventType)) {
                     targetHandler.onStart(token, eventType);
                     // put to the handler map
@@ -285,7 +287,7 @@ public class BindingXCore {
 
         if (handler == null) {
             LogProxy.d("binding not enabled,try auto enable it.[sourceRef:" + anchor + ",eventType:" + eventType + "]");
-            token = doPrepare(context, instanceId, anchor, anchorInstanceId, eventType);
+            token = doPrepare(context, instanceId, anchor, anchorInstanceId, eventType, globalConfig);
             if (!TextUtils.isEmpty(token) && mBindingCouples != null && (handlerMap = mBindingCouples.get(token)) != null) {
                 handler = handlerMap.get(eventType);
             }
