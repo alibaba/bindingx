@@ -22,3 +22,4 @@ FOUNDATION_EXPORT const unsigned char BindingXVersionString[];
 
 #import <BindingX/EBHandlerFactory.h>
 #import <BindingX/EBNativeFunction.h>
+#import <BindingX/EBExpressionHandler.h>

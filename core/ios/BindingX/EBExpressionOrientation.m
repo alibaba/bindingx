@@ -44,9 +44,8 @@
     
 }
 
-- (instancetype)initWithExpressionType:(WXExpressionType)exprType
-                                source:(id)source {
-    if (self = [super initWithExpressionType:exprType source:source]) {
+- (instancetype)init {
+    if (self = [super init]) {
         _isStarted = false;
         _startAlpha = 0;
         _startBeta = 0;
@@ -57,6 +56,10 @@
         _alphaRecords = [NSMutableArray new];
     }
     return self;
+}
+
++ (BOOL)requireSource {
+    return NO;
 }
 
 - (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)targetExpression

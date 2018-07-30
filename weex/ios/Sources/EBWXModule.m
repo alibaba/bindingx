@@ -77,8 +77,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
         return;
     }
     
-    WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
-    if (exprType == WXExpressionTypeUndefined) {
+    if (![EBEventHandlerFactory containsEvent:eventType]) {
         WX_LOG(WXLogFlagWarning, @"prepare binding eventType error");
         return;
     }
@@ -87,18 +86,18 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
     WXPerformBlockOnComponentThread(^{
         // find sourceRef & targetRef
         WXComponent *sourceComponent = [weexInstance componentForRef:anchor];
-        if (!sourceComponent && (exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
+        if (!sourceComponent && [EBEventHandlerFactory eventRequireSource:eventType]) {
             WX_LOG(WXLogFlagWarning, @"prepare binding can't find component");
             return;
         }
         
         pthread_mutex_lock(&mutex);
         
-        EBExpressionHandler *handler = [welf.bindData handlerForToken:anchor expressionType:exprType];
+        EBExpressionHandler *handler = [welf.bindData handlerForToken:anchor eventType:eventType];
         if (!handler) {
             // create handler for key
-            handler = [EBExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
-            [welf.bindData putHandler:handler forToken:anchor expressionType:exprType];
+            handler = [EBEventHandlerFactory createHandlerWithEvent:eventType source:sourceComponent];
+            [welf.bindData putHandler:handler forToken:anchor eventType:eventType];
         }
         
         pthread_mutex_unlock(&mutex);
@@ -127,15 +126,14 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
         return nil;
     }
     
-    WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
-    if (exprType == WXExpressionTypeUndefined) {
+    if (![EBEventHandlerFactory containsEvent:eventType]) {
         WX_LOG(WXLogFlagWarning, @"bind params handler error");
         callback(@{@"state":@"error",@"msg":@"bind params handler error"}, NO);
         return nil;
     }
     
     if ([WXUtility isBlankString:token]){
-        if ((exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
+        if ([EBEventHandlerFactory eventRequireSource:eventType]) {
             WX_LOG(WXLogFlagWarning, @"bind params handler error");
             callback(@{@"state":@"error",@"msg":@"anchor cannot be blank when type is pan or scroll"}, NO);
             return nil;
@@ -156,7 +154,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
         } else {
             sourceComponent = [weexInstance componentForRef:token];
         }
-        if (!sourceComponent && (exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
+        if (!sourceComponent && [EBEventHandlerFactory eventRequireSource:eventType]) {
             WX_LOG(WXLogFlagWarning, @"bind can't find source component");
             callback(@{@"state":@"error",@"msg":@"bind can't find source component"}, NO);
             return;
@@ -203,11 +201,11 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
         // find handler for key
         pthread_mutex_lock(&mutex);
         
-        EBExpressionHandler *handler = [welf.bindData handlerForToken:token expressionType:exprType];
+        EBExpressionHandler *handler = [welf.bindData handlerForToken:token eventType:eventType];
         if (!handler) {
             // create handler for key
-            handler = [EBExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
-            [welf.bindData putHandler:handler forToken:token expressionType:exprType];
+            handler = [EBEventHandlerFactory createHandlerWithEvent:eventType source:sourceComponent];
+            [welf.bindData putHandler:handler forToken:token eventType:eventType];
         }
         
         [handler updateTargetExpression:targetExpression
@@ -245,27 +243,26 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
     NSString* eventType = dictionary[@"eventType"];
     
     if ([WXUtility isBlankString:token] || [WXUtility isBlankString:eventType]) {
-        WX_LOG(WXLogFlagWarning, @"disableBinding params error");
+        WX_LOG(WXLogFlagWarning, @"unbind params error");
         return;
     }
     
-    WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
-    if (exprType == WXExpressionTypeUndefined) {
-        WX_LOG(WXLogFlagWarning, @"disableBinding params handler error");
+    if (![EBEventHandlerFactory containsEvent:eventType]) {
+        WX_LOG(WXLogFlagWarning, @"unbind params handler error");
         return;
     }
     
     pthread_mutex_lock(&mutex);
     
-    EBExpressionHandler *handler = [self.bindData handlerForToken:token expressionType:exprType];
+    EBExpressionHandler *handler = [self.bindData handlerForToken:token eventType:eventType];
     if (!handler) {
-        WX_LOG(WXLogFlagWarning, @"disableBinding can't find handler handler");
+        WX_LOG(WXLogFlagWarning, @"unbind can't find handler handler");
         pthread_mutex_unlock(&mutex);
         return;
     }
     
     [handler removeExpressionBinding];
-    [self.bindData removeHandler:handler forToken:token expressionType:exprType];
+    [self.bindData removeHandler:handler forToken:token eventType:eventType];
     
     pthread_mutex_unlock(&mutex);
 }
