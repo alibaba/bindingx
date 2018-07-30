@@ -11,7 +11,7 @@ ext {
 
     mavenGroup = 'com.alibaba.android'
     mavenArtifactId = 'bindingx-core'
-    mavenVersion = '1.0.5'
+    mavenVersion = '1.0.9.4'
 
     orgName = 'rowandjj'
 }

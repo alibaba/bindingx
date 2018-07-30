@@ -47,6 +47,8 @@ public class BindingXCore {
     private Map<String/*token*/, Map<String/*event type*/, IEventHandler>> mBindingCouples;
     private final Map<String, ObjectCreator<IEventHandler, Context, PlatformManager>> mInternalEventHandlerCreatorMap =
             new HashMap<>(8);
+    private final static Map<String, ObjectCreator<IEventHandler, Context, PlatformManager>> sGlobalEventHandlerCreatorMap =
+            new HashMap<>(4);
     private final PlatformManager mPlatformManager;
 
     /**
@@ -107,8 +109,8 @@ public class BindingXCore {
 
         String anchor = Utils.getStringValue(params, BindingXConstants.KEY_ANCHOR); // maybe nullable
         List<Map<String, Object>> expressionArgs = Utils.getRuntimeProps(params);
-
-        return doBind(anchor, anchorInstanceId, eventType, configMap, exitExpressionPair, expressionArgs, callback, context, instanceId);
+        Map<String,ExpressionPair> interceptors = Utils.getCustomInterceptors(params);
+        return doBind(anchor, anchorInstanceId, eventType, configMap, exitExpressionPair, expressionArgs, interceptors, callback, context, instanceId);
     }
 
     /**
@@ -244,12 +246,16 @@ public class BindingXCore {
 
 
     /**
+     *
+     * Note: maybe refactor next version because parameters too long
+     *
      * @param anchor             a reference of some view. Maybe null
      * @param anchorInstanceId   optional instance id of anchor
      * @param eventType          event type such as pan
      * @param globalConfig       global config
      * @param exitExpressionPair exit expression
      * @param expressionArgs     runtime props
+     * @param interceptors       interceptors which can custom when native will callback js
      * @param callback           result callback
      * @param context            android context
      * @param instanceId         optional instance id
@@ -260,6 +266,7 @@ public class BindingXCore {
                          @Nullable Map<String, Object> globalConfig,
                          @Nullable ExpressionPair exitExpressionPair,
                          @Nullable List<Map<String, Object>> expressionArgs,
+                         @Nullable Map<String,ExpressionPair> interceptors,
                          @Nullable JavaScriptCallback callback,
                          @Nullable Context context,
                          @Nullable String instanceId) {
@@ -287,6 +294,7 @@ public class BindingXCore {
         if (handler != null) {
             handler.onBindExpression(eventType, globalConfig, exitExpressionPair, expressionArgs, callback);
             LogProxy.d("createBinding success.[exitExp:" + exitExpressionPair + ",args:" + expressionArgs + "]");
+            handler.setInterceptors(interceptors);
         } else {
             LogProxy.e("internal error.binding failed for ref:" + anchor + ",type:" + eventType);
         }
@@ -346,6 +354,26 @@ public class BindingXCore {
         mInternalEventHandlerCreatorMap.put(eventType, creator);
     }
 
+    /**
+     * register an eventHandler to handle a specific EventType.
+     * Same as {@link BindingXCore#registerEventHandler(String, ObjectCreator)}
+     *
+     * @param eventType the event type name like pan/orientation
+     * @param creator a factory to create an instance of {@link IEventHandler}
+     * */
+    @SuppressWarnings("unused")
+    public static void registerGlobalEventHandler(String eventType, ObjectCreator<IEventHandler, Context, PlatformManager> creator) {
+        if (TextUtils.isEmpty(eventType) || creator == null) {
+            return;
+        }
+        sGlobalEventHandlerCreatorMap.put(eventType, creator);
+    }
+
+    @SuppressWarnings("unused")
+    public static boolean unregisterGlobalEventHandler(String eventType) {
+        return sGlobalEventHandlerCreatorMap.remove(eventType) != null;
+    }
+
     private String generateToken() {
         return UUID.randomUUID().toString();
     }
@@ -358,6 +386,9 @@ public class BindingXCore {
             return null;
         }
         ObjectCreator<IEventHandler, Context, PlatformManager> creator = mInternalEventHandlerCreatorMap.get(eventType);
+        if(creator == null) {
+            creator = sGlobalEventHandlerCreatorMap.get(eventType);
+        }
         return (creator != null) ? creator.createWith(context,mPlatformManager,instanceId) : null;
     }
 

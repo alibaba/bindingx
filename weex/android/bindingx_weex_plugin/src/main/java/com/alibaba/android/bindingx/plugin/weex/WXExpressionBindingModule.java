@@ -79,6 +79,7 @@ public final class WXExpressionBindingModule extends WXSDKEngine.DestroyableModu
                 null,
                 exitExpressionPair,
                 expressionArgs,
+                null,
                 new BindingXCore.JavaScriptCallback() {
                     @Override
                     public void callback(Object params) {

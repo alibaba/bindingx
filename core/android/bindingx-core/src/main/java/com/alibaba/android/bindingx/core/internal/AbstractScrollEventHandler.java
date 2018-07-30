@@ -23,6 +23,7 @@ import com.alibaba.android.bindingx.core.BindingXEventType;
 import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -56,9 +57,20 @@ public abstract class AbstractScrollEventHandler extends AbstractEventHandler {
 
     @Override
     protected void onExit(@NonNull Map<String, Object> scope) {
-        float contentOffsetX = (float) scope.get("internal_x");
-        float contentOffsetY = (float) scope.get("internal_y");
+        double contentOffsetX = (double) scope.get("internal_x");
+        double contentOffsetY = (double) scope.get("internal_y");
         this.fireEventByState(BindingXConstants.STATE_EXIT, contentOffsetX, contentOffsetY,0,0,0,0);
+    }
+
+    @Override
+    protected void onUserIntercept(String interceptorName, @NonNull Map<String, Object> scope) {
+        double contentOffsetX = (double) scope.get("internal_x");
+        double contentOffsetY = (double) scope.get("internal_y");
+        double dx = (double) scope.get("dx");
+        double dy = (double) scope.get("dy");
+        double tdx = (double) scope.get("tdx");
+        double tdy = (double) scope.get("tdy");
+        this.fireEventByState(BindingXConstants.STATE_INTERCEPTOR, contentOffsetX, contentOffsetY,dx,dy,tdx,tdy, Collections.singletonMap(BindingXConstants.STATE_INTERCEPTOR,interceptorName));
     }
 
     @Override
@@ -102,8 +114,9 @@ public abstract class AbstractScrollEventHandler extends AbstractEventHandler {
         }
     }
 
-    protected void fireEventByState(@BindingXConstants.State String state, float contentOffsetX, float contentOffsetY,
-                                    float dx, float dy, float tdx, float tdy) {
+    @SuppressWarnings("unchecked")
+    protected void fireEventByState(@BindingXConstants.State String state, double contentOffsetX, double contentOffsetY,
+                                    double dx, double dy, double tdx, double tdy, Object... extension) {
         if (mCallback != null) {
             Map<String, Object> param = new HashMap<>();
             param.put("state", state);
@@ -122,6 +135,10 @@ public abstract class AbstractScrollEventHandler extends AbstractEventHandler {
             param.put("tdx", _tdx);
             param.put("tdy", _tdy);
             param.put(BindingXConstants.KEY_TOKEN, mToken);
+
+            if(extension != null && extension.length > 0 && extension[0] instanceof Map) {
+                param.putAll((Map<String,Object>) extension[0]);
+            }
 
             mCallback.callback(param);
             LogProxy.d(">>>>>>>>>>>fire event:(" + state + "," + x + "," + y + ","+ _dx  +","+ _dy +"," + _tdx +"," + _tdy +")");

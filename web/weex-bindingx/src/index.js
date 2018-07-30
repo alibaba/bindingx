@@ -83,6 +83,29 @@ function formatExpression(expression) {
   return resultExpression;
 }
 
+function formatExpressions(options) {
+  if (!options) return options;
+  options.exitExpression = formatExpression(options.exitExpression);
+
+  if (options.props) {
+    options.props.forEach((prop) => {
+      prop.expression = formatExpression(prop.expression);
+    });
+  }
+  return options;
+}
+
+function transformOldProps(options) {
+  if (!options || !options.props) return;
+  return options.props.map((prop) => {
+    return {
+      element: prop.element,
+      property: prop.property,
+      expression: prop.expression.transformed
+    };
+  });
+}
+
 // 统一回调参数
 function fixCallback(callback) {
   return function(params = {}) {
@@ -126,14 +149,8 @@ export default {
     if (!options) {
       throw new Error('should pass options for binding');
     }
-
-    options.exitExpression = formatExpression(options.exitExpression);
-
-    if (options.props) {
-      options.props.forEach((prop) => {
-        prop.expression = formatExpression(prop.expression);
-      });
-    }
+    // transform origin expression
+    formatExpressions(options);
 
     if (isWeex) {
       if (WeexBinding && isSupportBinding) {
@@ -141,20 +158,48 @@ export default {
           return WeexBinding.bind(options, options && options.eventType === 'timing' ? fixCallback(callback) : callback);
         } else {
           WeexBinding.enableBinding(options.anchor, options.eventType);
-          // 处理expression的参数格式
-          let expressionArgs = options.props.map((prop) => {
-            return {
-              element: prop.element,
-              property: prop.property,
-              expression: prop.expression.transformed
-            };
-          });
-          WeexBinding.createBinding(options.anchor, options.eventType, '', expressionArgs, callback);
+
+          WeexBinding.createBinding(options.anchor, options.eventType, '', transformOldProps(options), callback);
         }
       }
     } else {
       return WebBinding.bind(options, callback);
     }
+  },
+
+  bindAsync(options, callback = function() {
+  }) {
+    return new Promise((resolve, reject) => {
+      if (!options) {
+        reject('should pass options for binding');
+      }
+      // transform origin expression
+      formatExpressions(options);
+
+      if (isWeex) {
+        if (WeexBinding && isSupportBinding) {
+          if (isSupportNewBinding) {
+            if (options && options.eventType === 'timing') {
+              callback = fixCallback(callback);
+            }
+            if (typeof WeexBinding.bindAsync == 'function') {
+              WeexBinding.bindAsync(options, callback, (res) => {
+                resolve(res);
+              });
+            } else {
+              resolve(WeexBinding.bind(options, callback));
+            }
+          } else {
+
+            WeexBinding.enableBinding(options.anchor, options.eventType);
+
+            resolve(WeexBinding.createBinding(options.anchor, options.eventType, '', transformOldProps(options), callback));
+          }
+        }
+      } else {
+        resolve(WebBinding.bind(options, callback));
+      }
+    });
   },
   /**
    *  @param {object} options
@@ -212,6 +257,25 @@ export default {
     } else {
       return WebBinding.getComputedStyle(el);
     }
+  },
+  getComputedStyleAsync(el) {
+    return new Promise(resolve => {
+      if (isWeex) {
+        if (isSupportNewBinding) {
+          if (typeof WeexBinding.getComputedStyleAsync == 'function') {
+            WeexBinding.getComputedStyleAsync(el, (style) => {
+              resolve(style);
+            });
+          } else {
+            resolve(WeexBinding.getComputedStyle(el));
+          }
+        } else {
+          resolve({});
+        }
+      } else {
+        resolve(WebBinding.getComputedStyle(el));
+      }
+    });
   }
 };
 

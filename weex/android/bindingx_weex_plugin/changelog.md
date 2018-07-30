@@ -40,3 +40,15 @@
 #### 1.0.8.1 & 1.0.8.2
 
 1. 修复bindingx在某些情况下(比如在调用scrollToElement后)无法准确获取列表contentOffset的问题。
+
+#### 1.0.8.3
+
+1. 支持监听list/scroller的下拉刷新
+
+#### 1.0.9
+
+1. 适配bindingx-core 1.0.9
+
+#### 1.0.9.1 & 1.0.9.2
+
+1. bind/getComputedStyle方法增加异步版本

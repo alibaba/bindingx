@@ -27,6 +27,7 @@ import com.alibaba.android.bindingx.core.BindingXEventType;
 import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -301,7 +302,16 @@ public class BindingXOrientationHandler extends AbstractEventHandler implements 
         fireEventByState(BindingXConstants.STATE_EXIT, alpha, beta, gamma);
     }
 
-    private void fireEventByState(@BindingXConstants.State String state, double alpha, double beta, double gamma) {
+    @Override
+    protected void onUserIntercept(String interceptorName, @NonNull Map<String, Object> scope) {
+        double alpha = (double) scope.get("alpha");
+        double beta = (double) scope.get("beta");
+        double gamma = (double) scope.get("gamma");
+        fireEventByState(BindingXConstants.STATE_INTERCEPTOR, alpha, beta, gamma, Collections.singletonMap(BindingXConstants.STATE_INTERCEPTOR,interceptorName));
+    }
+
+    @SuppressWarnings("unchecked")
+    private void fireEventByState(@BindingXConstants.State String state, double alpha, double beta, double gamma, Object... extension) {
         if (mCallback != null) {
             Map<String, Object> param = new HashMap<>();
             param.put("state", state);
@@ -309,6 +319,10 @@ public class BindingXOrientationHandler extends AbstractEventHandler implements 
             param.put("beta", beta);
             param.put("gamma", gamma);
             param.put(BindingXConstants.KEY_TOKEN, mToken);
+
+            if(extension != null && extension.length > 0 && extension[0] instanceof Map) {
+                param.putAll((Map<String,Object>) extension[0]);
+            }
 
             mCallback.callback(param);
             LogProxy.d(">>>>>>>>>>>fire event:(" + state + "," + alpha + "," + beta + "," + gamma + ")");

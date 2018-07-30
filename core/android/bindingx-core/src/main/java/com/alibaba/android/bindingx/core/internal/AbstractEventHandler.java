@@ -23,6 +23,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.bindingx.core.BindingXCore;
+import com.alibaba.android.bindingx.core.BindingXJSFunctionRegister;
 import com.alibaba.android.bindingx.core.BindingXPropertyInterceptor;
 import com.alibaba.android.bindingx.core.IEventHandler;
 import com.alibaba.android.bindingx.core.LogProxy;
@@ -51,6 +52,7 @@ import java.util.Map;
 public abstract class AbstractEventHandler implements IEventHandler {
 
     protected volatile Map<String/*targetRef*/, List<ExpressionHolder>> mExpressionHoldersMap;
+    protected volatile Map<String/*interceptorName*/, ExpressionPair> mInterceptorsMap;
     protected BindingXCore.JavaScriptCallback mCallback;
     protected final Map<String, Object> mScope = new HashMap<>();
     protected String mInstanceId;
@@ -101,6 +103,11 @@ public abstract class AbstractEventHandler implements IEventHandler {
     private void applyFunctionsToScope() {
         JSMath.applyToScope(mScope);
         TimingFunctions.applyToScope(mScope);
+        // register custom js functions
+        Map<String,JSFunctionInterface> customFunctions = BindingXJSFunctionRegister.getInstance().getJSFunctions();
+        if(customFunctions != null && !customFunctions.isEmpty()) {
+            mScope.putAll(customFunctions);
+        }
     }
 
     private void transformArgs(@NonNull String eventType, @NonNull List<Map<String, Object>> originalArgs) {
@@ -150,11 +157,9 @@ public abstract class AbstractEventHandler implements IEventHandler {
      *
      * @return true if expression return true and false otherwise
      * */
-    boolean evaluateExitExpression(ExpressionPair exitExpression, @NonNull Map<String,Object> scope) {
+    protected boolean evaluateExitExpression(ExpressionPair exitExpression, @NonNull Map<String,Object> scope) {
         boolean exit = false;
-        if (exitExpression != null
-                && !TextUtils.isEmpty(exitExpression.transformed)
-                && !"{}".equals(exitExpression.transformed)) {
+        if (ExpressionPair.isValid(exitExpression)) {
             Expression expression = new Expression(exitExpression.transformed);
             try {
                 exit = (boolean) expression.execute(scope);
@@ -176,6 +181,41 @@ public abstract class AbstractEventHandler implements IEventHandler {
         return exit;
     }
 
+    @Override
+    public void setInterceptors(@Nullable Map<String, ExpressionPair> params) {
+        this.mInterceptorsMap = params;
+    }
+
+    @Override
+    public void performInterceptIfNeeded(@NonNull String interceptorName, @NonNull ExpressionPair condition, @NonNull Map<String,Object> scope) {
+        if(!ExpressionPair.isValid(condition)) {
+            return;
+        }
+        Expression expression = new Expression(condition.transformed);
+        boolean shouldIntercept = false;
+        try {
+            shouldIntercept = (boolean) expression.execute(scope);
+        } catch (Exception e) {
+            LogProxy.e("evaluate interceptor ["+ interceptorName+"] expression failed. ", e);
+        }
+        if(shouldIntercept) {
+            onUserIntercept(interceptorName, scope);
+        }
+    }
+
+    private void tryInterceptAllIfNeeded(@NonNull Map<String,Object> scope) {
+        if(this.mInterceptorsMap == null || this.mInterceptorsMap.isEmpty()) {
+            return;
+        }
+        for(Map.Entry<String, ExpressionPair> entry : this.mInterceptorsMap.entrySet()) {
+            String interceptorName = entry.getKey();
+            ExpressionPair interceptCondition = entry.getValue();
+            if(!TextUtils.isEmpty(interceptorName) && interceptCondition != null) {
+                performInterceptIfNeeded(interceptorName, interceptCondition, scope);
+            }
+        }
+    }
+
     /**
      * consume all the expressions that bind before.
      *
@@ -184,9 +224,10 @@ public abstract class AbstractEventHandler implements IEventHandler {
      * @param currentType current event type
      *
      * */
-    void consumeExpression(@Nullable Map<String, List<ExpressionHolder>> args, @NonNull Map<String,Object> scope,
+    protected void consumeExpression(@Nullable Map<String, List<ExpressionHolder>> args, @NonNull Map<String,Object> scope,
                            @NonNull String currentType) throws IllegalArgumentException, JSONException {
-        //https://developer.mozilla.org/zh-CN/docs/Web/CSS/transform
+        tryInterceptAllIfNeeded(scope);
+
         if (args == null) {
             LogProxy.e("expression args is null");
             return;
@@ -208,9 +249,7 @@ public abstract class AbstractEventHandler implements IEventHandler {
                 String instanceId = TextUtils.isEmpty(holder.targetInstanceId)? mInstanceId : holder.targetInstanceId;
 
                 ExpressionPair expressionPair = holder.expressionPair;
-                if(expressionPair == null
-                        || TextUtils.isEmpty(expressionPair.transformed)
-                        || "{}".equals(expressionPair.transformed)) {
+                if(!ExpressionPair.isValid(expressionPair)) {
                     continue;
                 }
                 Expression expression = mCachedExpressionMap.get(expressionPair.transformed);
@@ -264,7 +303,9 @@ public abstract class AbstractEventHandler implements IEventHandler {
 
     protected abstract void onExit(@NonNull Map<String, Object> scope);
 
-    void clearExpressions() {
+    protected abstract void onUserIntercept(String interceptorName, @NonNull Map<String,Object> scope);
+
+    protected void clearExpressions() {
         LogProxy.d("all expression are cleared");
         if (mExpressionHoldersMap != null) {
             mExpressionHoldersMap.clear();

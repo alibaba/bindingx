@@ -16,6 +16,7 @@
 package com.alibaba.android.bindingx.core.internal;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 /**
  * Description:
@@ -41,6 +42,10 @@ public class ExpressionPair {
 
     public static ExpressionPair create(@Nullable String origin, @Nullable String transformed) {
         return new ExpressionPair(origin,transformed);
+    }
+
+    public static boolean isValid(@Nullable ExpressionPair pair) {
+        return pair != null && !TextUtils.isEmpty(pair.transformed) && !"{}".equals(pair.transformed);
     }
 
     @Override

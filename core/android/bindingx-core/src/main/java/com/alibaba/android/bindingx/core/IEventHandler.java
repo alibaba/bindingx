@@ -37,7 +37,7 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 
-public interface IEventHandler {
+public interface IEventHandler extends IEventInterceptor{
 
     /**
      * the lifecycle of create event handler which will only be called once if not created
