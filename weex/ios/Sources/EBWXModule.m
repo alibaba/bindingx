@@ -284,21 +284,49 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
 
 - (NSDictionary *)getComputedStyle:(NSString *)sourceRef
                           callback:(WXKeepAliveCallback)callback {
+    
+    if (callback) {
+        // call async method when callback is not nil
+        [self getComputedStyleAsync:sourceRef callback:callback];
+        return nil;
+    }
+    
+    __block NSDictionary *styles = nil;
+    
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    [self fetchComputedStyle:sourceRef callback:^(NSDictionary *callbackStyles) {
+        styles = callbackStyles;
+        dispatch_semaphore_signal(semaphore);
+    }];
+    dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)));
+    
+    return styles;
+}
+
+- (void)getComputedStyleAsync:(NSString *)sourceRef
+                callback:(WXKeepAliveCallback)callback {
+    [self fetchComputedStyle:sourceRef callback:^(NSDictionary *styles) {
+        if (callback) {
+            callback(styles, NO);
+        }
+    }];
+}
+
+- (void)fetchComputedStyle:(NSString *)sourceRef
+                callback:(void (^ _Nullable)(NSDictionary *))callback {
     if (![sourceRef isKindOfClass:NSString.class] || [WXUtility isBlankString:sourceRef]) {
         WX_LOG(WXLogFlagWarning, @"getComputedStyle params error");
-        return nil;
+        callback(nil);
     }
     
     __block NSMutableDictionary *styles = [NSMutableDictionary new];
     
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     WXPerformBlockOnComponentThread(^{
         // find sourceRef & targetRef
         WXComponent *sourceComponent = [weexInstance componentForRef:sourceRef];
         if (!sourceComponent) {
             WX_LOG(WXLogFlagWarning, @"getComputedStyle can't find source component");
-            dispatch_semaphore_signal(semaphore);
-            return;
+            callback(nil);
         }
         NSDictionary* mapping = [EBWXUtils cssPropertyMapping];
         for (NSString* key in mapping) {
@@ -334,21 +362,9 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
             styles[@"rotateZ"] = [layer valueForKeyPath:@"transform.rotation.z"];
             styles[@"opacity"] = [layer valueForKeyPath:@"opacity"];
             
-            dispatch_semaphore_signal(semaphore);
+            callback(styles);
         });
     });
-    
-    dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)));
-    if (callback) {
-        callback(styles, NO);
-    }
-    return styles;
-}
-
-- (void)getComputedStyleAsync:(NSString *)sourceRef
-                callback:(WXKeepAliveCallback)callback {
-    [self getComputedStyle:sourceRef
-                  callback:callback];
 }
 
 @end
