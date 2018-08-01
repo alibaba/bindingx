@@ -15,7 +15,8 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "EBUtility.h"
+
+typedef void (^EBKeepAliveCallback)(_Nonnull id source ,_Nonnull id result, BOOL keepAlive);
 
 @class EBExpressionHandler;
 
