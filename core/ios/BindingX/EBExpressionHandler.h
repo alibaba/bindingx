@@ -40,10 +40,10 @@ typedef void (^EBKeepAliveCallback)(id source , id result, BOOL keepAlive);
 
 @property (nonatomic, weak) id source;
 
-@property (nonatomic, copy) NSDictionary *exitExpression;
-@property (nonatomic, copy) EBKeepAliveCallback callback;
+@property (nonatomic, copy, nullable) NSDictionary *exitExpression;
+@property (nonatomic, copy, nullable) EBKeepAliveCallback callback;
 @property (nonatomic, strong, nullable) NSMapTable<id, NSDictionary *> *expressionMap;
-@property (nonatomic, strong) NSDictionary *options;
+@property (nonatomic, strong, nullable) NSDictionary *options;
 
 - (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)expressionMap
                        options:(NSDictionary *)options
