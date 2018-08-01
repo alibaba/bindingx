@@ -15,6 +15,7 @@
  */
 
 #import "EBExpressionTiming.h"
+#import <UIKit/UIKit.h>
 
 @interface EBExpressionTiming ()
 
