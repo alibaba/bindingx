@@ -16,7 +16,9 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^EBKeepAliveCallback)(_Nonnull id source ,_Nonnull id result, BOOL keepAlive);
+NS_ASSUME_NONNULL_BEGIN
+
+typedef void (^EBKeepAliveCallback)(id source , id result, BOOL keepAlive);
 
 @class EBExpressionHandler;
 
@@ -58,3 +60,4 @@ typedef void (^EBKeepAliveCallback)(_Nonnull id source ,_Nonnull id result, BOOL
 
 @end
 
+NS_ASSUME_NONNULL_END
