@@ -72,7 +72,6 @@
         
         if (self.turnChange) {
             [self fireTurnEvent:scope];
-            return;
         }
         BOOL exit = ![self executeExpression:scope];
         if (exit) {
