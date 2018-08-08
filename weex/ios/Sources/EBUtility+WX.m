@@ -256,7 +256,7 @@
 
 + (NSNumber *)radian2Angle:(NSNumber *)radian {
     if ([radian isKindOfClass:NSNumber.class]) {
-        return @([radian doubleValue]*90);
+        return @([radian doubleValue]*180/M_PI);
     }
     return @(0);
 }

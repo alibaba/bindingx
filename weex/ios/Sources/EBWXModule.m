@@ -359,6 +359,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
                 styles[@"rotateX"] = [EBUtility radian2Angle:[layer valueForKeyPath:@"transform.rotation.x"]];
                 styles[@"rotateY"] = [EBUtility radian2Angle:[layer valueForKeyPath:@"transform.rotation.y"]];
                 styles[@"rotateZ"] = [EBUtility radian2Angle:[layer valueForKeyPath:@"transform.rotation.z"]];
+                styles[@"isRotateAngle"] = @"true";
                 styles[@"opacity"] = [layer valueForKeyPath:@"opacity"];
             }
             
