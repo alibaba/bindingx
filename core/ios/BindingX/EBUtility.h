@@ -17,7 +17,6 @@
 #import <Foundation/Foundation.h>
 #import "EBExpressionProperty.h"
 
-typedef void (^EBKeepAliveCallback)(_Nonnull id source ,_Nonnull id result, BOOL keepAlive);
 typedef void (^EBGetPanGestureCallback)(BOOL isHorizontal, BOOL isVertical);
 
 typedef void (^EBPerformBlock)(void);

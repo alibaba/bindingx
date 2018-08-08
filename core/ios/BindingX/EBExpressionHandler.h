@@ -15,40 +15,44 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "EBUtility.h"
 
-typedef NS_ENUM(NSInteger, WXExpressionType) {
-    WXExpressionTypeUndefined = -1,
-    WXExpressionTypePan,
-    WXExpressionTypeScroll,
-    WXExpressionTypeTiming,
-    WXExpressionTypeOrientation
-};
+NS_ASSUME_NONNULL_BEGIN
+
+typedef void (^EBKeepAliveCallback)(id source , id result, BOOL keepAlive);
+
+@class EBExpressionHandler;
+
+@interface EBEventHandlerFactory : NSObject
+
++ (BOOL)containsEvent:(NSString *)event;
+
++ (BOOL)eventRequireSource:(NSString *)event;
+
++ (NSArray<NSString *> *)supportEvents;
+
++ (void)registerEvent:(NSString *)event withClass:(Class)clazz;
+
++ (EBExpressionHandler *)createHandlerWithEvent:(NSString *)event source:(id)source;
+
+@end
 
 @interface EBExpressionHandler : NSObject
 
-@property (nonatomic, assign) WXExpressionType exprType;
 @property (nonatomic, weak) id source;
 
-@property (nonatomic, copy) NSDictionary *exitExpression;
-@property (nonatomic, copy) EBKeepAliveCallback callback;
-@property (nonatomic, strong) NSMapTable<id, NSDictionary *> *expressionMap;
-@property (nonatomic, strong) NSDictionary *options;
-
-- (instancetype)initWithExpressionType:(WXExpressionType)exprType
-                                source:(id)source;
+@property (nonatomic, copy, nullable) NSDictionary *exitExpression;
+@property (nonatomic, copy, nullable) EBKeepAliveCallback callback;
+@property (nonatomic, strong, nullable) NSMapTable<id, NSDictionary *> *expressionMap;
+@property (nonatomic, strong, nullable) NSDictionary *options;
 
 - (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)expressionMap
-                       options:(NSDictionary *)options
+                       options:(NSDictionary * _Nullable)options
                 exitExpression:(NSDictionary *)exitExpression
                       callback:(EBKeepAliveCallback)callback;
 
++ (BOOL)requireSource;
+
 - (void)removeExpressionBinding;
-
-+ (WXExpressionType)stringToExprType:(NSString *)typeStr;
-
-+ (EBExpressionHandler *)handlerWithExpressionType:(WXExpressionType)exprType
-                                            source:(id)source;
 
 - (BOOL)executeExpression:(NSDictionary *)scope;
 
@@ -56,3 +60,4 @@ typedef NS_ENUM(NSInteger, WXExpressionType) {
 
 @end
 
+NS_ASSUME_NONNULL_END

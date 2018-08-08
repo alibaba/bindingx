@@ -17,9 +17,6 @@
 #import <UIKit/UIKit.h>
 #import "EBExpressionHandler.h"
 
-
 @interface EBExpressionGesture : EBExpressionHandler
-
-@property (nonatomic, weak) UIGestureRecognizer *gesture;
 
 @end

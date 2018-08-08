@@ -22,6 +22,7 @@
 
 @interface EBExpressionGesture () <UIGestureRecognizerDelegate>
 
+@property (nonatomic, weak) UIGestureRecognizer *gesture;
 @property (nonatomic, weak) id<UIGestureRecognizerDelegate> tmpDelegate;
 @property (nonatomic, assign) BOOL isHorizontal;
 @property (nonatomic, assign) BOOL isVertical;
@@ -30,14 +31,6 @@
 
 @implementation EBExpressionGesture {
     BOOL _isMutex;
-}
-
-- (instancetype)initWithExpressionType:(WXExpressionType)exprType
-                                source:(id)source {
-    if (self = [super initWithExpressionType:exprType source:source]) {
-         [self initGesture];
-    }
-    return self;
 }
 
 - (void)dealloc {
@@ -73,7 +66,7 @@
 
 #pragma mark - private methods
 - (void)initGesture {
-    if (self.exprType == WXExpressionTypePan && !self.gesture) {
+    if (!self.gesture) {
         __weak typeof(self) welf = self;
         [EBUtility performBlockOnMainThread:^{
             [welf addGuestureOnMainThread];
@@ -150,7 +143,7 @@
 #pragma mark - Gesture
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer == self.gesture) {
-        if (self.exprType == WXExpressionTypePan && [gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
             if (!_isHorizontal && !_isVertical) {
                 return YES;
             }
@@ -168,7 +161,7 @@
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if (self.exprType == WXExpressionTypePan && gestureRecognizer == self.gesture) {
+    if (gestureRecognizer == self.gesture) {
         
         if (otherGestureRecognizer.view && [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]]) {
             UIScrollView *scroller = (UIScrollView *)otherGestureRecognizer.view;
@@ -196,7 +189,7 @@
                     return YES;
                 }
             }
-        } else if(self.exprType == WXExpressionTypePan && [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]){
+        } else if([otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]){
             if ([self isInnerPan:(UIPanGestureRecognizer *)otherGestureRecognizer otherPan:(UIPanGestureRecognizer *)gestureRecognizer]) {
                 return YES;
             }
@@ -206,7 +199,7 @@
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if (self.exprType == WXExpressionTypePan && gestureRecognizer == self.gesture) {
+    if (gestureRecognizer == self.gesture) {
         if ([otherGestureRecognizer isKindOfClass:NSClassFromString(@"UIScrollViewPanGestureRecognizer")]) {
             if (_isMutex) {
                 return YES;
@@ -227,7 +220,7 @@
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if (self.exprType == WXExpressionTypePan && gestureRecognizer == self.gesture) {
+    if (gestureRecognizer == self.gesture) {
         if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]
             && [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
             if (!_isMutex) {

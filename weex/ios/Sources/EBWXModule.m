@@ -77,8 +77,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
         return;
     }
     
-    WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
-    if (exprType == WXExpressionTypeUndefined) {
+    if (![EBEventHandlerFactory containsEvent:eventType]) {
         WX_LOG(WXLogFlagWarning, @"prepare binding eventType error");
         return;
     }
@@ -87,18 +86,18 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
     WXPerformBlockOnComponentThread(^{
         // find sourceRef & targetRef
         WXComponent *sourceComponent = [weexInstance componentForRef:anchor];
-        if (!sourceComponent && (exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
+        if (!sourceComponent && [EBEventHandlerFactory eventRequireSource:eventType]) {
             WX_LOG(WXLogFlagWarning, @"prepare binding can't find component");
             return;
         }
         
         pthread_mutex_lock(&mutex);
         
-        EBExpressionHandler *handler = [welf.bindData handlerForToken:anchor expressionType:exprType];
+        EBExpressionHandler *handler = [welf.bindData handlerForToken:anchor eventType:eventType];
         if (!handler) {
             // create handler for key
-            handler = [EBExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
-            [welf.bindData putHandler:handler forToken:anchor expressionType:exprType];
+            handler = [EBEventHandlerFactory createHandlerWithEvent:eventType source:sourceComponent];
+            [welf.bindData putHandler:handler forToken:anchor eventType:eventType];
         }
         
         pthread_mutex_unlock(&mutex);
@@ -127,15 +126,14 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
         return nil;
     }
     
-    WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
-    if (exprType == WXExpressionTypeUndefined) {
+    if (![EBEventHandlerFactory containsEvent:eventType]) {
         WX_LOG(WXLogFlagWarning, @"bind params handler error");
         callback(@{@"state":@"error",@"msg":@"bind params handler error"}, NO);
         return nil;
     }
     
     if ([WXUtility isBlankString:token]){
-        if ((exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
+        if ([EBEventHandlerFactory eventRequireSource:eventType]) {
             WX_LOG(WXLogFlagWarning, @"bind params handler error");
             callback(@{@"state":@"error",@"msg":@"anchor cannot be blank when type is pan or scroll"}, NO);
             return nil;
@@ -156,7 +154,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
         } else {
             sourceComponent = [weexInstance componentForRef:token];
         }
-        if (!sourceComponent && (exprType == WXExpressionTypePan || exprType == WXExpressionTypeScroll)) {
+        if (!sourceComponent && [EBEventHandlerFactory eventRequireSource:eventType]) {
             WX_LOG(WXLogFlagWarning, @"bind can't find source component");
             callback(@{@"state":@"error",@"msg":@"bind can't find source component"}, NO);
             return;
@@ -203,11 +201,11 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
         // find handler for key
         pthread_mutex_lock(&mutex);
         
-        EBExpressionHandler *handler = [welf.bindData handlerForToken:token expressionType:exprType];
+        EBExpressionHandler *handler = [welf.bindData handlerForToken:token eventType:eventType];
         if (!handler) {
             // create handler for key
-            handler = [EBExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
-            [welf.bindData putHandler:handler forToken:token expressionType:exprType];
+            handler = [EBEventHandlerFactory createHandlerWithEvent:eventType source:sourceComponent];
+            [welf.bindData putHandler:handler forToken:token eventType:eventType];
         }
         
         [handler updateTargetExpression:targetExpression
@@ -245,27 +243,26 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
     NSString* eventType = dictionary[@"eventType"];
     
     if ([WXUtility isBlankString:token] || [WXUtility isBlankString:eventType]) {
-        WX_LOG(WXLogFlagWarning, @"disableBinding params error");
+        WX_LOG(WXLogFlagWarning, @"unbind params error");
         return;
     }
     
-    WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
-    if (exprType == WXExpressionTypeUndefined) {
-        WX_LOG(WXLogFlagWarning, @"disableBinding params handler error");
+    if (![EBEventHandlerFactory containsEvent:eventType]) {
+        WX_LOG(WXLogFlagWarning, @"unbind params handler error");
         return;
     }
     
     pthread_mutex_lock(&mutex);
     
-    EBExpressionHandler *handler = [self.bindData handlerForToken:token expressionType:exprType];
+    EBExpressionHandler *handler = [self.bindData handlerForToken:token eventType:eventType];
     if (!handler) {
-        WX_LOG(WXLogFlagWarning, @"disableBinding can't find handler handler");
+        WX_LOG(WXLogFlagWarning, @"unbind can't find handler handler");
         pthread_mutex_unlock(&mutex);
         return;
     }
     
     [handler removeExpressionBinding];
-    [self.bindData removeHandler:handler forToken:token expressionType:exprType];
+    [self.bindData removeHandler:handler forToken:token eventType:eventType];
     
     pthread_mutex_unlock(&mutex);
 }
@@ -284,21 +281,49 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
 
 - (NSDictionary *)getComputedStyle:(NSString *)sourceRef
                           callback:(WXKeepAliveCallback)callback {
+    
+    if (callback) {
+        // call async method when callback is not nil
+        [self getComputedStyleAsync:sourceRef callback:callback];
+        return nil;
+    }
+    
+    __block NSDictionary *styles = nil;
+    
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    [self fetchComputedStyle:sourceRef callback:^(NSDictionary *callbackStyles) {
+        styles = callbackStyles;
+        dispatch_semaphore_signal(semaphore);
+    }];
+    dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)));
+    
+    return styles;
+}
+
+- (void)getComputedStyleAsync:(NSString *)sourceRef
+                callback:(WXKeepAliveCallback)callback {
+    [self fetchComputedStyle:sourceRef callback:^(NSDictionary *styles) {
+        if (callback) {
+            callback(styles, NO);
+        }
+    }];
+}
+
+- (void)fetchComputedStyle:(NSString *)sourceRef
+                callback:(void (^ _Nullable)(NSDictionary *))callback {
     if (![sourceRef isKindOfClass:NSString.class] || [WXUtility isBlankString:sourceRef]) {
         WX_LOG(WXLogFlagWarning, @"getComputedStyle params error");
-        return nil;
+        callback(nil);
     }
     
     __block NSMutableDictionary *styles = [NSMutableDictionary new];
     
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     WXPerformBlockOnComponentThread(^{
         // find sourceRef & targetRef
         WXComponent *sourceComponent = [weexInstance componentForRef:sourceRef];
         if (!sourceComponent) {
             WX_LOG(WXLogFlagWarning, @"getComputedStyle can't find source component");
-            dispatch_semaphore_signal(semaphore);
-            return;
+            callback(nil);
         }
         NSDictionary* mapping = [EBWXUtils cssPropertyMapping];
         for (NSString* key in mapping) {
@@ -325,30 +350,22 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
         }
         WXPerformBlockOnMainThread(^{
             CALayer *layer = sourceComponent.view.layer;
-            styles[@"translateX"] = [EBUtility transformFactor:@"transform.translation.x" layer:layer];
-            styles[@"translateY"] = [EBUtility transformFactor:@"transform.translation.y" layer:layer];
-            styles[@"scaleX"] = [layer valueForKeyPath:@"transform.scale.x"];
-            styles[@"scaleY"] = [layer valueForKeyPath:@"transform.scale.y"];
-            styles[@"rotateX"] = [layer valueForKeyPath:@"transform.rotation.x"];
-            styles[@"rotateY"] = [layer valueForKeyPath:@"transform.rotation.y"];
-            styles[@"rotateZ"] = [layer valueForKeyPath:@"transform.rotation.z"];
-            styles[@"opacity"] = [layer valueForKeyPath:@"opacity"];
+            layer = layer.presentationLayer ?: layer.modelLayer;
+            if (layer) {
+                styles[@"translateX"] = [EBUtility transformFactor:@"transform.translation.x" layer:layer];
+                styles[@"translateY"] = [EBUtility transformFactor:@"transform.translation.y" layer:layer];
+                styles[@"scaleX"] = [layer valueForKeyPath:@"transform.scale.x"];
+                styles[@"scaleY"] = [layer valueForKeyPath:@"transform.scale.y"];
+                styles[@"rotateX"] = [EBUtility radian2Angle:[layer valueForKeyPath:@"transform.rotation.x"]];
+                styles[@"rotateY"] = [EBUtility radian2Angle:[layer valueForKeyPath:@"transform.rotation.y"]];
+                styles[@"rotateZ"] = [EBUtility radian2Angle:[layer valueForKeyPath:@"transform.rotation.z"]];
+                styles[@"isRotateAngle"] = @"true";
+                styles[@"opacity"] = [layer valueForKeyPath:@"opacity"];
+            }
             
-            dispatch_semaphore_signal(semaphore);
+            callback(styles);
         });
     });
-    
-    dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)));
-    if (callback) {
-        callback(styles, NO);
-    }
-    return styles;
-}
-
-- (void)getComputedStyleAsync:(NSString *)sourceRef
-                callback:(WXKeepAliveCallback)callback {
-    [self getComputedStyle:sourceRef
-                  callback:callback];
 }
 
 @end

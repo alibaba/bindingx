@@ -25,20 +25,95 @@
 #import "EBUtility.h"
 #import "EBHandlerFactory.h"
 
-@interface EBExpressionHandler ()
+@interface EBEventHandlerFactory ()
+
+@property(nonatomic, strong) NSMutableDictionary<NSString *, Class> *eventHandlers;
+@property (nonatomic, strong)  NSLock   *lock;
+
+@end
+
+@implementation EBEventHandlerFactory
+
++ (instancetype)sharedInstance {
+    static EBEventHandlerFactory* _sharedInstance = nil;
+    static dispatch_once_t oncePredicate;
+    dispatch_once(&oncePredicate, ^{
+        _sharedInstance = [self new];
+    });
+    return _sharedInstance;
+}
+
+- (instancetype)init {
+    if (self = [super init]) {
+        _eventHandlers = [NSMutableDictionary dictionaryWithObjects:@[
+                                                     EBExpressionGesture.class,
+                                                     EBExpressionScroller.class,
+                                                     EBExpressionTiming.class,
+                                                     EBExpressionOrientation.class,
+                                                     ]
+                                           forKeys:@[
+                                                     @"pan",
+                                                     @"scroll",
+                                                     @"timing",
+                                                     @"orientation",
+                                                     ]];
+        _lock = [NSLock new];
+    }
+    return self;
+}
+
+- (Class)classWithEvent:(NSString *)event {
+    [_lock lock];
+    Class clazz = [_eventHandlers objectForKey:event];
+    [_lock unlock];
+    return clazz;
+}
+
+- (NSArray<NSString *> *)supportEvents {
+    [_lock lock];
+    NSArray<NSString *> *supportEvents = _eventHandlers.allKeys;
+    [_lock unlock];
+    return supportEvents;
+}
+
+- (void)registerEvent:(NSString *)event withClass:(Class)clazz {
+    [_lock lock];
+    [_eventHandlers setObject:clazz forKey:event];
+    [_lock unlock];
+}
+
++ (BOOL)containsEvent:(NSString *)event {
+    return [[self supportEvents] containsObject:event];
+}
+
++ (BOOL)eventRequireSource:(NSString *)event {
+    Class clazz = [[EBEventHandlerFactory sharedInstance] classWithEvent:event];
+    if ([clazz respondsToSelector:@selector(requireSource)]) {
+        return [clazz requireSource];
+    }
+    return YES;
+}
+
++ (NSArray<NSString *> *)supportEvents {
+    return [EBEventHandlerFactory sharedInstance].supportEvents;
+}
+
++ (void)registerEvent:(NSString *)event withClass:(Class)clazz {
+    [[EBEventHandlerFactory sharedInstance] registerEvent:event withClass:clazz];
+}
+
++ (EBExpressionHandler *)createHandlerWithEvent:(NSString *)event source:(id)source {
+    Class clazz = [[EBEventHandlerFactory sharedInstance] classWithEvent:event];
+    EBExpressionHandler *handler = [clazz new];
+    if ([handler respondsToSelector:@selector(setSource:)]) {
+        [handler setSource:source];
+    }
+    return handler;
+}
 
 @end
 
 @implementation EBExpressionHandler
-
-- (instancetype)initWithExpressionType:(WXExpressionType)exprType
-                                source:(id)source {
-    if (self = [super init]) {
-        self.source = source;
-        self.exprType = exprType;
-    }
-    return self;
-}
 
 - (void)updateTargetExpression:(NSMapTable<id, NSDictionary *> *)expressionMap
                        options:(NSDictionary *)options
@@ -52,39 +127,14 @@
     self.options = options;
 }
 
++ (BOOL)requireSource {
+    return YES;
+}
+
 - (void)removeExpressionBinding {
     [EBUtility performBlockOnMainThread:^{
         self.expressionMap = nil;
     }];
-}
-
-+ (WXExpressionType)stringToExprType:(NSString *)typeStr {
-    if ([@"pan" isEqualToString:typeStr]) {
-        return WXExpressionTypePan;
-    } else if ([@"scroll" isEqualToString:typeStr]) {
-        return WXExpressionTypeScroll;
-    } else if ([@"timing" isEqualToString:typeStr]) {
-        return WXExpressionTypeTiming;
-    } else if ([@"orientation" isEqualToString:typeStr]) {
-        return WXExpressionTypeOrientation;
-    }
-    return WXExpressionTypeUndefined;
-}
-
-+ (EBExpressionHandler *)handlerWithExpressionType:(WXExpressionType)exprType
-                                            source:(id)source {
-    switch (exprType) {
-        case WXExpressionTypePan:
-            return [[EBExpressionGesture alloc] initWithExpressionType:exprType source:source];
-        case WXExpressionTypeScroll:
-            return [[EBExpressionScroller alloc] initWithExpressionType:exprType source:source];
-        case WXExpressionTypeTiming:
-            return [[EBExpressionTiming alloc] initWithExpressionType:exprType source:source];
-        case WXExpressionTypeOrientation:
-            return [[EBExpressionOrientation alloc] initWithExpressionType:exprType source:source];
-        default:
-            return [EBExpressionHandler new];
-    }
 }
 
 - (BOOL)executeExpression:(NSDictionary *)scope {

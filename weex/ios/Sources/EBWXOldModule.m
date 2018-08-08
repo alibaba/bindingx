@@ -68,8 +68,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         return;
     }
     
-    WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
-    if (exprType == WXExpressionTypeUndefined) {
+    if (![EBEventHandlerFactory containsEvent:eventType]) {
         WX_LOG(WXLogFlagWarning, @"enableBinding params error");
         return;
     }
@@ -85,11 +84,11 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         
         pthread_mutex_lock(&mutex);
         
-        EBExpressionHandler *handler = [welf.bindData handlerForToken:sourceRef expressionType:exprType];
+        EBExpressionHandler *handler = [welf.bindData handlerForToken:sourceRef eventType:eventType];
         if (!handler) {
             // create handler for key
-            handler = [EBExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
-            [welf.bindData putHandler:handler forToken:sourceRef expressionType:exprType];
+            handler = [EBEventHandlerFactory createHandlerWithEvent:eventType source:sourceComponent];
+            [welf.bindData putHandler:handler forToken:sourceRef eventType:eventType];
         }
         
         pthread_mutex_unlock(&mutex);
@@ -107,8 +106,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         return;
     }
     
-    WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
-    if (exprType == WXExpressionTypeUndefined) {
+    if (![EBEventHandlerFactory containsEvent:eventType]) {
         WX_LOG(WXLogFlagWarning, @"createBinding params handler error");
         callback(@{@"state":@"error",@"msg":@"createBinding params handler error"}, NO);
         return;
@@ -158,11 +156,11 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         // find handler for key
         pthread_mutex_lock(&mutex);
         
-        EBExpressionHandler *handler = [welf.bindData handlerForToken:sourceRef expressionType:exprType];
+        EBExpressionHandler *handler = [welf.bindData handlerForToken:sourceRef eventType:eventType];
         if (!handler) {
             // create handler for key
-            handler = [EBExpressionHandler handlerWithExpressionType:exprType source:sourceComponent];
-            [welf.bindData putHandler:handler forToken:sourceRef expressionType:exprType];
+            handler = [EBEventHandlerFactory createHandlerWithEvent:eventType source:sourceComponent];
+            [welf.bindData putHandler:handler forToken:sourceRef eventType:eventType];
         }
 
         [handler updateTargetExpression:targetExpressionMap
@@ -183,15 +181,14 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
         return;
     }
     
-    WXExpressionType exprType = [EBExpressionHandler stringToExprType:eventType];
-    if (exprType == WXExpressionTypeUndefined) {
+    if (![EBEventHandlerFactory containsEvent:eventType]) {
         WX_LOG(WXLogFlagWarning, @"disableBinding params handler error");
         return;
     }
     
     pthread_mutex_lock(&mutex);
     
-    EBExpressionHandler *handler = [self.bindData handlerForToken:sourceRef expressionType:exprType];
+    EBExpressionHandler *handler = [self.bindData handlerForToken:sourceRef eventType:eventType];
     if (!handler) {
         WX_LOG(WXLogFlagWarning, @"disableBinding can't find handler handler");
         pthread_mutex_unlock(&mutex);
@@ -199,7 +196,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyle:))
     }
     
     [handler removeExpressionBinding];
-    [self.bindData removeHandler:handler forToken:sourceRef expressionType:exprType];
+    [self.bindData removeHandler:handler forToken:sourceRef eventType:eventType];
     
     pthread_mutex_unlock(&mutex);
 }

@@ -31,14 +31,6 @@
 
 @implementation EBExpressionScroller
 
-- (instancetype)initWithExpressionType:(WXExpressionType)exprType
-                                source:(id)source {
-    if (self = [super initWithExpressionType:exprType source:source]) {
-        [self initScroller];
-    }
-    return self;
-}
-
 - (void)updateTargetExpression:(NSMapTable<id,NSDictionary *> *)expressionMap
                        options:(NSDictionary *)options
                 exitExpression:(NSDictionary *)exitExpression
@@ -73,7 +65,6 @@
         
         if (self.turnChange) {
             [self fireTurnEvent:scope];
-            return;
         }
         BOOL exit = ![self executeExpression:scope];
         if (exit) {

@@ -207,19 +207,23 @@
 
 + (void)addScrollDelegate:(id<UIScrollViewDelegate>)delegate source:(id)source
 {
-    if ([source respondsToSelector:@selector(addScrollDelegate:)]) {
-        [source addScrollDelegate:delegate];
-    } else {
-        WXLogError(@"bind `scroll` type on a component could't scroll");
+    if (source) {
+        if ([source respondsToSelector:@selector(addScrollDelegate:)]) {
+            [source addScrollDelegate:delegate];
+        } else {
+            WXLogError(@"bind `scroll` type on a component could't scroll");
+        }
     }
 }
 
 + (void)removeScrollDelegate:(id<UIScrollViewDelegate>)delegate source:(id)source
 {
-    if ([source respondsToSelector:@selector(removeScrollDelegate:)]) {
-        [source removeScrollDelegate:delegate];
-    } else {
-        WXLogError(@"bind `scroll` type on a component could't scroll");
+    if (source) {
+        if ([source respondsToSelector:@selector(removeScrollDelegate:)]) {
+            [source removeScrollDelegate:delegate];
+        } else {
+            WXLogError(@"bind `scroll` type on a component could't scroll");
+        }
     }
 }
 
@@ -252,6 +256,13 @@
         return [NSString stringWithFormat:@"rgba(%d,%d,%d,%f)", (int)(components[0]*255), (int)(components[1]*255), (int)(components[2]*255), components[3]];
     }
     return nil;
+}
+
++ (NSNumber *)radian2Angle:(NSNumber *)radian {
+    if ([radian isKindOfClass:NSNumber.class]) {
+        return @([radian doubleValue]*180/M_PI);
+    }
+    return @(0);
 }
 
 + (UIView *)getViewByRef:(id)ref {
