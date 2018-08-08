@@ -31,13 +31,6 @@
 
 @implementation EBExpressionScroller
 
-- (instancetype)init {
-    if (self = [super init]) {
-        [self initScroller];
-    }
-    return self;
-}
-
 - (void)updateTargetExpression:(NSMapTable<id,NSDictionary *> *)expressionMap
                        options:(NSDictionary *)options
                 exitExpression:(NSDictionary *)exitExpression

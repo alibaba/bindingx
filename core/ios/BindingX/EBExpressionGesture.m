@@ -33,13 +33,6 @@
     BOOL _isMutex;
 }
 
-- (instancetype)init {
-    if (self = [super init]) {
-         [self initGesture];
-    }
-    return self;
-}
-
 - (void)dealloc {
     [_gesture removeTarget:self action:nil];
     _gesture.delegate = _tmpDelegate;

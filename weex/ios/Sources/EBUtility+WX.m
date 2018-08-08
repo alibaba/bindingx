@@ -207,19 +207,23 @@
 
 + (void)addScrollDelegate:(id<UIScrollViewDelegate>)delegate source:(id)source
 {
-    if ([source respondsToSelector:@selector(addScrollDelegate:)]) {
-        [source addScrollDelegate:delegate];
-    } else {
-        WXLogError(@"bind `scroll` type on a component could't scroll");
+    if (source) {
+        if ([source respondsToSelector:@selector(addScrollDelegate:)]) {
+            [source addScrollDelegate:delegate];
+        } else {
+            WXLogError(@"bind `scroll` type on a component could't scroll");
+        }
     }
 }
 
 + (void)removeScrollDelegate:(id<UIScrollViewDelegate>)delegate source:(id)source
 {
-    if ([source respondsToSelector:@selector(removeScrollDelegate:)]) {
-        [source removeScrollDelegate:delegate];
-    } else {
-        WXLogError(@"bind `scroll` type on a component could't scroll");
+    if (source) {
+        if ([source respondsToSelector:@selector(removeScrollDelegate:)]) {
+            [source removeScrollDelegate:delegate];
+        } else {
+            WXLogError(@"bind `scroll` type on a component could't scroll");
+        }
     }
 }
 
