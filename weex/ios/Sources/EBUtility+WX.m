@@ -254,6 +254,13 @@
     return nil;
 }
 
++ (NSNumber *)radian2Angle:(NSNumber *)radian {
+    if ([radian isKindOfClass:NSNumber.class]) {
+        return @([radian doubleValue]*90);
+    }
+    return @(0);
+}
+
 + (UIView *)getViewByRef:(id)ref {
     if ([ref isKindOfClass:WXComponent.class]) {
         WXComponent* component = (WXComponent *)ref;

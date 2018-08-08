@@ -21,5 +21,6 @@
 
 + (NSNumber *)transformFactor:(NSString *)key layer:(CALayer* )layer;
 + (NSString *)colorAsString:(CGColorRef)cgColor;
++ (NSNumber *)radian2Angle:(NSNumber *)radian;
 
 @end

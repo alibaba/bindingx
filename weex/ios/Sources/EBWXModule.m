@@ -354,9 +354,9 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
             styles[@"translateY"] = [EBUtility transformFactor:@"transform.translation.y" layer:layer];
             styles[@"scaleX"] = [layer valueForKeyPath:@"transform.scale.x"];
             styles[@"scaleY"] = [layer valueForKeyPath:@"transform.scale.y"];
-            styles[@"rotateX"] = [layer valueForKeyPath:@"transform.rotation.x"];
-            styles[@"rotateY"] = [layer valueForKeyPath:@"transform.rotation.y"];
-            styles[@"rotateZ"] = [layer valueForKeyPath:@"transform.rotation.z"];
+            styles[@"rotateX"] = [EBUtility radian2Angle:[layer valueForKeyPath:@"transform.rotation.x"]];
+            styles[@"rotateY"] = [EBUtility radian2Angle:[layer valueForKeyPath:@"transform.rotation.y"]];
+            styles[@"rotateZ"] = [EBUtility radian2Angle:[layer valueForKeyPath:@"transform.rotation.z"]];
             styles[@"opacity"] = [layer valueForKeyPath:@"opacity"];
             
             callback(styles);
