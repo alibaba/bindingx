@@ -350,14 +350,17 @@ WX_EXPORT_METHOD_SYNC(@selector(getComputedStyleAsync:callback:))
         }
         WXPerformBlockOnMainThread(^{
             CALayer *layer = sourceComponent.view.layer;
-            styles[@"translateX"] = [EBUtility transformFactor:@"transform.translation.x" layer:layer];
-            styles[@"translateY"] = [EBUtility transformFactor:@"transform.translation.y" layer:layer];
-            styles[@"scaleX"] = [layer valueForKeyPath:@"transform.scale.x"];
-            styles[@"scaleY"] = [layer valueForKeyPath:@"transform.scale.y"];
-            styles[@"rotateX"] = [EBUtility radian2Angle:[layer valueForKeyPath:@"transform.rotation.x"]];
-            styles[@"rotateY"] = [EBUtility radian2Angle:[layer valueForKeyPath:@"transform.rotation.y"]];
-            styles[@"rotateZ"] = [EBUtility radian2Angle:[layer valueForKeyPath:@"transform.rotation.z"]];
-            styles[@"opacity"] = [layer valueForKeyPath:@"opacity"];
+            layer = layer.presentationLayer ?: layer.modelLayer;
+            if (layer) {
+                styles[@"translateX"] = [EBUtility transformFactor:@"transform.translation.x" layer:layer];
+                styles[@"translateY"] = [EBUtility transformFactor:@"transform.translation.y" layer:layer];
+                styles[@"scaleX"] = [layer valueForKeyPath:@"transform.scale.x"];
+                styles[@"scaleY"] = [layer valueForKeyPath:@"transform.scale.y"];
+                styles[@"rotateX"] = [EBUtility radian2Angle:[layer valueForKeyPath:@"transform.rotation.x"]];
+                styles[@"rotateY"] = [EBUtility radian2Angle:[layer valueForKeyPath:@"transform.rotation.y"]];
+                styles[@"rotateZ"] = [EBUtility radian2Angle:[layer valueForKeyPath:@"transform.rotation.z"]];
+                styles[@"opacity"] = [layer valueForKeyPath:@"opacity"];
+            }
             
             callback(styles);
         });
