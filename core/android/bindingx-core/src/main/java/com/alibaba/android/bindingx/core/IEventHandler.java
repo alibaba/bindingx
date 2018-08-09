@@ -101,4 +101,6 @@ public interface IEventHandler extends IEventInterceptor{
     void setAnchorInstanceId(String anchorInstanceId);
 
     void setToken(String token);
+
+    void setExtensionParams(Object[] params);
 }

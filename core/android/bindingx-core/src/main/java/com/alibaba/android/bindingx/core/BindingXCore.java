@@ -91,7 +91,7 @@ public class BindingXCore {
     public String doBind(@Nullable Context context,
                          @Nullable String instanceId,
                          @NonNull Map<String, Object> params,
-                         @NonNull JavaScriptCallback callback) {
+                         @NonNull JavaScriptCallback callback, Object... extension) {
         String eventType = Utils.getStringValue(params, BindingXConstants.KEY_EVENT_TYPE);
         String anchorInstanceId = Utils.getStringValue(params, BindingXConstants.KEY_INSTANCE_ID);
         LogProxy.enableLogIfNeeded(params);
@@ -110,7 +110,7 @@ public class BindingXCore {
         String anchor = Utils.getStringValue(params, BindingXConstants.KEY_ANCHOR); // maybe nullable
         List<Map<String, Object>> expressionArgs = Utils.getRuntimeProps(params);
         Map<String,ExpressionPair> interceptors = Utils.getCustomInterceptors(params);
-        return doBind(anchor, anchorInstanceId, eventType, configMap, exitExpressionPair, expressionArgs, interceptors, callback, context, instanceId);
+        return doBind(anchor, anchorInstanceId, eventType, configMap, exitExpressionPair, expressionArgs, interceptors, callback, context, instanceId, extension);
     }
 
     /**
@@ -269,8 +269,8 @@ public class BindingXCore {
                          @Nullable Map<String,ExpressionPair> interceptors,
                          @Nullable JavaScriptCallback callback,
                          @Nullable Context context,
-                         @Nullable String instanceId) {
-
+                         @Nullable String instanceId,
+                         @Nullable Object... extension) {
         if (TextUtils.isEmpty(eventType) || expressionArgs == null) {
             LogProxy.e("doBind failed,illegal argument.[" + eventType + "," + expressionArgs + "]");
             return null;
@@ -295,6 +295,7 @@ public class BindingXCore {
             handler.onBindExpression(eventType, globalConfig, exitExpressionPair, expressionArgs, callback);
             LogProxy.d("createBinding success.[exitExp:" + exitExpressionPair + ",args:" + expressionArgs + "]");
             handler.setInterceptors(interceptors);
+            handler.setExtensionParams(extension);
         } else {
             LogProxy.e("internal error.binding failed for ref:" + anchor + ",type:" + eventType);
         }

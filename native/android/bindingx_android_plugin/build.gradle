@@ -51,12 +51,15 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // provided
+    compileOnly 'com.alibaba:fastjson:1.1.54.android@jar'
+
     compileOnly 'com.android.support:recyclerview-v7:26.1.0'
     compileOnly 'com.android.support:appcompat-v7:26.1.0'
     compileOnly 'com.android.support:design:26.1.0'
     compileOnly 'com.android.support:support-annotations:26.1.0'
-//    compileOnly project(path: ':bindingx-core')
-    compileOnly 'com.alibaba.android:bindingx-core:1.0.9'
+    compileOnly project(path: ':bindingx-core')
+
+//    compileOnly 'com.alibaba.android:bindingx-core:1.0.9'
 
 
     testImplementation 'junit:junit:4.12'

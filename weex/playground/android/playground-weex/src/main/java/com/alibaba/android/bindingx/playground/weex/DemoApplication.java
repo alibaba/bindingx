@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.bindingx.core.BindingXPropertyInterceptor;
+import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
 import com.alibaba.android.bindingx.plugin.weex.BindingX;
 import com.taobao.weex.InitConfig;
@@ -103,6 +104,7 @@ public class DemoApplication extends Application {
         // register bindingx module manually
         try {
             BindingX.register();
+            LogProxy.sEnableLog = true;
         } catch (WXException e) {
         }
 

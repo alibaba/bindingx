@@ -33,8 +33,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -62,6 +64,7 @@ public abstract class AbstractEventHandler implements IEventHandler {
     protected PlatformManager mPlatformManager;
 
     protected ExpressionPair mExitExpressionPair;
+    protected Object[] mExtensionParams;
 
     private Cache<String, Expression> mCachedExpressionMap = new Cache<>(16);
 
@@ -240,13 +243,22 @@ public abstract class AbstractEventHandler implements IEventHandler {
         if(LogProxy.sEnableLog) {
             LogProxy.d(String.format(Locale.getDefault(), "consume expression with %d tasks. event type is %s",args.size(),currentType));
         }
+        List<Object> extension = new LinkedList<>();
         for (List<ExpressionHolder> holderList : args.values()) {
             for (ExpressionHolder holder : holderList) {
                 if (!currentType.equals(holder.eventType)) {
                     LogProxy.d("skip expression with wrong event type.[expected:" + currentType + ",found:" + holder.eventType + "]");
                     continue;
                 }
+                extension.clear();
+                if(mExtensionParams != null && mExtensionParams.length > 0) {
+                    Collections.addAll(extension, mExtensionParams);
+                }
+
                 String instanceId = TextUtils.isEmpty(holder.targetInstanceId)? mInstanceId : holder.targetInstanceId;
+                if(!TextUtils.isEmpty(instanceId)) {
+                    extension.add(instanceId);
+                }
 
                 ExpressionPair expressionPair = holder.expressionPair;
                 if(!ExpressionPair.isValid(expressionPair)) {
@@ -270,7 +282,7 @@ public abstract class AbstractEventHandler implements IEventHandler {
                 }
                 //apply transformation/layout change ... to target view.
 
-                View targetView = mPlatformManager.getViewFinder().findViewBy(holder.targetRef, instanceId);
+                View targetView = mPlatformManager.getViewFinder().findViewBy(holder.targetRef, extension.toArray());
                 BindingXPropertyInterceptor.getInstance().performIntercept(
                         targetView,
                         holder.prop,
@@ -317,6 +329,11 @@ public abstract class AbstractEventHandler implements IEventHandler {
     @Override
     public void setToken(String token) {
         this.mToken = token;
+    }
+
+    @Override
+    public void setExtensionParams(Object[] params) {
+        this.mExtensionParams = params;
     }
 
     static class Cache<K, V> extends LinkedHashMap<K, V> {
