@@ -1,0 +1,17 @@
+/**
+ * use [./gradlew clean assemble install bintrayUpload] to publish(bintray)
+ * */
+
+ext {
+    projectName = 'maven'
+    projectDesc = 'bindingx android plugin'
+
+    siteUrl = 'https://github.com/alibaba/bindingx'
+    gitUrl = 'git@github.com:alibaba/bindingx.git'
+
+    mavenGroup = 'com.alibaba.android'
+    mavenArtifactId = 'bindingx_android_plugin'
+    mavenVersion = '1.0.0'
+
+    orgName = 'rowandjj'
+}
