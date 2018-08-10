@@ -10,10 +10,14 @@ import com.alibaba.android.bindingx.core.BindingXCore;
 import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
 import com.alibaba.android.bindingx.core.internal.BindingXConstants;
+import com.alibaba.android.bindingx.core.internal.ExpressionPair;
+import com.alibaba.android.bindingx.plugin.android.model.BindingXPropSpec;
 import com.alibaba.android.bindingx.plugin.android.model.BindingXSpec;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -156,8 +160,36 @@ public class NativeBindingX {
     }
 
     private Map<String,Object> resolveParams(BindingXSpec spec) {
-        // TODO
-        return null;
+        Map<String,Object> params = new HashMap<>();
+        params.put(BindingXConstants.KEY_EVENT_TYPE, spec.eventType);
+        params.put(BindingXConstants.KEY_ANCHOR, spec.anchor);
+        params.put(BindingXConstants.KEY_OPTIONS,spec.options);
+
+        if(spec.exitExpression != null && ExpressionPair.isValid(spec.exitExpression)) {
+            Map<String,String> exitExpressionMap = new HashMap<>(2);
+            exitExpressionMap.put(BindingXConstants.KEY_ORIGIN, spec.exitExpression.origin);
+            exitExpressionMap.put(BindingXConstants.KEY_TRANSFORMED, spec.exitExpression.transformed);
+            params.put(BindingXConstants.KEY_EXIT_EXPRESSION, exitExpressionMap);
+        }
+
+        List<Map<String,Object>> propList = new LinkedList<>();
+        for(BindingXPropSpec prop : spec.expressionProps) {
+            Map<String,Object> propMap = new HashMap<>();
+            propMap.put(BindingXConstants.KEY_PROPERTY, prop.property);
+            propMap.put(BindingXConstants.KEY_ELEMENT, prop.element);
+
+            Map<String,String> expressionMap = new HashMap<>(2);
+
+            if(prop.expressionPair != null && ExpressionPair.isValid(prop.expressionPair)) {
+                expressionMap.put(BindingXConstants.KEY_ORIGIN, prop.expressionPair.origin);
+                expressionMap.put(BindingXConstants.KEY_TRANSFORMED, prop.expressionPair.transformed);
+            }
+
+            propMap.put(BindingXConstants.KEY_EXPRESSION, expressionMap);
+            propList.add(propMap);
+        }
+        params.put(BindingXConstants.KEY_RUNTIME_PROPS, propList);
+        return params;
     }
 
     static class ViewFinderProxy implements PlatformManager.IViewFinder {
