@@ -129,6 +129,15 @@ public class NativeBindingX {
         }
     }
 
+    @SuppressWarnings("unused")
+    public void onDestroy() {
+        if(mBindingXCore != null) {
+            mBindingXCore.doRelease();
+            mBindingXCore = null;
+            NativeViewUpdateService.clearCallbacks();
+        }
+    }
+
     private PlatformManager createPlatformManager(@NonNull PlatformManager.IViewFinder finder, @NonNull PlatformManager.IDeviceResolutionTranslator translator) {
         return new PlatformManager.Builder()
                 .withViewFinder(finder)
