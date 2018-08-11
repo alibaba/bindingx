@@ -2,7 +2,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "BindingX"
-  s.version      = "1.0.2"
+  s.version      = "1.0.3"
   s.summary      = "bindingx plugin for Weex"
 
   s.description  = <<-DESC
