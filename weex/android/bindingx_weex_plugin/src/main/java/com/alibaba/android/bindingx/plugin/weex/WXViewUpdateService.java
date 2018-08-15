@@ -22,10 +22,8 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Layout;
-import android.text.SpannableString;
-import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
@@ -654,23 +652,11 @@ final class WXViewUpdateService {
                     } else if(component instanceof WXText && targetView instanceof WXTextView) {
                         Layout layout = ((WXTextView) targetView).getTextLayout();
                         if(layout != null) {
-                            CharSequence sequence = layout.getText();
-                            if(sequence != null && sequence instanceof SpannableString) {
-                                /*kind of ugly*/
-                                ForegroundColorSpan[] spans = ((SpannableString) sequence).getSpans(
-                                        0,
-                                        sequence.length(),
-                                        ForegroundColorSpan.class);
-                                if(spans != null && spans.length == 1) {/*仅处理纯色text*/
-                                    ((SpannableString) sequence).removeSpan(spans[0]);
-                                    ((SpannableString) sequence).setSpan(new ForegroundColorSpan(d),
-                                            0,
-                                            sequence.length(),
-                                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-
-                                    targetView.invalidate();
-                                }
+                            TextPaint paint = layout.getPaint();
+                            if(paint != null) {
+                                paint.setColor(d);
                             }
+                            targetView.invalidate();
                         }
                     }
                 }

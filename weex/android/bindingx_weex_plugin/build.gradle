@@ -53,7 +53,7 @@ dependencies {
 //    implementation 'org.weex.plugin:annotation:1.0.0'
 
     // provided
-    compileOnly 'com.taobao.android:weex_sdk:0.18.15.4-SNAPSHOT@aar'
+    compileOnly 'com.taobao.android:weex_sdk:0.18.16.28@aar'
     compileOnly 'com.android.support:recyclerview-v7:26.1.0'
     compileOnly 'com.android.support:appcompat-v7:26.1.0'
     compileOnly 'com.android.support:design:26.1.0'
