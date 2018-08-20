@@ -26,9 +26,9 @@ public class Demo2Activity extends AppCompatActivity {
 
         final BindingXSliderView slider = createBindingXSlider();
         slider.setAnimationConfig(new BindingXSliderView.ConfigBuilder()
-                .withDuration(400)//ms
+                .withDuration(500)//ms
                 .withEasingFunction("easeOutQuart") //easeOutBack   https://easings.net/zh-tw
-                .withFlipInterval(2500)//ms
+                .withFlipInterval(1000)//ms
                 .build());
 
 

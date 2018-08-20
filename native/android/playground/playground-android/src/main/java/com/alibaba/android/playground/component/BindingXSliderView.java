@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 
 import com.alibaba.android.bindingx.core.BindingXEventType;
 import com.alibaba.android.bindingx.core.LogProxy;
+import com.alibaba.android.bindingx.core.internal.BindingXConstants;
 import com.alibaba.android.bindingx.core.internal.ExpressionPair;
 import com.alibaba.android.bindingx.plugin.android.NativeBindingX;
 import com.alibaba.android.bindingx.plugin.android.NativeCallback;
@@ -46,45 +47,100 @@ public class BindingXSliderView extends AbstractAnimatorView{
 
     private void init() {
         mNativeBinding = NativeBindingX.create();
-        LogProxy.sEnableLog = true;
+        LogProxy.sEnableLog = false;
         this.setId(CONTAINER_ID);
     }
 
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        super.addView(wrapChild(index,child), index, params);
+        this.addView(child,index,params,true);
+    }
+
+    public void addView(View child, int index, ViewGroup.LayoutParams params, boolean wrap) {
+        if(wrap) {
+            super.addView(wrapChild(index,child),index,params);
+        } else {
+            super.addView(child, index, params);
+        }
+    }
+
+    public void addView(View child, boolean wrap) {
+        ViewGroup.LayoutParams params = child.getLayoutParams();
+        if (params == null) {
+            params = generateDefaultLayoutParams();
+            if (params == null) {
+                throw new IllegalArgumentException("generateDefaultLayoutParams() cannot return null");
+            }
+        }
+
+        if(wrap) {
+            this.addView(child, -1, params);
+        } else {
+            this.addView(child, -1, params, false);
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mNativeBinding = null;
     }
 
     private View wrapChild(int index, @NonNull View child) {
         final FrameLayout wrapper = new FrameLayout(this.getContext());
         wrapper.addView(child);
         wrapper.setId(OFFSET_ID + index);
-
-        if (getChildCount() == 1) {
-            wrapper.setVisibility(View.VISIBLE);
-        } else {
-//            child.setVisibility(View.GONE);
-        }
         return wrapper;
     }
 
     @Override
     protected void switchTo(int index) {
-        int cur = this.mWhichChild;
-        int next = index;
-
-        Log.v(TAG, "switch from " + cur + " to " + next);
+        /* 这是真实数据源中的位置 */
+        final int cur = this.mWhichChild;
+        final int next = index;
 
         mNativeBinding.unbindAll();
         mNativeBinding.bind(this, createBindingXParams(cur, next) , new NativeCallback() {
             @Override
             public void callback(Map<String, Object> params) {
-                Log.v(TAG, "binding callback:" + params.toString());
+                String state = (String) params.get("state");
+                switch (state) {
+                    case BindingXConstants.STATE_START:// 动画开始
+                        beforeSwitch(cur, next);
+                        break;
+                    case BindingXConstants.STATE_EXIT:// 动画结束
+                        afterSwitch(cur, next);
+                        break;
+                }
             }
         });
     }
 
-    private BindingXSpec createBindingXParams(int cur, int next) {
+
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+        super.onScrollChanged(l, t, oldl, oldt);
+    }
+
+    private void beforeSwitch(int cur, int next) {
+        // nope
+        Log.v(TAG, "slider will slide from " + cur + " to " + next);
+    }
+
+    private void afterSwitch(int cur, int next) {
+        this.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setScrollOffset(0);
+                View viewToMove = getChildAt(0);
+                removeView(viewToMove);
+                addView(viewToMove,false);
+
+            }
+        },0);
+    }
+
+    private BindingXSpec createBindingXParams(int from, int to) {
         BindingXSpec spec = new BindingXSpec();
 
         spec.eventType = BindingXEventType.TYPE_TIMING;
@@ -92,16 +148,16 @@ public class BindingXSliderView extends AbstractAnimatorView{
         spec.expressionProps = new LinkedList<>();
 
         String easing = mEasing; // TODO 暴露给外面
-        int end = computeAnimEndValue(cur, next);
+        int end = computeAnimEndValue();
         int duration = mAnimationDuration;
-        spec.expressionProps.add(createFlipAnimationProps(easing, getScrollY(), end, duration));
+        spec.expressionProps.add(createFlipAnimationProps(easing, getScrollOffset() , end, duration));
         return spec;
     }
 
-    private int computeAnimEndValue(int cur, int next) {
-        // TODo 支持loop
+    private int computeAnimEndValue() {
         int pageSize = getPageSize();
-        return pageSize * next;
+        Log.v(TAG,"pageSize is " + pageSize);
+        return pageSize;
     }
 
     private static BindingXPropSpec createFlipAnimationProps(String easing, int begin, int end, int duration) {

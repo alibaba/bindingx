@@ -117,7 +117,31 @@ public abstract class AbstractAnimatorView extends LinearLayout{
     public void removeViewAt(int index) {
         super.removeViewAt(index);
         final int childCount = getChildCount();
+
         // TODO
+//        if (childCount == 0) {
+//            mWhichChild = 0;
+//            mFirstTime = true;
+//        } else if (mWhichChild >= childCount) {
+//            // Displayed is above child count, so float down to top of stack
+//            setDisplayedChild(childCount - 1);
+//        } else if (mWhichChild == index) {
+//            // Displayed was removed, so show the new child living in its place
+//            setDisplayedChild(mWhichChild);
+//        }
+    }
+
+    protected int getScrollOffset() {
+        return isVertical ? getScrollY() : getScrollX();
+    }
+
+    protected void setScrollOffset(int offset) {
+        offset = Math.max(0,offset);
+        if(isVertical) {
+            setScrollY(offset);
+        } else {
+            setScrollX(offset);
+        }
     }
 
     @Override
