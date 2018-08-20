@@ -26,6 +26,7 @@ import java.util.Map;
 /**
  * Description:
  *
+ * // TODO 数目为1时控制不要动画
  * Created by rowandjj(chuyi)<br/>
  */
 public class BindingXSliderView extends AbstractAnimatorView{
@@ -50,10 +51,14 @@ public class BindingXSliderView extends AbstractAnimatorView{
         init();
     }
 
+    public BindingXSliderView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+
     private void init() {
         mNativeBinding = NativeBindingX.create();
         LogProxy.sEnableLog = false;
-        this.setId(CONTAINER_ID);
     }
 
     @Override
@@ -61,7 +66,7 @@ public class BindingXSliderView extends AbstractAnimatorView{
         this.addView(child,index,params,true);
     }
 
-    public void addView(View child, int index, ViewGroup.LayoutParams params, boolean wrap) {
+    private void addView(View child, int index, ViewGroup.LayoutParams params, boolean wrap) {
         if(wrap) {
             super.addView(wrapChild(index,child),index,params);
         } else {
@@ -69,7 +74,7 @@ public class BindingXSliderView extends AbstractAnimatorView{
         }
     }
 
-    public void addView(View child, boolean wrap) {
+    private void addView(View child, boolean wrap) {
         ViewGroup.LayoutParams params = child.getLayoutParams();
         if (params == null) {
             params = generateDefaultLayoutParams();
@@ -162,7 +167,7 @@ public class BindingXSliderView extends AbstractAnimatorView{
         String easing = mEasing;
         int end = computeAnimEndValue();
         int duration = mAnimationDuration;
-        spec.expressionProps.add(createFlipAnimationProps(isVertical, easing, getScrollOffset() , end, duration));
+        spec.expressionProps.add(createFlipAnimationProps(this.getId(), isVertical, easing, getScrollOffset() , end, duration));
         return spec;
     }
 
@@ -172,10 +177,10 @@ public class BindingXSliderView extends AbstractAnimatorView{
         return pageSize;
     }
 
-    private static BindingXPropSpec createFlipAnimationProps(boolean isVertical, String easing, int begin, int end, int duration) {
+    private static BindingXPropSpec createFlipAnimationProps(int rootElementId, boolean isVertical, String easing, int begin, int end, int duration) {
         easing = easing == null ? "linear" : easing;
         BindingXPropSpec spec = new BindingXPropSpec();
-        spec.element = String.valueOf(CONTAINER_ID);
+        spec.element = String.valueOf(rootElementId);
         spec.property = isVertical ? "scroll.contentOffsetY" : "scroll.contentOffsetX";
         int changed = end - begin;
         String origin = String.format(Locale.getDefault(),"%s(t,%d,%d,%d)", easing, begin, changed, duration);

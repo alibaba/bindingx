@@ -45,6 +45,11 @@ public abstract class AbstractAnimatorView extends LinearLayout{
         init();
     }
 
+    public AbstractAnimatorView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+
     private void init() {
         setOrientation(isVertical ? VERTICAL : HORIZONTAL);
     }

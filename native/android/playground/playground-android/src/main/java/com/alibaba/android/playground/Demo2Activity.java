@@ -2,8 +2,6 @@ package com.alibaba.android.playground;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Pair;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.playground.component.BindingXSliderView;
+import com.alibaba.android.playground.utils.Utils;
 
 public class Demo2Activity extends AppCompatActivity {
 
@@ -35,8 +34,8 @@ public class Demo2Activity extends AppCompatActivity {
         mRootView = findViewById(R.id.container);
 
         // create vertical slider
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(160));
-        params.topMargin = dp2px(50);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Utils.dp2px(this, 160));
+        params.topMargin = Utils.dp2px(this, 50);
         final BindingXSliderView slider1 = createFakeBindingXSlider1();
         slider1.setAnimationConfig(new BindingXSliderView.ConfigBuilder()
                 .withDuration(700)//ms
@@ -46,7 +45,7 @@ public class Demo2Activity extends AppCompatActivity {
         mRootView.addView(slider1, params);
 
         // create horizontal slider
-        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(160));
+        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Utils.dp2px(this, 160));
         final BindingXSliderView slider2 = createFakeBindingXSlider2();
         slider2.setAnimationConfig(new BindingXSliderView.ConfigBuilder()
                 .withDuration(800)//ms
@@ -95,7 +94,7 @@ public class Demo2Activity extends AppCompatActivity {
             child.setText("I AM CHILD " + i);
             child.setBackgroundColor(bgs[i]);
             child.setGravity(Gravity.CENTER);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(160));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Utils.dp2px(this, 160));
             slider.addView(child, params);
         }
 
@@ -110,22 +109,14 @@ public class Demo2Activity extends AppCompatActivity {
             child.setText("I AM CHILD " + i);
             child.setBackgroundColor(bgs[i]);
             child.setGravity(Gravity.CENTER);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(getScreenSize().first, dp2px(160));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(Utils.getScreenSize(this).first, Utils.dp2px(this, 160));
             slider.addView(child, params);
         }
 
         return slider;
     }
 
-    private int dp2px(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
-    }
 
-    private Pair<Integer,Integer> getScreenSize() {
-        int width = getResources().getDisplayMetrics().widthPixels;
-        int height = getResources().getDisplayMetrics().heightPixels;
-        return Pair.create(width, height);
-    }
 
     private String randomEasingFunction() {
         int index = (int) (Math.random()*EASING_ARRAY.length);
