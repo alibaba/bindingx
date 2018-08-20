@@ -26,12 +26,11 @@ import java.util.Map;
 /**
  * Description:
  *
- * // TODO 数目为1时控制不要动画
  * Created by rowandjj(chuyi)<br/>
  */
 public class BindingXSliderView extends AbstractAnimatorView{
     private static final int OFFSET_ID = 10000;
-    private static final int CONTAINER_ID = 9999;
+    private static final int CONTAINER_ID = 19999;
     private NativeBindingX mNativeBinding;
 
     private String mEasing = "linear";
@@ -167,7 +166,12 @@ public class BindingXSliderView extends AbstractAnimatorView{
         String easing = mEasing;
         int end = computeAnimEndValue();
         int duration = mAnimationDuration;
-        spec.expressionProps.add(createFlipAnimationProps(this.getId(), isVertical, easing, getScrollOffset() , end, duration));
+
+        if(this.getId() == NO_ID) {
+            this.setId(CONTAINER_ID);
+        }
+        int id = this.getId() == NO_ID ? CONTAINER_ID : getId();
+        spec.expressionProps.add(createFlipAnimationProps(id, isVertical, easing, getScrollOffset() , end, duration));
         return spec;
     }
 

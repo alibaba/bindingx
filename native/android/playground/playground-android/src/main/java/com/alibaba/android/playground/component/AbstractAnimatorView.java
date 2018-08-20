@@ -179,6 +179,9 @@ public abstract class AbstractAnimatorView extends LinearLayout{
     }
 
     private void updateRunning() {
+        if(getChildCount() <= 1) {
+            return;
+        }
         boolean running = mVisible && mStarted;
         if (running != mRunning) {
             if (running) {

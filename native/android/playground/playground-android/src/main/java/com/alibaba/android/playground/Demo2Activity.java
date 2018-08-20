@@ -103,7 +103,7 @@ public class Demo2Activity extends AppCompatActivity {
 
     private BindingXSliderView createFakeBindingXSlider2() {
         final BindingXSliderView slider = new BindingXSliderView(this, false);
-        int[] bgs = new int[]{0xffBA68C8,0xff4DB6AC,0xffD4E157,0xffE57373};
+        int[] bgs = new int[]{0xffBA68C8,0xffD4E157,0xff4DB6AC,0xffE57373};
         for (int i = 0; i < 4; i++) {
             TextView child = new TextView(this);
             child.setText("I AM CHILD " + i);
