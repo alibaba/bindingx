@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="60dp">
+
+  
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="60dp"
+            android:layout_height="60dp">
+
+        <TextView
+                android:text="预计送达"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:layout_gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="30dp"/>
+
+        <TextView
+                android:id="@+id/date"
+                android:text="03-23"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="30dp"/>
+    </LinearLayout>
+
+    <FrameLayout
+            android:layout_width="10dp"
+            android:layout_height="60dp">
+
+        <View
+                android:background="#e0e0e0"
+                android:layout_width="2dp"
+                android:layout_gravity="center"
+                android:layout_height="60dp"/>
+
+        <View
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/border_wuliu_dot"
+                android:layout_gravity="center"
+                />
+
+    </FrameLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+        
+        <ImageView
+                android:scaleType="fitXY"
+                android:layout_gravity="center_vertical"
+                android:layout_width="48dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/image"
+                android:layout_marginRight="10dp"
+                android:layout_height="48dp"/>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:lines="1"
+                    android:textColor="#0000ff"
+                    android:text="已签收"
+                    android:id="@+id/state"
+                    android:ellipsize="end"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"/>
+
+
+            <TextView
+                    android:lines="1"
+                    android:id="@+id/desc"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:text="签收人是小邮局，期待再次为您服务"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    
+</LinearLayout>

@@ -31,5 +31,18 @@
 
     </LinearLayout>
 
+    <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:background="#ffffff"
+            android:layout_height="120dp">
+
+        <com.alibaba.android.playground.component.BindingXSliderView
+                android:id="@+id/slider_wuliu"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>
