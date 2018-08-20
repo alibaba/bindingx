@@ -84,7 +84,7 @@ final class NativeViewUpdateService {
         sTransformPropertyUpdaterMap.put("color", new ColorUpdater());
 
 //        sTransformPropertyUpdaterMap.put("scroll.contentOffset", new ContentOffsetUpdater());
-//        sTransformPropertyUpdaterMap.put("scroll.contentOffsetX", new ContentOffsetXUpdater());
+        sTransformPropertyUpdaterMap.put("scroll.contentOffsetX", new ContentOffsetXUpdater());
         sTransformPropertyUpdaterMap.put("scroll.contentOffsetY", new ContentOffsetYUpdater());
 //
 //        sTransformPropertyUpdaterMap.put("border-top-left-radius", new BorderRadiusTopLeftUpdater());
@@ -482,6 +482,28 @@ final class NativeViewUpdateService {
                     if(targetView instanceof TextView) {
                         ((TextView) targetView).setTextColor(d);
                     }
+                }
+            });
+        }
+    }
+
+    private static final class ContentOffsetXUpdater implements INativeViewUpdater {
+
+        @Override
+        public void update(
+                @NonNull final View targetView,
+                @NonNull Object cmd,
+                @NonNull final PlatformManager.IDeviceResolutionTranslator translator,
+                @NonNull Map<String,Object> config) {
+            if(!(cmd instanceof Double)) {
+                return;
+            }
+
+            final double val = (double) cmd;
+            runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    targetView.setScrollX((int) getRealSize(val,translator));
                 }
             });
         }

@@ -34,6 +34,12 @@ public abstract class AbstractAnimatorView extends LinearLayout{
         init();
     }
 
+    public AbstractAnimatorView(Context context, boolean isVertical) {
+        super(context);
+        this.isVertical = isVertical;
+        init();
+    }
+
     public AbstractAnimatorView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();

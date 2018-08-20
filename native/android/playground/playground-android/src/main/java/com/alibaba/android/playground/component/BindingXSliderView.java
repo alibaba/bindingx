@@ -40,6 +40,11 @@ public class BindingXSliderView extends AbstractAnimatorView{
         init();
     }
 
+    public BindingXSliderView(Context context, boolean isVertical) {
+        super(context, isVertical);
+        init();
+    }
+
     public BindingXSliderView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
@@ -99,6 +104,9 @@ public class BindingXSliderView extends AbstractAnimatorView{
         final int cur = this.mWhichChild;
         final int next = index;
 
+        // 使用BindingX实现滑动效果
+        // 当然，这里也可以直接使用android 原生的 Scroller来实现滑动效果
+        // BindingX的优势是可以通过不同配置实现不同的交互效果，灵活性高
         mNativeBinding.unbindAll();
         mNativeBinding.bind(this, createBindingXParams(cur, next) , new NativeCallback() {
             @Override
@@ -147,10 +155,10 @@ public class BindingXSliderView extends AbstractAnimatorView{
         spec.exitExpression = createExitExpression(mAnimationDuration);
         spec.expressionProps = new LinkedList<>();
 
-        String easing = mEasing; // TODO 暴露给外面
+        String easing = mEasing;
         int end = computeAnimEndValue();
         int duration = mAnimationDuration;
-        spec.expressionProps.add(createFlipAnimationProps(easing, getScrollOffset() , end, duration));
+        spec.expressionProps.add(createFlipAnimationProps(isVertical, easing, getScrollOffset() , end, duration));
         return spec;
     }
 
@@ -160,11 +168,11 @@ public class BindingXSliderView extends AbstractAnimatorView{
         return pageSize;
     }
 
-    private static BindingXPropSpec createFlipAnimationProps(String easing, int begin, int end, int duration) {
+    private static BindingXPropSpec createFlipAnimationProps(boolean isVertical, String easing, int begin, int end, int duration) {
         easing = easing == null ? "linear" : easing;
         BindingXPropSpec spec = new BindingXPropSpec();
         spec.element = String.valueOf(CONTAINER_ID);
-        spec.property = "scroll.contentOffsetY";
+        spec.property = isVertical ? "scroll.contentOffsetY" : "scroll.contentOffsetX";
         int changed = end - begin;
         String origin = String.format(Locale.getDefault(),"%s(t,%d,%d,%d)", easing, begin, changed, duration);
         String transformed = String.format(Locale.getDefault(),"{\"type\":\"CallExpression\",\"children\":[{\"type\":\"Identifier\",\"value\":\"%s\"},{\"type\":\"Arguments\",\"children\":[{\"type\":\"Identifier\",\"value\":\"t\"},{\"type\":\"NumericLiteral\",\"value\":%d},{\"type\":\"NumericLiteral\",\"value\":%d},{\"type\":\"NumericLiteral\",\"value\":%d}]}]}",easing, begin, changed, duration);
