@@ -17,7 +17,7 @@ public abstract class AbstractAnimatorView extends LinearLayout{
 
     protected static final String TAG = "Slider";
 
-    private static final int DEFAULT_INTERVAL = 1500;//ms
+    private static final int DEFAULT_INTERVAL = 2500;//ms
 
     protected boolean isVertical = true;
     protected int mWhichChild = 0;
@@ -26,6 +26,8 @@ public abstract class AbstractAnimatorView extends LinearLayout{
     protected boolean mRunning = false;
     protected boolean mStarted = false;
     protected boolean mVisible = false;
+
+    protected int mAnimationDuration = 500;// ms
 
     public AbstractAnimatorView(Context context) {
         super(context);
@@ -53,6 +55,19 @@ public abstract class AbstractAnimatorView extends LinearLayout{
 
     public void setFlipInterval(int milliseconds) {
         mFlipInterval = milliseconds;
+    }
+
+    public void setAnimationDuration(int duration) {
+        this.mAnimationDuration = (duration > 0) ? duration : this.mAnimationDuration;
+    }
+
+    protected int getPageSize() {
+        if(getChildCount() <= 0) {
+            return 0;
+        }
+        // 每个卡片高度一致
+        View view = getChildAt(0);
+        return isVertical ? view.getHeight() : view.getWidth();
     }
 
     protected abstract void switchTo(int index);
@@ -133,7 +148,7 @@ public abstract class AbstractAnimatorView extends LinearLayout{
         if (running != mRunning) {
             if (running) {
 //                showOnly(mWhichChild, flipNow);
-                postDelayed(mFlipRunnable, mFlipInterval);
+                postDelayed(mFlipRunnable, mFlipInterval + mAnimationDuration);
             } else {
                 removeCallbacks(mFlipRunnable);
             }

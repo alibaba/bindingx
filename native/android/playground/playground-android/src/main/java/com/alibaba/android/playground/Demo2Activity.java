@@ -22,7 +22,16 @@ public class Demo2Activity extends AppCompatActivity {
 
         mRootView = findViewById(R.id.container);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(60));
+
+
         final BindingXSliderView slider = createBindingXSlider();
+        slider.setAnimationConfig(new BindingXSliderView.ConfigBuilder()
+                .withDuration(400)//ms
+                .withEasingFunction("easeOutQuart") //easeOutBack   https://easings.net/zh-tw
+                .withFlipInterval(2500)//ms
+                .build());
+
+
         mRootView.addView(slider, params);
 
         findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
