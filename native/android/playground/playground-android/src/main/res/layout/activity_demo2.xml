@@ -19,7 +19,12 @@
             android:text="stop"
             android:id="@+id/stop"
             android:layout_width="match_parent"
-            android:layout_marginBottom="100dp"
+            android:layout_height="wrap_content"/>
+
+    <Button
+            android:text="random easing function"
+            android:id="@+id/easing"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
 </LinearLayout>

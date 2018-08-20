@@ -10,14 +10,20 @@
         tools:context=".MainActivity">
 
     <Button
-            android:text="Demo1"
+            android:text="What's BindingX"
             android:id="@+id/btn_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     <Button
-            android:text="Demo2 (SLIDER)"
+            android:text="BindingX Slider Basic"
             android:id="@+id/btn_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <Button
+            android:text="BindingX Slider With Custom Style"
+            android:id="@+id/btn_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 </LinearLayout>

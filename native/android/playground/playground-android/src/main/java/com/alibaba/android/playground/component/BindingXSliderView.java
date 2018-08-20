@@ -85,6 +85,10 @@ public class BindingXSliderView extends AbstractAnimatorView{
         }
     }
 
+    public void setEasingFunction(String easing) {
+        this.mEasing = TextUtils.isEmpty(easing) ? this.mEasing : easing;
+    }
+
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
