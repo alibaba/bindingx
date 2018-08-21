@@ -16,6 +16,7 @@
                 android:text="预计送达"
                 android:gravity="center"
                 android:textSize="12sp"
+                android:textColor="#546E7A"
                 android:layout_gravity="center"
                 android:layout_width="100dp"
                 android:layout_height="30dp"/>
@@ -23,7 +24,8 @@
         <TextView
                 android:id="@+id/date"
                 android:text="03-23"
-                android:textSize="12sp"
+                android:textSize="14sp"
+                android:textColor="#546E7A"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_width="100dp"
@@ -71,7 +73,7 @@
 
             <TextView
                     android:lines="1"
-                    android:textColor="#0000ff"
+                    android:textColor="#2196F3"
                     android:text="已签收"
                     android:id="@+id/state"
                     android:ellipsize="end"
@@ -83,8 +85,9 @@
             <TextView
                     android:lines="1"
                     android:id="@+id/desc"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:ellipsize="end"
+                    android:textColor="#455A64"
                     android:text="签收人是小邮局，期待再次为您服务"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"/>
