@@ -77,8 +77,8 @@ final class NativeViewUpdateService {
 //
 //        sTransformPropertyUpdaterMap.put("transform.rotate",new RotateUpdater());
 //        sTransformPropertyUpdaterMap.put("transform.rotateZ",new RotateUpdater());
-//        sTransformPropertyUpdaterMap.put("transform.rotateX",new RotateXUpdater());
-//        sTransformPropertyUpdaterMap.put("transform.rotateY",new RotateYUpdater());
+        sTransformPropertyUpdaterMap.put("transform.rotateX",new RotateXUpdater());
+        sTransformPropertyUpdaterMap.put("transform.rotateY",new RotateYUpdater());
 
         sTransformPropertyUpdaterMap.put("background-color",new BackgroundUpdater());
         sTransformPropertyUpdaterMap.put("color", new ColorUpdater());
@@ -400,41 +400,49 @@ final class NativeViewUpdateService {
 //        }
 //    }
 
+    private static final class RotateXUpdater implements INativeViewUpdater {
 
-//    private static final class RotateYUpdater implements IWXViewUpdater {
-//
-//        @Override
-//        public void update(
-//                           @NonNull final View targetView,
-//                           @NonNull final Object cmd,
-//                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
-//                           @NonNull final Map<String,Object> config) {
-//            if(!(cmd instanceof Double)) {
-//                return;
-//            }
-//            runOnUIThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    int perspective = WXUtils.getInt(config.get(PERSPECTIVE));
-//                    perspective = Utils.normalizedPerspectiveValue(targetView.getContext(),perspective);
-//
-//                    Pair<Float,Float> pivot = Utils.parseTransformOrigin(
-//                            WXUtils.getString(config.get(TRANSFORM_ORIGIN),null),targetView);
-//
-//                    if(perspective != 0) {
-//                        targetView.setCameraDistance(perspective);
-//                    }
-//                    if(pivot != null) {
-//                        targetView.setPivotX(pivot.first);
-//                        targetView.setPivotY(pivot.second);
-//                    }
-//
-//                    final double d = (double) cmd;
-//                    targetView.setRotationY((float) d);
-//                }
-//            });
-//        }
-//    }
+        @Override
+        public void update(
+                @NonNull final View targetView,
+                @NonNull final Object cmd,
+                @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                @NonNull final Map<String,Object> config) {
+            if(!(cmd instanceof Double)) {
+                return;
+            }
+            runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    // TODO perspective and pivot
+                    final double d = (double) cmd;
+                    targetView.setRotationX((float) d);
+                }
+            });
+        }
+    }
+
+    private static final class RotateYUpdater implements INativeViewUpdater {
+
+        @Override
+        public void update(
+                           @NonNull final View targetView,
+                           @NonNull final Object cmd,
+                           @NonNull PlatformManager.IDeviceResolutionTranslator translator,
+                           @NonNull final Map<String,Object> config) {
+            if(!(cmd instanceof Double)) {
+                return;
+            }
+            runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    // TODO perspective and pivot
+                    final double d = (double) cmd;
+                    targetView.setRotationY((float) d);
+                }
+            });
+        }
+    }
 
 
     private static final class BackgroundUpdater implements INativeViewUpdater {

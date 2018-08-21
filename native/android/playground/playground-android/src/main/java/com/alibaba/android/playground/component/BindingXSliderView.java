@@ -21,6 +21,7 @@ import com.alibaba.android.bindingx.plugin.android.model.BindingXPropSpec;
 import com.alibaba.android.bindingx.plugin.android.model.BindingXSpec;
 import com.alibaba.android.playground.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +30,8 @@ import java.util.Map;
 
 /**
  * Description:
+ *
+ * // TODO   初始态设置 getInitStyle
  *
  * Created by rowandjj(chuyi)<br/>
  */
@@ -188,17 +191,50 @@ public class BindingXSliderView extends AbstractAnimatorView{
         return spec;
     }
 
-    private List<BindingXPropSpec> resolveBindingTransitionSpec(@NonNull BindingTransitionSpec transitionSpec, int from, int to) {
+    private List<BindingXPropSpec> resolveBindingTransitionSpec(@NonNull BindingTransitionSpec transitionSpec, int cur, int next) {
 
-//        List<BindingXPropSpec> list = new ArrayList<>(2);
-//
-//        String elementFrom = String.valueOf(OFFSET_ID + from);
-//        String elementTo = String.valueOf(OFFSET_ID + to);
+        List<BindingXPropSpec> list = new ArrayList<>(2);
+        String elementCur = String.valueOf(OFFSET_ID + cur);
+        String elementNext = String.valueOf(OFFSET_ID + next);
 
-        // TODO
+        String easing = mEasing;
+        int duration = mAnimationDuration;
+        String property = transitionSpec.property;
+
+        float in1 = transitionSpec.inputRange.first;
+        float in2 = transitionSpec.inputRange.second;
+
+        float out1 = transitionSpec.outputRange.first;// 0.4
+        float out2 = transitionSpec.outputRange.second;// 1
+
+        //0->1 0.4->1
+
+        // cur: 1->0
+        // next: 0->1
 
 
-        return Collections.emptyList();
+        // cur element 1--->0
+        BindingXPropSpec specCur = new BindingXPropSpec();
+        specCur.property = property;
+        specCur.element = elementCur;
+        specCur.expressionPair = createExpression(easing, out2, out1-out2, duration);
+        list.add(specCur);
+
+        // next element  0--->1
+        BindingXPropSpec specNext = new BindingXPropSpec();
+        specNext.property = property;
+        specNext.element = elementNext;
+        specNext.expressionPair = createExpression(easing,out1, out2-out1, duration);
+        list.add(specNext);
+
+        return list;
+    }
+
+    private static ExpressionPair createExpression(String easing, float begin, float changed, int duration) {
+        String origin = String.format(Locale.getDefault(),"%s(t,%f,%f,%d)",easing,begin,changed,duration);
+
+        String transformed = String.format(Locale.getDefault(), "{\"type\":\"CallExpression\",\"children\":[{\"type\":\"Identifier\",\"value\":\"%s\"},{\"type\":\"Arguments\",\"children\":[{\"type\":\"Identifier\",\"value\":\"t\"},{\"type\":\"NumericLiteral\",\"value\":%f},{\"type\":\"NumericLiteral\",\"value\":%f},{\"type\":\"NumericLiteral\",\"value\":%d}]}]}",easing,begin,changed,duration);
+        return ExpressionPair.create(origin,transformed);
     }
 
     private int computeAnimEndValue() {
@@ -234,6 +270,31 @@ public class BindingXSliderView extends AbstractAnimatorView{
         this.mEasing = !TextUtils.isEmpty(config.easing) ? config.easing : this.mEasing;
         this.mFlipInterval = config.flipInterval > 0 ? config.flipInterval : this.mFlipInterval;
         this.mTransitionSpecArray = config.transitionSpecArray != null ? config.transitionSpecArray : Collections.<BindingTransitionSpec>emptyList();
+
+        this.setInitialStyle(mTransitionSpecArray);
+    }
+
+    private void setInitialStyle(List<BindingTransitionSpec> transitionSpecArray) {
+        if(mTransitionSpecArray.isEmpty()) {
+            return;
+        }
+
+        for(BindingTransitionSpec spec : transitionSpecArray) {
+            for(int i = 0; i < getChildCount(); i++) {
+                View child = getChildAt(i);
+                switch (spec.property) {
+                    // TODO 扩充其他属性
+                    case "opacity":
+                        child.setAlpha(i==mWhichChild ? spec.outputRange.second : spec.outputRange.first);
+                        break;
+                    case "transform.rotateY":
+                        child.setRotationY(i==mWhichChild ? spec.outputRange.second : spec.outputRange.first);
+                        break;
+                    case "transform.rotateX":
+                        child.setRotationX(i==mWhichChild ? spec.outputRange.second : spec.outputRange.first);
+                }
+            }
+        }
     }
 
     public static class Config {
@@ -279,7 +340,7 @@ public class BindingXSliderView extends AbstractAnimatorView{
             return this;
         }
 
-        public ConfigBuilder withBindingXTransition(String property, Pair<Float,Float> inputRange, Pair<Object,Object> outputRange) {
+        public ConfigBuilder withBindingXTransition(String property, Pair<Float,Float> inputRange, Pair<Float,Float> outputRange) {
             this.mBindingPropsArray.add(new BindingTransitionSpec(property, inputRange, outputRange));
             return this;
         }
@@ -288,9 +349,9 @@ public class BindingXSliderView extends AbstractAnimatorView{
     static class BindingTransitionSpec {
         String property;
         Pair<Float,Float> inputRange;
-        Pair<Object,Object> outputRange;
+        Pair<Float,Float> outputRange;
 
-        BindingTransitionSpec(String property, Pair<Float,Float> inputRange, Pair<Object,Object> outputRange) {
+        BindingTransitionSpec(String property, Pair<Float,Float> inputRange, Pair<Float,Float> outputRange) {
             this.property = property;
             this.inputRange = inputRange;
             this.outputRange = outputRange;
