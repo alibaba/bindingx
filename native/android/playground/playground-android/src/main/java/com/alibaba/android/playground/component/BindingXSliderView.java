@@ -18,6 +18,7 @@ import com.alibaba.android.bindingx.plugin.android.NativeBindingX;
 import com.alibaba.android.bindingx.plugin.android.NativeCallback;
 import com.alibaba.android.bindingx.plugin.android.model.BindingXPropSpec;
 import com.alibaba.android.bindingx.plugin.android.model.BindingXSpec;
+import com.alibaba.android.playground.utils.Utils;
 
 import java.util.LinkedList;
 import java.util.Locale;
@@ -34,6 +35,8 @@ public class BindingXSliderView extends AbstractAnimatorView{
     private NativeBindingX mNativeBinding;
 
     private String mEasing = "linear";
+
+    private int mContainerId = View.NO_ID;
 
     public BindingXSliderView(Context context) {
         super(context);
@@ -168,9 +171,10 @@ public class BindingXSliderView extends AbstractAnimatorView{
         int duration = mAnimationDuration;
 
         if(this.getId() == NO_ID) {
-            this.setId(CONTAINER_ID);
+            mContainerId = Utils.generateViewId();
+            this.setId(mContainerId);
         }
-        int id = this.getId() == NO_ID ? CONTAINER_ID : getId();
+        int id = getId();
         spec.expressionProps.add(createFlipAnimationProps(id, isVertical, easing, getScrollOffset() , end, duration));
         return spec;
     }
