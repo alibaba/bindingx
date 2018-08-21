@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -20,7 +21,9 @@ import com.alibaba.android.bindingx.plugin.android.model.BindingXPropSpec;
 import com.alibaba.android.bindingx.plugin.android.model.BindingXSpec;
 import com.alibaba.android.playground.utils.Utils;
 
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -30,11 +33,11 @@ import java.util.Map;
  * Created by rowandjj(chuyi)<br/>
  */
 public class BindingXSliderView extends AbstractAnimatorView{
-    private static final int OFFSET_ID = 10000;
-    private static final int CONTAINER_ID = 19999;
+    private static final int OFFSET_ID = 10000;// TODO 随机生成
     private NativeBindingX mNativeBinding;
 
     private String mEasing = "linear";
+    List<BindingTransitionSpec> mTransitionSpecArray;
 
     private int mContainerId = View.NO_ID;
 
@@ -60,7 +63,7 @@ public class BindingXSliderView extends AbstractAnimatorView{
 
     private void init() {
         mNativeBinding = NativeBindingX.create();
-        LogProxy.sEnableLog = false;
+        LogProxy.sEnableLog = true;
     }
 
     @Override
@@ -70,7 +73,7 @@ public class BindingXSliderView extends AbstractAnimatorView{
 
     private void addView(View child, int index, ViewGroup.LayoutParams params, boolean wrap) {
         if(wrap) {
-            super.addView(wrapChild(index,child),index,params);
+            super.addView(wrapChild(child),index,params);
         } else {
             super.addView(child, index, params);
         }
@@ -102,10 +105,13 @@ public class BindingXSliderView extends AbstractAnimatorView{
         mNativeBinding = null;
     }
 
-    private View wrapChild(int index, @NonNull View child) {
+    private View wrapChild(@NonNull View child) {
+        int count = getChildCount();
+
         final FrameLayout wrapper = new FrameLayout(this.getContext());
         wrapper.addView(child);
-        wrapper.setId(OFFSET_ID + index);
+        wrapper.setId(OFFSET_ID + count);
+
         return wrapper;
     }
 
@@ -176,7 +182,23 @@ public class BindingXSliderView extends AbstractAnimatorView{
         }
         int id = getId();
         spec.expressionProps.add(createFlipAnimationProps(id, isVertical, easing, getScrollOffset() , end, duration));
+        for(BindingTransitionSpec transitionSpec : mTransitionSpecArray) {
+            spec.expressionProps.addAll(resolveBindingTransitionSpec(transitionSpec,from, to));
+        }
         return spec;
+    }
+
+    private List<BindingXPropSpec> resolveBindingTransitionSpec(@NonNull BindingTransitionSpec transitionSpec, int from, int to) {
+
+//        List<BindingXPropSpec> list = new ArrayList<>(2);
+//
+//        String elementFrom = String.valueOf(OFFSET_ID + from);
+//        String elementTo = String.valueOf(OFFSET_ID + to);
+
+        // TODO
+
+
+        return Collections.emptyList();
     }
 
     private int computeAnimEndValue() {
@@ -211,17 +233,20 @@ public class BindingXSliderView extends AbstractAnimatorView{
         this.mAnimationDuration = config.duration > 0 ? config.duration : this.mAnimationDuration;
         this.mEasing = !TextUtils.isEmpty(config.easing) ? config.easing : this.mEasing;
         this.mFlipInterval = config.flipInterval > 0 ? config.flipInterval : this.mFlipInterval;
+        this.mTransitionSpecArray = config.transitionSpecArray != null ? config.transitionSpecArray : Collections.<BindingTransitionSpec>emptyList();
     }
 
     public static class Config {
         int duration;
         String easing;
         int flipInterval;
+        List<BindingTransitionSpec> transitionSpecArray;
 
-        Config(int duration, String easing, int flipInterval) {
+        Config(int duration, String easing, int flipInterval, List<BindingTransitionSpec> transitionSpecArray) {
             this.duration = duration;
             this.easing = easing;
             this.flipInterval = flipInterval;
+            this.transitionSpecArray = transitionSpecArray;
         }
     }
 
@@ -229,12 +254,14 @@ public class BindingXSliderView extends AbstractAnimatorView{
         private int duration; // 动画时长
         private String easing; // 动画插值器
         private int flipInterval; // 每张卡片展示时间
+        private LinkedList<BindingTransitionSpec> mBindingPropsArray; // 扩展动画配置
 
         public ConfigBuilder() {
+            mBindingPropsArray = new LinkedList<>();
         }
 
         public Config build() {
-            return new Config(duration,easing, flipInterval);
+            return new Config(duration,easing, flipInterval,mBindingPropsArray);
         }
 
         public ConfigBuilder withEasingFunction(String easing) {
@@ -250,6 +277,23 @@ public class BindingXSliderView extends AbstractAnimatorView{
         public ConfigBuilder withFlipInterval(int flipInterval) {
             this.flipInterval = flipInterval;
             return this;
+        }
+
+        public ConfigBuilder withBindingXTransition(String property, Pair<Float,Float> inputRange, Pair<Object,Object> outputRange) {
+            this.mBindingPropsArray.add(new BindingTransitionSpec(property, inputRange, outputRange));
+            return this;
+        }
+    }
+
+    static class BindingTransitionSpec {
+        String property;
+        Pair<Float,Float> inputRange;
+        Pair<Object,Object> outputRange;
+
+        BindingTransitionSpec(String property, Pair<Float,Float> inputRange, Pair<Object,Object> outputRange) {
+            this.property = property;
+            this.inputRange = inputRange;
+            this.outputRange = outputRange;
         }
     }
 

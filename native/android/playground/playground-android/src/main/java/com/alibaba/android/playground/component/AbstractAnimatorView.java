@@ -3,7 +3,6 @@ package com.alibaba.android.playground.component;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -168,7 +167,6 @@ public abstract class AbstractAnimatorView extends LinearLayout{
         if (mAutoStart) {
             startFlipping();
         }
-        Log.e("CHUYI","child count " + getChildCount());
     }
 
     @Override

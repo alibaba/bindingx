@@ -2,6 +2,7 @@ package com.alibaba.android.playground;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -71,6 +72,7 @@ public class Demo3Activity extends AppCompatActivity {
                 .withEasingFunction("easeOutQuart")
                 .withDuration(700)
                 .withFlipInterval(2100)
+                .withBindingXTransition("opacity", Pair.create(0f, 1f), Pair.<Object,Object>create(0.4f, 1f))
                 .build());
         mWuliuSlider.startFlipping();
 
