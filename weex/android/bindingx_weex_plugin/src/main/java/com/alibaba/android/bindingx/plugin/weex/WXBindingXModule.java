@@ -88,6 +88,13 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
                             return new BindingXScrollHandler(context, manager, extension);
                         }
                     });
+
+            mBindingXCore.registerEventHandler(BindingXEventType.TYPE_PAN, new BindingXCore.ObjectCreator<IEventHandler, Context, PlatformManager>() {
+                @Override
+                public IEventHandler createWith(@NonNull Context context, @NonNull PlatformManager manager, Object... extension) {
+                    return new BindingXGestureHandler(context, manager, extension);
+                }
+            });
         }
     }
 
@@ -140,7 +147,7 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
 
     @JSMethod(uiThread = false)
     public List<String> supportFeatures() {
-        return Arrays.asList("pan", "orientation", "timing", "scroll");
+        return Arrays.asList("pan", "orientation", "timing", "scroll", "experimentalGestureFeatures");
     }
 
     @JSMethod(uiThread = false)

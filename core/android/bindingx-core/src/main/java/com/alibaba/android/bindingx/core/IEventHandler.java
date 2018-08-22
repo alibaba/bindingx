@@ -58,6 +58,12 @@ public interface IEventHandler extends IEventInterceptor{
     void onStart(@NonNull String sourceRef, @NonNull String eventType);
 
     /**
+     * set global config. Invokes before {@link IEventHandler#onCreate(String, String)}.
+     *
+     * */
+    void setGlobalConfig(@Nullable Map<String, Object> globalConfig);
+
+    /**
      * the lifecycle of bind expressions
      *
      * @param eventType the unique event type
