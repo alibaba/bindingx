@@ -59,7 +59,7 @@ dependencies {
     compileOnly 'com.android.support:design:26.1.0'
     compileOnly 'com.android.support:support-annotations:26.1.0'
 //    compileOnly project(path: ':bindingx-core')
-    compileOnly 'com.alibaba.android:bindingx-core:1.0.9.5'
+    compileOnly 'com.alibaba.android:bindingx-core:1.0.9.6'
 
 //    annotationProcessor 'org.weex.plugin:processor:1.0.2'
 
@@ -73,7 +73,7 @@ dependencies {
     testImplementation "org.powermock:powermock-classloading-xstream:1.6.6"
 
     testImplementation 'com.taobao.android:weex_sdk:0.18.16.28@aar'
-    testImplementation 'com.alibaba.android:bindingx-core:1.0.9.5'
+    testImplementation 'com.alibaba.android:bindingx-core:1.0.9.6'
 }
 
 if(file('../../../LICENSE.md').exists() && plugins.hasPlugin("com.github.hierynomus.license")){
