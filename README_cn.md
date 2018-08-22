@@ -110,7 +110,7 @@
 在您项目中的`Podfile`中添加依赖：
 
   ```
-  pod 'BindingX', '~> 1.0.1'
+  pod 'BindingX', '~> 1.0.3'
   ```
 
 自动注册module，无需手动注册。
