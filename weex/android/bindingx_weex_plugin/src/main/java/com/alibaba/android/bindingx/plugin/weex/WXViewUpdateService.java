@@ -650,13 +650,20 @@ final class WXViewUpdateService {
                     if(targetView instanceof TextView) {
                         ((TextView) targetView).setTextColor(d);
                     } else if(component instanceof WXText && targetView instanceof WXTextView) {
-                        Layout layout = ((WXTextView) targetView).getTextLayout();
-                        if(layout != null) {
-                            TextPaint paint = layout.getPaint();
-                            if(paint != null) {
-                                paint.setColor(d);
-                            }
+                        try {
+                            ((WXTextView)targetView).setTextColor(d);
                             targetView.invalidate();
+                        }catch (Throwable e) {
+                            // fallback
+                            LogProxy.e("can not update text color, try fallback to call the old API",e);
+                            Layout layout = ((WXTextView) targetView).getTextLayout();
+                            if(layout != null) {
+                                TextPaint paint = layout.getPaint();
+                                if(paint != null) {
+                                    paint.setColor(d);
+                                }
+                                targetView.invalidate();
+                            }
                         }
                     }
                 }
