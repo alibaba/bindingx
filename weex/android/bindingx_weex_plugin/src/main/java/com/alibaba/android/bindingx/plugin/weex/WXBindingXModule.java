@@ -147,7 +147,7 @@ public class WXBindingXModule extends WXSDKEngine.DestroyableModule {
 
     @JSMethod(uiThread = false)
     public List<String> supportFeatures() {
-        return Arrays.asList("pan", "orientation", "timing", "scroll");
+        return Arrays.asList("pan", "orientation", "timing", "scroll", "experimentalGestureFeatures");
     }
 
     @JSMethod(uiThread = false)
