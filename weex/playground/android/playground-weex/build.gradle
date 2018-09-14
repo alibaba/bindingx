@@ -37,6 +37,8 @@ dependencies {
     implementation "com.alibaba:fastjson:1.1.46.android"
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.google.zxing:core:3.3.0'
+
+    implementation "com.airbnb.android:lottie:2.0.0-beta4"
 }
 
 if (file('../../../../LICENSE.md').exists() && plugins.hasPlugin("com.github.hierynomus.license")) {

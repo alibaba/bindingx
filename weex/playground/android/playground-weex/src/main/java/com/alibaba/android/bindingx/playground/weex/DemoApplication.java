@@ -23,6 +23,8 @@ import android.view.View;
 import com.alibaba.android.bindingx.core.BindingXPropertyInterceptor;
 import com.alibaba.android.bindingx.core.LogProxy;
 import com.alibaba.android.bindingx.core.PlatformManager;
+import com.alibaba.android.bindingx.playground.weex.extension.lottie.LottieProgressInterceptor;
+import com.alibaba.android.bindingx.playground.weex.extension.lottie.WXLottieComponent;
 import com.alibaba.android.bindingx.plugin.weex.BindingX;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
@@ -105,8 +107,13 @@ public class DemoApplication extends Application {
         try {
             BindingX.register();
             LogProxy.sEnableLog = true;
+
+            WXSDKEngine.registerComponent("lottie",WXLottieComponent.class);
         } catch (WXException e) {
         }
+
+        // Custom Properties
+        BindingXPropertyInterceptor.getInstance().addInterceptor(new LottieProgressInterceptor());
 
         BindingXPropertyInterceptor.getInstance()
                 .addInterceptor(new BindingXPropertyInterceptor.IPropertyUpdateInterceptor() {
