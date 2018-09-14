@@ -33,6 +33,8 @@
 		D95084AA2046CF9A003F3CC0 /* WXURLResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = D95084A92046CF9A003F3CC0 /* WXURLResolver.m */; };
 		D95084AD2046CFD0003F3CC0 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = D95084AC2046CFD0003F3CC0 /* NSString+Additions.m */; };
 		D95084AF2046D431003F3CC0 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D95084AE2046D431003F3CC0 /* Launch Screen.storyboard */; };
+		D9A8959A214B5C3F00AE5DCC /* WXLottieComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A89596214B5C3F00AE5DCC /* WXLottieComponent.m */; };
+		D9A8959B214B5C3F00AE5DCC /* WXLottieBindingXHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A89597214B5C3F00AE5DCC /* WXLottieBindingXHandler.m */; };
 		D9F28AEA207203D100CE451B /* CustomEBHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F28AE9207203D100CE451B /* CustomEBHandler.m */; };
 		DC5E503E1D0D97130059F0EB /* weex.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5E503C1D0D97130059F0EB /* weex.png */; };
 		DC5E503F1D0D97130059F0EB /* weex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5E503D1D0D97130059F0EB /* weex@2x.png */; };
@@ -96,6 +98,10 @@
 		D95084AB2046CFCF003F3CC0 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
 		D95084AC2046CFD0003F3CC0 /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
 		D95084AE2046D431003F3CC0 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		D9A89596214B5C3F00AE5DCC /* WXLottieComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXLottieComponent.m; sourceTree = "<group>"; };
+		D9A89597214B5C3F00AE5DCC /* WXLottieBindingXHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXLottieBindingXHandler.m; sourceTree = "<group>"; };
+		D9A89598214B5C3F00AE5DCC /* WXLottieComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXLottieComponent.h; sourceTree = "<group>"; };
+		D9A89599214B5C3F00AE5DCC /* WXLottieBindingXHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXLottieBindingXHandler.h; sourceTree = "<group>"; };
 		D9F28AE8207203D100CE451B /* CustomEBHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomEBHandler.h; sourceTree = "<group>"; };
 		D9F28AE9207203D100CE451B /* CustomEBHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomEBHandler.m; sourceTree = "<group>"; };
 		DC5E503C1D0D97130059F0EB /* weex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weex.png; sourceTree = "<group>"; };
@@ -240,12 +246,13 @@
 		D5ADF0861C77133B00597CA6 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				2AE88A291C8544D7003329DE /* scanner */,
+				DCABAFED1D029642001C8592 /* debug */,
+				D9A89595214B5C3F00AE5DCC /* lottie */,
 				D95084AB2046CFCF003F3CC0 /* NSString+Additions.h */,
 				D95084AC2046CFD0003F3CC0 /* NSString+Additions.m */,
 				D95084A82046CF9A003F3CC0 /* WXURLResolver.h */,
 				D95084A92046CF9A003F3CC0 /* WXURLResolver.m */,
-				2AE88A291C8544D7003329DE /* scanner */,
-				DCABAFED1D029642001C8592 /* debug */,
 				74CC79E91C2B9E4700829368 /* UIViewController+WXDemoNaviBar.h */,
 				74CC79EA1C2B9E4700829368 /* UIViewController+WXDemoNaviBar.m */,
 				775BEE811C1E8ECC008D1629 /* AppDelegate.h */,
@@ -259,6 +266,17 @@
 				D9F28AE9207203D100CE451B /* CustomEBHandler.m */,
 			);
 			name = Source;
+			sourceTree = "<group>";
+		};
+		D9A89595214B5C3F00AE5DCC /* lottie */ = {
+			isa = PBXGroup;
+			children = (
+				D9A89598214B5C3F00AE5DCC /* WXLottieComponent.h */,
+				D9A89596214B5C3F00AE5DCC /* WXLottieComponent.m */,
+				D9A89599214B5C3F00AE5DCC /* WXLottieBindingXHandler.h */,
+				D9A89597214B5C3F00AE5DCC /* WXLottieBindingXHandler.m */,
+			);
+			path = lottie;
 			sourceTree = "<group>";
 		};
 		DC65C4421CEB006C00B2F84F /* resource */ = {
@@ -508,6 +526,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCABAFF31D029685001C8592 /* WXATLoggerPlugin.m in Sources */,
+				D9A8959A214B5C3F00AE5DCC /* WXLottieComponent.m in Sources */,
 				D9F28AEA207203D100CE451B /* CustomEBHandler.m in Sources */,
 				2AE88A2C1C8544E6003329DE /* WXScannerVC.m in Sources */,
 				D95084A72046CE71003F3CC0 /* WXNavigationImpl.m in Sources */,
@@ -520,6 +539,7 @@
 				775BEE831C1E8ECC008D1629 /* AppDelegate.m in Sources */,
 				DCABAFF41D029685001C8592 /* WXATViewHierarchyPlugin.m in Sources */,
 				775BEE801C1E8ECC008D1629 /* main.m in Sources */,
+				D9A8959B214B5C3F00AE5DCC /* WXLottieBindingXHandler.m in Sources */,
 				DCABAFFE1D029753001C8592 /* WXImgLoaderDefaultImpl.m in Sources */,
 				747DF6681E2F176A005C53A8 /* UIView+UIThreadCheck.m in Sources */,
 			);

@@ -6,16 +6,13 @@
  * For the full copyright and license information,please view the LICENSE file in the root directory of this source tree.
  */
 
-#import "CustomEBHandler.h"
+#import <Foundation/Foundation.h>
+#import <WeexSDK/WeexSDK.h>
+#import <WeexSDK/WXResourceLoader.h>
+#import <WeexPluginLoader/WeexPluginLoader.h>
 
-@implementation CustomEBHandler
+@interface WXLottieComponent : WXComponent
 
-- (void)execute:(NSDictionary *)model to:(id)target {
-//    NSLog(@"%@", model);
-}
-
-- (NSDictionary *)customScope {
-    return nil;
-}
+- (void)setProgress:(CGFloat)progress;
 
 @end

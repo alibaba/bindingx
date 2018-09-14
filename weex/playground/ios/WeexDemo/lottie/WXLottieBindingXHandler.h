@@ -6,16 +6,8 @@
  * For the full copyright and license information,please view the LICENSE file in the root directory of this source tree.
  */
 
-#import "CustomEBHandler.h"
+#import "EBHandlerFactory.h"
 
-@implementation CustomEBHandler
-
-- (void)execute:(NSDictionary *)model to:(id)target {
-//    NSLog(@"%@", model);
-}
-
-- (NSDictionary *)customScope {
-    return nil;
-}
+@interface WXLottieBindingXHandler : NSObject <EBHandlerProtocol>
 
 @end
