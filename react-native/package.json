@@ -10,9 +10,11 @@
   "main": "lib/index.js",
   "nativePackage": true,
   "dependencies": {
-    "react": "16.0.0",
-    "react-native": "0.51.0",
     "bindingx-parser": "^0.0.2"
+  },
+  "peerDependencies": {
+    "react": "16.0.0",
+    "react-native": "0.51.0"
   },
   "devDependencies": {
     "babel-jest": "22.0.3",
