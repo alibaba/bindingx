@@ -46,36 +46,39 @@ const navigator = weex.requireModule('navigator')
 const root = weex.config.bundleUrl;
 
 module.exports = {
-  data: {
-    items: [{
-        title: 'Draggable Ball',
-        url: 'draggable_ball.js'
-      },
-      {
-        title: 'Swipeable Card',
-        url: 'swipeable_card.js'
-      },
-      {
-        title: 'Expandable Menu',
-        url: 'expandable_menu.js'
-      },
-      {
-        title: 'Slide Layout',
-        url: 'slide_layout.js'
-      },
-      {
-        title: 'Circle Menu',
-        url: 'circle_menu.js'
-      },
-      {
-        title: 'Navigation with Tab',
-        url: 'navigation.js'
-      },
-      {
-        title: 'Ripple Effect',
-        url: 'ripple.js'
-      }
-    ]
+  data() {
+    return {
+      items: [
+        {
+          title: "Draggable Ball",
+          url: "draggable_ball.js"
+        },
+        {
+          title: "Swipeable Card",
+          url: "swipeable_card.js"
+        },
+        {
+          title: "Expandable Menu",
+          url: "expandable_menu.js"
+        },
+        {
+          title: "Slide Layout",
+          url: "slide_layout.js"
+        },
+        {
+          title: "Circle Menu",
+          url: "circle_menu.js"
+        },
+        {
+          title: "Navigation with Tab",
+          url: "navigation.js"
+        },
+        {
+          title: "Ripple Effect",
+          url: "ripple.js"
+        }
+      ]
+    };
   },
   methods: {
     clickItem: function(e) {

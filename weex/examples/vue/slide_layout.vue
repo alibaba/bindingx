@@ -77,10 +77,12 @@
 import Binding from 'weex-bindingx';
 
 module.exports = {
-  data: {
-    _is_expanded: false,
-    _menu_animation_flag: false,
-    _opacity: 0
+  data() {
+    return {
+      _is_expanded: false,
+      _menu_animation_flag: false,
+      _opacity: 0
+    }
   },
   methods: {
 
