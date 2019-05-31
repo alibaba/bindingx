@@ -80,8 +80,10 @@
 import Binding from 'weex-bindingx';
 
 module.exports = {
-  data: {
-    isExpanded: false
+  data() {
+    return {
+      isExpanded: false
+    }
   },
   methods: {
 
