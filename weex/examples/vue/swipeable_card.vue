@@ -106,12 +106,14 @@ import Binding from 'weex-bindingx';
 
 
 module.exports = {
-  data: {
-    x: 0,
-    y: 0,
-    isInAnimation: false,
-    gesToken: 0,
-    opacity: 1
+  data() {
+    return {
+      x: 0,
+      y: 0,
+      isInAnimation: false,
+      gesToken: 0,
+      opacity: 1
+    }
   },
   methods: {
 
