@@ -149,7 +149,7 @@ add `bindingx-core` library to `build.gradle` manually:
 * Dingding chat group.
 
 
-![Snip20180115_20.png | left | 229x229](https://gw.alipayobjects.com/zos/skylark/fcc2b92e-06c2-4d8f-88ff-5cfb983735bf/2018/png/dfae0a43-4ecb-4f62-a5fb-d3f092cad66a.png "")
+![Snip20180115_20.png | left | 229x229](https://img.alicdn.com/tfs/TB1suFjbBiE3KVjSZFMXXbQhVXa-300-312.jpg "")
 
 ## License
 ```
