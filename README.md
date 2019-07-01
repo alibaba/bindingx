@@ -109,7 +109,7 @@ add dependencies in your application's `Podfile`
   pod 'BindingX', '~> 1.0.3'
 ```
 
-module will be registed automatically.
+module will be registed automatically by WeexPluginLoader, also you can use weex standard module register api `[WXSDKEngine registerModule:@"bindingx" withClass:NSClassFromString(@"EBWXModule")]`.
 
 ### React Native
 
